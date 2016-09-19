@@ -6,11 +6,11 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://example.com
+ * @link       https://github.com/brenoalvs/monk
  * @since      1.0.0
  *
- * @package    monk
- * @subpackage monk/includes
+ * @package    Monk
+ * @subpackage Monk/Includes
  */
 
 /**
@@ -20,8 +20,8 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    monk
- * @subpackage monk/includes
+ * @package    Monk
+ * @subpackage Monk/Includes
  * @author     Breno Alves <email@example.com>
  */
 class Monk_i18n {

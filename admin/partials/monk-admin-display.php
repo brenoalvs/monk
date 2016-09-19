@@ -5,11 +5,11 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       http://example.com
+ * @link       https://github.com/brenoalvs/monk
  * @since      1.0.0
  *
- * @package    monk
- * @subpackage monk/admin/partials
+ * @package    Monk
+ * @subpackage Monk/Admin/Partials
  */
 ?>
 

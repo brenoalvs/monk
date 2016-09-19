@@ -3,11 +3,11 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       http://example.com
+ * @link       https://github.com/brenoalvs/monk
  * @since      1.0.0
  *
- * @package    monk
- * @subpackage monk/includes
+ * @package    Monk
+ * @subpackage Monk/Includes
  */
 
 /**
@@ -16,8 +16,8 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    monk
- * @subpackage monk/includes
+ * @package    Monk
+ * @subpackage Monk/Includes
  * @author     Breno Alves <email@example.com>
  */
 class Monk_Deactivator {

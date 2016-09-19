@@ -3,11 +3,11 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://example.com
+ * @link       https://github.com/brenoalvs/monk
  * @since      1.0.0
  *
- * @package    monk
- * @subpackage monk/admin
+ * @package    Monk
+ * @subpackage Monk/Admin
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    monk
- * @subpackage monk/admin
+ * @package    Monk
+ * @subpackage Monk/Admin
  * @author     Breno Alves
  */
 class Monk_Admin {

@@ -10,10 +10,10 @@
  *
  * @link              https://github.com/brenoalvs/monk
  * @since             1.0.0
- * @package           monk
+ * @package           Monk
  *
  * @wordpress-plugin
- * Plugin Name:       monk
+ * Plugin Name:       Monk
  * Plugin URI:        https://github.com/brenoalvs/monk
  * Description:       An open source WordPress plugin to create multilanguage sites.
  * Version:           1.0.0
