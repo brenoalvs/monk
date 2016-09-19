@@ -7,7 +7,7 @@
  * @since      1.0.0
  *
  * @package    Monk
- * @subpackage Monk/includes
+ * @subpackage Monk/Includes
  */
 
 /**
@@ -17,7 +17,7 @@
  *
  * @since      1.0.0
  * @package    Monk
- * @subpackage Monk/includes
+ * @subpackage Monk/Includes
  * @author     Breno Alves <email@example.com>
  */
 class Monk_Deactivator {

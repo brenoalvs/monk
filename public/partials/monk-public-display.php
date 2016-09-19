@@ -9,7 +9,7 @@
  * @since      1.0.0
  *
  * @package    Monk
- * @subpackage Monk/public/partials
+ * @subpackage Monk/Public/Partials
  */
 ?>
 

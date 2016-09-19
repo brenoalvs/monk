@@ -7,7 +7,7 @@
  * @since      1.0.0
  *
  * @package    Monk
- * @subpackage Monk/includes
+ * @subpackage Monk/Includes
  */
 
 /**
@@ -18,7 +18,7 @@
  * run function to execute the list of actions and filters.
  *
  * @package    Monk
- * @subpackage Monk/includes
+ * @subpackage Monk/Includes
  * @author     Breno Alves <email@example.com>
  */
 class Monk_Loader {

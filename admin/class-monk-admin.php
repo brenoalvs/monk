@@ -7,7 +7,7 @@
  * @since      1.0.0
  *
  * @package    Monk
- * @subpackage Monk/admin
+ * @subpackage Monk/Admin
  */
 
 /**
@@ -17,7 +17,7 @@
  * enqueue the admin-specific stylesheet and JavaScript.
  *
  * @package    Monk
- * @subpackage Monk/admin
+ * @subpackage Monk/Admin
  * @author     Breno Alves
  */
 class Monk_Admin {
