@@ -103,19 +103,57 @@ class Monk_Admin {
 	/**
 	 * Function to register the settings page of the plugin
 	 *
-	 * @since 	1.0.0
+	 * @since    1.0.0
 	 */
 	public function register_monk_settings() {
-		add_settings_section(
-		'monk_settings_section',				 //ID
-		'Monk',									 //Title
-		array( $this, 'monk_settings_fields' ),	 //Callback function
-		'general'								 //Page into witch this options will be added
+		add_menu_page(
+			'Monk',
+			'Monk Settings',
+			'read',
+			'monk-settings',
+			array( $this, 'monk_settings_fields' ),
+			'dashicons-translation',
+			3
 		);
 	}
 
+	/**
+	 * Function to handle the options in the settings page of the plugin
+	 *
+	 * @since    1.0.0
+	*/
 	public function monk_settings_fields() {
-		echo "<p>Description</p>";
-	}
+		if ( !current_user_can( 'read' ) ) {
+			wp_die( 'Not Allowed' );
+		}
 
+		$monk_option_name    = 'language_selector';
+		$hidden_field_name   = 'submit_language';
+		$data_option_field   = 'language_selector';
+		$language_value      = get_option( $monk_option_name );
+
+		if ( isset( $POST[ $hidden_field_name ] ) && $POST[ $hidden_field_name ] == 'Y' ) {
+			$language_value  = $POST[ $data_option_field ];
+			update_option( $hidden_field_name, $language_value );
+		}
+?>
+
+	<form name="default-language" method="POST" action="">
+		<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
+		<h3><?php _e( 'Select the dafault language' ); ?></h3>
+		<select name="<?php echo $data_option_field; ?>">
+			<option value="portuguese" <?php selected( $language_value, 'portuguese' ); ?>>Portuguese</option>
+			<option value="english"    <?php selected( $language_value, 'english'    ); ?>>English</option>
+			<option value="spanish"    <?php selected( $language_value, 'spanish'    ); ?>>Spanish</option>
+			<option value="french"     <?php selected( $language_value, 'french'     ); ?>>French</option>
+		</select>
+	</form>
+
+	<p class="submit">
+		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Use language') ?>" />
+	</p>
+
+<?php
+
+	}
 }
