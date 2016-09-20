@@ -150,6 +150,11 @@ class Monk_Admin {
 		
 	}
 
+	/**
+	 * Function that handles the main language selector, used in monk_settings_fields()
+	 *
+	 * @since    1.0.0
+	*/
 	public function language_select() {
 	   ?>
 	        <select name="language-select">
