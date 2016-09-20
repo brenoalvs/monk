@@ -75,6 +75,7 @@ class Monk {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_widgets_hook();
 
 	}
 
@@ -119,6 +120,11 @@ class Monk {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-monk-public.php';
 
+		/**
+		 * The class responsible for defining all actions that occur in the widgets-area
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
+
 		$this->loader = new Monk_Loader();
 
 	}
@@ -150,7 +156,7 @@ class Monk {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
-
+		
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_monk_settings' );
@@ -167,9 +173,23 @@ class Monk {
 	private function define_public_hooks() {
 
 		$plugin_public = new Monk_Public( $this->get_plugin_name(), $this->get_version() );
-
+		
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the widgets
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_widgets_hook() {
+
+		$plugin_widget = new Monk_Language_Switcher();
+
+		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widgets');
 
 	}
 
