@@ -126,7 +126,6 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
 
 		$this->loader = new Monk_Loader();
-
 	}
 
 	/**
