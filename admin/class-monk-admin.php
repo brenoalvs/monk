@@ -107,9 +107,9 @@ class Monk_Admin {
 	 */
 	public function register_monk_settings() {
 		add_menu_page(
+			'Monk Setings',
 			'Monk',
-			'Monk Settings',
-			'read',
+			'manage_options',
 			'monk-settings',
 			array( $this, 'monk_settings_fields' ),
 			'dashicons-translation',
@@ -118,42 +118,46 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to handle the options in the settings page of the plugin
+	 * Function to create the option fields in the settings page, each field will have its unique function
 	 *
 	 * @since    1.0.0
 	*/
 	public function monk_settings_fields() {
-		if ( !current_user_can( 'read' ) ) {
-			wp_die( 'Not Allowed' );
-		}
+		add_settings_section( 'monk-general-options', 'General options', null, 'monk-settings' );
+		add_settings_field(
+			'language-select',
+			'Select your language',
+			array( $this, 'language_select' ),
+			'monk-settings',
+			'monk-general-options'
+		);
+		register_setting( 'language', 'language-select' );
+		
+		?>		
+		
+		<div class="wrap">
+			<h2>Monk</h2>
+			<form method="POST" action="options.php">
+			<?php
+				settings_fields( 'monk_general_options' );
+				do_settings_sections( 'monk-settings' );
+				submit_button();
+			?>
+			</form>
+		</div>
+		
+		<?php
+		
+	}
 
-		$monk_option_name    = 'language_selector';
-		$hidden_field_name   = 'submit_language';
-		$data_option_field   = 'language_selector';
-		$language_value      = get_option( $monk_option_name );
-
-		if ( isset( $POST[ $hidden_field_name ] ) && $POST[ $hidden_field_name ] == 'Y' ) {
-			$language_value  = $POST[ $data_option_field ];
-			update_option( $hidden_field_name, $language_value );
-		}
-?>
-
-	<form name="default-language" method="POST" action="">
-		<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
-		<h3><?php _e( 'Select the dafault language' ); ?></h3>
-		<select name="<?php echo $data_option_field; ?>">
-			<option value="portuguese" <?php selected( $language_value, 'portuguese' ); ?>>Portuguese</option>
-			<option value="english"    <?php selected( $language_value, 'english'    ); ?>>English</option>
-			<option value="spanish"    <?php selected( $language_value, 'spanish'    ); ?>>Spanish</option>
-			<option value="french"     <?php selected( $language_value, 'french'     ); ?>>French</option>
-		</select>
-	</form>
-
-	<p class="submit">
-		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Use language') ?>" />
-	</p>
-
-<?php
-
+	public function language_select() {
+	   ?>
+	        <select name="language-select">
+	          <option value="portuguese" <?php selected( get_option( 'language-select' ), "portuguese" ); ?>>Portuguese</option>
+	          <option value="english" <?php selected( get_option( 'language-select' ), "english" ); ?>>English</option>
+	          <option value="spanish" <?php selected( get_option( 'language-select' ), "spanish" ); ?>>Spanish</option>
+	          <option value="french" <?php selected( get_option( 'language-select' ), "french" ); ?>>French</option>
+	        </select>
+	   <?php
 	}
 }
