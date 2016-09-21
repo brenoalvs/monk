@@ -42,7 +42,9 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance
 	 */
 	public function widget( $args, $instance ) {
+
 		// outputs the content of the widget
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
 
 	/**
@@ -53,24 +55,6 @@ class Monk_Language_Switcher extends WP_Widget {
 	public function form( $instance ) {
 
 		// outputs the options form on admin
-		$languages_nat = array(
-			'portuguese'	=> 'Português',
-			'english'		=> 'English',
-			'spanish'		=> 'Español',
-			'french'		=> 'Français',
-		);
-		$languages_eng = array(
-			'portuguese'	=> 'Portuguese',
-			'english'		=> 'English',
-			'spanish'		=> 'Spanish',
-			'french'		=> 'French',
-		);
-		$flags = array(
-			'portuguese'	=> 'Portuguese',
-			'english'		=> 'English',
-			'spanish'		=> 'Spanish',
-			'french'		=> 'French',
-		);
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/admin-monk-language-switcher.php';
 	}
 
