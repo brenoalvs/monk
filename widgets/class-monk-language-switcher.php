@@ -80,21 +80,35 @@ class Monk_Language_Switcher extends WP_Widget {
 	}
 
 	/**
-	 * Register languages and flags
+	 * Enqueue scripts and styles on admin-view
 	 */
-	public function widgets_enqueue_styles() {
+	public function admin_widgets_enqueue_scripts() {
 		
 		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Monk_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
+		 * This function does enqueue .css files.
 		 */
-		wp_enqueue_style( 'Monk_Language_Switcher_Style', plugin_dir_url(__FILE__) . 'css/admin-language-switcher-style.css', array(), '1.0.0', 'all' );
+		wp_enqueue_style( 'Admin_Monk_Language_Switcher_Style', plugin_dir_url(__FILE__) . 'css/admin-language-switcher-style.css', array(), '1.0.0', 'all' );
 	}
+
+	/**
+	 * Enqueue scripts and styles on public-view
+	 */
+	public function public_widgets_enqueue_scripts() {
+		
+		/**
+		 * This function does enqueue jquery-ui .css files.
+		 */
+		wp_enqueue_style( 'Jquery_UI_Style', plugin_dir_url(__FILE__) . 'css/jquery-ui.min.css', array(), '1.0.0', 'all' );
+
+		/**
+		 * This function does enqueue .css files.
+		 */
+		wp_enqueue_style( 'Public_Monk_Language_Switcher_Style', plugin_dir_url(__FILE__) . 'css/public-language-switcher-style.css', array(), '1.0.0', 'all' );
+
+		/**
+		 * This function does enqueue .js files.
+		 */
+		wp_enqueue_script( 'Monk_Language_Switcher_Script', plugin_dir_url(__FILE__) . 'js/public-language-switcher-script.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), '1.0.0', tru );
+	}
+
 }

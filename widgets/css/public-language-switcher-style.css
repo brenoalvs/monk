@@ -1,0 +1,18 @@
+* {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+			box-sizing: border-box;
+}
+
+span.ui-selectmenu-text {
+	display: inline;
+}
+
+span.ui-selectmenu-button {
+	padding: 3px;
+}
+
+#widget-language-select {
+	border-radius: 5px;
+    width: 150px;
+}

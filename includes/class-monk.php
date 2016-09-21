@@ -189,7 +189,8 @@ class Monk {
 		$plugin_widget = new Monk_Language_Switcher();
 
 		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widgets');
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_widget, 'widgets_enqueue_styles');
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_widget, 'admin_widgets_enqueue_scripts');
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_widget, 'public_widgets_enqueue_scripts');
 
 	}
 

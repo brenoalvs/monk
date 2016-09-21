@@ -18,7 +18,7 @@ $languages_flag = array(
 	'french'		=> 'http://www.flaticon.com/free-icon/france_206657',
 );
 ?>
-<select>
+<select id="widget-language-select">
 <?php foreach ($languages_eng as $key => $value) : ?>
 	<option><img src="<?php echo $languages_flag[$key]; ?>"><?php echo $value; ?></option>
 <?php endforeach; ?>
