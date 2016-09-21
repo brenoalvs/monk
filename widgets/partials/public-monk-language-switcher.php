@@ -12,14 +12,16 @@ $languages_eng = array(
 	'french'		=> 'French',
 );
 $languages_flag = array(
-	'portuguese'	=> 'http://www.flaticon.com/free-icon/brazil_206597',
-	'english'		=> 'http://www.flaticon.com/free-icon/united-states_206626',
-	'spanish'		=> 'http://www.flaticon.com/free-icon/spain_206724',
-	'french'		=> 'http://www.flaticon.com/free-icon/france_206657',
+	'portuguese'	=> 'http://image.flaticon.com/icons/svg/206/206597.svg',
+	'english'		=> 'http://image.flaticon.com/icons/svg/206/206626.svg',
+	'spanish'		=> 'http://image.flaticon.com/icons/svg/206/206724.svg',
+	'french'		=> 'http://image.flaticon.com/icons/svg/206/206657.svg',
 );
 ?>
-<select id="widget-language-select">
-<?php foreach ($languages_eng as $key => $value) : ?>
-	<option><img src="<?php echo $languages_flag[$key]; ?>"><?php echo $value; ?></option>
-<?php endforeach; ?>
-</select>
+<form name="">
+	<select id="widget-language-select">
+	<?php foreach ($languages_eng as $key => $value) : ?>
+		<option data-class="<?php echo esc_attr( 'widget-option' ); ?>" data-style="background-image: url( '<?php echo $languages_flag[$key]; ?>' );"><?php echo _e( $value ); ?></option>
+	<?php endforeach; ?>
+	</select>
+</form>
