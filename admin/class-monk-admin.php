@@ -105,64 +105,63 @@ class Monk_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function register_monk_settings() {
+	public function monk_add_menu_page() {
 		add_menu_page(
-			'Monk Setings',
+			'Monk Settings',
 			'Monk',
 			'manage_options',
-			'monk-settings',
-			array( $this, 'monk_settings_fields' ),
+			'monk',
+			array( $this, 'monk_options' ),
 			'dashicons-translation',
-			3
+			3 );
+	}
+
+	public function monk_options_init() {
+		register_setting( 'generalOptions', 'monk_language' );
+		add_settings_section(
+			'monk_general_options',
+			'General options',
+			array( $this, 'monk_settings_section_render'),
+			'generalOptions'
+		);
+		add_settings_field(
+			'monk_language_field',
+			'Default language',
+			array( $this, 'language_select_render' ),
+			'generalOptions',
+			'monk_general_options'
 		);
 	}
 
-	/**
-	 * Function to create the option fields in the settings page, each field will have its unique function
-	 *
-	 * @since    1.0.0
-	*/
-	public function monk_settings_fields() {
-		add_settings_section( 'monk-general-options', 'General options', null, 'monk-settings' );
-		add_settings_field(
-			'language-select',
-			'Select your language',
-			array( $this, 'language_select' ),
-			'monk-settings',
-			'monk-general-options'
-		);
-		register_setting( 'language', 'language-select' );
-		
-		?>		
-		
-		<div class="wrap">
+	public function language_select_render() {
+		$options = get_option( 'monk_language' );
+		?>
+		<select name='monk_language[language_select]'>
+			<option value='portuguese'<?php selected( $options['language_select'], 'portuguese' ); ?>>Portuguese</option>
+			<option value='english'<?php selected( $options['language_select'], 'english' ); ?>>English</option>
+			<option value='spanish'<?php selected( $options['language_select'], 'spanish' ); ?>>Spanish</option>
+			<option value='french'<?php selected( $options['language_select'], 'french' ); ?>>French</option>
+		</select>
+		<?php
+	}
+
+	public function monk_settings_section_render() {
+		echo _e( 'Adjust all you want', 'monk');
+	}
+
+	public function monk_options() {
+		?>
+		<div class='wrap'>
 			<h2>Monk</h2>
-			<form method="POST" action="options.php">
-			<?php
-				settings_fields( 'monk_general_options' );
-				do_settings_sections( 'monk-settings' );
+			<form action='options.php' method='POST'>
+				<?php
+				settings_fields( 'generalOptions' );
+				do_settings_sections( 'generalOptions' );
 				submit_button();
-			?>
+				delete_option( 'language_select' );
+				?>
 			</form>
 		</div>
-		
 		<?php
-		
-	}
-
-	/**
-	 * Function that handles the main language selector, used in monk_settings_fields()
-	 *
-	 * @since    1.0.0
-	*/
-	public function language_select() {
-	   ?>
-	        <select name="language-select">
-	          <option value="portuguese" <?php selected( get_option( 'language-select' ), "portuguese" ); ?>>Portuguese</option>
-	          <option value="english" <?php selected( get_option( 'language-select' ), "english" ); ?>>English</option>
-	          <option value="spanish" <?php selected( get_option( 'language-select' ), "spanish" ); ?>>Spanish</option>
-	          <option value="french" <?php selected( get_option( 'language-select' ), "french" ); ?>>French</option>
-	        </select>
-	   <?php
 	}
 }
