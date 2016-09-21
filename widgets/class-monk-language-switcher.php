@@ -29,10 +29,10 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function __construct( $classname, $description ) {
 		$widget_ops = array( 
-			'classname' => 'Monk_Language_Switcher',
-			'description' 	=> 'The Monk Language Switcher is the best language selector widget',
+			'classname'		=> __( 'Monk_Language_Switcher', 'text_domain' ),
+			'description'	=> __( 'The Monk Language Switcher is the best language selector widget', 'text_domain' ),
 		);
-		parent::__construct( 'Monk_Language_Switcher', 'Monk Language Switcher', $widget_ops );
+		parent::__construct( 'Monk_Language_Switcher', __( 'Monk Language Switcher', 'text_domain' ), $widget_ops );
 	}
 
 	/**
@@ -51,6 +51,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance The widget options
 	 */
 	public function form( $instance ) {
+
 		// outputs the options form on admin
 		$languages_nat = array(
 			'portuguese'	=> 'Português',
@@ -87,10 +88,29 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * Register widget
 	 */
 	public function register_widgets() {
+
+		/**
+		 * Register widget
+		 */
 		register_widget( 'Monk_Language_Switcher' );
 	}
 
 	/**
 	 * Register languages and flags
 	 */
+	public function widgets_enqueue_styles() {
+		
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Plugin_Name_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Monk_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
+		wp_enqueue_style( 'Monk_Language_Switcher_Style', plugin_dir_url(__FILE__) . 'css/admin-language-switcher-style.css', array(), '1.0.0', 'all' );
+	}
 }
