@@ -185,7 +185,7 @@ class Monk {
 	 * Register all the widgets
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   public
 	 */
 	public function register_widgets() {
 
