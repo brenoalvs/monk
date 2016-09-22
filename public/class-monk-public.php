@@ -75,6 +75,16 @@ class Monk_Public {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/monk-public.css', array(), $this->version, 'all' );
 
+		/**
+		 * This function does enqueue jquery-ui .css files.
+		 */
+		wp_enqueue_style( 'jquery_ui_style', plugin_dir_url( '' ) . 'monk/widgets/css/jquery-ui.min.css', array(), '1.0.0', 'all' );
+
+		/**
+		 * This function does enqueue .css files.
+		 */
+		wp_enqueue_style( 'public_monk_language_switcher_style', plugin_dir_url( '' ) . 'monk/widgets/css/public-language-switcher-style.css', array(), '1.0.0', 'all' );
+
 	}
 
 	/**
@@ -97,6 +107,11 @@ class Monk_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/monk-public.js', array( 'jquery' ), $this->version, false );
+
+		/**
+		 * This function does enqueue .js files.
+		 */
+		wp_enqueue_script( 'monk_language_switcher_script', plugin_dir_url( '' ) . 'monk/widgets/js/public-language-switcher-script.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), '1.0.0', true );
 
 	}
 

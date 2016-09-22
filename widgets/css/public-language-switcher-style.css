@@ -26,6 +26,10 @@ option.widget-option {
     width: 150px;
 }
 
+.ui-menu .ui-menu-item {
+	border-bottom: 1px solid lightgray;
+}
+
 .ui-menu .ui-icon {
     float: right;
     right: 10px;

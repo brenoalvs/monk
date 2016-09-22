@@ -75,8 +75,7 @@ class Monk {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->define_widgets_hook();
-
+		
 	}
 
 	/**
@@ -88,6 +87,7 @@ class Monk {
 	 * - Monk_i18n. Defines internationalization functionality.
 	 * - Monk_Admin. Defines all hooks for the admin area.
 	 * - Monk_Public. Defines all hooks for the public side of the site.
+	 * - Monk_Language_Switcher. Defines all functions related to widgets.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -126,6 +126,9 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
 
 		$this->loader = new Monk_Loader();
+
+		$this->loader->add_action( 'widgets_init', $this, 'register_widgets');
+
 	}
 
 	/**
@@ -155,7 +158,7 @@ class Monk {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
-		
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_monk_settings' );
@@ -172,26 +175,24 @@ class Monk {
 	private function define_public_hooks() {
 
 		$plugin_public = new Monk_Public( $this->get_plugin_name(), $this->get_version() );
-		
+
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 	}
 
 	/**
-	 * Register all of the hooks related to the widgets
+	 * Register all the widgets
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   public
 	 */
-	private function define_widgets_hook() {
+	public function register_widgets() {
 
-		$plugin_widget = new Monk_Language_Switcher();
-
-		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widgets');
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_widget, 'admin_widgets_enqueue_scripts');
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_widget, 'public_widgets_enqueue_scripts');
-
+		/**
+		 * Register the Monk_Language_Switcher widget
+		 */
+		register_widget( 'Monk_Language_Switcher' );
 	}
 
 	/**

@@ -1,9 +1,9 @@
 (function( $ ) {
 
 	/**
-	 * All of the code for your Widget JavaScript source
+	 * Function for include icon on select menu.
 	 */
-	 $.widget( 'custom.iconselectmenu', $.ui.selectmenu, {
+	$.widget( 'custom.iconselectmenu', $.ui.selectmenu, {
 	 	_renderItem: function( ul, item ) {
 	 		var li = $( '<li>' ),
 	 		wrapper = $( '<div>', { text: item.label } );
@@ -20,7 +20,10 @@
 
 	 		return li.append( wrapper ).appendTo( ul );
 	 	}
-	 });
+	});
 
+	/**
+	 * Defines #widget-language-select as jquery-ui iconselectmenu
+	 */
 	$( '#widget-language-select' ).iconselectmenu().iconselectmenu( 'menuWidget' ).addClass( 'ui-menu-icons avatar' );
 })( jQuery );
