@@ -72,7 +72,6 @@ class Monk_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/monk-public.css', array(), $this->version, 'all' );
 
 		/**
@@ -104,7 +103,6 @@ class Monk_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/monk-public.js', array( 'jquery' ), $this->version, false );
 
 		/**
@@ -112,5 +110,4 @@ class Monk_Public {
 		 */
 		wp_enqueue_script( 'monk_language_switcher_script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), '1.0.0', true );
 	}
-
 }
