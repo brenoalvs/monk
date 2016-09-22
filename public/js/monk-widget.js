@@ -23,7 +23,12 @@
 	});
 
 	/**
-	 * Defines #widget-language-select as jquery-ui iconselectmenu
+	 * Defines #widget-language-select as jquery-ui iconselectmenu and create form submit event on change #widget-language-select
+	 * to change URL
 	 */
-	$( '#widget-language-select' ).iconselectmenu().iconselectmenu( 'menuWidget' ).addClass( 'ui-menu-icons avatar' );
+	$( '#widget-language-select' ).iconselectmenu({
+  		change: function( event, ui ) {
+  			$( '#form-language' ).submit();
+  		}
+	}).iconselectmenu( 'menuWidget' ).addClass( 'ui-menu-icons avatar' );
 })( jQuery );

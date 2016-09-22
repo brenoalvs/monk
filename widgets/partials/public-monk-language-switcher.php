@@ -29,17 +29,22 @@ $languages_eng = array(
 );
 
 $languages_flag = array(
-	'portuguese' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
-	'english'    => 'http://image.flaticon.com/icons/svg/206/206626.svg',
-	'spanish'    => 'http://image.flaticon.com/icons/svg/206/206724.svg',
-	'french'     => 'http://image.flaticon.com/icons/svg/206/206657.svg',
+	'Portuguese' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
+	'English'    => 'http://image.flaticon.com/icons/svg/206/206626.svg',
+	'Spanish'    => 'http://image.flaticon.com/icons/svg/206/206724.svg',
+	'French'     => 'http://image.flaticon.com/icons/svg/206/206657.svg',
 );
+
+$select_value = $_GET['lang'];
 
 ?>
 <form name="form-language" id="form-language" method="get" action="<?php home_url(); ?>">
-	<select id="widget-language-select" name="lang" value="<?php echo _e( $value, 'monk' ); ?>">
+	<select id="widget-language-select" name="lang" value="<?php echo $select_value; ?>">
+		<option data-class="widget-option" data-style="background-image: url( '<?php echo $languages_flag[$select_value]; ?>' );" value="<?php echo esc_attr_e( $select_value, 'monk' ); ?>"><?php echo _e( $select_value, 'monk' ); ?></option>
 	<?php foreach ( $languages_eng as $key => $value ) : ?>
-		<option data-class="widget-option" data-style="background-image: url( '<?php echo $languages_flag[$key]; ?>' );"><?php echo _e( $value, 'monk' ); ?></option>
+		<?php if ( strcmp( $value, $select_value ) != 0 ) : ?>
+			<option data-class="widget-option" data-style="background-image: url( '<?php echo $languages_flag[$value]; ?>' );" value="<?php echo esc_attr_e( $value, 'monk' ); ?>"><?php echo _e( $value, 'monk' ); ?></option>
+		<?php endif; ?>
 	<?php endforeach; ?>
 	</select>
 </form>
