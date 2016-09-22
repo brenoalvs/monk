@@ -31,7 +31,7 @@ class Monk_Language_Switcher extends WP_Widget {
 			'classname'		=> __( 'Monk_Language_Switcher', 'text_domain' ),
 			'description'	=> __( 'The Monk Language Switcher is the best language selector widget', 'text_domain' ),
 		);
-		parent::__construct( 'Monk_Language_Switcher', 'Monk Language Switcher', $widget_ops );
+		parent::__construct( 'monk_language_switcher', 'Monk Language Switcher', $widget_ops );
 	}
 
 	/**
