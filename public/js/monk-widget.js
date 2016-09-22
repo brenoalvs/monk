@@ -26,9 +26,9 @@
 	 * Defines #widget-language-select as jquery-ui iconselectmenu and create form submit event on change #widget-language-select
 	 * to change URL
 	 */
-	$( '#widget-language-select' ).iconselectmenu({
+	$( '#monk-widget-language-selector' ).iconselectmenu({
   		change: function( event, ui ) {
-  			$( '#form-language' ).submit();
+  			$( '#monk-form-language' ).submit();
   		}
 	}).iconselectmenu( 'menuWidget' ).addClass( 'ui-menu-icons avatar' );
 })( jQuery );
