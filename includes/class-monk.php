@@ -75,7 +75,6 @@ class Monk {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->define_widgets_hook();
 
 	}
 
@@ -88,6 +87,7 @@ class Monk {
 	 * - Monk_i18n. Defines internationalization functionality.
 	 * - Monk_Admin. Defines all hooks for the admin area.
 	 * - Monk_Public. Defines all hooks for the public side of the site.
+	 * - Monk_Language_Switcher. Defines all functions relatef to widgets.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -126,6 +126,8 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
 
 		$this->loader = new Monk_Loader();
+
+		$this->loader->add_action( 'widgets_init', $this, 'register_widgets');
 
 	}
 
@@ -180,17 +182,17 @@ class Monk {
 	}
 
 	/**
-	 * Register all of the hooks related to the widgets
+	 * Register all the widgets
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_widgets_hook() {
+	public function register_widgets() {
 
-		$plugin_widget = new Monk_Language_Switcher();
-
-		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widgets');
-
+		/**
+		 * Register the Monk_Language_Switcher widget
+		 */
+		register_widget( 'Monk_Language_Switcher' );
 	}
 
 	/**

@@ -13,7 +13,9 @@
 /**
  * Monk Language Switcher.
  *
- * Defines the class name and description.
+ * Defines the class name, description, 
+ * outputs the content of the widget, options form on admin
+ * and processes widget options to be saved.
  *
  * @package    Monk
  * @subpackage Monk/Widgets
@@ -22,15 +24,12 @@
 class Monk_Language_Switcher extends WP_Widget {
 
 	/**
-	 * Sets up the widgets name etc
-	 *
-	 * @param array $classname
-	 * @param array $description
+	 * Sets up the widgets classname and description.
 	 */
-	public function __construct( $classname, $description ) {
+	public function __construct() {
 		$widget_ops = array( 
-			'classname' => 'Monk_Language_Switcher',
-			'description' 	=> 'The Monk Language Switcher is the best language selector widget',
+			'classname'		=> __( 'Monk_Language_Switcher', 'text_domain' ),
+			'description'	=> __( 'The Monk Language Switcher is the best language selector widget', 'text_domain' ),
 		);
 		parent::__construct( 'Monk_Language_Switcher', 'Monk Language Switcher', $widget_ops );
 	}
@@ -64,10 +63,4 @@ class Monk_Language_Switcher extends WP_Widget {
 		// processes widget options to be saved
 	}
 
-	/**
-	 * Register widget
-	 */
-	public function register_widgets() {
-		register_widget( 'Monk_Language_Switcher' );
-	}
 }
