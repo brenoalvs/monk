@@ -6,8 +6,12 @@
 	margin-bottom: 15px;
 }
 
+.monk-label-block {
+	display: block;
+}
+
 .monk-widgets-form .monk-input-checkbox,
 .monk-widgets-form .monk-input-radio {
-	float: left;
+	margin-bottom: 5px;
 	margin-right: 10px;
 }
