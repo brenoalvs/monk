@@ -35,16 +35,25 @@ $languages_flag = array(
 	'fr'    => 'http://image.flaticon.com/icons/svg/206/206657.svg',
 );
 
+$select_value = $_GET['lang'];
+$check = ! empty( $instance['flag'] ) ? '1' : '0';
+
+function insert_flags( $checkbox, $array, $i ) {
+	if ( $checkbox ) {
+		return 'data-style="background-image: url( ' . $array[$i] . ' );"';
+	} else {
+		return 'data-style="background-image: none;';
+	}
+}; 
 ?>
 <form name="form-language" id="monk-form-language" method="get" action="<?php home_url(); ?>">
 	<select id="monk-widget-language-selector" name="lang" value="<?php echo $select_value; ?>">
-		<?php if ( isset( $_GET['lang'] ) ) : ?>
-			<?php $select_value = $_GET['lang']; ?>
-			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$select_value]; ?>' );" value="<?php echo esc_attr_e( $languages_eng[$select_value], 'monk' ); ?>"><?php echo _e( $languages_eng[$select_value], 'monk' ); ?></option>
+		<?php if ( isset( $select_value ) ) : ?>
+			<option data-class="monk-widget-option" <?php echo insert_flags( $check, $languages_flag, $select_value ); ?> value="<?php echo esc_attr_e( $languages_eng[$select_value], 'monk' ); ?>"><?php echo _e( $languages_eng[$select_value], 'monk' ); ?></option>
 		<?php endif; ?>
 	<?php foreach ( $languages_eng as $key => $value ) : ?>
 		<?php if ( strcmp( $key, $select_value ) != 0 ) : ?>
-			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$key]; ?>' );" value="<?php echo esc_attr_e( $key, 'monk' ); ?>"><?php echo _e( $value, 'monk' ); ?></option>
+			<option data-class="monk-widget-option" <?php echo insert_flags( $check, $languages_flag, $key ); ?> value="<?php echo esc_attr_e( $key, 'monk' ); ?>"><?php echo _e( $value, 'monk' ); ?></option>
 		<?php endif; ?>
 	<?php endforeach; ?>
 	</select>
