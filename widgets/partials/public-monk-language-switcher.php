@@ -15,35 +15,36 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 $languages_nat = array(
-	'portuguese' => 'Português',
-	'english'    => 'English',
-	'spanish'    => 'Español',
-	'french'     => 'Français',
+	'pt-br' => 'Português',
+	'en'    => 'English',
+	'es'    => 'Español',
+	'fr'    => 'Français',
 );
 
 $languages_eng = array(
-	'portuguese' => 'Portuguese',
-	'english'    => 'English',
-	'spanish'    => 'Spanish',
-	'french'     => 'French',
+	'pt-br' => 'Portuguese',
+	'en'    => 'English',
+	'es'    => 'Spanish',
+	'fr'    => 'French',
 );
 
 $languages_flag = array(
-	'Portuguese' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
-	'English'    => 'http://image.flaticon.com/icons/svg/206/206626.svg',
-	'Spanish'    => 'http://image.flaticon.com/icons/svg/206/206724.svg',
-	'French'     => 'http://image.flaticon.com/icons/svg/206/206657.svg',
+	'pt-br' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
+	'en'    => 'http://image.flaticon.com/icons/svg/206/206626.svg',
+	'es'    => 'http://image.flaticon.com/icons/svg/206/206724.svg',
+	'fr'    => 'http://image.flaticon.com/icons/svg/206/206657.svg',
 );
-
-$select_value = $_GET['lang'];
 
 ?>
 <form name="form-language" id="monk-form-language" method="get" action="<?php home_url(); ?>">
 	<select id="monk-widget-language-selector" name="lang" value="<?php echo $select_value; ?>">
-		<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$select_value]; ?>' );" value="<?php echo esc_attr_e( $select_value, 'monk' ); ?>"><?php echo _e( $select_value, 'monk' ); ?></option>
+		<?php if ( isset( $_GET['lang'] ) ) : ?>
+			<?php $select_value = $_GET['lang']; ?>
+			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$select_value]; ?>' );" value="<?php echo esc_attr_e( $languages_eng[$select_value], 'monk' ); ?>"><?php echo _e( $languages_eng[$select_value], 'monk' ); ?></option>
+		<?php endif; ?>
 	<?php foreach ( $languages_eng as $key => $value ) : ?>
-		<?php if ( strcmp( $value, $select_value ) != 0 ) : ?>
-			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$value]; ?>' );" value="<?php echo esc_attr_e( $value, 'monk' ); ?>"><?php echo _e( $value, 'monk' ); ?></option>
+		<?php if ( strcmp( $key, $select_value ) != 0 ) : ?>
+			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$key]; ?>' );" value="<?php echo esc_attr_e( $key, 'monk' ); ?>"><?php echo _e( $value, 'monk' ); ?></option>
 		<?php endif; ?>
 	<?php endforeach; ?>
 	</select>
