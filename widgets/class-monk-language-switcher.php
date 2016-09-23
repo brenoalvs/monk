@@ -62,6 +62,12 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $old_instance The previous options
 	 */
 	public function update( $new_instance, $old_instance ) {
-		// process widget options to be saved
+		$instance                     = $old_instance;
+		$instance['title']            = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['flag']        = ! empty( $new_instance['flag'] ) ? 1 : 0;
+		$instance['name']        = ! empty( $new_instance['name'] ) ? 1 : 0;
+		$instance['lang-native'] = ! empty( $new_instance['lang-native'] ) ? 1 : 0;
+
+		return $instance;
 	}
 }
