@@ -73,8 +73,12 @@ class Monk_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->monk, plugin_dir_url(__FILE__) . 'css/monk-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->monk, plugin_dir_url( __FILE__ ) . 'css/monk-admin.css', array(), $this->version, 'all' );
 
+		/**
+		 * This function does enqueue widget .css files in admin side.
+		 */
+		wp_enqueue_style( 'monk-widgets', plugin_dir_url( __FILE__ ) . 'css/monk-widgets.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -97,7 +101,6 @@ class Monk_Admin {
 		 */
 
 		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
-
 	}
 
 	/**
