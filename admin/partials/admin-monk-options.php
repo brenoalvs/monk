@@ -10,12 +10,12 @@
  * @subpackage Monk/Admin/Partials
  */
 ?>
-	<div class='wrap'>
+	<div class="wrap">
 		<h2>Monk</h2>
 		<form action="options.php" method="POST">
 			<?php
-			settings_fields( 'generalOptions' );
-			do_settings_sections( 'generalOptions' );
+			settings_fields( 'general_options' );
+			do_settings_sections( 'general_options' );
 			submit_button();
 			?>
 		</form>

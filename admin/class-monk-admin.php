@@ -125,18 +125,18 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function monk_options_init() {
-		register_setting( 'generalOptions', 'monk_language' );
+		register_setting( 'general_options', 'monk_language' );
 		add_settings_section(
 			'monk_general_options',
 			'General options',
 			array( $this, 'monk_settings_section_render'),
-			'generalOptions'
+			'general_options'
 		);
 		add_settings_field(
 			'monk_language_field',
 			'Default language',
 			array( $this, 'language_select_render' ),
-			'generalOptions',
+			'general_options',
 			'monk_general_options'
 		);
 	}
@@ -154,7 +154,7 @@ class Monk_Admin {
 	 * This is the callback for the monk_geeneral_options section
 	*/
 	public function monk_settings_section_render() {
-		echo _e( 'Adjust the way you want', 'monk');
+		_e( 'Adjust the way you want', 'monk');
 	}
 
 	/**
