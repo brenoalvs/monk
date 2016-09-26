@@ -40,11 +40,11 @@ $languages_flag = array(
 	<select id="monk-widget-language-selector" name="lang" value="<?php echo $select_value; ?>">
 		<?php if ( isset( $_GET['lang'] ) ) : ?>
 			<?php $select_value = $_GET['lang']; ?>
-			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$select_value]; ?>' );" value="<?php echo esc_attr_e( $languages_eng[$select_value], 'monk' ); ?>"><?php echo _e( $languages_eng[$select_value], 'monk' ); ?></option>
+			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$select_value]; ?>' );" value="<?php echo esc_attr_e( $languages_eng[$select_value], 'monk' ); ?>"><?php echo esc_html_e( $languages_eng[$select_value], 'monk' ); ?></option>
 		<?php endif; ?>
 	<?php foreach ( $languages_eng as $key => $value ) : ?>
 		<?php if ( strcmp( $key, $select_value ) != 0 ) : ?>
-			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$key]; ?>' );" value="<?php echo esc_attr_e( $key, 'monk' ); ?>"><?php echo _e( $value, 'monk' ); ?></option>
+			<option data-class="monk-widget-option" data-style="background-image: url( '<?php echo $languages_flag[$key]; ?>' );" value="<?php echo esc_attr_e( $key, 'monk' ); ?>"><?php echo esc_html_e( $value, 'monk' ); ?></option>
 		<?php endif; ?>
 	<?php endforeach; ?>
 	</select>

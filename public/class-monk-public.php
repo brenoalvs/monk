@@ -77,12 +77,12 @@ class Monk_Public {
 		/**
 		 * This function does enqueue jquery-ui .css files in public side.
 		 */
-		wp_enqueue_style( 'jquery_ui_style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.min.css', array(), '1.0.0', 'all' );
+		wp_enqueue_style( 'jquery-ui-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.min.css', array(), $this->version, 'all' );
 
 		/**
 		 * This function does enqueue monk widget .css files in public side.
 		 */
-		wp_enqueue_style( 'public_monk_language_switcher_style', plugin_dir_url( __FILE__ ) . 'css/monk-widget.css', array(), '1.0.0', 'all' );
+		wp_enqueue_style( 'public-monk-language-switcher-style', plugin_dir_url( __FILE__ ) . 'css/monk-widget.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -108,6 +108,6 @@ class Monk_Public {
 		/**
 		 * This function does enqueue monk widget .js files in public side.
 		 */
-		wp_enqueue_script( 'monk_language_switcher_script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), '1.0.0', true );
+		wp_enqueue_script( 'monk-language-switcher-script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), $this->version, true );
 	}
 }
