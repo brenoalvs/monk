@@ -1,0 +1,40 @@
+/**
+ * All of the CSS on public side of the Monk_Language_Switcher widget should be
+ * included in this file.
+ */
+.ui-selectmenu-text {
+	display: inline;
+	margin: 0 25px;
+}
+
+.ui-selectmenu-button {
+	padding: 3px;
+}
+
+.monk-widget-option {
+	background-repeat: no-repeat !important;
+	padding-left: 20px;
+}
+.monk-widget-option .ui-icon {
+	background-position: left top;
+}
+
+#monk-widget-language-selector {
+	border-radius: 5px;
+    width: 150px;
+}
+
+.ui-menu .ui-menu-item {
+	border-bottom: 1px solid lightgray;
+	padding-left: 10px;
+}
+
+.ui-menu .ui-icon {
+    float: right;
+    right: 10px;
+    top: 5px;
+    left: inherit;
+    bottom: inherit;
+    margin: 0;
+    position: relative;
+}

@@ -43,7 +43,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance
 	 */
 	public function widget( $args, $instance ) {
-		// outputs the content of the widget
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
 
 	/**

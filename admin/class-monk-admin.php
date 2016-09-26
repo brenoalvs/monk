@@ -76,7 +76,7 @@ class Monk_Admin {
 		wp_enqueue_style( $this->monk, plugin_dir_url( __FILE__ ) . 'css/monk-admin.css', array(), $this->version, 'all' );
 
 		/**
-		 * This function does enqueue widget .css files in admin side.
+		 * This function does enqueue monk widget .css files in admin side.
 		 */
 		wp_enqueue_style( 'monk-widgets', plugin_dir_url( __FILE__ ) . 'css/monk-widgets.css', array(), $this->version, 'all' );
 	}

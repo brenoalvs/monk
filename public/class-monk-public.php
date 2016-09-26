@@ -72,8 +72,17 @@ class Monk_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/monk-public.css', array(), $this->version, 'all' );
+
+		/**
+		 * This function does enqueue jquery-ui .css files in public side.
+		 */
+		wp_enqueue_style( 'jquery-ui-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.min.css', array(), $this->version, 'all' );
+
+		/**
+		 * This function does enqueue monk widget .css files in public side.
+		 */
+		wp_enqueue_style( 'public-monk-language-switcher-style', plugin_dir_url( __FILE__ ) . 'css/monk-widget.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -94,8 +103,11 @@ class Monk_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/monk-public.js', array( 'jquery' ), $this->version, false );
-	}
 
+		/**
+		 * This function does enqueue monk widget .js files in public side.
+		 */
+		wp_enqueue_script( 'monk-language-switcher-script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), $this->version, true );
+	}
 }
