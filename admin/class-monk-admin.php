@@ -116,6 +116,11 @@ class Monk_Admin {
 			3 );
 	}
 
+	/**
+	 * Function to create a section for General Options in the administration menu
+	 *
+	 * @since    1.0.0
+	*/
 	public function monk_options_init() {
 		register_setting( 'generalOptions', 'monk_language' );
 		add_settings_section(
@@ -133,6 +138,11 @@ class Monk_Admin {
 		);
 	}
 
+	/**
+	 * Function to render a select field
+	 *
+	 * @since    1.0.0
+	*/
 	public function language_select_render() {
 		$options = get_option( 'monk_language' );
 		?>
@@ -145,10 +155,18 @@ class Monk_Admin {
 		<?php
 	}
 
+	/**
+	 * This is the callback for the monk_geeneral_options section
+	*/
 	public function monk_settings_section_render() {
 		echo _e( 'Adjust all you want', 'monk');
 	}
 
+	/**
+	* Function to render the admin page for the plugin
+	*
+	* @since    1.0.0
+	*/
 	public function monk_options() {
 		?>
 		<div class='wrap'>
@@ -158,7 +176,6 @@ class Monk_Admin {
 				settings_fields( 'generalOptions' );
 				do_settings_sections( 'generalOptions' );
 				submit_button();
-				delete_option( 'language_select' );
 				?>
 			</form>
 		</div>
