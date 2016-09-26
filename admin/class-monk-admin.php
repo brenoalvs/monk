@@ -147,22 +147,14 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function language_select_render() {
-		$options = get_option( 'monk_language' );
-		?>
-		<select name='monk_language[language_select]'>
-			<option value='portuguese'<?php selected( $options['language_select'], 'portuguese' ); ?>>Portuguese</option>
-			<option value='english'<?php selected( $options['language_select'], 'english' ); ?>>English</option>
-			<option value='spanish'<?php selected( $options['language_select'], 'spanish' ); ?>>Spanish</option>
-			<option value='french'<?php selected( $options['language_select'], 'french' ); ?>>French</option>
-		</select>
-		<?php
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-render.php';
 	}
 
 	/**
 	 * This is the callback for the monk_geeneral_options section
 	*/
 	public function monk_settings_section_render() {
-		echo _e( 'Adjust all you want', 'monk');
+		echo _e( 'Adjust the way you want', 'monk');
 	}
 
 	/**
@@ -171,17 +163,6 @@ class Monk_Admin {
 	* @since    1.0.0
 	*/
 	public function monk_options() {
-		?>
-		<div class='wrap'>
-			<h2>Monk</h2>
-			<form action='options.php' method='POST'>
-				<?php
-				settings_fields( 'generalOptions' );
-				do_settings_sections( 'generalOptions' );
-				submit_button();
-				?>
-			</form>
-		</div>
-		<?php
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-options.php';
 	}
 }
