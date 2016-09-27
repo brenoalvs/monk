@@ -76,7 +76,7 @@ class Monk_Admin {
 		wp_enqueue_style( $this->monk, plugin_dir_url( __FILE__ ) . 'css/monk-admin.css', array(), $this->version, 'all' );
 
 		/**
-		 * This function does enqueue monk widget .css files in admin side.
+		 * This function does enqueue widget .css files in admin side.
 		 */
 		wp_enqueue_style( 'monk-widgets', plugin_dir_url( __FILE__ ) . 'css/monk-widgets.css', array(), $this->version, 'all' );
 	}
@@ -126,13 +126,14 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function monk_options_init() {
-		register_setting( 'general_options', 'monk_language' );
 		add_settings_section(
 			'monk_general_options',
 			__( 'General options', 'monk' ),
 			array( $this, 'monk_settings_section_render'),
 			'general_options'
 		);
+
+		register_setting( 'general_options', 'monk_language' );
 		add_settings_field(
 			'monk_language_field',
 			__( 'Default language', 'monk' ),
@@ -140,11 +141,20 @@ class Monk_Admin {
 			'general_options',
 			'monk_general_options'
 		);
+
+		register_setting( 'general_options', 'monk_translation_list' );
+		add_settings_field(
+			'monk_list',
+			__( 'Add new translation' ),
+			array( $this, 'monk_translation_list_render' ),
+			'general_options',
+			'monk_general_options'
+		);
 	}
 
 	/**
 	 * This is the callback for the monk_general_options section
-	*/
+	 */
 	public function monk_settings_section_render() {
 		_e( 'Adjust the way you want', 'monk');
 	}
@@ -153,15 +163,19 @@ class Monk_Admin {
 	 * Function to render a select field
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_language_select_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-render.php';
 	}
 
+	public function monk_translation_list_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-translation-list-render.php';
+	}
+
 	/**
-	* Function to render the admin page for the plugin
-	*
-	* @since    1.0.0
+	 * Function to render the admin page for the plugin
+	 *
+	 * @since    1.0.0
 	*/
 	public function monk_options() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-options.php';
