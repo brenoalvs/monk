@@ -106,19 +106,64 @@ class Monk_Admin {
 	/**
 	 * Function to register the settings page of the plugin
 	 *
-	 * @since 	1.0.0
+	 * @since    1.0.0
 	 */
-	public function register_monk_settings() {
-		add_settings_section(
-		'monk_settings_section',				 //ID
-		'Monk',									 //Title
-		array( $this, 'monk_settings_fields' ),	 //Callback function
-		'general'								 //Page into witch this options will be added
+	public function monk_add_menu_page() {
+		add_menu_page(
+			__( 'Monk Settings' ),
+			'Monk',
+			'manage_options',
+			'monk',
+			array( $this, 'monk_options' ),
+			'dashicons-translation',
+			3
 		);
 	}
 
-	public function monk_settings_fields() {
-		echo "<p>Description</p>";
+	/**
+	 * Function to create a section for General Options in the administration menu
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_options_init() {
+		register_setting( 'general_options', 'monk_language' );
+		add_settings_section(
+			'monk_general_options',
+			__( 'General options', 'monk' ),
+			array( $this, 'monk_settings_section_render'),
+			'general_options'
+		);
+		add_settings_field(
+			'monk_language_field',
+			__( 'Default language', 'monk' ),
+			array( $this, 'monk_language_select_render' ),
+			'general_options',
+			'monk_general_options'
+		);
 	}
 
+	/**
+	 * This is the callback for the monk_general_options section
+	*/
+	public function monk_settings_section_render() {
+		_e( 'Adjust the way you want', 'monk');
+	}
+
+	/**
+	 * Function to render a select field
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_language_select_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-render.php';
+	}
+
+	/**
+	* Function to render the admin page for the plugin
+	*
+	* @since    1.0.0
+	*/
+	public function monk_options() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-options.php';
+	}
 }
