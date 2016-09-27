@@ -13,16 +13,16 @@
 	$options = get_option( 'monk_language' );
 ?>
 	<select name="monk_language[language_select]">
-		<option value="pt-br"<?php selected( $options['language_select'], 'pt-br' ); ?>>
+		<option value="pt_BR"<?php selected( $options['language_select'], 'pt_BR' ); ?>>
 			<?php esc_html_e( 'Portuguese', 'monk' ); ?>
 		</option>
-		<option value="en"<?php selected( $options['language_select'], 'en' ); ?>>
+		<option value="en_US"<?php selected( $options['language_select'], 'en_US' ); ?>>
 			<?php esc_html_e( 'English', 'monk' ); ?>
 		</option>
-		<option value="es"<?php selected( $options['language_select'], 'es' ); ?>>
+		<option value="es_ES"<?php selected( $options['language_select'], 'es_ES' ); ?>>
 			<?php esc_html_e( 'Spanish', 'monk' ); ?>
 		</option>
-		<option value="fr"<?php selected( $options['language_select'], 'fr' ); ?>>
+		<option value="fr_FR"<?php selected( $options['language_select'], 'fr_FR' ); ?>>
 			<?php esc_html_e( 'French', 'monk' ); ?>
 		</option>
 	</select>
