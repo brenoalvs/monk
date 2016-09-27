@@ -124,7 +124,7 @@ class Monk_Admin {
 	 * Function to create a section for General Options in the administration menu
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_options_init() {
 		add_settings_section(
 			'monk_general_options',
@@ -133,7 +133,7 @@ class Monk_Admin {
 			'general_options'
 		);
 
-		register_setting( 'general_options', 'monk_language' );
+		register_setting( 'general_options', 'monk_default_language' );
 		add_settings_field(
 			'monk_language_field',
 			__( 'Default language', 'monk' ),
@@ -142,7 +142,7 @@ class Monk_Admin {
 			'monk_general_options'
 		);
 
-		register_setting( 'general_options', 'monk_translation_list' );
+		register_setting( 'general_options', 'monk_active_languages' );
 		add_settings_field(
 			'monk_list',
 			__( 'Add new translation' ),
@@ -154,13 +154,17 @@ class Monk_Admin {
 
 	/**
 	 * This is the callback for the monk_general_options section
+	 *
+	 * Prints a description in the section
+	 *
+	 * @since    1.0.0
 	 */
 	public function monk_settings_section_render() {
 		_e( 'Adjust the way you want', 'monk');
 	}
 
 	/**
-	 * Function to render a select field
+	 * Function to render the select field, callback for the monk_language_field element
 	 *
 	 * @since    1.0.0
 	 */
@@ -168,6 +172,11 @@ class Monk_Admin {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-render.php';
 	}
 
+	/**
+	 * Function to render the checkbox field, callback for the monk_translation_list element
+	 *
+	 * @since    1.0.0
+	 */
 	public function monk_translation_list_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-translation-list-render.php';
 	}
@@ -176,7 +185,7 @@ class Monk_Admin {
 	 * Function to render the admin page for the plugin
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_options() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-options.php';
 	}
