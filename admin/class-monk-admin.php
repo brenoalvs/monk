@@ -73,7 +73,7 @@ class Monk_Admin {
 		 * class.
 		 */
 
-			wp_enqueue_style( $this->monk, plugin_dir_url( __FILE__ ) . 'css/monk-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->monk, plugin_dir_url( __FILE__ ) . 'css/monk-admin.css', array(), $this->version, 'all' );
 
 		/**
 		 * This function does enqueue widget .css files in admin side.
@@ -110,13 +110,14 @@ class Monk_Admin {
 	 */
 	public function monk_add_menu_page() {
 		add_menu_page(
-			'Monk Settings',
+			__( 'Monk Settings' ),
 			'Monk',
 			'manage_options',
 			'monk',
 			array( $this, 'monk_options' ),
 			'dashicons-translation',
-			3 );
+			3
+		);
 	}
 
 	/**
@@ -128,17 +129,24 @@ class Monk_Admin {
 		register_setting( 'general_options', 'monk_language' );
 		add_settings_section(
 			'monk_general_options',
-			'General options',
+			__( 'General options', 'monk' ),
 			array( $this, 'monk_settings_section_render'),
 			'general_options'
 		);
 		add_settings_field(
 			'monk_language_field',
-			'Default language',
-			array( $this, 'language_select_render' ),
+			__( 'Default language', 'monk' ),
+			array( $this, 'monk_language_select_render' ),
 			'general_options',
 			'monk_general_options'
 		);
+	}
+
+	/**
+	 * This is the callback for the monk_general_options section
+	*/
+	public function monk_settings_section_render() {
+		_e( 'Adjust the way you want', 'monk');
 	}
 
 	/**
@@ -146,15 +154,8 @@ class Monk_Admin {
 	 *
 	 * @since    1.0.0
 	*/
-	public function language_select_render() {
+	public function monk_language_select_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-render.php';
-	}
-
-	/**
-	 * This is the callback for the monk_geeneral_options section
-	*/
-	public function monk_settings_section_render() {
-		_e( 'Adjust the way you want', 'monk');
 	}
 
 	/**

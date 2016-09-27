@@ -11,10 +11,18 @@
  */
 
 	$options = get_option( 'monk_language' );
-	?>
+?>
 	<select name="monk_language[language_select]">
-		<option value="portuguese"<?php selected( $options['language_select'], "portuguese" ); ?>>Portuguese</option>
-		<option value="english"<?php selected( $options['language_select'], "english" ); ?>>English</option>
-		<option value="spanish"<?php selected( $options['language_select'], "spanish" ); ?>>Spanish</option>
-		<option value="french"<?php selected( $options['language_select'], "french" ); ?>>French</option>
+		<option value="pt-br"<?php selected( $options['language_select'], 'pt-br' ); ?>>
+			<?php esc_html_e( 'Portuguese', 'monk' ); ?>
+		</option>
+		<option value="en"<?php selected( $options['language_select'], 'en' ); ?>>
+			<?php esc_html_e( 'English', 'monk' ); ?>
+		</option>
+		<option value="es"<?php selected( $options['language_select'], 'es' ); ?>>
+			<?php esc_html_e( 'Spanish', 'monk' ); ?>
+		</option>
+		<option value="fr"<?php selected( $options['language_select'], 'fr' ); ?>>
+			<?php esc_html_e( 'French', 'monk' ); ?>
+		</option>
 	</select>
