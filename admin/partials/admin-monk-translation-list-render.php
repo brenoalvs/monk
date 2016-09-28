@@ -10,31 +10,33 @@
  * @subpackage Monk/Admin/Partials
  */
 
-	$options = get_option( 'monk_active_languages' );
+	$active_languages = get_option( 'monk_active_languages' );
+	$suported_languages = array(
+		'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+		'en_US' => __( 'English', 'monk' ),
+		'es_ES' => __( 'Spanish', 'monk' ),
+		'fr_FR' => __( 'French', 'monk' ),
+		'it_IT' => __('Italian', 'monk')
+	);
+	$default_language = get_option( 'monk_default_language' );
 ?>
 	<fieldset>
-		<label for="monk-ptbr">
-			<?php esc_html_e( 'Portuguese( Brazil )', 'monk' ); ?>
-		</label>
-		<input type="checkbox" name="monk_active_languages[]" id="monk-ptbr" value="pt_BR" <?php checked( in_array( 'pt_BR', $options ) ); ?>/>
+	<?php
+		foreach ($suported_languages as $lang_code => $lang_name) {
 
-		<label for="monk-enus">
-			<?php esc_html_e( 'English', 'monk' ); ?>
-		</label>
-		<input type="checkbox" name="monk_active_languages[]" id="monk-enus" value="en_US" <?php checked( in_array( 'en_US', $options ) ); ?>/>
+			/**
+			 * Walks through each value in the active languages array creating the checkboxes
+			 * based on the values, making possible and more reliable updating that list 
+			*/
 
-		<label for="monk-eses">
-			<?php esc_html_e( 'Spanish', 'monk' ); ?>
-		</label>
-		<input type="checkbox" name="monk_active_languages[]" id="monk-eses" value="es_ES" <?php checked( in_array( 'es_ES', $options ) ); ?>/>
-
-		<label for="monk-frfr">
-			<?php esc_html_e( 'French', 'monk' ); ?>
-		</label>
-		<input type="checkbox" name="monk_active_languages[]" id="monk-frfr" value="fr_FR" <?php checked( in_array( 'fr_FR', $options ) ); ?>/>
-
-		<label for="monk-itit">
-			<?php esc_html_e( 'Italian', 'monk' ); ?>
-		</label>
-		<input type="checkbox" name="monk_active_languages[]" id="monk-itit" value="it_IT" <?php checked( in_array( 'it_IT', $options ) ); ?>/>
+			$id = strtolower( str_replace( '_', '', $lang_code) );
+	?>
+			<label for="monk-<?php echo $id; ?>">
+				<?php echo $lang_name; ?>
+			</label>
+			<input type="checkbox" name="monk_active_languages[]" id="monk-<?php echo $id; ?>" value="<?php echo $lang_code; ?>" <?php checked( in_array( $lang_code, $active_languages ) ); disabled( $default_language, $lang_code); ?> />
+	<?php
+		}
+	?>
 	</fieldset>
+	<?php	
