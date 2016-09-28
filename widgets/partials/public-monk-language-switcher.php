@@ -46,39 +46,40 @@ $languages_flag = array(
 );
 
 /**
- * Show the flag in monk language switcher on public view
+ * Show the flag, name or flag and name in english or native language in monk language switcher on public view
  *
  * @param bool  $flag
- * @param array $flag_list
- */
-function insert_flags( $flag, $flag_list ) {
-	if ( $flag ) {
-		return 'data-style="background-image: url( ' . $flag_list . ' );"';
-	} else {
-		return 'data-style="background-image: none;';
-	}
-};
-
-/**
- * Show the name of language in monk language switcher on public view
- *
  * @param bool  $name
+ * @param array $flag_list
+ * @param array $lang_list
+ * @param string $key
  */
-function insert_names( $name ) {
-	if ( ! $name ) {
-		return 'screen-reader-text';	
+function test( $flag, $name, $flag_list, $lang_list, $key ) {
+	if ( $flag && $name) {
+		return '<a class="selector-link" href="?lang=' . esc_attr( $key, 'monk' ) . '">' . $lang_list . '<img class="monk-selector-flag" src="' . $flag_list . '" alt=""></a>';
+	} elseif ( $flag && !$name ) {
+		return '<a class="selector-link" href="?lang=' . esc_attr( $key, 'monk' ) . '"><span class="screen-reader-text">' . $lang_list . '</span><img class="monk-selector-flag" src="' . $flag_list . '" alt=""></a>';
+	} else {
+		return '<a class="selector-link" href="?lang=' . esc_attr( $key, 'monk' ) . '">' . $lang_list . '</a>';
 	}
-};
+}
 ?>
-<form name="form-language" id="monk-form-language" method="get" action="<?php home_url(); ?>">
-	<select id="monk-widget-language-selector" name="lang" value="<?php echo $select_value; ?>">
-		<?php if ( isset( $select_value ) ) : ?>
-			<option data-class="monk-widget-option <?php echo insert_names( $name ); ?>" <?php echo insert_flags( $flag, $languages_flag[$select_value] ); ?> value="<?php echo esc_attr_e( $select_value, 'monk' ); ?>"><?php echo $languages[$select_value]; ?></option>
-		<?php endif; ?>
+
+<ul class="selector">
+	<?php if ( isset( $select_value ) ) : ?>
+		<li class="options active-lang">
+			<?php echo test( $flag, $name, $languages_flag[$select_value], $languages[$select_value], $select_value ); ?>
+		</li>
+	<?php endif; ?>
 	<?php foreach ( $languages as $key => $value ) : ?>
 		<?php if ( strcmp( $key, $select_value ) != 0 ) : ?>
-			<option data-class="monk-widget-option <?php echo insert_names( $name ); ?>" <?php echo insert_flags( $flag, $languages_flag[$key] ); ?> value="<?php echo esc_attr_e( $key, 'monk' ); ?>"><?php echo $value; ?></option>
+			<li class="options">
+				<?php echo test( $flag, $name, $languages_flag[$key], $value, $key ); ?>
+			</li>
+		<?php else : ?>
+			<li class="options actual-lang">
+				<?php echo test( $flag, $name, $languages_flag[$key], $value, $key ); ?>
+			</li>
 		<?php endif; ?>
 	<?php endforeach; ?>
-	</select>
-</form>
+</ul>
