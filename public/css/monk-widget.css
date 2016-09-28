@@ -24,68 +24,55 @@
     width: 150px;
 }
 
-.ui-menu .ui-menu-item {
-	border-bottom: 1px solid lightgray;
-	padding-left: 10px;
-}
-
-.ui-menu .ui-icon {
-    float: right;
-    right: 10px;
-    top: 5px;
-    left: inherit;
-    bottom: inherit;
-    margin: 0;
-    position: relative;
-}
-
-.selector {
-	margin: 0;
-}
-
-.options {
-	display: none;
-	border-bottom: 1px solid #000;
-	border-top: 1px solid #000;
-}
-
-.active-lang {
-	display: block;
+#monk-selector {
+    background-color: #fff;
+	border: 1px solid #ddd;
 	border-radius: 5px 5px 0 0;
+	height: 28px;
+	margin: -28px 0 0;
+	min-width: 23%;
+	position: absolute;
+    z-index: 9999;
 }
 
-.active-lang,
-.actual-lang {
+#monk-selector .monk-lang {
+	background-color: #ddd;
+	display: none;
+	list-style: none;
+}
+
+#monk-selector .monk-active-lang {
+	display: block;
+	list-style: none;
+}
+
+.monk-active-lang {
 	background-color: #fff;
-	pointer-events: none;
 }
 
-.selector-link {
-	padding-bottom: 4px;
-	padding-left: 20%;
-	padding-right: 60%;
-	padding-top: 4px;
+.monk-selector-link {
 	color: #001aab;
+	display: block;
 }
 
-.active-lang .selector-link,
-.actual-lang .selector-link {
+.monk-active-lang .monk-selector-link {
 	color: #000;
 }
 
-.selector-link:hover {
+.monk-selector-link:hover {
 	color: #5a55ff;
 }
 
-.selector:hover .options {
-	display: block;
+.monk-selector-flag {
+	margin-bottom: 3px;
+	margin-left: 20px;
+	margin-right: 10px;
+	width: 16px;
 }
 
-.monk-selector-flag {
+.monk-selector-arrow {
 	float: right;
-	margin-bottom: 3px;
-	margin-left: 10px;
-	margin-right: 10px;
-	margin-top: 7px;
-	width: 16px;
+	position: relative;
+	right: 10px;
+	top: -24px;
 }

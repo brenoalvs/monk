@@ -16,70 +16,67 @@ if ( ! defined( 'WPINC' ) ) {
 
 if ( isset( $_GET['lang'] ) ) {
 	$select_value = $_GET['lang'];
+} else {
+	$select_value = 'en_EN';
 }
 
-$flag = ! empty( $instance['flag'] ) ? '1' : '0';
-$name = ! empty( $instance['name'] ) ? '1' : '0';
-$lang = ! empty( $instance['lang-native'] ) ? '1' : '0';
+$flag = ! empty( $instance['flag'] ) ? true : false;
+$name = ! empty( $instance['name'] ) ? true : false;
+$lang = ! empty( $instance['lang-native'] ) ? true : false;
 
 if ( $lang ){
 	$languages = array(
-		'pt-br' => __( 'Português', 'monk'),
-		'en'    => __( 'English', 'monk' ),
-		'es'    => __( 'Español', 'monk' ),
-		'fr'    => __( 'Français', 'monk' ),
+		'en_EN' => __( 'English', 'monk' ),
+		'es_ES' => __( 'Español', 'monk' ),
+		'fr_FR' => __( 'Français', 'monk' ),
+		'pt_BR' => __( 'Português', 'monk'),
 	);
 } else {
 	$languages = array(
-		'pt-br' => __( 'Portuguese', 'monk' ),
-		'en'    => __( 'English', 'monk' ),
-		'es'    => __( 'Spanish', 'monk' ),
-		'fr'    => __( 'French', 'monk' ),
+		'en_EN' => __( 'English', 'monk' ),
+		'es_ES' => __( 'Spanish', 'monk' ),
+		'fr_FR' => __( 'French', 'monk' ),
+		'pt_BR' => __( 'Portuguese', 'monk' ),
 	);
 }
 
 $languages_flag = array(
-	'pt-br' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
-	'en'    => 'http://image.flaticon.com/icons/svg/206/206626.svg',
-	'es'    => 'http://image.flaticon.com/icons/svg/206/206724.svg',
-	'fr'    => 'http://image.flaticon.com/icons/svg/206/206657.svg',
+	'en_EN' => 'http://image.flaticon.com/icons/svg/206/206626.svg',
+	'es_ES' => 'http://image.flaticon.com/icons/svg/206/206724.svg',
+	'fr_FR' => 'http://image.flaticon.com/icons/svg/206/206657.svg',
+	'pt_BR' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
 );
-
-/**
- * Show the flag, name or flag and name in english or native language in monk language switcher on public view
- *
- * @param bool  $flag
- * @param bool  $name
- * @param array $flag_list
- * @param array $lang_list
- * @param string $key
- */
-function test( $flag, $name, $flag_list, $lang_list, $key ) {
-	if ( $flag && $name) {
-		return '<a class="selector-link" href="?lang=' . esc_attr( $key, 'monk' ) . '">' . $lang_list . '<img class="monk-selector-flag" src="' . $flag_list . '" alt=""></a>';
-	} elseif ( $flag && !$name ) {
-		return '<a class="selector-link" href="?lang=' . esc_attr( $key, 'monk' ) . '"><span class="screen-reader-text">' . $lang_list . '</span><img class="monk-selector-flag" src="' . $flag_list . '" alt=""></a>';
-	} else {
-		return '<a class="selector-link" href="?lang=' . esc_attr( $key, 'monk' ) . '">' . $lang_list . '</a>';
-	}
-}
 ?>
 
-<ul class="selector">
-	<?php if ( isset( $select_value ) ) : ?>
-		<li class="options active-lang">
-			<?php echo test( $flag, $name, $languages_flag[$select_value], $languages[$select_value], $select_value ); ?>
-		</li>
-	<?php endif; ?>
+<ul id="monk-selector">
 	<?php foreach ( $languages as $key => $value ) : ?>
-		<?php if ( strcmp( $key, $select_value ) != 0 ) : ?>
-			<li class="options">
-				<?php echo test( $flag, $name, $languages_flag[$key], $value, $key ); ?>
+		<?php if ( strcmp( $key, $select_value ) == 0 ) : ?>
+			<li class="monk-active-lang">
+				<span>
+					<?php if ( $flag ) : ?>
+						<img class="monk-selector-flag" src="<?php echo esc_attr( $languages_flag[$key] ) ?>" alt="">
+					<?php endif; ?>
+					<?php if ( $name ) : ?>
+						<span><?php echo esc_html( $value ); ?></span>
+					<?php else : ?>
+						<span class="screen-reader-text"><?php echo esc_html( $value ); ?></span>
+					<?php endif; ?>
+				</span>
 			</li>
 		<?php else : ?>
-			<li class="options actual-lang">
-				<?php echo test( $flag, $name, $languages_flag[$key], $value, $key ); ?>
+			<li class="monk-lang">
+				<a class="monk-selector-link" href="?lang=<?php echo esc_attr( $key, 'monk' ); ?>">
+					<?php if ( $flag ) : ?>
+						<img class="monk-selector-flag" src="<?php echo esc_attr( $languages_flag[$key] ) ?>" alt="">
+					<?php endif; ?>
+					<?php if ( $name ) : ?>
+						<span><?php echo esc_html( $value ); ?></span>
+					<?php else : ?>
+						<span class="screen-reader-text"><?php echo esc_html( $value ); ?></span>
+					<?php endif; ?>
+				</a>
 			</li>
 		<?php endif; ?>
 	<?php endforeach; ?>
+	<span class="dashicons dashicons-arrow-down monk-selector-arrow"></span>
 </ul>
