@@ -12,10 +12,11 @@
 ?>
 	<div class="wrap">
 		<h2>Monk</h2>
+		<?php settings_errors(); ?>
 		<form action="options.php" method="POST">
 			<?php
-			settings_fields( 'general_options' );
-			do_settings_sections( 'general_options' );
+			settings_fields( 'monk_settings' );
+			do_settings_sections( 'monk_settings' );
 			submit_button();
 			?>
 		</form>
