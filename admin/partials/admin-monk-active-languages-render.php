@@ -13,11 +13,15 @@
 	$active_languages    = get_option( 'monk_active_languages' );
 	$default_language    = get_option( 'monk_default_language' );
 	$available_languages = array(
-		'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+		'da_DK' => __( 'Danish', 'monk' ),
 		'en_US' => __( 'English', 'monk' ),
-		'es_ES' => __( 'Spanish', 'monk' ),
 		'fr_FR' => __( 'French', 'monk' ),
 		'it_IT' => __( 'Italian', 'monk' ),
+		'de_DE' => __( 'German', 'monk' ),
+		'ja'    => __( 'Japanese', 'monk' ),
+		'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+		'ru_RU' => __( 'Russian', 'monk' ),
+		'es_ES' => __( 'Spanish', 'monk' ),
 	);
 ?>
 <fieldset>
