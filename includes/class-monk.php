@@ -193,20 +193,55 @@ class Monk {
 	}
 
 	function monk_language_customizer( $wp_customize ) {
-		$wp_customize->add_setting( 'monk', array(
+		
+		$wp_customize->add_section( 'monk_selector' , array(
+		    'title'      => __( 'Monk Selector', 'monk' ),
+		    'priority'   => 4,
+		));
+
+		$wp_customize->add_setting( 'monk_selector_color', array(
+			'type' => 'option',
+			'capability' => 'manage_options',
+			'default' => '#ddd',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_color', array(
+			'label' => __( 'Monk Selector Color', 'monk' ),
+			'section' => 'monk_selector',
+		)));
+		
+		$wp_customize->add_setting( 'monk_selector_active_color', array(
 			'type' => 'option',
 			'capability' => 'manage_options',
 			'default' => '#fff',
 			'sanitize_callback' => 'sanitize_hex_color',
 		));
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk', array(
-			'label' => __( 'Monk Selector Color', 'theme_textdomain' ),
-			'section' => 'monk',
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_active_color', array(
+			'label' => __( 'Monk Selector Active Color', 'monk' ),
+			'section' => 'monk_selector',
 		)));
-		$wp_customize->add_section( 'monk' , array(
-		    'title'      => __( 'Monk Selector', 'monk' ),
-		    'priority'   => 4,
+		
+		$wp_customize->add_setting( 'monk_lang_color', array(
+			'type' => 'option',
+			'capability' => 'manage_options',
+			'default' => '#001aab',
+			'sanitize_callback' => 'sanitize_hex_color',
 		));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_color', array(
+			'label' => __( 'Monk Language Color', 'monk' ),
+			'section' => 'monk_selector',
+		)));
+
+		$wp_customize->add_setting( 'monk_lang_active_color', array(
+			'type' => 'option',
+			'capability' => 'manage_options',
+			'default' => '#000',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_active_color', array(
+			'label' => __( 'Monk Language Active Color', 'monk' ),
+			'section' => 'monk_selector',
+		)));
 	}
 
 	/**
