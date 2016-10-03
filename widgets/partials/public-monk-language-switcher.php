@@ -46,6 +46,7 @@ $languages_flag = array(
 	'fr_FR' => 'http://image.flaticon.com/icons/svg/206/206657.svg',
 	'pt_BR' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
 );
+echo get_option( 'monk', '' );
 ?>
 
 <ul id="monk-selector">

@@ -127,6 +127,7 @@ class Monk {
 		$this->loader = new Monk_Loader();
 
 		$this->loader->add_action( 'widgets_init', $this, 'register_widgets');
+		$this->loader->add_action( 'customize_register', $this, 'monk_language_customizer' );
 	}
 
 	/**
@@ -189,6 +190,23 @@ class Monk {
 		 * Register the Monk_Language_Switcher widget.
 		 */
 		register_widget( 'Monk_Language_Switcher' );
+	}
+
+	function monk_language_customizer( $wp_customize ) {
+		$wp_customize->add_setting( 'monk', array(
+			'type' => 'option',
+			'capability' => 'manage_options',
+			'default' => '#fff',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk', array(
+			'label' => __( 'Monk Selector Color', 'theme_textdomain' ),
+			'section' => 'monk',
+		)));
+		$wp_customize->add_section( 'monk' , array(
+		    'title'      => __( 'Monk Selector', 'monk' ),
+		    'priority'   => 4,
+		));
 	}
 
 	/**
