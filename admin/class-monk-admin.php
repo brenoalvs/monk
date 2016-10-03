@@ -110,11 +110,11 @@ class Monk_Admin {
 	 */
 	public function monk_add_menu_page() {
 		add_menu_page(
-			__( 'Monk Settings' ),
+			__( 'Monk Settings', 'monk' ),
 			'Monk',
 			'manage_options',
 			'monk',
-			array( $this, 'monk_options' ),
+			array( $this, 'monk_settings_render' ),
 			'dashicons-translation',
 			3
 		);
@@ -127,58 +127,58 @@ class Monk_Admin {
 	 */
 	public function monk_options_init() {
 		add_settings_section(
-			'monk_general_options',
-			__( 'General options', 'monk' ),
-			array( $this, 'monk_settings_section_render'),
-			'general_options'
+			'monk_general_settings',
+			__( 'General Settings', 'monk' ),
+			array( $this, 'monk_general_settings_render'),
+			'monk_settings'
 		);
 
-		register_setting( 'general_options', 'monk_default_language' );
+		register_setting( 'monk_settings', 'monk_default_language' );
 		add_settings_field(
-			'monk_language_field',
-			__( 'Default language', 'monk' ),
-			array( $this, 'monk_language_select_render' ),
-			'general_options',
-			'monk_general_options'
+			'monk_default_language',
+			__( 'Default site language', 'monk' ),
+			array( $this, 'monk_default_language_render' ),
+			'monk_settings',
+			'monk_general_settings'
 		);
 
-		register_setting( 'general_options', 'monk_active_languages' );
+		register_setting( 'monk_settings', 'monk_active_languages' );
 		add_settings_field(
-			'monk_list',
-			__( 'Add new translation' ),
-			array( $this, 'monk_translation_list_render' ),
-			'general_options',
-			'monk_general_options'
+			'monk_active_languages',
+			__( 'Add new translation', 'monk' ),
+			array( $this, 'monk_active_languages_render' ),
+			'monk_settings',
+			'monk_general_settings'
 		);
 	}
 
 	/**
-	 * This is the callback for the monk_general_options section
+	 * This is the callback for the monk_general_settings section
 	 *
 	 * Prints a description in the section
 	 *
 	 * @since    1.0.0
 	 */
-	public function monk_settings_section_render() {
+	public function monk_general_settings_render() {
 		_e( 'Adjust the way you want', 'monk');
 	}
 
 	/**
-	 * Function to render the select field, callback for the monk_language_field element
+	 * Function to render the select field, callback for the monk_default_language element
 	 *
 	 * @since    1.0.0
 	 */
-	public function monk_language_select_render() {
-		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-render.php';
+	public function monk_default_language_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-render.php';
 	}
 
 	/**
-	 * Function to render the checkbox field, callback for the monk_translation_list element
+	 * Function to render the checkbox field, callback for the monk_active_languages element
 	 *
 	 * @since    1.0.0
 	 */
-	public function monk_translation_list_render() {
-		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-translation-list-render.php';
+	public function monk_active_languages_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-active-languages-render.php';
 	}
 
 	/**
@@ -186,7 +186,7 @@ class Monk_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function monk_options() {
-		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-options.php';
+	public function monk_settings_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
 	}
 }
