@@ -70,4 +70,20 @@ class Monk_Language_Switcher extends WP_Widget {
 
 		return $instance;
 	}
+
+	/**
+	 * Include styles related to Customize options
+	 */
+	public function monk_customize_css() {
+		?>
+		<style type="text/css">
+			#monk-selector { border-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
+			.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color' ) ); ?>; }
+			.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color' ) ); ?>; }
+			#monk-selector .monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
+			.monk-selector-link { color: <?php echo esc_attr( get_option( 'monk_lang_color' ) ); ?>; }
+			.monk-selector-arrow { color: <?php esc_attr_e( get_option( 'monk_selector_color' ) ); ?>; }
+		</style>
+		<?php
+	}
 }

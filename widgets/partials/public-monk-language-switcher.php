@@ -48,11 +48,11 @@ $languages_flag = array(
 );
 ?>
 
-<ul id="monk-selector" style="border-color: <?php esc_attr_e( get_option( 'monk_selector_color' ) ); ?>;">
+<ul id="monk-selector">
 	<?php foreach ( $languages as $key => $value ) : ?>
 		<?php if ( strcmp( $key, $select_value ) == 0 ) : ?>
-			<li class="monk-active-lang" style="background-color: <?php esc_attr_e( get_option( 'monk_selector_active_color' ) ); ?>;">
-				<span style="color: <?php esc_attr_e( get_option( 'monk_lang_active_color' ) ); ?>;">
+			<li class="monk-active-lang">
+				<span class="monk-active-lang-name">
 					<?php if ( $flag ) : ?>
 						<img class="monk-selector-flag" src="<?php esc_attr_e( $languages_flag[$key] ) ?>" alt="">
 					<?php endif; ?>
@@ -64,8 +64,8 @@ $languages_flag = array(
 				</span>
 			</li>
 		<?php else : ?>
-			<li class="monk-lang" style="background-color: <?php esc_attr_e( get_option( 'monk_selector_color' ) ); ?>;">
-				<a class="monk-selector-link" href="?lang=<?php esc_attr_e( $key, 'monk' ); ?>" style="color: <?php esc_attr_e( get_option( 'monk_lang_color' ) ); ?>;">
+			<li class="monk-lang">
+				<a class="monk-selector-link" href="?lang=<?php esc_attr_e( $key, 'monk' ); ?>">
 					<?php if ( $flag ) : ?>
 						<img class="monk-selector-flag" src="<?php esc_attr_e( $languages_flag[$key] ) ?>" alt="">
 					<?php endif; ?>
@@ -78,5 +78,5 @@ $languages_flag = array(
 			</li>
 		<?php endif; ?>
 	<?php endforeach; ?>
-	<span class="dashicons dashicons-arrow-down monk-selector-arrow" style="color: <?php esc_attr_e( get_option( 'monk_selector_color' ) ); ?>;"></span>
+	<span class="dashicons dashicons-arrow-down monk-selector-arrow"></span>
 </ul>
