@@ -28,9 +28,9 @@
     background-color: #fff;
 	border: 1px solid #ddd;
 	border-radius: 5px 5px 0 0;
-	height: 28px;
-	margin: -28px 0 0;
-	min-width: 23%;
+	height: 21px;
+	margin: 0 0 0 -1px;
+	min-width: 22.9%;
 	position: absolute;
     z-index: 9999;
 }
@@ -74,5 +74,5 @@
 	float: right;
 	position: relative;
 	right: 10px;
-	top: -24px;
+	top: -20px;
 }
