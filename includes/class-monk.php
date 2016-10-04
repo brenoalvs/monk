@@ -226,7 +226,7 @@ class Monk {
 			'sanitize_callback' => 'sanitize_hex_color',
 		));
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_color', array(
-			'label'   => __( 'Monk Selector Color', 'monk' ),
+			'label'   => __( 'Languages Background', 'monk' ),
 			'section' => 'monk_selector',
 		)));
 		
@@ -237,7 +237,7 @@ class Monk {
 			'sanitize_callback' => 'sanitize_hex_color',
 		));
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_active_color', array(
-			'label'   => __( 'Monk Selector Active Color', 'monk' ),
+			'label'   => __( 'Active Language Background', 'monk' ),
 			'section' => 'monk_selector',
 		)));
 		
@@ -248,7 +248,7 @@ class Monk {
 			'sanitize_callback' => 'sanitize_hex_color',
 		));
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_color', array(
-			'label'   => __( 'Monk Language Color', 'monk' ),
+			'label'   => __( 'Language Text Color', 'monk' ),
 			'section' => 'monk_selector',
 		)));
 
@@ -259,7 +259,7 @@ class Monk {
 			'sanitize_callback' => 'sanitize_hex_color',
 		));
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_active_color', array(
-			'label'   => __( 'Monk Language Active Color', 'monk' ),
+			'label'   => __( 'Active Language Text Color', 'monk' ),
 			'section' => 'monk_selector',
 		)));
 	}

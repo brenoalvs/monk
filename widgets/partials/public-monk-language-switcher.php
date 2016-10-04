@@ -49,7 +49,7 @@ $languages_flag = array(
 );
 ?>
 <section id="<?php echo $this->id; ?>" class="widget <?php echo $this->id_base; ?>">
-	<h2 class="widget_title"><?php esc_html_e( $title ); ?></h2>
+	<h2 class="widget-title"><?php esc_html_e( $title ); ?></h2>
 	<ul id="monk-selector">
 		<?php foreach ( $languages as $key => $value ) : ?>
 			<?php if ( strcmp( $key, $select_value ) == 0 ) : ?>
