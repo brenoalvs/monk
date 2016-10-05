@@ -182,11 +182,35 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to render the admin page for the plugin
+	 * Function to render the admin settings page for the plugin
 	 *
 	 * @since    1.0.0
 	 */
 	public function monk_settings_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
+	}
+
+	/**
+	 * Function to create the main language for posts
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_post_meta_box() {
+		add_meta_box(
+			'monk_default_post_language',
+			__( 'Post default language', 'monk' ),
+			array( $this, 'monk_post_meta_box_render'),
+			'',
+			'side',
+			'high',
+			''
+		);
+	}
+
+	/**
+	 * Function that makes the view for the post default language meta box
+	*/
+	public function monk_post_meta_box_render( $post ) {
+
 	}
 }

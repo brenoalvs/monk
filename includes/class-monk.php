@@ -160,6 +160,7 @@ class Monk {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 	}
 
 	/**
