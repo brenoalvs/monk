@@ -21,9 +21,9 @@ if ( isset( $_GET['lang'] ) ) {
 }
 
 $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'monk' );
-$flag = ! empty( $instance['flag'] ) ? true : false;
-$name = ! empty( $instance['name'] ) ? true : false;
-$lang = ! empty( $instance['lang-native'] ) ? true : false;
+$flag  = ! empty( $instance['flag'] ) ? true : false;
+$name  = ! empty( $instance['name'] ) ? true : false;
+$lang  = ! empty( $instance['lang-native'] ) ? true : false;
 
 if ( $lang ){
 	$languages = array(

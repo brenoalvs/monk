@@ -12,7 +12,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-    die;
+	die;
 }
 
 /**
@@ -63,7 +63,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance                = $old_instance;
-		$instance['title']       = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['title']       = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
 		$instance['flag']        = ! empty( $new_instance['flag'] ) ? true : false;
 		$instance['name']        = ! empty( $new_instance['name'] ) ? true : false;
 		$instance['lang-native'] = ! empty( $new_instance['lang-native'] ) ? true : false;
@@ -85,5 +85,31 @@ class Monk_Language_Switcher extends WP_Widget {
 			.monk-selector-arrow { color: <?php esc_attr_e( get_option( 'monk_selector_color' ) ); ?>; }
 		</style>
 		<?php
+	}
+
+	/**
+	 * Include styles related to Customize options
+	 */
+	public function add_monk_filter() {
+
+		//execute only on the 'post' content type
+		global $post_type;
+		if( $post_type == 'post' ){
+
+			$post_formats_args = array(
+				'show_option_all'   => 'Languages',
+				'orderby'           => 'NAME',
+				'order'             => 'ASC',
+				'name'              => 'monk_language_filter',
+				'taxonomy'          => 'languages'
+			);
+
+			//if we have a post format already selected, ensure that its value is set to be selected
+			if( isset( $_GET['post_format_admin_filter'] ) ) {
+				$post_formats_args['selected'] = ( int )sanitize_text_field( $_GET['post_format_admin_filter'] );
+			}
+
+			wp_dropdown_categories( $post_formats_args );
+		}
 	}
 }
