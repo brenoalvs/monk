@@ -49,32 +49,32 @@ $languages_flag = array(
 );
 ?>
 <section id="<?php echo $this->id; ?>" class="widget <?php echo $this->id_base; ?>">
-	<h2 class="widget-title"><?php esc_html_e( $title ); ?></h2>
+	<h2 class="widget-title"><?php echo esc_html( $title ); ?></h2>
 	<ul id="monk-selector">
-		<?php foreach ( $languages as $key => $value ) : ?>
-			<?php if ( strcmp( $key, $select_value ) == 0 ) : ?>
+		<?php foreach ( $languages as $value => $name ) : ?>
+			<?php if ( strcmp( $value, $select_value ) == 0 ) : ?>
 				<li class="monk-active-lang">
 					<span class="monk-active-lang-name">
 						<?php if ( $flag ) : ?>
-							<img class="monk-selector-flag" src="<?php esc_attr_e( $languages_flag[$key] ) ?>" alt="">
+							<img class="monk-selector-flag" src="<?php echo esc_attr( $languages_flag[$value] ) ?>" alt="">
 						<?php endif; ?>
 						<?php if ( $name ) : ?>
-							<span><?php esc_html_e( $value ); ?></span>
+							<span><?php echo esc_html( $name ); ?></span>
 						<?php else : ?>
-							<span class="screen-reader-text"><?php esc_html_e( $value ); ?></span>
+							<span class="screen-reader-text"><?php echo esc_html( $name ); ?></span>
 						<?php endif; ?>
 					</span>
 				</li>
 			<?php else : ?>
 				<li class="monk-lang">
-					<a class="monk-selector-link" href="?lang=<?php esc_attr_e( $key, 'monk' ); ?>">
+					<a class="monk-selector-link" href="<?php echo add_query_arg( 'lang', esc_attr( $value, 'monk' ), home_url() ); ?>">
 						<?php if ( $flag ) : ?>
-							<img class="monk-selector-flag" src="<?php esc_attr_e( $languages_flag[$key] ) ?>" alt="">
+							<img class="monk-selector-flag" src="<?php echo esc_attr( $languages_flag[$value] ) ?>" alt="">
 						<?php endif; ?>
 						<?php if ( $name ) : ?>
-							<span><?php esc_html_e( $value ); ?></span>
+							<span><?php echo esc_html( $name ); ?></span>
 						<?php else : ?>
-							<span class="screen-reader-text"><?php esc_html_e( $value ); ?></span>
+							<span class="screen-reader-text"><?php echo esc_html( $name ); ?></span>
 						<?php endif; ?>
 					</a>
 				</li>
