@@ -62,12 +62,28 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $old_instance The previous options
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                     = $old_instance;
-		$instance['title']            = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['flag']        = ! empty( $new_instance['flag'] ) ? 1 : 0;
-		$instance['name']        = ! empty( $new_instance['name'] ) ? 1 : 0;
-		$instance['lang-native'] = ! empty( $new_instance['lang-native'] ) ? 1 : 0;
+		$instance                = $old_instance;
+		$instance['title']       = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['flag']        = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance['name']        = ! empty( $new_instance['name'] ) ? true : false;
+		$instance['lang-native'] = ! empty( $new_instance['lang-native'] ) ? true : false;
 
 		return $instance;
+	}
+
+	/**
+	 * Include styles related to Customize options
+	 */
+	public function monk_customize_css() {
+		?>
+		<style type="text/css">
+			#monk-selector { border-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
+			.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color' ) ); ?>; }
+			.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color' ) ); ?>; }
+			#monk-selector .monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
+			.monk-selector-link { color: <?php echo esc_attr( get_option( 'monk_lang_color' ) ); ?>; }
+			.monk-selector-arrow { color: <?php esc_attr_e( get_option( 'monk_selector_color' ) ); ?>; }
+		</style>
+		<?php
 	}
 }

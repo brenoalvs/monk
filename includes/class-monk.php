@@ -75,6 +75,7 @@ class Monk {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_widget_hooks();
 	}
 
 	/**
@@ -125,8 +126,6 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
 
 		$this->loader = new Monk_Loader();
-
-		$this->loader->add_action( 'widgets_init', $this, 'register_widgets');
 	}
 
 	/**
@@ -178,6 +177,22 @@ class Monk {
 	}
 
 	/**
+	 * Register all of the hooks related to Monk Widgets
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_widget_hooks() {
+
+		$monk_widget   = new Monk_Language_Switcher();
+
+
+		$this->loader->add_action( 'widgets_init', $this, 'register_widgets' );
+		$this->loader->add_action( 'customize_register', $this, 'monk_language_customizer' );
+		$this->loader->add_action( 'wp_head', $monk_widget, 'monk_customize_css' );
+	}
+
+	/**
 	 * Register all the widgets
 	 *
 	 * @since    1.0.0
@@ -189,6 +204,80 @@ class Monk {
 		 * Register the Monk_Language_Switcher widget.
 		 */
 		register_widget( 'Monk_Language_Switcher' );
+	}
+
+	/**
+	 * Add components on Appearance->Customize
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function monk_language_customizer( $wp_customize ) {
+		
+		$wp_customize->add_section( 'monk_selector' , array(
+		    'title'    => __( 'Monk Selector', 'monk' ),
+		    'priority' => 4,
+		));
+
+		/**
+		 * Add setting and control related to Language Background.
+		 */
+		$wp_customize->add_setting( 'monk_selector_color', array(
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'default'           => '#ddd',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_color', array(
+			'label'   => __( 'Language Background', 'monk' ),
+			'section' => 'monk_selector',
+		)));
+
+		/**
+		 * Add setting and control related to Active Language Background.
+		 */		
+		$wp_customize->add_setting( 'monk_selector_active_color', array(
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'default'           => '#fff',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_active_color', array(
+			'label'   => __( 'Active Language Background', 'monk' ),
+			'section' => 'monk_selector',
+		)));
+		
+		/**
+		 * Add setting and control related to Language Text Color.
+		 */
+		$wp_customize->add_setting( 'monk_lang_color', array(
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'default'           => '#001aab',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_color', array(
+			'label'   => __( 'Language Text Color', 'monk' ),
+			'section' => 'monk_selector',
+		)));
+
+		/**
+		 * Add setting and control related to Active Language Text Color.
+		 */
+		$wp_customize->add_setting( 'monk_lang_active_color', array(
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'default'           => '#000',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_active_color', array(
+			'label'   => __( 'Active Language Text Color', 'monk' ),
+			'section' => 'monk_selector',
+		)));
 	}
 
 	/**

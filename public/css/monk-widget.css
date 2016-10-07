@@ -24,17 +24,56 @@
     width: 150px;
 }
 
-.ui-menu .ui-menu-item {
-	border-bottom: 1px solid lightgray;
-	padding-left: 10px;
+#monk-selector {
+    background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px 5px 0 0;
+	height: 21px;
+	margin: 0 0 0 -1px;
+	width: 22.9%;
+	min-width: 180px;
+	position: absolute;
+    z-index: 9999;
 }
 
-.ui-menu .ui-icon {
-    float: right;
-    right: 10px;
-    top: 5px;
-    left: inherit;
-    bottom: inherit;
-    margin: 0;
-    position: relative;
+#monk-selector .monk-lang {
+	background-color: #ddd;
+	display: none;
+	list-style: none;
+}
+
+#monk-selector .monk-active-lang {
+	display: block;
+	list-style: none;
+}
+
+.monk-active-lang {
+	background-color: #fff;
+}
+
+.monk-selector-link {
+	color: #001aab;
+	display: block;
+}
+
+.monk-active-lang .monk-selector-link {
+	color: #000;
+}
+
+.monk-selector-link:hover {
+	color: #5a55ff;
+}
+
+.monk-selector-flag {
+	margin-bottom: 3px;
+	margin-left: 20px;
+	margin-right: 10px;
+	width: 16px;
+}
+
+.monk-selector-arrow {
+	float: right;
+	position: relative;
+	right: 10px;
+	top: -21px;
 }
