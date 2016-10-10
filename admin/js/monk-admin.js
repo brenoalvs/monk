@@ -31,6 +31,7 @@
 
 	$( document ).ready( function() {
 		$( document ).on( 'change', 'select[name="monk_default_language"]', function() {
+			console.log('that');
 			var default_language  = $( 'input[type="hidden"][name="monk_active_languages[]"]' ).val();
 			var selected_language = $( this ).val();
 			$( 'input[type="checkbox"][name="monk_active_languages[]"]' ).each( function() {
@@ -52,6 +53,9 @@
 						});
 					}
 				}
+			});
+			$( '.monk-add-translation' ).click( function() {
+				console.log('works');
 			});
 		});
 	});

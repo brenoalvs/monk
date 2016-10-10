@@ -197,9 +197,9 @@ class Monk_Admin {
 	*/
 	public function monk_post_meta_box() {
 		add_meta_box(
-			'monk_default_post_language',
-			__( 'Post default language', 'monk' ),
-			array( $this, 'monk_post_meta_box_render'),
+			'monk_post_meta_box_field',
+			__( 'Post languages', 'monk' ),
+			array( $this, 'monk_post_meta_box_field_render'),
 			'',
 			'side',
 			'high',
@@ -208,41 +208,67 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function that makes the view for the post default language meta box
+	 * Function that makes the view for the post monk meta box
 	 *
 	 * @since    1.0.0
 	*/
-	public function monk_post_meta_box_render( $post ) {
-		$active_languages = get_option( 'monk_active_languages' );
+	public function monk_post_meta_box_field_render( $post ) {
+		global $current_screen;
+		$active_languages      = get_option( 'monk_active_languages' );
 		$post_default_language = get_post_meta( $post->ID, '_monk_default_post_language', true );
-		$available_languages = array(
-		'da_DK' => __( 'Danish', 'monk' ),
-		'en_US' => __( 'English', 'monk' ),
-		'fr_FR' => __( 'French', 'monk' ),
-		'de_DE' => __( 'German', 'monk' ),
-		'it_IT' => __( 'Italian', 'monk' ),
-		'ja'    => __( 'Japanese', 'monk' ),
-		'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
-		'ru_RU' => __( 'Russian', 'monk' ),
-		'es_ES' => __( 'Spanish', 'monk' ),
-	);
+		$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
+		$available_languages   = array(
+			'da_DK' => __( 'Danish', 'monk' ),
+			'en_US' => __( 'English', 'monk' ),
+			'fr_FR' => __( 'French', 'monk' ),
+			'de_DE' => __( 'German', 'monk' ),
+			'it_IT' => __( 'Italian', 'monk' ),
+			'ja'    => __( 'Japanese', 'monk' ),
+			'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+			'ru_RU' => __( 'Russian', 'monk' ),
+			'es_ES' => __( 'Spanish', 'monk' ),
+		);
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
+
+		if ( $current_screen->action == 'add' ) {
 		?>
 		<div>
-			<h3><?php _e( 'Post language', 'monk' ); ?></h3>
+			<h4><?php _e( 'Default post language', 'monk' ); ?></h4>
 			<p>
-				<select name="monk_post_default_language">
+				<select name="monk_default_post_language">
 				<?php foreach ( $available_languages as $lang_code => $lang_name ) :
-						if ( in_array( $lang_code, $active_languages ) ) { ?>
-							<option value="<?php echo esc_attr( $lang_name ); ?>"<?php selected( $post_default_language, $lang_name ); ?>>
-								<?php echo esc_html( $lang_name ); ?>
-							</option>
+					if ( in_array( $lang_code, $active_languages ) ) { ?>
+						<option value="<?php echo esc_attr( $lang_name ); ?>"<?php selected( $post_default_language, $lang_name ); ?>>
+							<?php echo esc_html( $lang_name ); ?>
+						</option>
 				<?php   }
 						endforeach; ?>
 				</select>
 			</p>
 		</div>
+
 		<?php
+		} else { ?>
+		<div class="monk-post-meta-text">
+			<h2><?php echo $post_default_language; ?></h2>
+			<label for="monk-post-add-translation"><?php _e( 'Language', 'monk' ); ?></label>
+			<a class="edit-post-status hide-if-no-js" style="display: inline;"><span aria-hidden="true" class="monk-add-translation">Add+</span> <span class="screen-reader-text">Add new translation</span></a>
+		</div>
+		<div class="monk-post-meta-add-translation">
+			<fieldset>
+				<?php foreach ( $available_languages as $lang_code => $lang_name ) :
+					$lang_id = sanitize_title( $lang_code );
+					if ( in_array( $lang_code, $active_languages ) && $post_default_language != $lang_name ) { ?>
+						<label for="<?php echo $lang_id; ?>">
+						<input type="checkbox" id="<?php echo $lang_id; ?>" name="monk_post_add_translation[]" value="<?php echo $lang_code; ?>" <?php checked( in_array( $lang_code, $post_translations) ); ?> /><?php echo $lang_name; ?>
+						</label>
+						<br />
+				<?php   }
+					endforeach; ?>
+			</fieldset>		
+		</div>
+		<?php
+		}
 	}
 
 	public function monk_save_post_default_language( $post_id ) {
@@ -254,6 +280,22 @@ class Monk_Admin {
 		}
 		if ( !current_user_can( 'edit_post', $post_id ) ) {
 			return;
+		}
+		if ( isset( $_REQUEST['monk_post_default_language'] ) ) {
+			update_post_meta(
+				$post_id,
+				'_monk_default_post_language',
+				sanitize_text_field( $_POST['monk_post_default_language'] )
+			);
+		}
+		if ( isset( $_REQUEST['monk_post_add_translation'] ) ) {
+			$added_translations = (array) $_POST['monk_post_add_translation'];
+			$added_translations = array_map( 'sanitize_text_field', $added_translations );
+			update_post_meta(
+				$post_id,
+				'_monk_post_add_translation',
+				$added_translations
+			);
 		}
 	}
 }
