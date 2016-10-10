@@ -143,9 +143,9 @@ class Monk_Language_Switcher extends WP_Widget {
 	/**
 	 * Include styles related to Customize options
 	 *
-	 * @param array $title Title of the colum
+	 * @param array $title Title of the column
 	 */
-	public function add_custom_colum_head( $title ) {
+	public function add_custom_column_head( $title ) {
 		$title['languages'] = 'Languages';
     	return $title;
 	}
@@ -153,10 +153,10 @@ class Monk_Language_Switcher extends WP_Widget {
 	/**
 	 * Include styles related to Customize options
 	 *
-	 * @param string $colum_name Title of the colum
+	 * @param string $colum_name Title of the column
 	 * @param string $post_ID    Post id
 	 */
-	public function add_custom_colum_content( $column_name, $post_ID ) {
+	public function add_custom_column_content( $column_name, $post_ID ) {
 		if ( $column_name == 'languages' ) {
 	        $languages = get_post_meta( $post_ID, '_monk_languages' );
 	        if ( $languages ) {
