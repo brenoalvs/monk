@@ -88,7 +88,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	}
 
 	/**
-	 * Include styles related to Customize options
+	 * Add select filter
 	 */
 	public function add_monk_filter() {
 
@@ -122,16 +122,48 @@ class Monk_Language_Switcher extends WP_Widget {
 		}
 	}
 
-	function posts_where( $where ) {
+	/**
+	 * Add parameters to filter by meta_key
+	 *
+	 * @param string $where wpdb query
+	 */
+	public function posts_where( $where ) {
 	    if( is_admin() ) {
 	        global $wpdb;       
 	        if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
 	            $language = $_GET['monk_language_filter'];
-	            
+
 	            $where .= 'AND ID IN (SELECT post_id FROM ' . $wpdb->postmeta . ' 
 							WHERE meta_key="_monk_languages" AND meta_value="' . $language . '" )';
 	        }
 	    }   
 	    return $where;
+	}
+
+	/**
+	 * Include styles related to Customize options
+	 *
+	 * @param array $title Title of the colum
+	 */
+	public function add_custom_colum_head( $title ) {
+		$title['languages'] = 'Languages';
+    	return $title;
+	}
+
+	/**
+	 * Include styles related to Customize options
+	 *
+	 * @param string $colum_name Title of the colum
+	 * @param string $post_ID    Post id
+	 */
+	public function add_custom_colum_content( $column_name, $post_ID ) {
+		if ( $column_name == 'languages' ) {
+	        $languages = get_post_meta( $post_ID, '_monk_languages' );
+	        if ( $languages ) {
+	        	foreach ( $languages as $language ) {
+	        		echo $language . " ";
+	        	}
+	        }
+	    }
 	}
 }
