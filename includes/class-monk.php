@@ -191,6 +191,7 @@ class Monk {
 		$this->loader->add_action( 'customize_register', $this, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $monk_widget, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $monk_widget, 'add_monk_filter' );
+		$this->loader->add_filter( 'posts_where', $monk_widget, 'posts_where' );
 	}
 
 	/**

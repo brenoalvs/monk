@@ -95,21 +95,43 @@ class Monk_Language_Switcher extends WP_Widget {
 		//execute only on the 'post' content type
 		global $post_type;
 		if( $post_type == 'post' ){
-
-			$post_formats_args = array(
-				'show_option_all'   => 'Languages',
-				'orderby'           => 'NAME',
-				'order'             => 'ASC',
-				'name'              => 'monk_language_filter',
-				'taxonomy'          => 'languages'
-			);
-
-			//if we have a post format already selected, ensure that its value is set to be selected
-			if( isset( $_GET['post_format_admin_filter'] ) ) {
-				$post_formats_args['selected'] = ( int )sanitize_text_field( $_GET['post_format_admin_filter'] );
-			}
-
-			wp_dropdown_categories( $post_formats_args );
+			global $wpdb;
+			$languages = $wpdb->get_col( '
+				SELECT DISTINCT meta_value
+				FROM ' . $wpdb->postmeta . '
+				WHERE meta_key = "_monk_languages"
+				ORDER BY meta_value
+				' );
+				?>
+				<select name="monk_language_filter" id="monk-language">
+					<option value="">Languages</option>
+					<?php foreach ( $languages as $language ) : ?>
+						<option value="<?php echo esc_attr( $language ); ?>" 
+							<?php 
+							if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
+								selected( $_GET['monk_language_filter'], $language ); 
+							} 
+							?>>
+							<?php
+							echo $language;
+							?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+				<?php
 		}
+	}
+
+	function posts_where( $where ) {
+	    if( is_admin() ) {
+	        global $wpdb;       
+	        if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
+	            $language = $_GET['monk_language_filter'];
+	            
+	            $where .= 'AND ID IN (SELECT post_id FROM ' . $wpdb->postmeta . ' 
+							WHERE meta_key="_monk_languages" AND meta_value="' . $language . '" )';
+	        }
+	    }   
+	    return $where;
 	}
 }
