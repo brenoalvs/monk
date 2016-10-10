@@ -191,7 +191,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to create the main language for posts
+	 * Function to create the main language box for posts
 	 *
 	 * @since    1.0.0
 	*/
@@ -209,8 +209,51 @@ class Monk_Admin {
 
 	/**
 	 * Function that makes the view for the post default language meta box
+	 *
+	 * @since    1.0.0
 	*/
 	public function monk_post_meta_box_render( $post ) {
+		$active_languages = get_option( 'monk_active_languages' );
+		$post_default_language = get_post_meta( $post->ID, '_monk_default_post_language', true );
+		$available_languages = array(
+		'da_DK' => __( 'Danish', 'monk' ),
+		'en_US' => __( 'English', 'monk' ),
+		'fr_FR' => __( 'French', 'monk' ),
+		'de_DE' => __( 'German', 'monk' ),
+		'it_IT' => __( 'Italian', 'monk' ),
+		'ja'    => __( 'Japanese', 'monk' ),
+		'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+		'ru_RU' => __( 'Russian', 'monk' ),
+		'es_ES' => __( 'Spanish', 'monk' ),
+	);
+		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
+		?>
+		<div>
+			<h3><?php _e( 'Post language', 'monk' ); ?></h3>
+			<p>
+				<select name="monk_post_default_language">
+				<?php foreach ( $available_languages as $lang_code => $lang_name ) :
+						if ( in_array( $lang_code, $active_languages ) ) { ?>
+							<option value="<?php echo esc_attr( $lang_name ); ?>"<?php selected( $post_default_language, $lang_name ); ?>>
+								<?php echo esc_html( $lang_name ); ?>
+							</option>
+				<?php   }
+						endforeach; ?>
+				</select>
+			</p>
+		</div>
+		<?php
+	}
 
+	public function monk_save_post_default_language( $post_id ) {
+		if ( !isset( $_POST['monk_post_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
+			return;
+		}
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) {
+			return;
+		}
+		if ( !current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
 	}
 }

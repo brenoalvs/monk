@@ -161,6 +161,7 @@ class Monk {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_default_language', 10, 2 );
 	}
 
 	/**
