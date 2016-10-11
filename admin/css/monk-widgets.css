@@ -9,9 +9,3 @@
 .monk-label-block {
 	display: block;
 }
-
-.monk-widgets-form .monk-input-checkbox,
-.monk-widgets-form .monk-input-radio {
-	margin-bottom: 5px;
-	margin-right: 10px;
-}

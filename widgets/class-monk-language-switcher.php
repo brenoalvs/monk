@@ -31,7 +31,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$widget_options = array( 
 			'classname'   => 'monk_language_switcher',
 			'description' => __( 'The Monk Language Switcher is the best language selector widget', 'monk' ),
-		);
+			);
 		
 		parent::__construct( 'monk_language_switcher', 'Monk Language Switcher', $widget_options );
 	}
@@ -94,50 +94,41 @@ class Monk_Language_Switcher extends WP_Widget {
 
 		//execute only on the 'post' content type
 		global $post_type;
-		if( $post_type == 'post' ){
-			global $wpdb;
-			$languages = $wpdb->get_col( '
-				SELECT DISTINCT meta_value
-				FROM ' . $wpdb->postmeta . '
-				WHERE meta_key = "_monk_languages"
-				ORDER BY meta_value
-				' );
-				?>
-				<select name="monk_language_filter" id="monk-language">
-					<option value="">Languages</option>
-					<?php foreach ( $languages as $language ) : ?>
-						<option value="<?php echo esc_attr( $language ); ?>" 
-							<?php 
-							if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
-								selected( $_GET['monk_language_filter'], $language ); 
-							} 
-							?>>
-							<?php
-							echo $language;
-							?>
-						</option>
-					<?php endforeach; ?>
-				</select>
-				<?php
+		if ( $post_type == 'post' ) {
+			$languages = get_option( 'monk_active_languages' );
+			?>
+			<select name="monk_language_filter" id="monk-language">
+				<option value="">Languages</option>
+				<?php foreach ( $languages as $language ) : ?>
+					<option value="<?php echo esc_attr( $language ); ?>" 
+						<?php 
+						if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
+							selected( $_GET['monk_language_filter'], $language ); 
+						} 
+						?>>
+						<?php
+						echo $language;
+						?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+			<?php
 		}
 	}
 
 	/**
 	 * Add parameters to filter by meta_key
 	 *
-	 * @param string $where wpdb query
+	 * @param string $query 
 	 */
-	public function posts_where( $where ) {
-	    if( is_admin() ) {
-	        global $wpdb;       
-	        if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
-	            $language = $_GET['monk_language_filter'];
-
-	            $where .= 'AND ID IN (SELECT post_id FROM ' . $wpdb->postmeta . ' 
-							WHERE meta_key="_monk_languages" AND meta_value="' . $language . '" )';
-	        }
-	    }   
-	    return $where;
+	public function posts_where( $query ) {
+		if ( is_admin() && $query->is_main_query() && $query->is_search() ) {     
+			if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
+				$language = $_GET['monk_language_filter'];
+				$query->set( 'meta_key', '_monk_languages' );
+				$query->set( 'meta_value', $language );
+			}
+		}    
 	}
 
 	/**
@@ -147,7 +138,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function add_custom_column_head( $title ) {
 		$title['languages'] = 'Languages';
-    	return $title;
+		return $title;
 	}
 
 	/**
@@ -158,12 +149,12 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function add_custom_column_content( $column_name, $post_ID ) {
 		if ( $column_name == 'languages' ) {
-	        $languages = get_post_meta( $post_ID, '_monk_languages' );
-	        if ( $languages ) {
-	        	foreach ( $languages as $language ) {
-	        		echo $language . " ";
-	        	}
-	        }
-	    }
+			$languages = get_post_meta( $post_ID, '_monk_languages' );
+			if ( $languages ) {
+				foreach ( $languages as $language ) {
+					echo $language . " ";
+				}
+			}
+		}
 	}
 }

@@ -79,6 +79,11 @@ class Monk_Admin {
 		 * This function does enqueue widget .css files in admin side.
 		 */
 		wp_enqueue_style( 'monk-widgets', plugin_dir_url( __FILE__ ) . 'css/monk-widgets.css', array(), $this->version, 'all' );
+
+		/**
+		 * This function does enqueue flag icon .css files in admin side.
+		 */
+		wp_enqueue_style( 'monk-flags', plugin_dir_url( dirname( __FILE__ ) ) . 'lib/css/flag-icon.css', array(), $this->version, 'all' );
 	}
 
 	/**

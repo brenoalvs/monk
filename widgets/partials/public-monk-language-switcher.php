@@ -17,7 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 if ( isset( $_GET['lang'] ) ) {
 	$select_value = $_GET['lang'];
 } else {
-	$select_value = 'en_EN';
+	$select_value = 'en_US';
 }
 
 $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'monk' );
@@ -27,41 +27,58 @@ $lang  = ! empty( $instance['lang-native'] ) ? true : false;
 
 if ( $lang ){
 	$languages = array(
-		'en_EN' => __( 'English', 'monk' ),
-		'es_ES' => __( 'Español', 'monk' ),
+		'da_DK' => __( 'Dansk', 'monk' ),
+		'en_US' => __( 'English', 'monk' ),
 		'fr_FR' => __( 'Français', 'monk' ),
-		'pt_BR' => __( 'Português', 'monk'),
+		'de_DE' => __( 'Deutsch', 'monk' ),
+		'it_IT' => __( 'Italiano', 'monk' ),
+		'ja'    => __( '日本の', 'monk' ),
+		'pt_BR' => __( 'Português (Brasil)', 'monk' ),
+		'ru_RU' => __( 'Pусский', 'monk' ),
+		'es_ES' => __( 'Español', 'monk' ),
 	);
 } else {
 	$languages = array(
-		'en_EN' => __( 'English', 'monk' ),
-		'es_ES' => __( 'Spanish', 'monk' ),
+		'da_DK' => __( 'Danish', 'monk' ),
+		'en_US' => __( 'English', 'monk' ),
 		'fr_FR' => __( 'French', 'monk' ),
-		'pt_BR' => __( 'Portuguese', 'monk' ),
+		'de_DE' => __( 'German', 'monk' ),
+		'it_IT' => __( 'Italian', 'monk' ),
+		'ja'    => __( 'Japanese', 'monk' ),
+		'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+		'ru_RU' => __( 'Russian', 'monk' ),
+		'es_ES' => __( 'Spanish', 'monk' ),
 	);
 }
 
 $languages_flag = array(
-	'en_EN' => 'http://image.flaticon.com/icons/svg/206/206626.svg',
-	'es_ES' => 'http://image.flaticon.com/icons/svg/206/206724.svg',
-	'fr_FR' => 'http://image.flaticon.com/icons/svg/206/206657.svg',
-	'pt_BR' => 'http://image.flaticon.com/icons/svg/206/206597.svg',
+	'da_DK' => 'flag-icon-dk',
+	'en_US' => 'flag-icon-us',
+	'fr_FR' => 'flag-icon-fr',
+	'de_DE' => 'flag-icon-de',
+	'it_IT' => 'flag-icon-it',
+	'ja'    => 'flag-icon-jp',
+	'pt_BR' => 'flag-icon-br',
+	'ru_RU' => 'flag-icon-ru',
+	'es_ES' => 'flag-icon-es',
 );
+
+$index = get_option( 'monk_active_languages' );
 ?>
 <section id="<?php echo $this->id; ?>" class="widget <?php echo $this->id_base; ?>">
 	<h2 class="widget-title"><?php echo esc_html( $title ); ?></h2>
 	<ul id="monk-selector">
-		<?php foreach ( $languages as $value => $name ) : ?>
+		<?php foreach ( $index as $value ) : ?>
 			<?php if ( strcmp( $value, $select_value ) == 0 ) : ?>
 				<li class="monk-active-lang">
 					<span class="monk-active-lang-name">
 						<?php if ( $flag ) : ?>
-							<img class="monk-selector-flag" src="<?php echo esc_attr( $languages_flag[$value] ) ?>" alt="">
+							<span class="monk-selector-flag flag-icon <?php echo esc_attr( $languages_flag[$value] ); ?>"></span>
 						<?php endif; ?>
-						<?php if ( $name ) : ?>
-							<span><?php echo esc_html( $name ); ?></span>
+						<?php if (  $languages[$value] ) : ?>
+							<span><?php echo esc_html( $languages[$value] ); ?></span>
 						<?php else : ?>
-							<span class="screen-reader-text"><?php echo esc_html( $name ); ?></span>
+							<span class="screen-reader-text"><?php echo esc_html( $languages[$value]); ?></span>
 						<?php endif; ?>
 					</span>
 				</li>
@@ -69,12 +86,12 @@ $languages_flag = array(
 				<li class="monk-lang">
 					<a class="monk-selector-link" href="<?php echo add_query_arg( 'lang', esc_attr( $value, 'monk' ), home_url() ); ?>">
 						<?php if ( $flag ) : ?>
-							<img class="monk-selector-flag" src="<?php echo esc_attr( $languages_flag[$value] ) ?>" alt="">
+							<span class="monk-selector-flag flag-icon <?php echo esc_attr( $languages_flag[$value] ); ?>"></span>
 						<?php endif; ?>
-						<?php if ( $name ) : ?>
-							<span><?php echo esc_html( $name ); ?></span>
+						<?php if ( $languages[$value]) : ?>
+							<span><?php echo esc_html( $languages[$value]); ?></span>
 						<?php else : ?>
-							<span class="screen-reader-text"><?php echo esc_html( $name ); ?></span>
+							<span class="screen-reader-text"><?php echo esc_html( $languages[$value]); ?></span>
 						<?php endif; ?>
 					</a>
 				</li>
