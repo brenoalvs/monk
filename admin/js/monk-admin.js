@@ -54,9 +54,9 @@
 					}
 				}
 			});
-			$( '.monk-add-translation' ).click( function() {
-				console.log('works');
-			});
+		});
+		$( document ).on( 'click', 'span.monk-add-translation', function() {
+			$( '.monk-post-meta-add-translation' ).slideToggle( 200 );
 		});
 	});
 

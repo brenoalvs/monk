@@ -6,14 +6,16 @@
  div.monk-post-meta-text label {
  	font-weight: 600;
  	line-height: 1em;
- 	margin: 0 0 6px 0;
+ 	margin: 0 0 8px 0;
 
  }
 
  div.monk-post-meta-text label:before {
  	font: 400 20px/1 dashicons;
  	color: #82878c;
- 	content: '\f173';
+ 	content: '\f326';
+ 	margin: 0 7px 0 -2px;
+ 	vertical-align: top;
  }
 
  div.monk-post-meta-text h2 {
@@ -23,4 +25,14 @@
  .monk-add-translation {
  	text-decoration: underline;
  	cursor: pointer;
+ }
+
+ .monk-post-meta-add-translation {
+ 	display: none;
+ 	margin: 4px 0 0 0;
+ }
+
+ .monk-post-meta-option:before {
+ 	font: 400 20px/1 dashicons;
+ 	color: #82878c;
  }
