@@ -29,10 +29,19 @@
 
  .monk-post-meta-add-translation {
  	display: none;
- 	margin: 4px 0 0 0;
+ 	margin-top: 15px;
  }
 
  .monk-post-meta-option:before {
  	font: 400 20px/1 dashicons;
  	color: #82878c;
+ }
+
+ .monk-translated-to {
+ 	margin-top: 10px;
+ }
+
+ .monk-translated-to a {
+ 	display: block;
+ 	text-decoration: none;
  }
