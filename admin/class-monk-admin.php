@@ -199,7 +199,7 @@ class Monk_Admin {
 		add_meta_box(
 			'monk_post_meta_box_field',
 			__( 'Post languages', 'monk' ),
-			array( $this, 'monk_post_meta_box_field_render'),
+			array( $this, 'monk_post_meta_box_field_render' ),
 			'',
 			'side',
 			'high',
@@ -213,6 +213,22 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function monk_post_meta_box_field_render( $post ) {
+		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
+		$active_languages      = get_option( 'monk_active_languages' );
+		$post_default_language = get_post_meta( $post->ID, '_monk_post_default_language', true );
+		$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
+		global $current_screen;
+		$available_languages   = array(
+			'da_DK' => __( 'Danish', 'monk' ),
+			'en_US' => __( 'English', 'monk' ),
+			'fr_FR' => __( 'French', 'monk' ),
+			'de_DE' => __( 'German', 'monk' ),
+			'it_IT' => __( 'Italian', 'monk' ),
+			'ja'    => __( 'Japanese', 'monk' ),
+			'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+			'ru_RU' => __( 'Russian', 'monk' ),
+			'es_ES' => __( 'Spanish', 'monk' ),
+		);
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
 	}
 
@@ -222,13 +238,13 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function monk_save_post_meta_box( $post_id ) {
-		if ( !isset( $_POST['monk_post_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
+		if ( ! isset( $_POST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
 			return;
 		}
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
-		if ( !current_user_can( 'edit_post', $post_id ) ) {
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
 		if ( isset( $_REQUEST['monk_post_default_language'] ) ) {
@@ -239,7 +255,7 @@ class Monk_Admin {
 			);
 		}
 		if ( isset( $_REQUEST['monk_post_add_translation'] ) ) {
-			$added_translations = (array) $_POST['monk_post_add_translation'];
+			$added_translations = ( array ) $_POST['monk_post_add_translation'];
 			$added_translations = array_map( 'sanitize_text_field', $added_translations );
 			update_post_meta(
 				$post_id,
