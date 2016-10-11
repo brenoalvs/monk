@@ -129,7 +129,7 @@ class Monk_Admin {
 		add_settings_section(
 			'monk_general_settings',
 			__( 'General Settings', 'monk' ),
-			array( $this, 'monk_general_settings_render'),
+			array( $this, 'monk_general_settings_render' ),
 			'monk_settings'
 		);
 
@@ -160,7 +160,7 @@ class Monk_Admin {
 	 * @since    1.0.0
 	 */
 	public function monk_general_settings_render() {
-		_e( 'Adjust the way you want', 'monk');
+		_e( 'Adjust the way you want', 'monk' );
 	}
 
 	/**

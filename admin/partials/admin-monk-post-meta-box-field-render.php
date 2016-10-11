@@ -10,7 +10,7 @@
  * @subpackage Monk/Admin/Partials
  */
 
-	if ( $current_screen -> action == 'add' || $post_default_language == '' ) : 
+	if ( $current_screen->action == 'add' || $post_default_language == '' ) : 
 	?>
 	<div>
 		<h4><?php _e( 'Default post language', 'monk' ); ?></h4>
@@ -20,14 +20,13 @@
 				foreach ( $available_languages as $lang_code => $lang_name ) :
 					if ( in_array( $lang_code, $active_languages ) ) :
 			?>
-				<option value="<?php echo esc_attr( $lang_name ); ?>"<?php selected( $post_default_language, $lang_name ); ?>>
+				<option value="<?php echo esc_attr( $lang_name ); ?>" <?php selected( $post_default_language, $lang_name ); ?>>
 					<?php echo esc_html( $lang_name ); ?>
 				</option>
 			<?php endif; endforeach; ?>
 			</select>
 		</p>
 	</div>
-
 	<?php else : ?>
 	<div class="monk-post-meta-text">
 		<h2><?php echo __( 'Post in ', 'monk' ) . $post_default_language; ?></h2>
@@ -44,7 +43,7 @@
 						<?php echo $lang_name; ?>
 					</option>
 			<?php endif; endforeach; ?>
-		</select>		
+		</select>
 	</div>
-<?php 
+<?php
 endif;
