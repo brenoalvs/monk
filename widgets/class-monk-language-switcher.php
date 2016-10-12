@@ -131,7 +131,6 @@ class Monk_Language_Switcher extends WP_Widget {
 	public function add_custom_column_content( $column_name, $post_ID ) {
 		if ( $column_name == 'languages' ) {
 			$languages = get_post_meta( $post_ID, '_monk_languages' );
-			$teste = get_post_meta( $post_ID, '_monk_translations_id' );
 			if ( $languages ) {
 				foreach ( $languages as $language ) {
 					require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/monk-language-column.php';
