@@ -22,7 +22,7 @@
  	color: #82878c;
  }
 
- .monk-add-translation {
+ .monk-add-translation, .button-cancel {
  	text-decoration: underline;
  	cursor: pointer;
  }

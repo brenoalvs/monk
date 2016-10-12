@@ -198,7 +198,7 @@ class Monk_Admin {
 	public function monk_post_meta_box() {
 		add_meta_box(
 			'monk_post_meta_box_field',
-			__( 'Post languages', 'monk' ),
+			__( 'Language', 'monk' ),
 			array( $this, 'monk_post_meta_box_field_render' ),
 			'',
 			'side',
@@ -213,6 +213,7 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function monk_post_meta_box_field_render( $post ) {
+		$site_default_language = get_option( 'monk_default_language' );
 		$active_languages      = get_option( 'monk_active_languages' );
 		$post_default_language = get_post_meta( $post->ID, '_monk_post_default_language', true );
 		$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
@@ -231,6 +232,12 @@ class Monk_Admin {
 			'ru_RU' => __( 'Russian', 'monk' ),
 			'es_ES' => __( 'Spanish', 'monk' ),
 		);
+
+		if ( $post_default_language == '' ) {
+			$selected = $available_languages[$site_default_language];
+		} else {
+			$selected = $post_default_language;
+		}
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
 	}
 
@@ -261,12 +268,14 @@ class Monk_Admin {
 		}
 		
 		if ( isset( $_REQUEST['monk_post_add_translation'] ) ) {
-			$added_translations = ( array ) $_POST['monk_post_add_translation'];
-			$added_translations = array_map( 'sanitize_text_field', $added_translations );
+			$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
+			$added_translation     = (string) $_POST['monk_post_add_translation'];
+			array_push( $post_translations, $added_translation );
+			$post_translations = array_map( 'sanitize_text_field', $post_translations );
 			update_post_meta(
 				$post_id,
 				'_monk_post_add_translation',
-				$added_translations
+				$post_translations
 			);
 		}
 	}

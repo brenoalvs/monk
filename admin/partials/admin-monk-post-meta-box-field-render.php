@@ -33,7 +33,7 @@
 		<a class="edit-post-status hide-if-no-js"><span aria-hidden="true" class="monk-add-translation">Add<strong>+</strong></span><span class="screen-reader-text">Add new translation</span></a>
 	</div>
 	<div class="monk-post-meta-add-translation">
-		<select name="monk_post_add_translation[]">
+		<select name="monk_post_add_translation">
 			<?php
 				foreach ( $available_languages as $lang_code => $lang_name ) :
 				$lang_id = sanitize_title( $lang_code );
@@ -44,6 +44,7 @@
 			<?php endif; endforeach; ?>
 		</select>
 		<input type="submit" class="monk-submit-translation button" value="ok" />
+		<a class="monk-cancel-sunmit-translation hide-if-no-js button-cancel">Cancel</a>
 	</div>
 	<ul class="monk-translated-to">
 		<li><?php echo esc_html( $post_default_language ); ?></li>
