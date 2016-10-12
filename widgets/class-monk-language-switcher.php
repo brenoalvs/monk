@@ -93,27 +93,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	public function add_monk_filter() {
 
 		//execute only on the 'post' content type
-		global $post_type;
-		if ( $post_type == 'post' ) {
-			$languages = get_option( 'monk_active_languages' );
-			?>
-			<select name="monk_language_filter" id="monk-language">
-				<option value="">Languages</option>
-				<?php foreach ( $languages as $language ) : ?>
-					<option value="<?php echo esc_attr( $language ); ?>" 
-						<?php 
-						if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
-							selected( $_GET['monk_language_filter'], $language ); 
-						} 
-						?>>
-						<?php
-						echo $language;
-						?>
-					</option>
-				<?php endforeach; ?>
-			</select>
-			<?php
-		}
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/monk-language-filter.php';
 	}
 
 	/**
@@ -123,7 +103,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function posts_where( $query ) {
 		if ( is_admin() && $query->is_main_query() && $query->is_search() ) {     
-			if ( isset( $_GET['monk_language_filter'] ) && !empty( $_GET['monk_language_filter'] ) ) {
+			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) ) {
 				$language = $_GET['monk_language_filter'];
 				$query->set( 'meta_key', '_monk_languages' );
 				$query->set( 'meta_value', $language );
@@ -137,7 +117,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $title Title of the column
 	 */
 	public function add_custom_column_head( $title ) {
-		$title['languages'] = 'Languages';
+		$title['languages'] = __( 'Languages', 'monk' );
 		return $title;
 	}
 
@@ -152,7 +132,7 @@ class Monk_Language_Switcher extends WP_Widget {
 			$languages = get_post_meta( $post_ID, '_monk_languages' );
 			if ( $languages ) {
 				foreach ( $languages as $language ) {
-					echo $language . " ";
+					echo $language . ' ';
 				}
 			}
 		}

@@ -78,7 +78,7 @@ $index = get_option( 'monk_active_languages' );
 						<?php if (  $languages[$value] ) : ?>
 							<span><?php echo esc_html( $languages[$value] ); ?></span>
 						<?php else : ?>
-							<span class="screen-reader-text"><?php echo esc_html( $languages[$value]); ?></span>
+							<span class="screen-reader-text"><?php echo esc_html( $languages[$value] ); ?></span>
 						<?php endif; ?>
 					</span>
 				</li>
@@ -88,10 +88,10 @@ $index = get_option( 'monk_active_languages' );
 						<?php if ( $flag ) : ?>
 							<span class="monk-selector-flag flag-icon <?php echo esc_attr( $languages_flag[$value] ); ?>"></span>
 						<?php endif; ?>
-						<?php if ( $languages[$value]) : ?>
-							<span><?php echo esc_html( $languages[$value]); ?></span>
+						<?php if ( $languages[$value] ) : ?>
+							<span><?php echo esc_html( $languages[$value] ); ?></span>
 						<?php else : ?>
-							<span class="screen-reader-text"><?php echo esc_html( $languages[$value]); ?></span>
+							<span class="screen-reader-text"><?php echo esc_html( $languages[$value] ); ?></span>
 						<?php endif; ?>
 					</a>
 				</li>
