@@ -25,7 +25,9 @@ if ( $post_type == 'post' ) :
 			<?php 
 			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) ) {
 				selected( $_GET['monk_language_filter'], $language ); 
-			} 
+			} elseif ( ! isset( $_GET['monk_language_filter'] ) ) {
+				selected( get_option( 'monk_default_language' ), $language );
+			}
 			?>>
 			<?php
 			echo $language;
