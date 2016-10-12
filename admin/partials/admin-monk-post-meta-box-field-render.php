@@ -26,6 +26,12 @@
 			<?php endif; endforeach; ?>
 			</select>
 		</p>
+		<span>
+			<?php
+				$qvar = get_query_var( 'lang' );
+				echo $qvar;
+			?>
+		</span>
 	</div>
 	<?php else : ?>
 	<div class="monk-post-meta-text">
@@ -43,15 +49,16 @@
 					</option>
 			<?php endif; endforeach; ?>
 		</select>
-		<input type="submit" class="monk-submit-translation button" value="ok" />
-		<a class="monk-cancel-sunmit-translation hide-if-no-js button-cancel">Cancel</a>
+		<input type="submit" class="monk-submit-translation button" value="OK" />
+		<a class="monk-cancel-submit-translation hide-if-no-js button-cancel">Cancel</a>
 	</div>
 	<ul class="monk-translated-to">
 		<li><?php echo esc_html( $post_default_language ); ?></li>
 		<?php
 			foreach ( $available_languages as $lang_code => $lang_name ) :
+				$encoded_url = esc_url( add_query_arg( 'lang', $lang_code, $translation_url ) );
 				if ( in_array( $lang_code, $post_translations ) ) : ?>
-					<li><a href="<?php echo get_edit_post_link( $post->ID, '' ); ?> "><?php echo $lang_name; ?></a></li>
+					<li><a href="<?php echo $encoded_url ?>"><?php echo $lang_name; ?></a></li>
 		<?php	endif; endforeach; ?>
 	</ul>
 <?php

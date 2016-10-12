@@ -207,6 +207,11 @@ class Monk_Admin {
 		);
 	}
 
+	public function monk_add_query_vars( $vars ) {
+		$vars[] = 'lang';
+		return $vars;
+	}
+
 	/**
 	 * Function that makes the view for the post monk meta box
 	 *
@@ -215,6 +220,7 @@ class Monk_Admin {
 	public function monk_post_meta_box_field_render( $post ) {
 		$site_default_language = get_option( 'monk_default_language' );
 		$active_languages      = get_option( 'monk_active_languages' );
+		$translation_url       = admin_url() . 'post-new.php';
 		$post_default_language = get_post_meta( $post->ID, '_monk_post_default_language', true );
 		$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
 		
@@ -238,6 +244,7 @@ class Monk_Admin {
 		} else {
 			$selected = $post_default_language;
 		}
+
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
 	}
 

@@ -58,7 +58,7 @@
 			$( '.monk-post-meta-add-translation' ).slideToggle( 200 );
 		});
 		$( document ).on( 'click', 'a.monk-cancel-submit-translation', function( e ) {
-			$( '.monk-post-meta-add-translation' ).slideup( 200 );
+			$( '.monk-post-meta-add-translation' ).slideUp( 200 );
 			e.preventDefault();
 		});
 		$( document ).on( 'click', 'input.monk-submit-translation', function( e ) {
