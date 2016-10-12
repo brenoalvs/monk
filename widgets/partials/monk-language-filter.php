@@ -14,9 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
-global $post_type;
-if ( $post_type == 'post' ) :
-	$languages = get_option( 'monk_active_languages' );
+$languages = get_option( 'monk_active_languages' );
 ?>
 <select name="monk_language_filter" id="monk-language">
 	<option value="">Languages</option>
@@ -35,4 +33,3 @@ if ( $post_type == 'post' ) :
 		</option>
 	<?php endforeach; ?>
 </select>
-<?php endif;
