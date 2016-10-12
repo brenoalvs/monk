@@ -91,8 +91,6 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * Add select filter
 	 */
 	public function add_monk_filter() {
-
-		//execute only on the 'post' content type
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/monk-language-filter.php';
 	}
 
