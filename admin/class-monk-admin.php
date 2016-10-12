@@ -129,7 +129,7 @@ class Monk_Admin {
 		add_settings_section(
 			'monk_general_settings',
 			__( 'General Settings', 'monk' ),
-			array( $this, 'monk_general_settings_render'),
+			array( $this, 'monk_general_settings_render' ),
 			'monk_settings'
 		);
 
@@ -160,7 +160,7 @@ class Monk_Admin {
 	 * @since    1.0.0
 	 */
 	public function monk_general_settings_render() {
-		_e( 'Adjust the way you want', 'monk');
+		_e( 'Adjust the way you want', 'monk' );
 	}
 
 	/**
@@ -182,11 +182,92 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to render the admin page for the plugin
+	 * Function to render the admin settings page for the plugin
 	 *
 	 * @since    1.0.0
 	 */
 	public function monk_settings_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
+	}
+
+	/**
+	 * Function to create the main language meta box for posts
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_post_meta_box() {
+		add_meta_box(
+			'monk_post_meta_box_field',
+			__( 'Post languages', 'monk' ),
+			array( $this, 'monk_post_meta_box_field_render' ),
+			'',
+			'side',
+			'high',
+			''
+		);
+	}
+
+	/**
+	 * Function that makes the view for the post monk meta box
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_post_meta_box_field_render( $post ) {
+		$active_languages      = get_option( 'monk_active_languages' );
+		$post_default_language = get_post_meta( $post->ID, '_monk_post_default_language', true );
+		$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
+		
+		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
+		global $current_screen;
+
+		$available_languages   = array(
+			'da_DK' => __( 'Danish', 'monk' ),
+			'en_US' => __( 'English', 'monk' ),
+			'fr_FR' => __( 'French', 'monk' ),
+			'de_DE' => __( 'German', 'monk' ),
+			'it_IT' => __( 'Italian', 'monk' ),
+			'ja'    => __( 'Japanese', 'monk' ),
+			'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+			'ru_RU' => __( 'Russian', 'monk' ),
+			'es_ES' => __( 'Spanish', 'monk' ),
+		);
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
+	}
+
+	/**
+	 * Function to save data from the monk post meta box
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_save_post_meta_box( $post_id ) {
+		if ( ! isset( $_POST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+
+		if ( isset( $_REQUEST['monk_post_default_language'] ) ) {
+			update_post_meta(
+				$post_id,
+				'_monk_post_default_language',
+				sanitize_text_field( $_POST['monk_post_default_language'] )
+			);
+		}
+		
+		if ( isset( $_REQUEST['monk_post_add_translation'] ) ) {
+			$added_translations = ( array ) $_POST['monk_post_add_translation'];
+			$added_translations = array_map( 'sanitize_text_field', $added_translations );
+			update_post_meta(
+				$post_id,
+				'_monk_post_add_translation',
+				$added_translations
+			);
+		}
 	}
 }

@@ -2,3 +2,46 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+ div.monk-post-meta-text label {
+ 	font-weight: 600;
+ 	line-height: 1em;
+ 	margin: 0 0 8px 0;
+
+ }
+
+ div.monk-post-meta-text label:before {
+ 	font: 400 20px/1 dashicons;
+ 	color: #82878c;
+ 	content: '\f326';
+ 	margin: 0 7px 0 -2px;
+ 	vertical-align: top;
+ }
+
+ div.monk-post-meta-text h2 {
+ 	color: #82878c;
+ }
+
+ .monk-add-translation {
+ 	text-decoration: underline;
+ 	cursor: pointer;
+ }
+
+ .monk-post-meta-add-translation {
+ 	display: none;
+ 	margin-top: 15px;
+ }
+
+ .monk-post-meta-option:before {
+ 	font: 400 20px/1 dashicons;
+ 	color: #82878c;
+ }
+
+ .monk-translated-to {
+ 	margin-top: 10px;
+ }
+
+ .monk-translated-to a {
+ 	display: block;
+ 	text-decoration: none;
+ }
