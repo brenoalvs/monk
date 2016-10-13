@@ -194,6 +194,8 @@ class Monk {
 		$this->loader->add_action( 'manage_posts_custom_column', $monk_widget, 'add_custom_column_content', 10, 2 );
 		$this->loader->add_filter( 'pre_get_posts', $monk_widget, 'posts_where' );
 		$this->loader->add_filter( 'manage_posts_columns', $monk_widget, 'add_custom_column_head' );
+		$this->loader->add_action( 'manage_pages_custom_column', $monk_widget, 'add_custom_column_content', 10, 2 );
+		$this->loader->add_filter( 'manage_pages_columns', $monk_widget, 'add_custom_column_head' );
 	}
 
 	/**

@@ -100,14 +100,28 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param string $query 
 	 */
 	public function posts_where( $query ) {
-		if ( is_admin() && $query->is_main_query() ) {     
-			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && $query->is_search() ) {
+		if ( is_admin() && $query->is_main_query() ) {
+			$languages = get_post_meta( $post_ID, '_monk_languages' );    
+			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && strcmp( $_GET['monk_language_filter'], 'en_US' ) != 0 && $query->is_search() ) {
 				$language = $_GET['monk_language_filter'];
+
 				$query->set( 'meta_key', '_monk_languages' );
 				$query->set( 'meta_value', $language );
-			} elseif ( ! isset( $_GET['monk_language_filter'] ) ) {
-				$query->set( 'meta_key', '_monk_languages' );
-				$query->set( 'meta_value', get_option( 'monk_default_language' ) );
+			} elseif ( ! isset( $_GET['monk_language_filter'] ) || strcmp( $_GET['monk_language_filter'], 'en_US' ) == 0 ) {
+				$language = get_option( 'monk_default_language' );
+				
+				$meta_query_args = array(
+					'relation' => 'OR', // Optional, defaults to "AND"
+					array(
+						'key'     => '_monk_languages',
+						'value'   => $language,
+					),
+					array(
+						'key'     => '_monk_languages',
+						'compare' => 'NOT EXISTS'
+					)
+				);
+				$query->set( 'meta_query', $meta_query_args );
 			}
 		}    
 	}
@@ -130,12 +144,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function add_custom_column_content( $column_name, $post_ID ) {
 		if ( $column_name == 'languages' ) {
-			$languages = get_post_meta( $post_ID, '_monk_languages' );
-			if ( $languages ) {
-				foreach ( $languages as $language ) {
-					require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/monk-language-column.php';
-				}
-			}
+			require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/monk-language-column.php';
 		}
 	}
 }
