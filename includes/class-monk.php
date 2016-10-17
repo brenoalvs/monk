@@ -161,6 +161,8 @@ class Monk {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
+
+		$this->loader->add_filter( 'query_vars', $plugin_admin, 'monk_add_query_vars' );
 	}
 
 	/**

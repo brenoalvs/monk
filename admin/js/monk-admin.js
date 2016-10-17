@@ -57,6 +57,10 @@
 		$( document ).on( 'click', 'span.monk-add-translation', function() {
 			$( '.monk-post-meta-add-translation' ).slideToggle( 200 );
 		});
+		$( document ).on( 'click', 'a.monk-cancel-submit-translation', function( e ) {
+			$( '.monk-post-meta-add-translation' ).slideUp( 200 );
+			e.preventDefault();
+		});
 		$( document ).on( 'click', 'input.monk-submit-translation', function( e ) {
 			e.preventDefault();
 		});
