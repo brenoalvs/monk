@@ -83,6 +83,11 @@ class Monk_Public {
 		 * This function does enqueue monk widget .css files in public side.
 		 */
 		wp_enqueue_style( 'public-monk-language-switcher-style', plugin_dir_url( __FILE__ ) . 'css/monk-widget.css', array(), $this->version, 'all' );
+
+		/**
+		 * This function does enqueue flag icon .css files in public side.
+		 */
+		wp_enqueue_style( 'monk-flags', plugin_dir_url( dirname( __FILE__ ) ) . 'lib/css/flag-icon.css', array(), $this->version, 'all' );
 	}
 
 	/**
