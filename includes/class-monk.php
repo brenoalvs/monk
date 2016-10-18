@@ -159,10 +159,26 @@ class Monk {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
-		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
-		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
+		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 
-		$this->loader->add_filter( 'query_vars', $plugin_admin, 'monk_add_query_vars' );
+		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
+		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_languages_filter' );
+
+		$args = array(
+		   'public'   => true,
+		   '_builtin' => true
+		);
+
+		$output = 'names'; // names or objects, note names is the default
+		$operator = 'and'; // 'and' or 'or'
+
+		$post_types = get_post_types( $args, $output, $operator );
+		$post_types['posts'] = 'posts';
+		$post_types['pages'] = 'pages';
+		foreach ( $post_types  as $post_type ) {
+			$this->loader->add_action( 'manage_' . $post_type . '_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
+			$this->loader->add_filter( 'manage_' . $post_type . '_columns', $plugin_admin, 'monk_language_column_head' );
+		}
 	}
 
 	/**
@@ -190,16 +206,8 @@ class Monk {
 
 		$monk_widget   = new Monk_Language_Switcher();
 
-
 		$this->loader->add_action( 'widgets_init', $this, 'register_widgets' );
 		$this->loader->add_action( 'customize_register', $this, 'monk_language_customizer' );
-		$this->loader->add_action( 'wp_head', $monk_widget, 'monk_customize_css' );
-		$this->loader->add_action( 'restrict_manage_posts', $monk_widget, 'add_monk_filter' );
-		$this->loader->add_action( 'manage_posts_custom_column', $monk_widget, 'add_custom_column_content', 10, 2 );
-		$this->loader->add_filter( 'pre_get_posts', $monk_widget, 'posts_where' );
-		$this->loader->add_filter( 'manage_posts_columns', $monk_widget, 'add_custom_column_head' );
-		$this->loader->add_action( 'manage_pages_custom_column', $monk_widget, 'add_custom_column_content', 10, 2 );
-		$this->loader->add_filter( 'manage_pages_columns', $monk_widget, 'add_custom_column_head' );
 	}
 
 	/**
@@ -225,8 +233,8 @@ class Monk {
 	public function monk_language_customizer( $wp_customize ) {
 		
 		$wp_customize->add_section( 'monk_selector' , array(
-		    'title'    => __( 'Monk Selector', 'monk' ),
-		    'priority' => 4,
+			'title'    => __( 'Monk Selector', 'monk' ),
+			'priority' => 4,
 		));
 
 		/**

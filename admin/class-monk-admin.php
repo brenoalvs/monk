@@ -291,4 +291,80 @@ class Monk_Admin {
 			);
 		}
 	}
+
+	/**
+	 * Include styles related to Customize options
+	 */
+	public function monk_customize_css() {
+		?>
+		<style type="text/css">
+			#monk-selector { border-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
+			.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color' ) ); ?>; }
+			.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color' ) ); ?>; }
+			#monk-selector .monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
+			.monk-selector-link { color: <?php echo esc_attr( get_option( 'monk_lang_color' ) ); ?>; }
+			.monk-selector-arrow { color: <?php esc_attr_e( get_option( 'monk_selector_color' ) ); ?>; }
+		</style>
+		<?php
+	}
+
+	/**
+	 * Add select filter
+	 */
+	public function monk_admin_languages_selector() {
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
+	}
+
+	/**
+	 * Add parameters to filter by meta_key
+	 *
+	 * @param string $query 
+	 */
+	public function monk_admin_languages_filter( $query ) {
+		if ( is_admin() && $query->is_main_query() ) {   
+			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && strcmp( $_GET['monk_language_filter'], 'en_US' ) != 0 && $query->is_search() ) {
+				$language = $_GET['monk_language_filter'];
+
+				$query->set( 'meta_key', '_monk_languages' );
+				$query->set( 'meta_value', $language );
+			} elseif ( ! isset( $_GET['monk_language_filter'] ) || 0 === strcmp( $_GET['monk_language_filter'], 'en_US' ) ) {
+				$language = get_option( 'monk_default_language' );
+				
+				$meta_query_args = array(
+					'relation' => 'OR', // Optional, defaults to "AND"
+					array(
+						'key'     => '_monk_languages',
+						'value'   => $language,
+					),
+					array(
+						'key'     => '_monk_languages',
+						'compare' => 'NOT EXISTS'
+					)
+				);
+				$query->set( 'meta_query', $meta_query_args );
+			}
+		}    
+	}
+
+	/**
+	 * Include styles related to Customize options
+	 *
+	 * @param array $title Title of the column
+	 */
+	public function monk_language_column_head( $title ) {
+		$title['languages'] = __( 'Languages', 'monk' );
+		return $title;
+	}
+
+	/**
+	 * Include styles related to Customize options
+	 *
+	 * @param string $colum_name Title of the column
+	 * @param string $post_ID    Post id
+	 */
+	public function monk_language_column_content( $column_name, $post_ID ) {
+		if ( 'languages' === $column_name ) {
+			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
+		}
+	}
 }
