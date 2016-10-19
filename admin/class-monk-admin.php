@@ -212,22 +212,19 @@ class Monk_Admin {
 		);
 	}
 
-	public function monk_add_query_vars( $vars ) {
-		$vars[] = 'lang';
-		return $vars;
-	}
-
 	/**
 	 * Function that makes the view for the post monk meta box
+	 *
+	 * @param    $post
 	 *
 	 * @since    1.0.0
 	*/
 	public function monk_post_meta_box_field_render( $post ) {
 		$site_default_language = get_option( 'monk_default_language' );
 		$active_languages      = get_option( 'monk_active_languages' );
-		$translation_url       = admin_url() . 'post-new.php';
-		$post_default_language = get_post_meta( $post->ID, '_monk_post_default_language', true );
-		$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
+		$post_default_language = get_post_meta( $post->ID, '_monk_post_language', true );
+		$post_translation      = get_post_meta( $post->ID, '_monk_post_translation_id', true ) ? get_post_meta( $post->ID, '_monk_post_translation_id', true ) : array();
+		$translated_posts      = get_post_meta( $post->ID, '_monk_translated_posts' );
 		
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 		global $current_screen;
@@ -244,6 +241,12 @@ class Monk_Admin {
 			'es_ES' => __( 'Spanish', 'monk' ),
 		);
 
+		if ( function_exists( 'admin_url' ) ) {
+			$monk_translation_url = admin_url() . 'post-new.php';
+		} else {
+			$monk_translation_url = get_option( 'siteurl' ) . '/wp-admin/' . 'post-new.php';
+		}
+
 		if ( $post_default_language == '' ) {
 			$selected = $available_languages[$site_default_language];
 		} else {
@@ -256,10 +259,12 @@ class Monk_Admin {
 	/**
 	 * Function to save data from the monk post meta box
 	 *
+	 * @param    $post_id
+	 *
 	 * @since    1.0.0
 	*/
 	public function monk_save_post_meta_box( $post_id ) {
-		if ( ! isset( $_POST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
+		if ( ! isset( $_REQUEST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
 			return;
 		}
 
@@ -271,24 +276,45 @@ class Monk_Admin {
 			return;
 		}
 
-		if ( isset( $_REQUEST['monk_post_default_language'] ) ) {
+		if ( isset( $_REQUEST['monk_post_language'] ) ) {
 			update_post_meta(
 				$post_id,
-				'_monk_post_default_language',
-				sanitize_text_field( $_POST['monk_post_default_language'] )
+				'_monk_post_language',
+				sanitize_text_field( $_REQUEST['monk_post_language'] )
 			);
 		}
 		
-		if ( isset( $_REQUEST['monk_post_add_translation'] ) ) {
-			$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
-			$added_translation     = (string) $_POST['monk_post_add_translation'];
-			array_push( $post_translations, $added_translation );
-			$post_translations = array_map( 'sanitize_text_field', $post_translations );
+		if ( isset( $_REQUEST['monk_post_translation_id'] ) ) {
+			$post_translation[] = get_post_meta( $post->ID, '_monk_post_translation_id', true ) ? get_post_meta( $post->ID, '_monk_post_translation_id', true ) : array();
+			$added_translation  = ( string ) $_POST['monk_post_translation_id'];
+			array_push( $post_translation, $added_translation );
+			$post_translation = array_map( 'sanitize_text_field', $post_translation );
 			update_post_meta(
 				$post_id,
-				'_monk_post_add_translation',
-				$post_translations
+				'_monk_post_translation_id',
+				$post_translation
 			);
 		}
+
+		// if ( isset( $_REQUEST['monk_translated_post_id'] ) && isset( $_REQUEST['monk_translated_post_lang'] ) ) {
+		// 	$translation_request     = get_post_meta( $post->ID, '_monk_translated_posts', true );
+		// 	$new_translation_request = [
+		// 		$_REQUEST['monk_translated_post_id'] => $_REQUEST['monk_translated_post_lang']
+		// 	];
+		// 	if ( $translation_request != NULL ) {
+		// 		update_post_meta(
+		// 			$post_id,
+		// 			'_monk_translated_posts',
+		// 			$translation_request
+		// 		);
+		// 	} else {
+		// 		array_push( $translation_request, $new_translation_request);
+		// 		update_post_meta(
+		// 			$post_id,
+		// 			'_monk_translated_posts',
+		// 			$translation_request
+		// 		);
+		// 	}
+		// }
 	}
 }
