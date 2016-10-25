@@ -66,12 +66,12 @@
 						$lang_name = $available_languages[$lang_code];
 			?>
 					<option  value="<?php echo $encoded_url; ?>"/>
-						<?php echo $lang_name; ?>
+						<?php esc_html( $lang_name ); ?>
 					</option>
 			<?php endif; endforeach; ?>
 		</select>
-		<button class="monk-submit-translation button">OK</button>
-		<a class="monk-cancel-submit-translation hide-if-no-js button-cancel">Cancel</a>
+		<button class="monk-submit-translation button"><?php _e( 'Ok', 'monk' ); ?></button>
+		<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php _e( 'Cancel', 'monk' ); ?></a>
 	</div>
 	<ul class="monk-translated-to">
 		<li>
@@ -80,9 +80,9 @@
 		<?php
 			foreach ( $post_translations as $lang_code => $monk_id ) :
 				if ( $monk_id != $post->ID ) :
-					$encoded_url = esc_url( get_edit_post_link( $monk_id ) ); ?>
+					$encoded_url = get_edit_post_link( $monk_id ); ?>
 					<li>
-						<a href="<?php echo $encoded_url; ?>"><?php echo $available_languages[$lang_code]; ?></a>
+						<a href="<?php echo esc_url( $encoded_url) ; ?>"><?php esc_html_e( $available_languages[$lang_code] ); ?></a>
 					</li>
 		<?php 	endif;
 				endforeach;

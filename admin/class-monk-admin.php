@@ -252,7 +252,7 @@ class Monk_Admin {
 			'es_ES' => __( 'Spanish', 'monk' ),
 		);
 
-		$monk_translation_url = admin_url() . 'post-new.php';
+		$monk_translation_url = admin_url( 'post-new.php' );
 
 		if ( $post_default_language == '' ) {
 			$selected = $available_languages[$site_default_language];
