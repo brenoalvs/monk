@@ -45,3 +45,8 @@
  	display: block;
  	text-decoration: none;
  }
+
+ .option-disabled {
+ 	opacity: 0.5;
+ 	pointer-events: none;
+ }

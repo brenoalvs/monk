@@ -234,10 +234,8 @@ class Monk_Admin {
 	public function monk_post_meta_box_field_render( $post ) {
 		$site_default_language = get_option( 'monk_default_language' );
 		$active_languages      = get_option( 'monk_active_languages' );
-		$monk_meta_id          = get_post_meta( $post->ID, '_monk_meta_id', true );
+		$monk_id               = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language = get_post_meta( $post->ID, '_monk_post_language', true );
-		$post_translation      = get_post_meta( $post->ID, '_monk_post_translation_id', true ) ? get_post_meta( $post->ID, '_monk_post_translation_id', true ) : array();
-		$translated_posts      = get_post_meta( $post->ID, '_monk_translated_posts' );
 		
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 		global $current_screen;
@@ -254,11 +252,7 @@ class Monk_Admin {
 			'es_ES' => __( 'Spanish', 'monk' ),
 		);
 
-		if ( function_exists( 'admin_url' ) ) {
-			$monk_translation_url = admin_url() . 'post-new.php';
-		} else {
-			$monk_translation_url = get_option( 'siteurl' ) . '/wp-admin/' . 'post-new.php';
-		}
+		$monk_translation_url = admin_url( 'post-new.php' );
 
 		if ( $post_default_language == '' ) {
 			$selected = $available_languages[$site_default_language];
@@ -309,20 +303,18 @@ class Monk_Admin {
 		if ( isset( $_REQUEST['monk_id'] ) && isset( $_REQUEST['monk_post_language'] ) ) {
 			$option_name = 'monk_post_translations_' . $_REQUEST['monk_id'];
 			$post_lang   = $_REQUEST['monk_post_language'];
-			if ( get_option( $option_name ) !== false ) {
-				$current_post_status = get_option( $option_name );
-				if ( ! wp_is_post_revision( $post_id ) ) {
-					$current_post_status[$post_id] = $post_lang;
+			if ( ! wp_is_post_revision( $post_id ) ) {
+				if ( get_option( $option_name ) !== false ) {
+					$current_post_status = get_option( $option_name );
+					$current_post_status[$post_lang] = $post_id;
 					update_option( $option_name, $current_post_status );
-				}
-			} else {
-				if ( ! wp_is_post_revision( $post_id ) ) {
-					add_option( $option_name, array( $post_id => $post_lang ), null, 'no' );
+				} else {
+					add_option( $option_name, array( $post_lang => $post_id ), null, 'no' );
 				}
 			}
 			update_post_meta(
 				$post_id,
-				'_monk_meta_id',
+				'_monk_post_translations_id',
 				sanitize_text_field( $_REQUEST['monk_id'] )
 			);
 		}
