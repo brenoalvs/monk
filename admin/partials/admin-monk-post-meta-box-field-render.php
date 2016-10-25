@@ -64,7 +64,7 @@
 						$lang_name = $available_languages[$lang_code];
 			?>
 					<option  value="<?php echo esc_url( $encoded_url ); ?>"/>
-						<?php esc_html( $lang_name ); ?>
+						<?php echo esc_html( $lang_name ); ?>
 					</option>
 			<?php endif; endforeach; ?>
 		</select>
