@@ -55,17 +55,15 @@
 				$option_current_name = 'monk_post_translations_' . $monk_id;
 				$post_translations = get_option( $option_current_name );
 				foreach ( $active_languages as $lang_code ) :
-					$encoded_url = esc_url(
-						add_query_arg( array(
+					$encoded_url = add_query_arg( array(
 							'lang'    => $lang_code,
 							'monk_id' => $monk_id
-						), $monk_translation_url )
-					);
+						), $monk_translation_url );
 					$lang_id = sanitize_title( $lang_code );
 					if ( array_key_exists( $lang_code, $available_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
 						$lang_name = $available_languages[$lang_code];
 			?>
-					<option  value="<?php echo $encoded_url; ?>"/>
+					<option  value="<?php echo esc_url( $encoded_url ); ?>"/>
 						<?php esc_html( $lang_name ); ?>
 					</option>
 			<?php endif; endforeach; ?>
