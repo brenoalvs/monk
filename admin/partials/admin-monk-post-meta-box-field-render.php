@@ -13,8 +13,11 @@
 		$lang    = $_GET['lang'];
 		$monk_id = $_GET['monk_id'];
 	} else {
-		$lang = $site_default_language;
-		$monk_id = '123';
+		$lang    = $site_default_language;
+		$monk_id = $monk_meta_id;
+		if ( empty( $monk_id ) ) {
+			$monk_id = $post->ID;
+		}
 	}
 ?>
 <input type="hidden" name="monk_id" value="<?php echo $monk_id; ?>" />
@@ -53,7 +56,7 @@
 					$encoded_url = esc_url(
 						add_query_arg( array(
 							'lang'    => $lang_code,
-							'monk_id' => '123'
+							'monk_id' => $monk_id
 							), $monk_translation_url
 						)
 					);
@@ -74,13 +77,22 @@
 			<?php echo esc_html( $available_languages[$post_default_language] ); ?>
 		</li>
 		<?php
-			$post_translations = get_option( 'monk_post_translations_123' );
-			foreach ( $post_translations as $monk_post_id => $lang_code ) :
-				$encoded_url = esc_url( get_edit_post_link( $monk_post_id ) ); ?>
-					<li>
-						<a href="<?php echo $encoded_url; ?>"><?php echo $available_languages[$lang_code]; ?></a>
-					</li>
-		<?php endforeach; ?>
+			$option_current_name = 'monk_post_translations_' . $monk_id;
+			//if ( get_option( $option_current_name ) !== false ) :
+				$post_translations = get_option( $option_current_name );
+				foreach ( $post_translations as $monk_post_id => $lang_code ) :
+					if ( $monk_post_id != $post->ID ) :
+						$encoded_url = esc_url( get_edit_post_link( $monk_post_id ) ); ?>
+						<li>
+							<a href="<?php echo $encoded_url; ?>"><?php echo $available_languages[$lang_code]; ?></a>
+						</li>
+		<?php 	endif;
+				endforeach;
+				if ( count( $post_translations ) == 1 ) : ?>
+					<span class="monk-add-translation">
+					<?php _e( 'Not translated, add one', 'monk' ); ?>
+					</span>
+		<?php   endif; ?>
 	</ul>
 <?php
 endif;
