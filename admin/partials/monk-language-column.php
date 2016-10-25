@@ -15,43 +15,30 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 $languages        = get_post_meta( $post_ID, '_monk_post_language' );
+$monk_satan_id    = get_post_meta( $post_ID, '_monk_post_translations_id', true );
+$monk_satan       = get_option( 'monk_post_translations_' . $monk_satan_id );
 $default_language = get_option( 'monk_default_language' );
+$base_url         = admin_url( 'post.php?action=edit' );
 
-$languages_flag = array(
-	'da_DK' => 'flag-icon-dk',
-	'en_US' => 'flag-icon-us',
-	'fr_FR' => 'flag-icon-fr',
-	'de_DE' => 'flag-icon-de',
-	'it_IT' => 'flag-icon-it',
-	'ja'    => 'flag-icon-jp',
-	'pt_BR' => 'flag-icon-br',
-	'ru_RU' => 'flag-icon-ru',
-	'es_ES' => 'flag-icon-es',
-);
-
-$base_url = admin_url( 'post.php?action=edit' );
-
-if ( $languages ) :
+if ( $monk_satan ) :
 ?>
 	<?php
-		foreach ( $languages as $language ) :
+		foreach ( $monk_satan as $lang_code => $id ) :
 			$post_url = add_query_arg( array(
-				'post' => $post_ID,
-				'lang' => $language,
+				'post' => $id,
 			), $base_url );
 	?>
 	<a href="<?php echo esc_url( $post_url ); ?>">
-		<span class="monk-selector-flag flag-icon <?php echo esc_attr( $languages_flag[$language] ); ?>"></span>
+		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $lang_code ); ?>"></span>
 	</a>
 	<?php endforeach; ?>
 <?php 
 	else: 
 		$post_url = add_query_arg( array(
 				'post' => $post_ID,
-				'lang' => $default_language,
 			), $base_url );
 ?>
 	<a href="<?php echo esc_url( $post_url ); ?>">
-		<span class="monk-selector-flag flag-icon <?php echo esc_attr( $languages_flag[$default_language] ); ?>"></span>
+		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
 	</a>
 <?php endif; ?>
