@@ -100,8 +100,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param string $query 
 	 */
 	public function posts_where( $query ) {
-		if ( is_admin() && $query->is_main_query() ) {
-			$languages = get_post_meta( $post_ID, '_monk_languages' );    
+		if ( is_admin() && $query->is_main_query() ) {   
 			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && strcmp( $_GET['monk_language_filter'], 'en_US' ) != 0 && $query->is_search() ) {
 				$language = $_GET['monk_language_filter'];
 
