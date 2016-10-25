@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Monk
- * @subpackage Monk/Widgets/Partials
+ * @subpackage Monk/Admin/Partials
  */
 
 // If this file is called directly, abort.
@@ -14,10 +14,11 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
+global $monk_languages;
 $languages = get_option( 'monk_active_languages' );
 ?>
 <select name="monk_language_filter" id="monk-language">
-	<option value="">Languages</option>
+	<option value=""><?php esc_html_e( 'All Languages', 'monk' ); ?></option>
 	<?php foreach ( $languages as $language ) : ?>
 		<option value="<?php echo esc_attr( $language ); ?>" 
 			<?php 
@@ -28,7 +29,7 @@ $languages = get_option( 'monk_active_languages' );
 			}
 			?>>
 			<?php
-			echo $language;
+			echo esc_html( $monk_languages[$language]['name'] );
 			?>
 		</option>
 	<?php endforeach; ?>
