@@ -111,6 +111,11 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-monk-i18n.php';
 
 		/**
+		 * Imports global array with translatable and native language names.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/monk-available-languages.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-monk-admin.php';
