@@ -290,7 +290,8 @@ class Monk_Admin {
 		 *
 		 * This section creates a post metadata to save the id
 		 * of the 'parent' post, witch is the first to be created and
-		 * then translated 
+		 * then translated. The translation posts will have that metadata
+		 * being the same as the first, the 'parent'
 		*/
 
 		if ( isset( $_REQUEST['monk_id'] ) && isset( $_REQUEST['monk_post_language'] ) ) {
