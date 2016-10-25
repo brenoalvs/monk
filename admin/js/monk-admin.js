@@ -31,25 +31,22 @@
 
 	$( document ).ready( function() {
 		$( document ).on( 'change', 'select[name="monk_default_language"]', function() {
-			var default_language  = $( 'input[type="hidden"][name="monk_active_languages[]"]' ).val();
 			var selected_language = $( this ).val();
 			$( 'input[type="checkbox"][name="monk_active_languages[]"]' ).each( function() {
 				var current_language = $( this ).val();
 				if ( current_language === selected_language ) {
 					$( this ).prop({
-						'disabled': true,
 						'checked': true
 					});
+					$( this ).parent().addClass( 'option-disabled' );
 				} else {
 					if ( $( this ).hasClass( 'monk-saved-language' ) ) {
-						$( this ).prop({
-							'disabled': false
-						});
+						$( this ).parent().removeClass( 'option-disabled' );
 					} else {
 						$( this ).prop({
-							'disabled': false,
 							'checked': false
 						});
+						$( this ).parent().removeClass( 'option-disabled' );
 					}
 				}
 			});
