@@ -70,7 +70,6 @@ class Monk_Language_Switcher extends WP_Widget {
 
 		return $instance;
 	}
-<<<<<<< HEAD
 
 	/**
 	 * Include styles related to Customize options
@@ -147,6 +146,4 @@ class Monk_Language_Switcher extends WP_Widget {
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/monk-language-column.php';
 		}
 	}
-=======
->>>>>>> 02db13cb7795b7f1717e43dbe776b45f4df45ec0
 }

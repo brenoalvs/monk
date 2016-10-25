@@ -126,7 +126,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to create a section for General Options in the administration menu
+	 * Function to create a section for the Monk General Options in the administration menu
 	 *
 	 * @since    1.0.0
 	 */
@@ -174,6 +174,18 @@ class Monk_Admin {
 	 * @since    1.0.0
 	 */
 	public function monk_default_language_render() {
+		$default_language = get_option( 'monk_default_language' );
+		$available_languages = array(
+			'da_DK' => __( 'Danish', 'monk' ),
+			'en_US' => __( 'English', 'monk' ),
+			'fr_FR' => __( 'French', 'monk' ),
+			'de_DE' => __( 'German', 'monk' ),
+			'it_IT' => __( 'Italian', 'monk' ),
+			'ja'    => __( 'Japanese', 'monk' ),
+			'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+			'ru_RU' => __( 'Russian', 'monk' ),
+			'es_ES' => __( 'Spanish', 'monk' ),
+		);
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-render.php';
 	}
 
@@ -419,23 +431,22 @@ class Monk_Admin {
 	 * @param string $query 
 	 */
 	public function monk_admin_languages_filter( $query ) {
-		if ( is_admin() && $query->is_main_query() ) {   
-			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && strcmp( $_GET['monk_language_filter'], 'en_US' ) != 0 && $query->is_search() ) {
+		if ( is_admin() && $query->is_main_query() ) {  
+			$language = get_option( 'monk_default_language' ); 
+			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && 0 !== strcmp( $_GET['monk_language_filter'], $language ) && $query->is_search() ) {
 				$language = $_GET['monk_language_filter'];
 
-				$query->set( 'meta_key', '_monk_languages' );
+				$query->set( 'meta_key', '_monk_post_language' );
 				$query->set( 'meta_value', $language );
-			} elseif ( ! isset( $_GET['monk_language_filter'] ) || 0 === strcmp( $_GET['monk_language_filter'], 'en_US' ) ) {
-				$language = get_option( 'monk_default_language' );
-				
+			} elseif ( ! isset( $_GET['monk_language_filter'] ) || 0 === strcmp( $_GET['monk_language_filter'], $language ) ) {
 				$meta_query_args = array(
 					'relation' => 'OR', // Optional, defaults to "AND"
 					array(
-						'key'     => '_monk_languages',
+						'key'     => '_monk_post_language',
 						'value'   => $language,
 					),
 					array(
-						'key'     => '_monk_languages',
+						'key'     => '_monk_post_language',
 						'compare' => 'NOT EXISTS'
 					)
 				);
