@@ -21,11 +21,11 @@ if ( isset( $_GET['lang'] ) ) {
 }
 
 global $monk_languages;
-$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'monk' );
-$flag  = ! empty( $instance['flag'] ) ? true : false;
-$name  = ! empty( $instance['name'] ) ? true : false;
-$lang  = ! empty( $instance['lang-native'] ) ? true : false;
-$lang_type = $lang ? 'native_name' : 'name';
+$title            = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'monk' );
+$flag             = ! empty( $instance['flag'] ) ? true : false;
+$name             = ! empty( $instance['name'] ) ? true : false;
+$lang             = ! empty( $instance['lang-native'] ) ? true : false;
+$lang_type        = $lang ? 'native_name' : 'name';
 $active_languages = get_option( 'monk_active_languages' );
 
 ?>
