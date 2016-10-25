@@ -61,8 +61,10 @@
 			$( '.monk-post-meta-add-translation' ).slideUp( 200 );
 			e.preventDefault();
 		});
-		$( document ).on( 'click', 'input.monk-submit-translation', function( e ) {
+		$( document ).on( 'click', 'button.monk-submit-translation', function( e ) {
 			e.preventDefault();
+			var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
+			window.location.replace( encoded_url );
 		});
 	});
 

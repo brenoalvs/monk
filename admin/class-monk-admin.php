@@ -126,7 +126,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to create a section for General Options in the administration menu
+	 * Function to create a section for the Monk General Options in the administration menu
 	 *
 	 * @since    1.0.0
 	 */
@@ -174,6 +174,18 @@ class Monk_Admin {
 	 * @since    1.0.0
 	 */
 	public function monk_default_language_render() {
+		$default_language = get_option( 'monk_default_language' );
+		$available_languages = array(
+			'da_DK' => __( 'Danish', 'monk' ),
+			'en_US' => __( 'English', 'monk' ),
+			'fr_FR' => __( 'French', 'monk' ),
+			'de_DE' => __( 'German', 'monk' ),
+			'it_IT' => __( 'Italian', 'monk' ),
+			'ja'    => __( 'Japanese', 'monk' ),
+			'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
+			'ru_RU' => __( 'Russian', 'monk' ),
+			'es_ES' => __( 'Spanish', 'monk' ),
+		);
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-render.php';
 	}
 
@@ -212,22 +224,20 @@ class Monk_Admin {
 		);
 	}
 
-	public function monk_add_query_vars( $vars ) {
-		$vars[] = 'lang';
-		return $vars;
-	}
-
 	/**
 	 * Function that makes the view for the post monk meta box
+	 *
+	 * @param    $post object
 	 *
 	 * @since    1.0.0
 	*/
 	public function monk_post_meta_box_field_render( $post ) {
 		$site_default_language = get_option( 'monk_default_language' );
 		$active_languages      = get_option( 'monk_active_languages' );
-		$translation_url       = admin_url() . 'post-new.php';
-		$post_default_language = get_post_meta( $post->ID, '_monk_post_default_language', true );
-		$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
+		$monk_meta_id          = get_post_meta( $post->ID, '_monk_meta_id', true );
+		$post_default_language = get_post_meta( $post->ID, '_monk_post_language', true );
+		$post_translation      = get_post_meta( $post->ID, '_monk_post_translation_id', true ) ? get_post_meta( $post->ID, '_monk_post_translation_id', true ) : array();
+		$translated_posts      = get_post_meta( $post->ID, '_monk_translated_posts' );
 		
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 		global $current_screen;
@@ -244,6 +254,12 @@ class Monk_Admin {
 			'es_ES' => __( 'Spanish', 'monk' ),
 		);
 
+		if ( function_exists( 'admin_url' ) ) {
+			$monk_translation_url = admin_url() . 'post-new.php';
+		} else {
+			$monk_translation_url = get_option( 'siteurl' ) . '/wp-admin/' . 'post-new.php';
+		}
+
 		if ( $post_default_language == '' ) {
 			$selected = $available_languages[$site_default_language];
 		} else {
@@ -256,10 +272,12 @@ class Monk_Admin {
 	/**
 	 * Function to save data from the monk post meta box
 	 *
+	 * @param    $post_id
+	 *
 	 * @since    1.0.0
 	*/
 	public function monk_save_post_meta_box( $post_id ) {
-		if ( ! isset( $_POST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
+		if ( ! isset( $_REQUEST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['monk_post_meta_box_nonce'], basename( __FILE__ ) ) ) {
 			return;
 		}
 
@@ -271,23 +289,41 @@ class Monk_Admin {
 			return;
 		}
 
-		if ( isset( $_REQUEST['monk_post_default_language'] ) ) {
+		if ( isset( $_REQUEST['monk_post_language'] ) ) {
 			update_post_meta(
 				$post_id,
-				'_monk_post_default_language',
-				sanitize_text_field( $_POST['monk_post_default_language'] )
+				'_monk_post_language',
+				sanitize_text_field( $_REQUEST['monk_post_language'] )
 			);
 		}
-		
-		if ( isset( $_REQUEST['monk_post_add_translation'] ) ) {
-			$post_translations     = get_post_meta( $post->ID, '_monk_post_add_translation', true ) ? get_post_meta( $post->ID, '_monk_post_add_translation', true ) : array();
-			$added_translation     = (string) $_POST['monk_post_add_translation'];
-			array_push( $post_translations, $added_translation );
-			$post_translations = array_map( 'sanitize_text_field', $post_translations );
+
+		/**
+		 * Here the correlation between posts is handled
+		 *
+		 * This section creates a post metadata to save the id
+		 * of the 'parent' post, witch is the first to be created and
+		 * then translated. The translation posts will have that metadata
+		 * being the same as the first, the 'parent'
+		*/
+
+		if ( isset( $_REQUEST['monk_id'] ) && isset( $_REQUEST['monk_post_language'] ) ) {
+			$option_name = 'monk_post_translations_' . $_REQUEST['monk_id'];
+			$post_lang   = $_REQUEST['monk_post_language'];
+			if ( get_option( $option_name ) !== false ) {
+				$current_post_status = get_option( $option_name );
+				if ( ! wp_is_post_revision( $post_id ) ) {
+					$current_post_status[$post_id] = $post_lang;
+					update_option( $option_name, $current_post_status );
+				}
+			} else {
+				if ( ! wp_is_post_revision( $post_id ) ) {
+					add_option( $option_name, array( $post_id => $post_lang ), null, 'no' );
+				}
+			}
 			update_post_meta(
 				$post_id,
-				'_monk_post_add_translation',
-				$post_translations
+				'_monk_meta_id',
+				sanitize_text_field( $_REQUEST['monk_id'] )
 			);
 		}
 	}
@@ -395,23 +431,22 @@ class Monk_Admin {
 	 * @param string $query 
 	 */
 	public function monk_admin_languages_filter( $query ) {
-		if ( is_admin() && $query->is_main_query() ) {   
-			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && strcmp( $_GET['monk_language_filter'], 'en_US' ) != 0 && $query->is_search() ) {
+		if ( is_admin() && $query->is_main_query() ) {  
+			$language = get_option( 'monk_default_language' ); 
+			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && 0 !== strcmp( $_GET['monk_language_filter'], $language ) && $query->is_search() ) {
 				$language = $_GET['monk_language_filter'];
 
-				$query->set( 'meta_key', '_monk_languages' );
+				$query->set( 'meta_key', '_monk_post_language' );
 				$query->set( 'meta_value', $language );
-			} elseif ( ! isset( $_GET['monk_language_filter'] ) || 0 === strcmp( $_GET['monk_language_filter'], 'en_US' ) ) {
-				$language = get_option( 'monk_default_language' );
-				
+			} elseif ( ! isset( $_GET['monk_language_filter'] ) || 0 === strcmp( $_GET['monk_language_filter'], $language ) ) {
 				$meta_query_args = array(
 					'relation' => 'OR', // Optional, defaults to "AND"
 					array(
-						'key'     => '_monk_languages',
+						'key'     => '_monk_post_language',
 						'value'   => $language,
 					),
 					array(
-						'key'     => '_monk_languages',
+						'key'     => '_monk_post_language',
 						'compare' => 'NOT EXISTS'
 					)
 				);

@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
-$languages        = get_post_meta( $post_ID, '_monk_languages' );
+$languages        = get_post_meta( $post_ID, '_monk_post_language' );
 $default_language = get_option( 'monk_default_language' );
 
 $languages_flag = array(

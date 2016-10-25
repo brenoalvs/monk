@@ -10,18 +10,6 @@
  * @subpackage Monk/Admin/Partials
  */
 
-	$default_language = get_option( 'monk_default_language' );
-	$available_languages = array(
-		'da_DK' => __( 'Danish', 'monk' ),
-		'en_US' => __( 'English', 'monk' ),
-		'fr_FR' => __( 'French', 'monk' ),
-		'de_DE' => __( 'German', 'monk' ),
-		'it_IT' => __( 'Italian', 'monk' ),
-		'ja'    => __( 'Japanese', 'monk' ),
-		'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
-		'ru_RU' => __( 'Russian', 'monk' ),
-		'es_ES' => __( 'Spanish', 'monk' ),
-	);
 ?>	
 <select name="monk_default_language">
 	<?php foreach ( $available_languages as $lang_code => $lang_name ) : ?>
@@ -30,3 +18,6 @@
 		</option>
 	<?php endforeach; ?>
 </select>
+<p>
+	<?php echo $default_language; ?>
+</p>

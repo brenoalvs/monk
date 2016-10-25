@@ -73,6 +73,7 @@ class Monk {
 
 		$this->load_dependencies();
 		$this->set_locale();
+		$this->define_global_hooks();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->define_widget_hooks();
@@ -151,6 +152,18 @@ class Monk {
 	 * @since    1.0.0
 	 * @access   private
 	 */
+	private function define_global_hooks() {
+
+		$this->loader->add_filter( 'query_vars', $this, 'monk_query_vars', 10, 1 );		
+	}
+
+	/**
+	 * Register all of the hooks related to the admin area functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
@@ -159,6 +172,8 @@ class Monk {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
@@ -202,6 +217,19 @@ class Monk {
 	private function define_widget_hooks() {
 
 		$this->loader->add_action( 'widgets_init', $this, 'register_widgets' );
+	}
+
+	/**
+	 * Registrate the query vars to generate the custom urls
+	 *
+	 * @param    $vars
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_query_vars( $vars ) {
+		$vars[] = 'lang';
+		$vars[] = 'monk_id';
+		return $vars;
 	}
 
 	/**
