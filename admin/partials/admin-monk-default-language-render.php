@@ -18,6 +18,3 @@
 		</option>
 	<?php endforeach; ?>
 </select>
-<p>
-	<?php echo $default_language; ?>
-</p>
