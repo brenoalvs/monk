@@ -9,6 +9,7 @@
  * @package    Monk
  * @subpackage Monk/Admin/Partials
  */
+	global $monk_languages;
 
 	if ( empty( $monk_id ) ) {
 		if ( isset( $_GET['lang'] ) && isset( $_GET['monk_id'] ) ) {
@@ -28,8 +29,8 @@
 			<select name="monk_post_language">
 			<?php
 				foreach ( $active_languages as $lang_code ) :
-					if ( array_key_exists( $lang_code, $available_languages ) ) :
-						$lang_name = $available_languages[$lang_code];
+					if ( array_key_exists( $lang_code, $monk_languages ) ) :
+						$lang_name = $monk_languages[$lang_code]['name'];
 			?>
 				<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
 					<?php echo esc_html( $lang_name ); ?>
@@ -60,8 +61,8 @@
 							'monk_id' => $monk_id
 						), $monk_translation_url );
 					$lang_id = sanitize_title( $lang_code );
-					if ( array_key_exists( $lang_code, $available_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-						$lang_name = $available_languages[$lang_code];
+					if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
+						$lang_name = $monk_languages[$lang_code]['name'];
 			?>
 					<option  value="<?php echo esc_url( $encoded_url ); ?>"/>
 						<?php echo esc_html( $lang_name ); ?>
@@ -73,14 +74,14 @@
 	</div>
 	<ul class="monk-translated-to">
 		<li>
-			<?php echo esc_html( $available_languages[$post_default_language] ); ?>
+			<?php echo esc_html( $monk_languages[$post_default_language]['name'] ); ?>
 		</li>
 		<?php
 			foreach ( $post_translations as $lang_code => $monk_id ) :
 				if ( $monk_id != $post->ID ) :
 					$encoded_url = get_edit_post_link( $monk_id ); ?>
 					<li>
-						<a href="<?php echo esc_url( $encoded_url) ; ?>"><?php esc_html_e( $available_languages[$lang_code] ); ?></a>
+						<a href="<?php echo esc_url( $encoded_url) ; ?>"><?php esc_html_e( $monk_languages[$lang_code]['name'] ); ?></a>
 					</li>
 		<?php 	endif;
 				endforeach;
