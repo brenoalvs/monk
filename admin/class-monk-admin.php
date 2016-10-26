@@ -424,24 +424,29 @@ class Monk_Admin {
 	 */
 	public function monk_admin_languages_filter( $query ) {
 		if ( is_admin() && $query->is_main_query() ) {  
-			$language = get_option( 'monk_default_language' ); 
-			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) && 0 !== strcmp( $_GET['monk_language_filter'], $language ) && $query->is_search() ) {
-				$language = $_GET['monk_language_filter'];
+			$default_language = get_option( 'monk_default_language' ); 
+			$not_filter       = isset( $_GET['monk_language_filter'] ) ? true : false;
+			$has_filter       = $not_filter && ! empty( $_GET['monk_language_filter'] ) ? true : false;
+			$is_default       = $has_filter && 0 === strcmp( $_GET['monk_language_filter'], $default_language ) ? true : false;
+
+			if ( $query->is_search() && $has_filter && ! $is_default ) {
+				$monk_language = $_GET['monk_language_filter'];
 
 				$query->set( 'meta_key', '_monk_post_language' );
-				$query->set( 'meta_value', $language );
-			} elseif ( ! isset( $_GET['monk_language_filter'] ) || 0 === strcmp( $_GET['monk_language_filter'], $language ) ) {
+				$query->set( 'meta_value', $monk_language );
+			} elseif ( ! $not_filter || $is_default ) {
 				$meta_query_args = array(
 					'relation' => 'OR', // Optional, defaults to "AND"
 					array(
 						'key'     => '_monk_post_language',
-						'value'   => $language,
+						'value'   => $default_language,
 					),
 					array(
 						'key'     => '_monk_post_language',
 						'compare' => 'NOT EXISTS'
 					)
 				);
+
 				$query->set( 'meta_query', $meta_query_args );
 			}
 		}    
