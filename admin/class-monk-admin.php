@@ -222,6 +222,7 @@ class Monk_Admin {
 	*/
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
+		global $monk_languages;
 		$site_default_language = get_option( 'monk_default_language' );
 		$active_languages      = get_option( 'monk_active_languages' );
 		$monk_id               = get_post_meta( $post->ID, '_monk_post_translations_id', true );
@@ -231,7 +232,7 @@ class Monk_Admin {
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 
 		if ( $post_default_language == '' ) {
-			$selected = $available_languages[$site_default_language];
+			$selected = $monk_languages[$site_default_language]['name'];
 		} else {
 			$selected = $post_default_language;
 		}
@@ -296,15 +297,13 @@ class Monk_Admin {
 		}
 	}
 
-	public function monk_taxonomies() {
-		register_taxonomy(
-			'monk_test',
-			'post',
-			array(
-				'label' => __( 'Monk test' ),
-				'rewrite' => array( 'slug' => 'monk_test' )
-			)
-		);
+	public function monk_add_term_metadata( $content ) {
+		$category = get_the_category();
+		$term_id  = $category[19]->term_id;
+
+		add_term_meta( $term_id, 'monk_data', 'test', true );
+
+		return $content;
 	}
 
 	/**

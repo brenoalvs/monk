@@ -9,7 +9,6 @@
  * @package    Monk
  * @subpackage Monk/Admin/Partials
  */
-	global $monk_languages;
 
 	if ( empty( $monk_id ) ) {
 		if ( isset( $_GET['lang'] ) && isset( $_GET['monk_id'] ) ) {
@@ -51,10 +50,21 @@
 		</a>
 	</div>
 	<div class="monk-post-meta-add-translation">
+		<?php
+		$translation_counter = 0;
+		$option_current_name = 'monk_post_translations_' . $monk_id;
+		$post_translations   = get_option( $option_current_name );
+		foreach ($active_languages as $code ) {
+			if ( $post_translations && array_key_exists( $code , $post_translations ) ) {
+				$translation_counter = $translation_counter + 1;
+			}
+		}
+		if ( $translation_counter === count( $active_languages ) ) :
+			_e( 'Posted in every active language', 'monk' );
+		else :
+		?>
 		<select name="monk_post_translation_id">
 			<?php
-				$option_current_name = 'monk_post_translations_' . $monk_id;
-				$post_translations = get_option( $option_current_name );
 				foreach ( $active_languages as $lang_code ) :
 					$encoded_url = add_query_arg( array(
 							'lang'    => $lang_code,
@@ -71,21 +81,25 @@
 		</select>
 		<button class="monk-submit-translation button"><?php _e( 'Ok', 'monk' ); ?></button>
 		<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php _e( 'Cancel', 'monk' ); ?></a>
+		<?php endif; ?>
 	</div>
 	<ul class="monk-translated-to">
 		<li>
 			<?php echo esc_html( $monk_languages[$post_default_language]['name'] ); ?>
 		</li>
 		<?php
+		if ( isset( $post_translations ) && $post_translations ) :
 			foreach ( $post_translations as $lang_code => $monk_id ) :
 				if ( $monk_id != $post->ID ) :
 					$encoded_url = get_edit_post_link( $monk_id ); ?>
 					<li>
 						<a href="<?php echo esc_url( $encoded_url) ; ?>"><?php esc_html_e( $monk_languages[$lang_code]['name'] ); ?></a>
 					</li>
-		<?php 	endif;
-				endforeach;
-				if ( count( $post_translations ) == 1 ) : ?>
+		<?php 	
+				endif;
+			endforeach;
+		endif;
+				if ( isset( $post_translations ) && count( $post_translations ) == 1 ) : ?>
 					<span class="monk-add-translation">
 					<?php _e( 'Not translated, add one', 'monk' ); ?>
 					</span>

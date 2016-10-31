@@ -111,7 +111,7 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-monk-i18n.php';
 
 		/**
-		 * Imports global array with translatable and native language names.
+		 * Imports a global array with the translatable and native language names.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/monk-available-languages.php';
 
@@ -130,6 +130,11 @@ class Monk {
 		 * Class responsible for create Monk_Language_Switcher widget.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
+
+		/**
+		 * Imports the metadata functionality for taxonomies
+		*/
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/monk-term-metadata.php';
 
 		$this->loader = new Monk_Loader();
 	}
@@ -179,11 +184,12 @@ class Monk {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
-		$this->loader->add_action( 'init', $plugin_admin, 'monk_taxonomies' );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
+		
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_languages_filter' );
+		$this->loader->add_filter( 'the_content', $plugin_admin, 'monk_add_term_metadata' );
 
 		$args = array(
 		   'public'   => true,
