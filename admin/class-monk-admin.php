@@ -175,17 +175,6 @@ class Monk_Admin {
 	 */
 	public function monk_default_language_render() {
 		$default_language = get_option( 'monk_default_language' );
-		$available_languages = array(
-			'da_DK' => __( 'Danish', 'monk' ),
-			'en_US' => __( 'English', 'monk' ),
-			'fr_FR' => __( 'French', 'monk' ),
-			'de_DE' => __( 'German', 'monk' ),
-			'it_IT' => __( 'Italian', 'monk' ),
-			'ja'    => __( 'Japanese', 'monk' ),
-			'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
-			'ru_RU' => __( 'Russian', 'monk' ),
-			'es_ES' => __( 'Spanish', 'monk' ),
-		);
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-render.php';
 	}
 
@@ -225,37 +214,25 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function that makes the view for the post monk meta box
+	 * Function to make the view for the post monk meta box
 	 *
 	 * @param    $post object
 	 *
 	 * @since    1.0.0
 	*/
 	public function monk_post_meta_box_field_render( $post ) {
+		global $current_screen;
+		global $monk_languages;
 		$site_default_language = get_option( 'monk_default_language' );
 		$active_languages      = get_option( 'monk_active_languages' );
 		$monk_id               = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language = get_post_meta( $post->ID, '_monk_post_language', true );
+		$monk_translation_url  = admin_url( 'post-new.php' );
 		
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
-		global $current_screen;
-
-		$available_languages   = array(
-			'da_DK' => __( 'Danish', 'monk' ),
-			'en_US' => __( 'English', 'monk' ),
-			'fr_FR' => __( 'French', 'monk' ),
-			'de_DE' => __( 'German', 'monk' ),
-			'it_IT' => __( 'Italian', 'monk' ),
-			'ja'    => __( 'Japanese', 'monk' ),
-			'pt_BR' => __( 'Portuguese (Brazil)', 'monk' ),
-			'ru_RU' => __( 'Russian', 'monk' ),
-			'es_ES' => __( 'Spanish', 'monk' ),
-		);
-
-		$monk_translation_url = admin_url( 'post-new.php' );
 
 		if ( $post_default_language == '' ) {
-			$selected = $available_languages[$site_default_language];
+			$selected = $monk_languages[$site_default_language]['name'];
 		} else {
 			$selected = $post_default_language;
 		}

@@ -10,14 +10,14 @@
  * @subpackage Monk/Admin/Partials
  */
 
+global $monk_languages;
 ?>	
 <select name="monk_default_language">
-	<?php foreach ( $available_languages as $lang_code => $lang_name ) : ?>
+	<?php
+	foreach ( $monk_languages as $lang_code => $lang_names ) :
+		$lang_name = $lang_array['name']; ?>
 		<option value="<?php echo esc_attr( $lang_code ); ?>"<?php selected( $default_language, $lang_code ); ?>>
 			<?php echo esc_html( $lang_name ); ?>
 		</option>
 	<?php endforeach; ?>
 </select>
-<p>
-	<?php echo $default_language; ?>
-</p>
