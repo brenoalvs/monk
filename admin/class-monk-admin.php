@@ -518,9 +518,9 @@ class Monk_Admin {
 	 * Include styles related to Customize options
 	 *
 	 * @param string $colum_name Title of the column
-	 * @param string $post_ID    Post id
+	 * @param int $term_id       Id of the term
 	 */
-	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
+	public function monk_taxonomy_language_column_content( $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-taxonomy-monk-language-column.php';
 		endif;
