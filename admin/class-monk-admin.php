@@ -473,4 +473,23 @@ class Monk_Admin {
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
 		}
 	}
+	
+	/**
+	 * Add select term language
+	 */
+	public function monk_custom_taxonomy_field() {
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-term.php';
+	}
+
+	/**
+	 * Save term language
+	 *
+	 * @param int $term_id  Id of the term
+	 */
+	public function save_monk_meta( $term_id ){
+		if( isset( $_POST['monk-language'] ) && '' !== $_POST['monk-language'] ){
+			$language = sanitize_text_field( $_POST['monk-language'] );
+			add_term_meta( $term_id, 'monk-language', $language, true );
+		}
+	}
 }
