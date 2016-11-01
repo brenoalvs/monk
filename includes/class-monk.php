@@ -184,11 +184,6 @@ class Monk {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
-		$this->loader->add_action( 'init', $plugin_admin, 'monk_add_custom_taxonomy', 0 );
-		$this->loader->add_action( 'monk_add_form_fields', $plugin_admin, 'monk_add_taxonomy_fields', 10, 2 );
-		$this->loader->add_action( 'created_monk', $plugin_admin, 'monk_save_custom_termmeta', 10, 2 );
-		$this->loader->add_action( 'monk_edit_form_fields', $plugin_admin, 'monk_edit_taxonomy_field', 10, 2 );
-		$this->loader->add_action( 'edited_monk', $plugin_admin, 'monk_update_taxonomy_field', 10, 2 );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
