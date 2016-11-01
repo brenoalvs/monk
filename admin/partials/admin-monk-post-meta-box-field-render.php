@@ -58,7 +58,7 @@
 			</span>
 			<span class="screen-reader-text"><?php _e( 'Add new translation', 'monk' ); ?></span>
 		</a>
-	<?php endif; ?>
+		<?php endif; ?>
 	</div>
 	<div class="monk-post-meta-add-translation">
 		<?php
