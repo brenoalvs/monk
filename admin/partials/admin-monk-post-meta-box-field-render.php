@@ -51,10 +51,7 @@
 	<input type="hidden" name="monk_post_language" value="<?php echo esc_attr( $post_default_language ); ?>">
 	<div class="monk-post-meta-text">
 		<label for="monk-post-add-translation"><?php _e( 'Translations', 'monk' ); ?></label>
-		<?php 
-		if ( $translation_counter !== count( $active_languages ) ) :
-			_e( 'Posted in every active language', 'monk' );
-		?>
+		<?php if ( $translation_counter !== count( $active_languages ) ) : ?>
 		<a class="edit-post-status hide-if-no-js">
 			<span aria-hidden="true" class="monk-add-translation">
 				Add<strong>+</strong>
