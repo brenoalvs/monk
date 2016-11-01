@@ -38,19 +38,7 @@
 			</select>
 		</p>
 	</div>
-	<?php else : ?>
-	<input type="hidden" name="monk_post_language" value="<?php echo esc_attr( $post_default_language ); ?>">
-	<div class="monk-post-meta-text">
-		<label for="monk-post-add-translation"><?php _e( 'Translations', 'monk' ); ?></label>
-		<a class="edit-post-status hide-if-no-js">
-			<span aria-hidden="true" class="monk-add-translation">
-				Add<strong>+</strong>
-			</span>
-			<span class="screen-reader-text"><?php _e( 'Add new translation', 'monk' ); ?></span>
-		</a>
-	</div>
-	<div class="monk-post-meta-add-translation">
-		<?php
+	<?php else : 
 		$translation_counter = 0;
 		$option_current_name = 'monk_post_translations_' . $monk_id;
 		$post_translations   = get_option( $option_current_name );
@@ -59,10 +47,26 @@
 				$translation_counter = $translation_counter + 1;
 			}
 		}
-		if ( $translation_counter === count( $active_languages ) ) :
+	?>
+	<input type="hidden" name="monk_post_language" value="<?php echo esc_attr( $post_default_language ); ?>">
+	<div class="monk-post-meta-text">
+		<label for="monk-post-add-translation"><?php _e( 'Translations', 'monk' ); ?></label>
+		<?php 
+		if ( $translation_counter !== count( $active_languages ) ) :
 			_e( 'Posted in every active language', 'monk' );
-		else :
 		?>
+		<a class="edit-post-status hide-if-no-js">
+			<span aria-hidden="true" class="monk-add-translation">
+				Add<strong>+</strong>
+			</span>
+			<span class="screen-reader-text"><?php _e( 'Add new translation', 'monk' ); ?></span>
+		</a>
+	<?php endif; ?>
+	</div>
+	<div class="monk-post-meta-add-translation">
+		<?php
+		
+		if ( $translation_counter !== count( $active_languages ) ) : ?>
 			<select name="monk_post_translation_id">
 				<?php
 					foreach ( $active_languages as $lang_code ) :
