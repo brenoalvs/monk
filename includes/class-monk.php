@@ -183,19 +183,10 @@ class Monk {
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_languages_filter' );
-
-		$args = array(
-		   'public'   => true,
-		   '_builtin' => true
-		);
-
-		$post_types = get_post_types( $args );
-		$post_types['posts'] = 'posts';
-		$post_types['pages'] = 'pages';
-		foreach ( $post_types  as $post_type ) {
-			$this->loader->add_action( 'manage_' . $post_type . '_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
-			$this->loader->add_filter( 'manage_' . $post_type . '_columns', $plugin_admin, 'monk_language_column_head' );
-		}
+		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'monk_language_column_head' );
+		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
+		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );		
+		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 	}
 
 	/**
