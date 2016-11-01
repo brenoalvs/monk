@@ -473,7 +473,7 @@ class Monk_Admin {
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
 		}
 	}
-	
+
 	/**
 	 * Add select term language
 	 */
@@ -490,6 +490,27 @@ class Monk_Admin {
 		if( isset( $_POST['monk-language'] ) && '' !== $_POST['monk-language'] ){
 			$language = sanitize_text_field( $_POST['monk-language'] );
 			add_term_meta( $term_id, 'monk-language', $language, true );
+		}
+	}
+
+	/**
+	 * Add select term language inside edit page
+	 *
+	 * @param Object $term 
+	 */
+	public function monk_edit_custom_taxonomy_field( $term ) {
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-update-term.php';
+	}
+
+	/**
+	 * Update term language
+	 *
+	 * @param int $term_id Id of the term
+	 */
+	public function update_monk_meta( $term_id ){
+		if( isset( $_POST['monk-language'] ) && '' !== $_POST['monk-language'] ){
+			$language = sanitize_text_field( $_POST['monk-language'] );
+			update_term_meta( $term_id, 'monk-language', $language );
 		}
 	}
 }
