@@ -297,15 +297,6 @@ class Monk_Admin {
 		}
 	}
 
-	public function monk_add_term_metadata( $content ) {
-		$category = get_the_category();
-		$term_id  = $category[19]->term_id;
-
-		add_term_meta( $term_id, 'monk_data', 'test', true );
-
-		return $content;
-	}
-
 	/**
 	 * Add components on Appearance->Customize
 	 *

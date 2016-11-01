@@ -63,24 +63,24 @@
 			_e( 'Posted in every active language', 'monk' );
 		else :
 		?>
-		<select name="monk_post_translation_id">
-			<?php
-				foreach ( $active_languages as $lang_code ) :
-					$encoded_url = add_query_arg( array(
-							'lang'    => $lang_code,
-							'monk_id' => $monk_id
-						), $monk_translation_url );
-					$lang_id = sanitize_title( $lang_code );
-					if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-						$lang_name = $monk_languages[$lang_code]['name'];
-			?>
-					<option  value="<?php echo esc_url( $encoded_url ); ?>"/>
-						<?php echo esc_html( $lang_name ); ?>
-					</option>
-			<?php endif; endforeach; ?>
-		</select>
-		<button class="monk-submit-translation button"><?php _e( 'Ok', 'monk' ); ?></button>
-		<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php _e( 'Cancel', 'monk' ); ?></a>
+			<select name="monk_post_translation_id">
+				<?php
+					foreach ( $active_languages as $lang_code ) :
+						$encoded_url = add_query_arg( array(
+								'lang'    => $lang_code,
+								'monk_id' => $monk_id
+							), $monk_translation_url );
+						$lang_id = sanitize_title( $lang_code );
+						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
+							$lang_name = $monk_languages[$lang_code]['name'];
+				?>
+						<option  value="<?php echo esc_url( $encoded_url ); ?>"/>
+							<?php echo esc_html( $lang_name ); ?>
+						</option>
+				<?php endif; endforeach; ?>
+			</select>
+			<button class="monk-submit-translation button"><?php _e( 'Ok', 'monk' ); ?></button>
+			<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php _e( 'Cancel', 'monk' ); ?></a>
 		<?php endif; ?>
 	</div>
 	<ul class="monk-translated-to">
@@ -99,11 +99,11 @@
 				endif;
 			endforeach;
 		endif;
-				if ( isset( $post_translations ) && count( $post_translations ) == 1 ) : ?>
-					<span class="monk-add-translation">
-					<?php _e( 'Not translated, add one', 'monk' ); ?>
-					</span>
-		<?php   endif; ?>
+		if ( isset( $post_translations ) && count( $post_translations ) == 1 ) : ?>
+			<span class="monk-add-translation">
+				<?php _e( 'Not translated, add one', 'monk' ); ?>
+			</span>
+		<?php endif; ?>
 	</ul>
 <?php
 endif;
