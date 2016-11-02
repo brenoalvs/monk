@@ -297,6 +297,13 @@ class Monk_Admin {
 		}
 	}
 
+	/**
+	 * Function to filter the query inside the category meta box using the post language
+	 *
+	 * @param    $term_query instance of WP_Term_Query class 
+	 *
+	 * @since    1.0.0
+	*/
 	public function monk_apply_terms_filter( $term_query ) {
 		$screen = get_current_screen();
 		if ( 'edit' === $screen->parent_base ) {
