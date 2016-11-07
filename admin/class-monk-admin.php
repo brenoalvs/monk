@@ -311,17 +311,12 @@ class Monk_Admin {
 			$post_id    = get_the_id();
 			$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
 			$query_lang = $_GET['lang'];
+			$term_args  = array( 'meta_key' => '_monk_term_language' );		
 			
-			if ( isset( $meta_lang ) && '' !== $meta_lang ) {
-				$term_args = array(
-					'meta_key'   => '_monk_term_language',
-					'meta_value' => $meta_lang
-				);
-			} elseif ( isset( $query_lang ) && '' !== $query_lang ) {
-				$term_args = array(
-					'meta_key'   => '_monk_term_language',
-					'meta_value' => $query_lang
-				);
+			if ( isset( $query_lang ) ) {
+				$term_args['meta_value'] = $query_lang;
+			} elseif ( isset( $meta_lang ) ) {
+				$term_args['meta_value'] = $meta_lang;
 			}
 
 			return $term_query->parse_query( $term_args );
