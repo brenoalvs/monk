@@ -297,6 +297,13 @@ class Monk_Admin {
 		}
 	}
 
+	/**
+	 * Function that erases the data stored by the plugin when post is deleted permanently
+	 *
+	 * @param    $post_id ID of the post, page or post_type to be deleted
+	 *
+	 * @since    1.0.0
+	*/
 	public function monk_delete_post_data( $post_id ) {
 		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );
@@ -313,6 +320,13 @@ class Monk_Admin {
 		}
 	}
 
+	/**
+	 * Function to clear the database entries stored by the plugin when post is trashed 
+	 *
+	 * @param    $post_id ID of the post, page or post_type to be deleted
+	 *
+	 * @since    1.0.0
+	*/
 	public function monk_trash_post_data( $post_id ) {
 		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );
