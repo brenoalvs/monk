@@ -184,12 +184,12 @@ class Monk {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
+		$this->loader->add_action( 'pre_get_terms', $plugin_admin, 'monk_category_language_filter' );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
 		
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_languages_filter' );
-		$this->loader->add_filter( 'save_post', $plugin_admin, 'monk_add_term_metadata' );
 
 		$args = array(
 		   'public'   => true,

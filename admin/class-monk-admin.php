@@ -231,7 +231,7 @@ class Monk_Admin {
 		
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 
-		if ( $post_default_language == '' ) {
+		if ( '' === $post_default_language ) {
 			$selected = $monk_languages[$site_default_language]['name'];
 		} else {
 			$selected = $post_default_language;
@@ -269,7 +269,7 @@ class Monk_Admin {
 		}
 
 		/**
-		 * Here the correlation between posts is handled
+		 * Here, the correlation between posts is handled
 		 *
 		 * This section creates a post metadata to save the id
 		 * of the 'parent' post, witch is the first to be created and
@@ -294,6 +294,32 @@ class Monk_Admin {
 				'_monk_post_translations_id',
 				sanitize_text_field( $_REQUEST['monk_id'] )
 			);
+		}
+	}
+
+	/**
+	 * Function to filter the query inside the category meta box using the post language
+	 *
+	 * @param    $term_query instance of WP_Term_Query class 
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_category_language_filter( $term_query ) {
+		$screen = get_current_screen();
+		if ( 'edit' === $screen->parent_base && 'category' === $term_query->query_vars['taxonomy'] ) {
+			$term_args  = '';
+			$post_id    = get_the_id();
+			$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
+			$query_lang = sanitize_title( $_GET['lang'] );
+			$term_args  = array( 'meta_key' => '_monk_term_language' );		
+			
+			if ( isset( $query_lang ) ) {
+				$term_args['meta_value'] = $query_lang;
+			} elseif ( isset( $meta_lang ) ) {
+				$term_args['meta_value'] = $meta_lang;
+			}
+
+			return $term_query->parse_query( $term_args );
 		}
 	}
 
