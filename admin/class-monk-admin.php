@@ -231,7 +231,7 @@ class Monk_Admin {
 		
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 
-		if ( '' == $post_default_language ) {
+		if ( '' === $post_default_language ) {
 			$selected = $monk_languages[$site_default_language]['name'];
 		} else {
 			$selected = $post_default_language;
@@ -304,18 +304,25 @@ class Monk_Admin {
 	 *
 	 * @since    1.0.0
 	*/
-	public function monk_apply_terms_filter( $term_query ) {
+	public function monk_category_language_filter( $term_query ) {
 		$screen = get_current_screen();
-		if ( 'edit' === $screen->parent_base ) {
-			$post_id   = get_the_id();
-			$meta_lang = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
-			$term_args = array(
-				'hide_empty' => false,
-				'fields'     => 'all',
-				'count'      => true,
-				'meta_key'   => 'monk-language',
-				'meta_value' => $meta_lang
-			);
+		if ( 'edit' === $screen->parent_base && 'category' === $term_query->query_vars['taxonomy'] ) {
+			$term_args  = '';
+			$post_id    = get_the_id();
+			$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
+			$query_lang = $_GET['lang'];
+			
+			if ( isset( $meta_lang ) && '' !== $meta_lang ) {
+				$term_args = array(
+					'meta_key'   => '_monk_term_language',
+					'meta_value' => $meta_lang
+				);
+			} elseif ( isset( $query_lang ) && '' !== $query_lang ) {
+				$term_args = array(
+					'meta_key'   => '_monk_term_language',
+					'meta_value' => $query_lang
+				);
+			}
 
 			return $term_query->parse_query( $term_args );
 		}
