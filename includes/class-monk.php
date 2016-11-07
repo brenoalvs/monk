@@ -184,7 +184,7 @@ class Monk {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
-		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_trash_post_data' );
+		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'pre_get_terms', $plugin_admin, 'monk_category_language_filter' );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );

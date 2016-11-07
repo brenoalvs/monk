@@ -311,9 +311,10 @@ class Monk_Admin {
 
 		if ( isset( $post_translations ) && $post_translations ) {
 			unset( $post_translations[$post_lang] );
-			update_option( 'monk_post_translations_' . $monk_id, $post_translations );
 			if ( empty( $post_translations ) ) {
 				delete_option( 'monk_post_translations_' . $monk_id );
+			} else {
+				update_option( 'monk_post_translations_' . $monk_id, $post_translations );
 			}
 		} else {
 			delete_option( 'monk_post_translations_' . $monk_id );
@@ -321,31 +322,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to clear the database entries stored by the plugin when post is trashed 
-	 *
-	 * @param    $post_id ID of the post, page or post_type to be deleted
-	 *
-	 * @since    1.0.0
-	*/
-	public function monk_trash_post_data( $post_id ) {
-		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
-		$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );
-		$option_name       = 'monk_post_translations_' . $monk_id;
-		$post_translations = get_option( $option_name, false );
-
-		if ( isset( $post_translations ) && $post_translations ) {
-			unset( $post_translations[$post_lang] );
-			update_option( $option_name, $post_translations );
-			if ( empty( $post_translations ) ) {
-				delete_option( $option_name );
-			}
-		} else {
-			delete_option( $option_name );
-		}
-	}
-
-	/**
-	 * Function to filter the query inside the category meta box using the post language
+	 * Function to filter the query inside the category meta box using the languages
 	 *
 	 * @param    $term_query instance of WP_Term_Query class 
 	 *
