@@ -1,17 +1,41 @@
 <?php 
-	$base_url         = admin_url( 'term.php?action=edit' );
-	$monk_language = get_term_meta( $term_id, 'monk-language', true );
-	$taxonomies = get_taxonomies();
+	foreach ( $taxonomies as $taxonomy) {
+		if ( $_GET['taxonomy'] === $taxonomy ) {
+			$base_url = admin_url( 'term.php?taxonomy=' . $taxonomy );
+		}
+	}
 
-	foreach ( $taxonomies as $taxonomy ) :
+	if ( $monk_term_satan ) :
 
-		if ( $monk_language && $_GET['taxonomy'] === $taxonomy ) :
-			$term_url = get_edit_term_link( $term_id, $taxonomy, 'post' );
-			
-			?>
-				<a href="<?php echo esc_url( $term_url ); ?>">
-					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_language ); ?>"></span>
-				</a>
-			<?php
-		endif;
-	endforeach;
+		$translation_term_url = add_query_arg( array(
+			'tag_ID' => $monk_term_satan_id,
+		), $base_url );
+	?>
+		<a href="<?php echo esc_url( $translation_term_url ); ?>">
+			<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
+		</a>
+		<?php 
+		
+		foreach ( $languages as $language ) :
+			foreach ( $monk_term_satan as $translation_code => $translation_id ) :
+				if ( $language === $translation_code && $translation_code !== $default_language ) :
+					$translation_term_url = add_query_arg( array(
+						'tag_ID' => $translation_id,
+					), $base_url );
+					?>
+					<a href="<?php echo esc_url( $translation_term_url ); ?>">
+						<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $translation_code ); ?>"></span>
+					</a>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		<?php endforeach; ?>
+	<?php 
+		else: 
+			$translation_term_url = add_query_arg( array(
+					'tag_ID' => $term_id,
+				), $base_url );
+	?>
+		<a href="<?php echo esc_url( $translation_term_url ); ?>">
+			<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
+		</a>
+	<?php endif; ?>
