@@ -297,6 +297,39 @@ class Monk_Admin {
 		}
 	}
 
+	public function monk_delete_post_data( $post_id ) {
+		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
+		$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );
+		$post_translations = get_option( 'monk_post_translations_' . $monk_id, false );
+
+		if ( isset( $post_translations ) && $post_translations ) {
+			unset( $post_translations[$post_lang] );
+			update_option( 'monk_post_translations_' . $monk_id, $post_translations );
+			if ( empty( $post_translations ) ) {
+				delete_option( 'monk_post_translations_' . $monk_id );
+			}
+		} else {
+			delete_option( 'monk_post_translations_' . $monk_id );
+		}
+	}
+
+	public function monk_trash_post_data( $post_id ) {
+		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
+		$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );
+		$option_name       = 'monk_post_translations_' . $monk_id;
+		$post_translations = get_option( $option_name, false );
+
+		if ( isset( $post_translations ) && $post_translations ) {
+			unset( $post_translations[$post_lang] );
+			update_option( $option_name, $post_translations );
+			if ( empty( $post_translations ) ) {
+				delete_option( $option_name );
+			}
+		} else {
+			delete_option( $option_name );
+		}
+	}
+
 	/**
 	 * Function to filter the query inside the category meta box using the post language
 	 *
