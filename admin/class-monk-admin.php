@@ -310,7 +310,7 @@ class Monk_Admin {
 			$term_args  = '';
 			$post_id    = get_the_id();
 			$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
-			$query_lang = $_GET['lang'];
+			$query_lang = sanitize_title( $_GET['lang'] );
 			$term_args  = array( 'meta_key' => '_monk_term_language' );		
 			
 			if ( isset( $query_lang ) ) {
