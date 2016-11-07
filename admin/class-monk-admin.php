@@ -478,6 +478,11 @@ class Monk_Admin {
 	 * Add select term language
 	 */
 	public function monk_custom_taxonomy_field() {
+		global $monk_languages;
+		$languages = get_option( 'monk_active_languages' );
+		$taxonomies = get_taxonomies();
+		$default_language = get_option( 'monk_default_language' );
+
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-term.php';
 	}
 
@@ -487,9 +492,27 @@ class Monk_Admin {
 	 * @param int $term_id  Id of the term
 	 */
 	public function save_monk_meta( $term_id ){
-		if( isset( $_POST['monk-language'] ) && '' !== $_POST['monk-language'] ){
+		if ( isset( $_POST['monk-language'] ) && ! empty( $_POST['monk-language'] ) ) {
 			$language = sanitize_text_field( $_POST['monk-language'] );
-			add_term_meta( $term_id, 'monk-language', $language, true );
+
+			add_term_meta( $term_id, '_monk_term_language', $language, true );
+			
+			if ( isset( $_REQUEST['monk_term_id'] ) ) {
+				$monk_term_id = $_REQUEST['monk_term_id'];
+				add_term_meta( $term_id, 'monk_term_id', $monk_term_id, true );
+				if ( get_option( 'monk_term_translations_' . $monk_term_id ) !== false ) {
+					$current_term_translations = get_option( 'monk_term_translations_' . $monk_term_id );
+					$current_term_translations[$_POST['monk-language']] = $term_id;
+					update_option( 'monk_term_translations_' . $monk_term_id, $current_term_translations );
+				}
+			} else {
+				$option_value = array(
+					$language => $term_id
+				);
+
+				add_option( 'monk_term_translations_' . $term_id, $option_value, null, 'no' );
+				add_term_meta( $term_id, 'monk_term_id', $term_id, true );
+			}		
 		}
 	}
 
@@ -499,6 +522,9 @@ class Monk_Admin {
 	 * @param Object $term 
 	 */
 	public function monk_edit_custom_taxonomy_field( $term ) {
+		$monk_language = get_term_meta( $term->term_id, '_monk_term_language', true );
+		global $monk_languages;
+		$languages = get_option( 'monk_active_languages' );
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-update-term.php';
 	}
 
@@ -510,19 +536,48 @@ class Monk_Admin {
 	public function update_monk_meta( $term_id ){
 		if( isset( $_POST['monk-language'] ) && '' !== $_POST['monk-language'] ){
 			$language = sanitize_text_field( $_POST['monk-language'] );
-			update_term_meta( $term_id, 'monk-language', $language );
+			update_term_meta( $term_id, '_monk_term_language', $language );
 		}
 	}
 
 	/**
-	 * Include styles related to Customize options
+	 * Add column content
 	 *
+	 * @param string $content
 	 * @param string $colum_name Title of the column
 	 * @param int $term_id       Id of the term
 	 */
-	public function monk_taxonomy_language_column_content( $column_name, $term_id ) {
+	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
+			global $monk_languages;
+			$monk_language      = get_term_meta( $term_id, '_monk_term_language', true );
+			$languages          = get_option( 'monk_active_languages' );
+			$taxonomies         = get_taxonomies();
+			$monk_term_satan_id = get_term_meta( $term_id, 'monk_term_id', true );
+			$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
+			$default_language = get_option( 'monk_default_language' );
+
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-taxonomy-monk-language-column.php';
 		endif;
+	}
+
+	/**
+	 * Add term translation meta field
+	 */
+	public function monk_term_translation_meta_field( $term ) {
+		global $monk_languages;
+		$monk_language      = get_term_meta( $term->term_id, '_monk_term_language', true );
+		$languages          = get_option( 'monk_active_languages' );
+		$taxonomies         = get_taxonomies();
+		$monk_term_satan_id = get_term_meta( $term->term_id, 'monk_term_id', true );
+		$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
+	
+		foreach ( $taxonomies as $taxonomy) {
+			if ( $_GET['taxonomy'] === $taxonomy ) {
+				$base_url = admin_url( 'edit-tags.php?taxonomy=' . $taxonomy );
+				$base_url_translation = admin_url( 'term.php?taxonomy=' . $taxonomy );
+			}
+		}
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-translation.php';
 	}
 }
