@@ -298,7 +298,31 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to filter the query inside the category meta box using the post language
+	 * Function that erases the data stored by the plugin when post is deleted permanently
+	 *
+	 * @param    $post_id ID of the post, page or post_type to be deleted
+	 *
+	 * @since    1.0.0
+	*/
+	public function monk_delete_post_data( $post_id ) {
+		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
+		$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );
+		$post_translations = get_option( 'monk_post_translations_' . $monk_id, false );
+
+		if ( isset( $post_translations ) && $post_translations ) {
+			unset( $post_translations[$post_lang] );
+			if ( empty( $post_translations ) ) {
+				delete_option( 'monk_post_translations_' . $monk_id );
+			} else {
+				update_option( 'monk_post_translations_' . $monk_id, $post_translations );
+			}
+		} else {
+			delete_option( 'monk_post_translations_' . $monk_id );
+		}
+	}
+
+	/**
+	 * Function to filter the query inside the category meta box using the languages
 	 *
 	 * @param    $term_query instance of WP_Term_Query class 
 	 *
