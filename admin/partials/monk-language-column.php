@@ -21,18 +21,19 @@ $active_languages = get_option( 'monk_active_languages' );
 
 if ( $monk_satan ) :
 
-$post_url = add_query_arg( array(
-	'post' => $post_ID,
-), $base_url );
-?>
-	<a href="<?php echo esc_url( $post_url ); ?>">
-		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
-	</a>
-	<?php 
+
 	
 	foreach ( $active_languages as $lang ) :
 		foreach ( $monk_satan as $lang_code => $post_id ) :
-			if ( $lang === $lang_code && $lang_code !== $default_language ) :
+			if ( $lang === $lang_code && $lang_code === $default_language ) :
+				$post_url = add_query_arg( array(
+					'post' => $post_id,
+				), $base_url );
+				?>
+				<a href="<?php echo esc_url( $post_url ); ?>">
+					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $lang_code ); ?>"></span>
+				</a>
+			<?php elseif ( $lang === $lang_code && $lang_code !== $default_language ) :
 				$post_url = add_query_arg( array(
 					'post' => $post_id,
 				), $base_url );
