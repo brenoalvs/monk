@@ -329,21 +329,24 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function monk_category_language_filter( $term_query ) {
-		$screen = get_current_screen();
-		if ( 'edit' === $screen->parent_base && 'category' === $term_query->query_vars['taxonomy'] ) {
-			$term_args  = '';
-			$post_id    = get_the_id();
-			$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
-			$query_lang = sanitize_title( $_GET['lang'] );
-			$term_args  = array( 'meta_key' => '_monk_term_language' );		
-			
-			if ( isset( $query_lang ) ) {
-				$term_args['meta_value'] = $query_lang;
-			} elseif ( isset( $meta_lang ) ) {
-				$term_args['meta_value'] = $meta_lang;
-			}
+		if ( is_admin() ) {
+			$screen = get_current_screen();
 
-			return $term_query->parse_query( $term_args );
+			if ( 'edit' === $screen->parent_base && 'category' === $term_query->query_vars['taxonomy'] ) {
+				$term_args  = '';
+				$post_id    = get_the_id();
+				$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
+				$query_lang = sanitize_title( $_GET['lang'] );
+				$term_args  = array( 'meta_key' => '_monk_term_language' );		
+				
+				if ( isset( $query_lang ) ) {
+					$term_args['meta_value'] = $query_lang;
+				} elseif ( isset( $meta_lang ) ) {
+					$term_args['meta_value'] = $meta_lang;
+				}
+
+				return $term_query->parse_query( $term_args );
+			}
 		}
 	}
 
