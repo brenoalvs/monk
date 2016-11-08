@@ -350,24 +350,6 @@ class Monk_Admin {
 		}
 	}
 
-
-
-
-
-
-	public function monk_rewrite_rule() {
-		add_rewrite_rule( '^welcome$', site_url( '?p=258' ), 'top' );
-	}
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * Add components on Appearance->Customize
 	 *
