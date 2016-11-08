@@ -17,7 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 global $monk_languages;
 $languages = get_option( 'monk_active_languages' );
 ?>
-<select name="monk_language_filter" id="monk-language">
+<select name="monk_language_filter" id="monk-language-filter">
 	<option value=""><?php esc_html_e( 'All Languages', 'monk' ); ?></option>
 	<?php foreach ( $languages as $language ) : ?>
 		<option value="<?php echo esc_attr( $language ); ?>" 

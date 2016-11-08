@@ -50,3 +50,7 @@
  	opacity: 0.5;
  	pointer-events: none;
  }
+
+#monk-language {
+	width: 95%;
+}

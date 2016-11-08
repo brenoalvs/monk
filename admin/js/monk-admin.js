@@ -63,6 +63,11 @@
 			var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
 			window.location.replace( encoded_url );
 		});
+		$( document ).on( 'change', '#monk-term-translation', function( e ) {
+			e.preventDefault();
+			var encoded_url = $( 'select[name="monk-term-translation"]' ).val();
+			window.location.replace( encoded_url );
+		} )
 	});
 
 })( jQuery );
