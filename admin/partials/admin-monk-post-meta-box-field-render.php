@@ -10,6 +10,11 @@
  * @subpackage Monk/Admin/Partials
  */
 
+	// If this file is called directly, abort.
+	if ( ! defined( 'WPINC' ) ) {
+	    die;
+	}
+
 	if ( empty( $monk_id ) ) {
 		if ( isset( $_GET['lang'] ) && isset( $_GET['monk_id'] ) ) {
 			$lang    = $_GET['lang'];
