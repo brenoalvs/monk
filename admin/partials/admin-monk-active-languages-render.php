@@ -9,6 +9,12 @@
  * @package    Monk
  * @subpackage Monk/Admin/Partials
  */
+
+	// If this file is called directly, abort.
+	if ( ! defined( 'WPINC' ) ) {
+		die;
+	}
+
 	global $monk_languages;
 	$active_languages    = get_option( 'monk_active_languages' );
 	$default_language    = get_option( 'monk_default_language' );
