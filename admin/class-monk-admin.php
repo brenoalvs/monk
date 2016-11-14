@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -332,12 +331,15 @@ class Monk_Admin {
 		if ( is_admin() ) {
 			$screen = get_current_screen();
 
-			if ( 'edit' === $screen->parent_base && 'category' === $term_query->query_vars['taxonomy'] ) {
+			if ( 'edit' === $screen->parent_base ) {
 				$term_args  = '';
 				$post_id    = get_the_id();
 				$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
-				$query_lang = sanitize_title( $_GET['lang'] );
-				$term_args  = array( 'meta_key' => '_monk_term_language' );		
+				$term_args  = array( 'meta_key' => '_monk_term_language' );
+
+				if ( isset( $_GET['lang'] ) ) {
+					$query_lang = sanitize_title( $_GET['lang'] );
+				}	
 				
 				if ( isset( $query_lang ) ) {
 					$term_args['meta_value'] = $query_lang;
