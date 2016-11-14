@@ -1,6 +1,6 @@
 <?php
 /**
- * Monk Language Column.
+ * Show flags in Languages column on posts list.
  *
  * @link       https://github.com/brenoalvs/monk
  * @since      1.0.0
@@ -20,9 +20,6 @@ $base_url         = admin_url( 'post.php?action=edit' );
 $active_languages = get_option( 'monk_active_languages' );
 
 if ( $monk_satan ) :
-
-
-	
 	foreach ( $active_languages as $lang ) :
 		foreach ( $monk_satan as $lang_code => $post_id ) :
 			if ( $lang === $lang_code && $lang_code === $default_language ) :
