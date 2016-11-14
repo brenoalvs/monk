@@ -1,3 +1,20 @@
+<?php
+/**
+ * Field to change Term Language.
+ *
+ * @link       https://github.com/brenoalvs/monk
+ * @since      1.0.0
+ *
+ * @package    Monk
+ * @subpackage Monk/Admin/Partials
+ */
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+    die;
+}
+
+?>
 <table class="form-table">
 	<tbody>
 		<tr class="form-field term-language">
