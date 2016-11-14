@@ -10,6 +10,11 @@
  * @subpackage Monk/Admin/Partials
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+    die;
+}
+
 global $monk_languages;
 ?>	
 <select name="monk_default_language">
