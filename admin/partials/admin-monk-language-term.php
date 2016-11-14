@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Monk Language Term.
+ * Taxonomy Languages Selector Field.
  *
  * @link       https://github.com/brenoalvs/monk
  * @since      1.0.0
