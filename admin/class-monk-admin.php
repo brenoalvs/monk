@@ -269,11 +269,11 @@ class Monk_Admin {
 		}
 
 		/**
-		 * Here, the correlation between posts is handled
+		 * Here, the correlation between posts is handled to translate the post
 		 *
 		 * This section creates a post metadata to save the id
 		 * of the 'parent' post, witch is the first to be created and
-		 * then translated. The translation posts will have that metadata
+		 * then translated. These posts will have that metadata
 		 * being the same as the first, the 'parent'
 		*/
 
@@ -294,6 +294,30 @@ class Monk_Admin {
 				'_monk_post_translations_id',
 				sanitize_text_field( $_REQUEST['monk_id'] )
 			);
+		}
+
+		/**
+		 * Saves the new language for the element, once the user decides to change it
+		*/
+
+		if ( isset( $_REQUEST['monk_new_language'] ) && '' !== $_REQUEST['monk_new_language'] ) {
+			$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
+			$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );
+			$post_new_lang     = $_REQUEST['monk_new_language'];
+			$post_translations = get_option( 'monk_post_translations_' . $monk_id, false );
+
+			if ( isset( $post_translations ) && $post_translations ) {
+				unset( $post_translations[$post_lang] );
+				$post_translations[$post_new_lang] = $post_id;
+				update_option( 'monk_post_translations_' . $monk_id, $post_translations );
+				update_post_meta(
+					$post_id,
+					'_monk_post_language',
+					sanitize_text_field( $post_new_lang )
+				);
+			} else {
+				delete_option( 'monk_post_translations_' . $monk_id );
+			}
 		}
 	}
 
