@@ -11,7 +11,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-    die;
+	die;
 }
 
 global $monk_languages;
@@ -21,15 +21,15 @@ $languages = get_option( 'monk_active_languages' );
 	<option value=""><?php esc_html_e( 'All Languages', 'monk' ); ?></option>
 	<?php foreach ( $languages as $language ) : ?>
 		<option value="<?php echo esc_attr( $language ); ?>" 
-			<?php 
+			<?php
 			if ( isset( $_GET['monk_language_filter'] ) && ! empty( $_GET['monk_language_filter'] ) ) {
-				selected( $_GET['monk_language_filter'], $language ); 
+				selected( $_GET['monk_language_filter'], $language );
 			} elseif ( ! isset( $_GET['monk_language_filter'] ) ) {
 				selected( get_option( 'monk_default_language' ), $language );
 			}
 			?>>
 			<?php
-			echo esc_html( $monk_languages[$language]['name'] );
+			echo esc_html( $monk_languages[ $language ]['name'] );
 			?>
 		</option>
 	<?php endforeach; ?>
