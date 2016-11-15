@@ -48,7 +48,6 @@
 			}
 		}
 	?>
-	<input type="hidden" name="monk_post_language" value="<?php echo esc_attr( $post_default_language ); ?>">
 	<div class="monk-post-meta-text">
 		<label for="monk-post-add-translation"><?php _e( 'Translations', 'monk' ); ?></label>
 		<?php if ( $translation_counter !== count( $active_languages ) ) : ?>
@@ -99,8 +98,10 @@
 			</a>
 			<div class="monk-change-current-language">
 				<?php if ( $translation_counter !== count( $active_languages ) ) : ?>
-					<select name="monk_new_language">
-						<option value=""><?php esc_html_e( 'Choose language', 'monk' ); ?></option>
+					<select name="monk_post_language">
+						<option value="<?php echo esc_attr( $post_default_language ); ?>" selected>
+							<?php echo esc_html( $monk_languages[$post_default_language]['name'] ); ?>
+						</option>
 						<?php
 							foreach ( $active_languages as $lang_code ) :
 								if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
