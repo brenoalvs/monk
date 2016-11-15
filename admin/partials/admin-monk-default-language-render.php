@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide the view for the monk_default_language_render function
  *
@@ -12,7 +11,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-    die;
+	die;
 }
 
 global $monk_languages;
