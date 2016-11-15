@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide the view for the monk_options function
  *
@@ -9,6 +8,11 @@
  * @package    Monk
  * @subpackage Monk/Admin/Partials
  */
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 ?>
 	<div class="wrap">
 		<h2>Monk</h2>
