@@ -51,23 +51,42 @@
 				}
 			});
 		});
+
 		$( document ).on( 'click', 'span.monk-add-translation', function() {
-			$( '.monk-post-meta-add-translation' ).slideToggle( 200 );
+			$( '.monk-post-meta-add-translation' ).slideToggle( 150 );
 		});
+
 		$( document ).on( 'click', 'a.monk-cancel-submit-translation', function( e ) {
-			$( '.monk-post-meta-add-translation' ).slideUp( 200 );
+			$( '.monk-post-meta-add-translation' ).slideUp( 150 );
 			e.preventDefault();
 		});
+
+		$( document ).on( 'click', 'span.monk-change-language', function() {
+			$( '.monk-change-current-language' ).slideToggle( 150 );
+		});
+
+		$( document ).on( 'change', '#new-post-language', function() {
+			var new_name = $( 'select[name="monk_post_language"] option:selected' ).text();
+			$( '#current-language' ).html( new_name );
+		});
+
+		$( document ).on( 'click', 'a.monk-cancel-language-change', function( e ) {
+			$( '.monk-change-current-language' ).slideUp( 150 );
+			$( 'select[name="monk_new_language"] option[value=""]').attr( 'selected', 'selected' );
+			e.preventDefault();
+		});
+
 		$( document ).on( 'click', 'button.monk-submit-translation', function( e ) {
 			e.preventDefault();
 			var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
 			window.location.replace( encoded_url );
 		});
+
 		$( document ).on( 'change', '#monk-term-translation', function( e ) {
 			e.preventDefault();
 			var encoded_url = $( 'select[name="monk-term-translation"]' ).val();
 			window.location.replace( encoded_url );
-		} )
+		});
 	});
 
 })( jQuery );

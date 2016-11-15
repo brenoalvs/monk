@@ -19,6 +19,7 @@
  * @subpackage Monk/Admin
  * @author     Breno Alves
  */
+
 class Monk_Admin {
 
 	/**
@@ -259,40 +260,46 @@ class Monk_Admin {
 			return;
 		}
 
+		$current_post_language = get_post_meta( $post_id, '_monk_post_language', true );
+
 		if ( isset( $_REQUEST['monk_post_language'] ) ) {
+			$post_language = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
 			update_post_meta(
 				$post_id,
 				'_monk_post_language',
-				sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) )
+				$post_language
+			);
+		}
+
+		if ( isset( $_REQUEST['monk_id'] ) ) {
+			$monk_id = sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
+			update_post_meta(
+				$post_id,
+				'_monk_post_translations_id',
+				$monk_id
 			);
 		}
 
 		/**
-		 * Here, the correlation between posts is handled
-		 *
-		 * This section creates a post metadata to save the id
-		 * of the 'parent' post, witch is the first to be created and
-		 * then translated. The translation posts will have that metadata
-		 * being the same as the first, the 'parent'
-		*/
+		 * Now we get the saved $monk_id and $post_language metadata
+		 * and attach this post to its corresponding Monk_Post_Translation object
+		 */
 
-		if ( isset( $_REQUEST['monk_id'] ) && isset( $_REQUEST['monk_post_language'] ) ) {
-			$option_name = 'monk_post_translations_' . sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
-			$post_lang   = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
-			if ( ! wp_is_post_revision( $post_id ) ) {
-				if ( get_option( $option_name ) !== false ) {
-					$current_post_status = get_option( $option_name );
-					$current_post_status[ $post_lang ] = $post_id;
-					update_option( $option_name, $current_post_status );
-				} else {
-					add_option( $option_name, array( $post_lang => $post_id ), null, 'no' );
+		if ( isset( $post_language ) && isset( $monk_id ) && ! wp_is_post_revision( $post_id ) ) {
+			$option_name = 'monk_post_translations_' . $monk_id;
+
+			if ( get_option( $option_name ) !== false ) {
+				$post_translations = get_option( $option_name );
+
+				if ( $post_language !== $current_post_language ) {
+					unset( $post_translations[ $current_post_language ] );
 				}
+
+				$post_translations[ $post_language ] = $post_id;
+				update_option( $option_name, $post_translations );
+			} else {
+				add_option( $option_name, array( $post_language => $post_id ), null, 'no' );
 			}
-			update_post_meta(
-				$post_id,
-				'_monk_post_translations_id',
-				sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) )
-			);
 		}
 	}
 
@@ -302,7 +309,7 @@ class Monk_Admin {
 	 * @param    $post_id ID of the post, page or post_type to be deleted
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_delete_post_data( $post_id ) {
 		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$post_lang         = get_post_meta( $post_id, '_monk_post_language', true );

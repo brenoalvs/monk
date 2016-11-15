@@ -22,7 +22,7 @@
  	color: #82878c;
  }
 
- .monk-add-translation, .button-cancel {
+ .monk-add-translation, .monk-change-language, .button-cancel {
  	text-decoration: underline;
  	cursor: pointer;
  }
@@ -30,6 +30,11 @@
  .monk-post-meta-add-translation {
  	display: none;
  	margin-top: 15px;
+ }
+
+ .monk-change-current-language {
+ 	display: none;
+ 	margin: 10px 0 15px;
  }
 
  .monk-post-meta-option:before {
@@ -41,8 +46,7 @@
  	margin-top: 10px;
  }
 
- .monk-translated-to a {
- 	display: block;
+ .monk-translated-to li a {
  	text-decoration: none;
  }
 
