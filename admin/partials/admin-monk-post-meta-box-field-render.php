@@ -83,7 +83,7 @@
 	</div>
 	<ul class="monk-translated-to">
 		<li>
-			<?php echo esc_html( $monk_languages[$post_default_language]['name'] ); ?>
+			<span id="current-language"><?php echo esc_html( $monk_languages[ $post_default_language ]['name'] ); ?></span>
 
 			<!-- 
 				Gives the option to alter the current post language
@@ -98,7 +98,7 @@
 			</a>
 			<div class="monk-change-current-language">
 				<?php if ( $translation_counter !== count( $active_languages ) ) : ?>
-					<select name="monk_post_language">
+					<select name="monk_post_language" id="new-post-language">
 						<option value="<?php echo esc_attr( $post_default_language ); ?>" selected>
 							<?php echo esc_html( $monk_languages[$post_default_language]['name'] ); ?>
 						</option>
