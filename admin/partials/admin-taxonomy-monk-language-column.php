@@ -11,16 +11,18 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-    die;
+	die;
 }
 
-foreach ( $taxonomies as $taxonomy) {
-	if ( $_GET['taxonomy'] === $taxonomy ) {
-		$base_url = admin_url( 'term.php?taxonomy=' . $taxonomy );
+foreach ( $taxonomies as $taxonomy ) {
+	if ( isset( $_GET['taxonomy'] ) ) {
+		if ( $_GET['taxonomy'] === $taxonomy ) {
+			$base_url = admin_url( 'term.php?taxonomy=' . $taxonomy );
+		}
 	}
 }
 
-if ( $monk_term_satan ) :		
+if ( $monk_term_satan ) :
 	foreach ( $languages as $language ) :
 		foreach ( $monk_term_satan as $translation_code => $translation_id ) :
 			if ( $language === $translation_code && $translation_code === $default_language ) :
@@ -43,11 +45,11 @@ if ( $monk_term_satan ) :
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
-<?php 
-	else: 
+<?php
+	else :
 		$translation_term_url = add_query_arg( array(
 				'tag_ID' => $term_id,
-			), $base_url );
+		), $base_url );
 ?>
 	<a href="<?php echo esc_url( $translation_term_url ); ?>">
 		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
