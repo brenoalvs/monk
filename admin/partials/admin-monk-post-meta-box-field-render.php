@@ -93,7 +93,7 @@
 			-->
 			<a class="edit-post-status hide-if-no-js">
 				<span aria-hidden="true" class="monk-change-language">
-					<?php esc_html_e( 'Change', 'monk' ); ?>
+					<?php esc_html_e( 'Edit', 'monk' ); ?>
 				</span>
 				<span class="screen-reader-text"><?php esc_html_e( 'Change current language', 'monk' ); ?></span>
 			</a>
