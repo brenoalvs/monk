@@ -335,7 +335,7 @@ class Monk_Admin {
 	 * @since    1.0.0
 	*/
 	public function monk_category_language_filter( $term_query ) {
-		if ( is_admin() ) {
+		if ( is_admin() && ! is_customize_preview() ) {
 			$screen = get_current_screen();
 
 			if ( 'edit' === $screen->parent_base ) {
