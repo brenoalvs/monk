@@ -17,8 +17,8 @@ if ( ! defined( 'WPINC' ) ) {
 
 if ( empty( $monk_id ) ) {
 	if ( isset( $_GET['lang'] ) && isset( $_GET['monk_id'] ) ) {
-		$lang    = $_GET['lang'];
-		$monk_id = $_GET['monk_id'];
+		$lang    = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
+		$monk_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
 	} else {
 		$lang    = $site_default_language;
 		$monk_id = $post->ID;
@@ -125,7 +125,7 @@ if ( empty( $monk_id ) ) {
 		<?php
 		if ( isset( $post_translations ) && $post_translations ) :
 			foreach ( $post_translations as $lang_code => $monk_id ) :
-				if ( $monk_id != $post->ID ) :
+				if ( strval( $monk_id ) !== $post->ID ) :
 					$encoded_url = get_edit_post_link( $monk_id ); ?>
 					<li>
 						<a href="<?php echo esc_url( $encoded_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?></a>
