@@ -353,7 +353,6 @@ class Monk_Admin {
 				} elseif ( isset( $meta_lang ) ) {
 					$term_args['meta_value'] = $meta_lang;
 				}
-
 				return $term_query->parse_query( $term_args );
 			}
 		}
