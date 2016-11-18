@@ -75,6 +75,11 @@
 	padding: 3px 10px;
 }
 
+.monk-translation-link:hover,
+.monk-new-post-link:hover {
+	color: #000;
+}
+
 .monk-new-post-link {
 	text-align: left;
 	color: #fff;
