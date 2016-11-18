@@ -14,10 +14,17 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+?>
+	<span class="hide-if-no-js flag-icon flag-icon-monk-pencil"></span>
+	<div class="hide-if-js monk-column-translations">
+<?php
 foreach ( $taxonomies as $taxonomy ) {
 	if ( isset( $_GET['taxonomy'] ) ) {
 		if ( $_GET['taxonomy'] === $taxonomy ) {
-			$base_url = admin_url( 'term.php?taxonomy=' . $taxonomy );
+			$base_url     = admin_url( 'term.php?taxonomy=' . $taxonomy );
+			$new_term_url = add_query_arg( array(
+					'monk_term_id' => $monk_term_satan_id,
+			), admin_url( 'edit-tags.php?taxonomy=' . $taxonomy ) );
 		}
 	}
 }
@@ -25,21 +32,13 @@ foreach ( $taxonomies as $taxonomy ) {
 if ( $monk_term_satan ) :
 	foreach ( $languages as $language ) :
 		foreach ( $monk_term_satan as $translation_code => $translation_id ) :
-			if ( $language === $translation_code && $translation_code === $default_language ) :
-				$translation_term_url = add_query_arg( array(
-					'tag_ID' => $monk_term_satan_id,
-				), $base_url );
-			?>
-				<a href="<?php echo esc_url( $translation_term_url ); ?>">
-					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
-				</a>
-			<?php
-			elseif ( $language === $translation_code && $translation_code !== $default_language ) :
+			if ( $language === $translation_code ) :
 				$translation_term_url = add_query_arg( array(
 					'tag_ID' => $translation_id,
 				), $base_url );
 				?>
-				<a href="<?php echo esc_url( $translation_term_url ); ?>">
+				<a class="monk-translation-link" href="<?php echo esc_url( $translation_term_url ); ?>">
+					<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?></span>
 					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $translation_code ); ?>"></span>
 				</a>
 			<?php endif; ?>
@@ -51,7 +50,10 @@ if ( $monk_term_satan ) :
 				'tag_ID' => $term_id,
 		), $base_url );
 ?>
-	<a href="<?php echo esc_url( $translation_term_url ); ?>">
+	<a class="monk-translation-link" href="<?php echo esc_url( $translation_term_url ); ?>">
+		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $default_language ]['name'] ); ?></span>
 		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
 	</a>
 <?php endif; ?>
+	<a class="monk-new-post-link" href="<?php echo esc_url( $new_term_url ); ?>">Add +</a>
+	</div>
