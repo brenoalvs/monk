@@ -87,6 +87,10 @@
 			var encoded_url = $( 'select[name="monk-term-translation"]' ).val();
 			window.location.replace( encoded_url );
 		});
+
+		$( document ).on( 'hover', 'td.column-languages', function() {
+			$( this ).children( '.hide-if-js' ).toggle();
+		});
 	});
 
 })( jQuery );
