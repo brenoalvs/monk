@@ -2,6 +2,14 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.column-languages {
+	text-align: center;
+}
+
+.column-languages,
+.column-languages a {
+	cursor: pointer;
+}
 
  div.monk-post-meta-text label {
  	font-weight: 600;
@@ -57,4 +65,41 @@
 
 #monk-language {
 	width: 95%;
+}
+
+.monk-translation-link {
+	text-align: left;
+	border-bottom: 1px solid #fff;
+	color: #fff;
+	display: block;
+	padding: 3px 10px;
+}
+
+.monk-new-post-link {
+	text-align: left;
+	color: #fff;
+	display: block;
+	padding: 7px 10px 0;
+}
+
+.flag-icon-monk-pencil {
+	margin: 0 auto;
+}
+
+.monk-language-name {
+	padding-right: 40px; 
+}
+
+.monk-selector-flag {
+	float: right;
+	padding-top: 7px; 
+}
+
+.monk-column-translations {
+	background-color: #9c9c9c;
+	border: 1px solid #a0a0a0;
+	border-radius: 5px;
+	padding: 7px 0;
+	position: absolute;
+	z-index: 9999;
 }
