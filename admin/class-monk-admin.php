@@ -44,8 +44,7 @@ class Monk_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $monk       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param    string $monk       The name of this plugin.
 	 */
 	public function __construct( $monk, $version ) {
 
@@ -439,12 +438,11 @@ class Monk_Admin {
 	public function monk_customize_css() {
 		?>
 		<style type="text/css">
-			#monk-selector { border-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
-			.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color' ) ); ?>; }
-			.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color' ) ); ?>; }
-			#monk-selector .monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
-			.monk-selector-link { color: <?php echo esc_attr( get_option( 'monk_lang_color' ) ); ?>; }
-			.monk-selector-arrow { color: <?php echo esc_attr( get_option( 'monk_selector_color' ) ); ?>; }
+			ul#monk-selector li.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color', '#fff' ) ); ?>; }
+			ul#monk-selector li.monk-active-lang span.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color', '#000' ) ); ?>; }
+			ul#monk-selector li.monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
+			ul#monk-selector li.monk-lang a.monk-selector-link { color: <?php echo esc_attr( get_option( 'monk_lang_color', '#001aab' ) ); ?>; }
+			ul#monk-selector span.monk-selector-arrow { color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
 		</style>
 		<?php
 	}
