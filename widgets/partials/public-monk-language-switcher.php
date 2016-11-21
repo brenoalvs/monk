@@ -32,8 +32,9 @@ $active_languages = get_option( 'monk_active_languages' );
 <section id="<?php echo esc_attr( $this->id ); ?>" class="widget <?php echo esc_attr( $this->id_base ); ?>">
 	<h2 class="widget-title"><?php echo esc_html( $title ); ?></h2>
 	<ul id="monk-selector">
+		<span class="dashicons dashicons-arrow-down monk-selector-arrow"></span>
 		<?php foreach ( $active_languages as $lang_code ) : ?>
-			<?php if ( strcmp( $lang_code, $select_value ) == 0 ) : ?>
+			<?php if ( strcmp( $lang_code, $select_value ) === 0 ) : ?>
 				<li class="monk-active-lang">
 					<span class="monk-active-lang-name">
 						<?php if ( $flag ) : ?>
@@ -61,6 +62,5 @@ $active_languages = get_option( 'monk_active_languages' );
 				</li>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		<span class="dashicons dashicons-arrow-down monk-selector-arrow"></span>
 	</ul>
 </section>
