@@ -43,9 +43,6 @@
 					if ( $( this ).hasClass( 'monk-saved-language' ) ) {
 						$( this ).parent().removeClass( 'option-disabled' );
 					} else {
-						$( this ).prop({
-							'checked': false
-						});
 						$( this ).parent().removeClass( 'option-disabled' );
 					}
 				}
@@ -90,6 +87,7 @@
 
 		$( document ).on( 'hover', 'td.column-languages', function() {
 			$( this ).children( '.hide-if-js' ).toggle();
+			$( this ).children( '.monk-column-translations' ).css( 'position', 'absolute' );
 		});
 	});
 
