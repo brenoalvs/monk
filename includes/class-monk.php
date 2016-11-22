@@ -195,7 +195,7 @@ class Monk {
 		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
-		$this->loader->add_action( 'wp_loaded', $this, 'add_term_actions' );
+		$this->loader->add_action( 'wp_loaded', $this, 'add_term_hooks' );
 	}
 
 	/**
@@ -211,6 +211,7 @@ class Monk {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_filter( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 	}
 
 	/**
@@ -224,7 +225,13 @@ class Monk {
 		$this->loader->add_action( 'widgets_init', $this, 'register_widgets' );
 	}
 
-	public function add_term_actions() {
+	/**
+	 * Register all of the hooks related to terms
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function add_term_hooks() {
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
 		$taxonomies = get_taxonomies();
 		foreach ( $taxonomies as $taxonomy ) {
@@ -234,7 +241,7 @@ class Monk {
 			add_action( $taxonomy . '_edit_form_fields', array( $plugin_admin, 'monk_post_meta_box' ) );
 			add_action( 'created_' . $taxonomy, array( $plugin_admin, 'save_monk_meta' ) );
 			add_action( 'edited_' . $taxonomy, array( $plugin_admin, 'update_monk_meta' ) );
-			add_filter( 'manage_edit-' . $taxonomy . '_columns', array( $plugin_admin, 'monk_language_column_head' ) );		
+			add_filter( 'manage_edit-' . $taxonomy . '_columns', array( $plugin_admin, 'monk_language_column_head' ) );
 			add_action( 'manage_' . $taxonomy . '_custom_column', array( $plugin_admin, 'monk_taxonomy_language_column_content' ), 10, 3 );
 		}
 	}
