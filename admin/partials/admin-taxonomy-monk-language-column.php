@@ -53,16 +53,9 @@ if ( $monk_term_satan ) :
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
-<?php
-	else :
-		$translation_term_url = add_query_arg( array(
-				'tag_ID' => $term_id,
-		), $base_url );
-?>
-	<a class="monk-translation-link" href="<?php echo esc_url( $translation_term_url ); ?>">
-		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $default_language ]['name'] ); ?></span>
-		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
-	</a>
-<?php endif; ?>
 	<a class="monk-new-post-link" href="<?php echo esc_url( $new_term_url ); ?>">Add +</a>
-	</div>
+<?php
+	else : ?>
+	<span class="dashicons dashicons-minus"></span>
+<?php endif; ?>
+</div>
