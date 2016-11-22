@@ -46,6 +46,8 @@ class Monk_Public {
 	 * @since    1.0.0
 	 * @param      string $monk       The name of the plugin.
 	 * @param      string $version    The version of this plugin.
+	 * @param      string    $monk       The name of the plugin.
+	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $monk, $version ) {
 
@@ -148,5 +150,28 @@ class Monk_Public {
 			);
 		}
 		$query->set( 'meta_query', $query_args );
+	}
+
+	/**
+	 * Function to filter terms when in the front-end
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param  string $version    The version of this plugin.
+	 * @return Object $term_query Instance of $WP_Term_Query 
+	 *
+	 */
+	public function monk_public_terms_filter( $term_query ) {
+		$default_language = get_option( 'monk_default_language', false );
+		$language         = get_query_var( 'lang', $default_language );
+
+		if ( ! is_admin() && ! empty( $language ) ) {
+			$args = array(
+				'meta_key'   => '_monk_term_language',
+				'meta_value' => $language, 
+			);
+			
+			return $term_query->parse_query( $args );
+		} 
 	}
 }
