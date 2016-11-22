@@ -26,8 +26,14 @@ if ( ! isset( $_GET['monk_term_id'] ) ) {
 	</div>
 	<?php
 } else {
-	$translation_lang = $_GET['translation_lang'];
-	$monk_term_id     = $_GET['monk_term_id'];
+	if ( isset( $_GET['translation_lang'] ) ) {
+		$translation_lang = sanitize_text_field( wp_unslash( $_GET['translation_lang'] ) );
+	} else {
+		$translation_lang = $default_language;
+	}
+
+	$monk_term_id = sanitize_text_field( wp_unslash( $_GET['monk_term_id'] ) );
+
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Monk language', 'monk' ); ?></label>

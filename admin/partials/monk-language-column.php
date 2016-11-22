@@ -13,29 +13,21 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-$monk_satan_id    = get_post_meta( $post_id, '_monk_post_translations_id', true );
-$monk_satan       = get_option( 'monk_post_translations_' . $monk_satan_id );
-$default_language = get_option( 'monk_default_language' );
-$base_url         = admin_url( 'post.php?action=edit' );
-$active_languages = get_option( 'monk_active_languages' );
-
+?>
+	<span class="hide-if-no-js dashicons dashicons-edit"></span>
+	<div class="monk-hide monk-column-translations-arrow"></div>
+	<div class="hide-if-js monk-column-translations">
+<?php
 if ( $monk_satan ) :
 	foreach ( $active_languages as $lang ) :
 		foreach ( $monk_satan as $lang_code => $post_id ) :
-			if ( $lang === $lang_code && $lang_code === $default_language ) :
+			if ( $lang === $lang_code ) :
 				$post_url = add_query_arg( array(
 					'post' => $post_id,
 				), $base_url );
 				?>
-				<a href="<?php echo esc_url( $post_url ); ?>">
-					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $lang_code ); ?>"></span>
-				</a>
-			<?php elseif ( $lang === $lang_code && $lang_code !== $default_language ) :
-				$post_url = add_query_arg( array(
-					'post' => $post_id,
-				), $base_url );
-				?>
-				<a href="<?php echo esc_url( $post_url ); ?>">
+				<a class="monk-translation-link <?php if ( $lang_code === $monk_language ) : ?>monk-language<?php endif; ?>" href="<?php echo esc_url( $post_url ); ?>">
+					<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $lang ]['name'] ); ?></span>
 					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $lang_code ); ?>"></span>
 				</a>
 			<?php endif; ?>
@@ -47,7 +39,10 @@ if ( $monk_satan ) :
 				'post' => $post_id,
 		), $base_url );
 ?>
-	<a href="<?php echo esc_url( $post_url ); ?>">
+	<a class="monk-translation-link" href="<?php echo esc_url( $post_url ); ?>">
+		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $default_language ]['name'] ); ?></span>
 		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
 	</a>
 <?php endif; ?>
+		<a class="monk-new-post-link" href="<?php echo esc_url( $new_post_url ); ?>">Add +</a>
+	</div>
