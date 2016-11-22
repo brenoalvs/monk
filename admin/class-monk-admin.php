@@ -642,7 +642,7 @@ class Monk_Admin {
 		$monk_term_translations = get_option( $option_name, false );
 
 		if ( isset( $monk_term_translations ) && $monk_term_translations ) {
-			unset( $monk_term_translations[$term_language] );
+			unset( $monk_term_translations[ $term_language ] );
 			if ( empty( $monk_term_translations ) ) {
 				delete_option( $option_name );
 			} else {
