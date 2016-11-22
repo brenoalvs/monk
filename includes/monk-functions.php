@@ -13,5 +13,5 @@ function monk_is_language_code( $language_code ) {
 	global $monk_languages;
 	$languages_codes = array_keys( $monk_languages );
 	
-	return in_array( $language , $language_codes );
+	return in_array( $language_code , $language_codes );
 }
