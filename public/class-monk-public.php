@@ -115,4 +115,20 @@ class Monk_Public {
 		 */
 		wp_enqueue_script( 'monk-language-switcher-script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), $this->version, true );
 	}
+
+	public function monk_public_terms_filter( $term_query ) {
+		$args = array();
+
+		if ( ! is_admin() && isset( $_REQUEST['lang'] ) ) {
+			$lang_query = get_query_var( 'lang' );
+			$args             = array( 'meta_key' => '_monk_term_language' );
+			$default_language = get_option( 'monk_default_language', false );
+
+			if ( isset( $lang_query ) && $lang_query ) {
+				$args['meta_value'] = $lang_query;
+			}
+		}
+
+		return $term_query->parse_query( $args ); 
+	}
 }
