@@ -116,6 +116,13 @@ class Monk_Public {
 		wp_enqueue_script( 'monk-language-switcher-script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), $this->version, true );
 	}
 
+	/**
+	 * Function to filter terms when in the front-end
+	 *
+	 * @param    string    $version    The version of this plugin.
+	 *
+	 * @since    1.0.0
+	 */
 	public function monk_public_terms_filter( $term_query ) {
 		$args = array();
 
