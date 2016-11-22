@@ -123,7 +123,7 @@ class Monk_Public {
 	 * @param    Object $query WP_query object.
 	 */
 	public function monk_public_posts_filter( $query ) {
-		if ( is_admin() || ! $query->is_main_query() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
