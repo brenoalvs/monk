@@ -536,7 +536,7 @@ class Monk_Admin {
 	 *
 	 * @param int $term_id  Id of the term
 	 */
-	public function save_monk_meta( $term_id ) {
+	public function monk_create_term_meta( $term_id ) {
 		if ( isset( $_REQUEST['monk-language'] ) && ! empty( $_REQUEST['monk-language'] ) ) {
 			$language = sanitize_text_field( wp_unslash( $_REQUEST['monk-language'] ) );
 			add_term_meta( $term_id, '_monk_term_language', $language, true );
@@ -577,7 +577,7 @@ class Monk_Admin {
 	 *
 	 * @param int $term_id Id of the term
 	 */
-	public function update_monk_meta( $term_id ) {
+	public function monk_update_term_meta( $term_id ) {
 		if ( isset( $_REQUEST['monk-language'] ) && '' !== $_REQUEST['monk-language'] ) {
 			$language = sanitize_text_field( wp_unslash( $_REQUEST['monk-language'] ) );
 			update_term_meta( $term_id, '_monk_term_language', $language );
@@ -635,7 +635,7 @@ class Monk_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function monk_delete_term_data( $term_id ) {
+	public function monk_delete_term_meta( $term_id ) {
 		$monk_term_id           = get_term_meta( $term_id, '_monk_term_id', true );
 		$term_language          = get_term_meta( $term_id, '_monk_term_language', true );
 		$option_name            = 'monk_term_translations_' . $monk_term_id;
