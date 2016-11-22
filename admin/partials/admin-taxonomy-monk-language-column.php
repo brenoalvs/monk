@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 ?>
-	<span class="hide-if-no-js flag-icon flag-icon-monk-pencil"></span>
+	<span class="hide-if-no-js dashicons dashicons-edit"></span>
 	<div class="monk-hide monk-column-translations-arrow"></div>
 	<div class="hide-if-js monk-column-translations monk-column-translations-terms">
 <?php
@@ -38,10 +38,10 @@ if ( $monk_term_satan ) :
 					'tag_ID' => $translation_id,
 				), $base_url );
 				?>
-				<a class="monk-translation-link" href="<?php echo esc_url( $translation_term_url ); ?>">
-					<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?></span>
-					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $translation_code ); ?>"></span>
-				</a>
+					<a class="monk-translation-link <?php if ( $translation_code === $monk_language ) : ?>monk-language<?php endif; ?>" href="<?php echo esc_url( $translation_term_url ); ?>">
+						<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?></span>
+						<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $translation_code ); ?>"></span>
+					</a>
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
