@@ -120,9 +120,9 @@ class Monk_Public {
 		$args = array();
 
 		if ( ! is_admin() && isset( get_query_var( 'lang' ) ) ) {
-			$lang_query = get_query_var( 'lang' );
-			$default_language = get_option( 'monk_default_language', false );
 			$args             = array( 'meta_key' => '_monk_term_language' );
+			$lang_query       = get_query_var( 'lang' );
+			$default_language = get_option( 'monk_default_language', false );
 
 			if ( isset( $lang_query ) && $lang_query ) {
 				$args['meta_value'] = $lang_query;
