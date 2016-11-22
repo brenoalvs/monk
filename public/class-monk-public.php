@@ -117,7 +117,7 @@ class Monk_Public {
 	}
 
 	/**
-	 * Register the JavaScript for the public-facing side of the site.
+	 * Function to filter posts when in the front-end.
 	 *
 	 * @since    1.0.0
 	 * @param    Object $query WP_query object.
