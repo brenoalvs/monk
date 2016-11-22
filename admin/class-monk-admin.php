@@ -516,6 +516,7 @@ class Monk_Admin {
 		if ( 'languages' === $column_name ) {
 			global $monk_languages;
 
+			$monk_language    = get_post_meta( $post_id, '_monk_post_language', true );
 			$monk_satan_id    = get_post_meta( $post_id, '_monk_post_translations_id', true );
 			$monk_satan       = get_option( 'monk_post_translations_' . $monk_satan_id );
 			$default_language = get_option( 'monk_default_language' );
