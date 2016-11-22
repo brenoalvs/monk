@@ -132,9 +132,9 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
 
 		/**
-		 * Imports the metadata functionality for taxonomies
-		*/
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/monk-term-metadata.php';
+		 * Helper functions
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/monk-functions.php';
 
 		$this->loader = new Monk_Loader();
 	}
