@@ -115,4 +115,27 @@ class Monk_Public {
 		 */
 		wp_enqueue_script( 'monk-language-switcher-script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), $this->version, true );
 	}
+
+	/**
+	 * Function to filter terms when in the front-end
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param  string $version    The version of this plugin.
+	 * @return Object $term_query Instance of $WP_Term_Query 
+	 *
+	 */
+	public function monk_public_terms_filter( $term_query ) {
+		$default_language = get_option( 'monk_default_language', false );
+		$language         = get_query_var( 'lang', $default_language );
+
+		if ( ! is_admin() && ! empty( $language ) ) {
+			$args = array(
+				'meta_key'   => '_monk_term_language',
+				'meta_value' => $language, 
+			);
+			
+			return $term_query->parse_query( $args );
+		} 
+	}
 }

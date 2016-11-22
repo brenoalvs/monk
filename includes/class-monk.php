@@ -211,6 +211,7 @@ class Monk {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'pre_get_terms', $plugin_public, 'monk_public_terms_filter' );
 	}
 
 	/**
@@ -224,19 +225,28 @@ class Monk {
 		$this->loader->add_action( 'widgets_init', $this, 'register_widgets' );
 	}
 
+	/**
+	 * Register every hooks related to term data handling
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
 	public function add_term_actions() {
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
 		$taxonomies = get_taxonomies();
+
 		foreach ( $taxonomies as $taxonomy ) {
 			add_action( $taxonomy . '_add_form_fields', array( $plugin_admin, 'monk_custom_taxonomy_field' ) );
 			add_action( $taxonomy . '_edit_form_fields', array( $plugin_admin, 'monk_edit_custom_taxonomy_field' ) );
 			add_action( $taxonomy . '_edit_form_fields', array( $plugin_admin, 'monk_term_translation_meta_field' ) );
 			add_action( $taxonomy . '_edit_form_fields', array( $plugin_admin, 'monk_post_meta_box' ) );
-			add_action( 'created_' . $taxonomy, array( $plugin_admin, 'save_monk_meta' ) );
-			add_action( 'edited_' . $taxonomy, array( $plugin_admin, 'update_monk_meta' ) );
 			add_filter( 'manage_edit-' . $taxonomy . '_columns', array( $plugin_admin, 'monk_language_column_head' ) );		
 			add_action( 'manage_' . $taxonomy . '_custom_column', array( $plugin_admin, 'monk_taxonomy_language_column_content' ), 10, 3 );
 		}
+
+		add_action( 'created_term', array( $plugin_admin, 'monk_create_term_meta' ) );
+		add_action( 'edited_term', array( $plugin_admin, 'monk_update_term_meta' ) );
+		add_action( 'pre_delete_term', array( $plugin_admin, 'monk_delete_term_meta' ) );
 	}
 
 	/**
