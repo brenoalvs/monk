@@ -86,8 +86,8 @@
 		});
 
 		$( document ).on( 'hover', 'td.column-languages', function() {
-			$( this ).children( '.hide-if-js, .monk-hide' ).slideToggle();
-			$( this ).children( '.monk-column-translations' ).addClass( 'monk-show' );
+			$( this ).children( '.monk-column-translations' ).toggleClass( 'monk-show' );
+			$( this ).children( '.monk-column-translations-arrow' ).toggleClass( 'monk-hide' );
 		});
 	});
 })( jQuery );
