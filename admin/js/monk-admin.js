@@ -86,9 +86,8 @@
 		});
 
 		$( document ).on( 'hover', 'td.column-languages', function() {
-			$( this ).children( '.hide-if-js' ).toggle();
+			$( this ).children( '.hide-if-js' ).slideToggle();
 			$( this ).children( '.monk-column-translations' ).css( 'position', 'absolute' );
 		});
 	});
-
 })( jQuery );
