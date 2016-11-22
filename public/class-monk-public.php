@@ -119,17 +119,20 @@ class Monk_Public {
 	/**
 	 * Function to filter terms when in the front-end
 	 *
-	 * @param    string    $version    The version of this plugin.
-	 *
 	 * @since    1.0.0
+	 *
+	 * @param  string $version    The version of this plugin.
+	 * @return Object $term_query Instance of $WP_Term_Query 
+	 *
 	 */
 	public function monk_public_terms_filter( $term_query ) {
-		$args = array();
+		$args             = array();
+		$default_language = get_option( 'monk_default_language', false );
+		$language         = get_query_var( 'lang', $default_language );
 
-		if ( ! is_admin() && isset( get_query_var( 'lang' ) ) ) {
+		if ( ! is_admin() && isset( $language ) ) {
 			$args             = array( 'meta_key' => '_monk_term_language' );
 			$lang_query       = get_query_var( 'lang' );
-			$default_language = get_option( 'monk_default_language', false );
 
 			if ( isset( $lang_query ) && $lang_query ) {
 				$args['meta_value'] = $lang_query;

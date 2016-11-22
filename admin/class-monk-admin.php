@@ -543,7 +543,7 @@ class Monk_Admin {
 
 			if ( isset( $_REQUEST['monk_term_id'] ) ) {
 				$monk_term_id = sanitize_text_field( wp_unslash( $_REQUEST['monk_term_id'] ) );
-				add_term_meta( $term_id, 'monk_term_id', $monk_term_id, true );
+				add_term_meta( $term_id, '_monk_term_id', $monk_term_id, true );
 				if ( get_option( 'monk_term_translations_' . $monk_term_id ) !== false ) {
 					$current_term_translations = get_option( 'monk_term_translations_' . $monk_term_id );
 					$current_term_translations[ $language ] = $term_id;
@@ -555,7 +555,7 @@ class Monk_Admin {
 				);
 
 				add_option( 'monk_term_translations_' . $term_id, $option_value, null, 'no' );
-				add_term_meta( $term_id, 'monk_term_id', $term_id, true );
+				add_term_meta( $term_id, '_monk_term_id', $term_id, true );
 			}
 		}
 	}
@@ -597,7 +597,7 @@ class Monk_Admin {
 			$monk_language      = get_term_meta( $term_id, '_monk_term_language', true );
 			$languages          = get_option( 'monk_active_languages' );
 			$taxonomies         = get_taxonomies();
-			$monk_term_satan_id = get_term_meta( $term_id, 'monk_term_id', true );
+			$monk_term_satan_id = get_term_meta( $term_id, '_monk_term_id', true );
 			$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
 			$default_language = get_option( 'monk_default_language' );
 
@@ -613,7 +613,7 @@ class Monk_Admin {
 		$monk_language      = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$languages          = get_option( 'monk_active_languages' );
 		$taxonomies         = get_taxonomies();
-		$monk_term_satan_id = get_term_meta( $term->term_id, 'monk_term_id', true );
+		$monk_term_satan_id = get_term_meta( $term->term_id, '_monk_term_id', true );
 		$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
 
 		foreach ( $taxonomies as $taxonomy ) {
@@ -636,7 +636,7 @@ class Monk_Admin {
 	 * @since 1.0.0
 	 */
 	public function monk_delete_term_data( $term_id ) {
-		$monk_term_id           = get_term_meta( $term_id, 'monk_term_id', true );
+		$monk_term_id           = get_term_meta( $term_id, '_monk_term_id', true );
 		$term_language          = get_term_meta( $term_id, '_monk_term_language', true );
 		$option_name            = 'monk_term_translations_' . $monk_term_id;
 		$monk_term_translations = get_option( $option_name, false );
