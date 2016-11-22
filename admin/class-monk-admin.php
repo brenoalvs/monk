@@ -631,7 +631,7 @@ class Monk_Admin {
 	/**
 	 * Function that erases the data stored by the plugin when term is deleted
 	 *
-	 * @param $term object of Term API  
+	 * @param $term_id object of Term API  
 	 *
 	 * @since 1.0.0
 	 */
