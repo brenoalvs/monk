@@ -113,3 +113,7 @@ span.flag-icon-monk-pencil {
 	margin: 0 auto;
 	width: 0; 
 }
+
+.monk-hide {
+	display: none;
+}
