@@ -119,10 +119,10 @@ class Monk_Public {
 	public function monk_public_terms_filter( $term_query ) {
 		$args = array();
 
-		if ( ! is_admin() && isset( $_REQUEST['lang'] ) ) {
+		if ( ! is_admin() && isset( get_query_var( 'lang' ) ) ) {
 			$lang_query = get_query_var( 'lang' );
-			$args             = array( 'meta_key' => '_monk_term_language' );
 			$default_language = get_option( 'monk_default_language', false );
+			$args             = array( 'meta_key' => '_monk_term_language' );
 
 			if ( isset( $lang_query ) && $lang_query ) {
 				$args['meta_value'] = $lang_query;
