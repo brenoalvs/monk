@@ -39,16 +39,9 @@ $post_url = add_query_arg( array(
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
+	<a class="monk-new-post-link" href="<?php echo esc_url( $new_post_url ); ?>">Add +</a>
 <?php
-	else :
-		$post_url = add_query_arg( array(
-				'post' => $post_id,
-		), $base_url );
-?>
-	<a class="monk-translation-link" href="<?php echo esc_url( $post_url ); ?>">
-		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $default_language ]['name'] ); ?></span>
-		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $default_language ); ?>"></span>
-	</a>
+	else : ?>
+	<span class="dashicons dashicons-minus"></span>
 <?php endif; ?>
-		<a class="monk-new-post-link" href="<?php echo esc_url( $new_post_url ); ?>">Add +</a>
-	</div>
+</div>
