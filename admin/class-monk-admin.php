@@ -561,6 +561,53 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Update term language
+	 *
+	 * @param int $term_id Id of the term
+	 */
+	public function monk_update_term_meta( $term_id ) {
+		if ( isset( $_REQUEST['monk-language'] ) && ! empty( $_REQUEST['monk-language'] ) ) {
+			$current_language = get_term_meta( $term_id, '_monk_term_language', true );
+			$new_language     = sanitize_text_field( wp_unslash( $_REQUEST['monk-language'] ) );
+			$monk_term_id     = get_term_meta( $term_id, '_monk_term_id', true );
+			
+			update_term_meta( $term_id, '_monk_term_language', $language );
+			$monk_term_translations = get_option( 'monk_term_translations_' . $monk_term_id, false );
+
+			if ( ! empty( $monk_term_translations ) ) {
+				unset( $monk_term_translations[ $current_language ] );
+				$monk_term_translations[ $new_language ] = $term_id;
+				update_option( 'monk_term_translations_' . $monk_term_id, $monk_term_translations );
+			}
+		}
+	}
+
+	/**
+	 * Function that erases the data stored by the plugin when term is deleted
+	 *
+	 * @param $term_id object of Term API  
+	 *
+	 * @since 1.0.0
+	 */
+	public function monk_delete_term_meta( $term_id ) {
+		$monk_term_id           = get_term_meta( $term_id, '_monk_term_id', true );
+		$term_language          = get_term_meta( $term_id, '_monk_term_language', true );
+		$option_name            = 'monk_term_translations_' . $monk_term_id;
+		$monk_term_translations = get_option( $option_name, false );
+
+		if ( isset( $monk_term_translations ) && $monk_term_translations ) {
+			unset( $monk_term_translations[ $term_language ] );
+			if ( empty( $monk_term_translations ) ) {
+				delete_option( $option_name );
+			} else {
+				update_option( $option_name, $monk_term_translations );
+			}
+		} else {
+			delete_option( $option_name );
+		}
+	}
+
+	/**
 	 * Add select term language inside edit page
 	 *
 	 * @param Object $term Object term.
@@ -570,18 +617,6 @@ class Monk_Admin {
 		global $monk_languages;
 		$languages = get_option( 'monk_active_languages' );
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-update-term.php';
-	}
-
-	/**
-	 * Update term language
-	 *
-	 * @param int $term_id Id of the term
-	 */
-	public function monk_update_term_meta( $term_id ) {
-		if ( isset( $_REQUEST['monk-language'] ) && '' !== $_REQUEST['monk-language'] ) {
-			$language = sanitize_text_field( wp_unslash( $_REQUEST['monk-language'] ) );
-			update_term_meta( $term_id, '_monk_term_language', $language );
-		}
 	}
 
 	/**
@@ -626,30 +661,5 @@ class Monk_Admin {
 			}
 		}
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-translation.php';
-	}
-
-	/**
-	 * Function that erases the data stored by the plugin when term is deleted
-	 *
-	 * @param $term_id object of Term API  
-	 *
-	 * @since 1.0.0
-	 */
-	public function monk_delete_term_meta( $term_id ) {
-		$monk_term_id           = get_term_meta( $term_id, '_monk_term_id', true );
-		$term_language          = get_term_meta( $term_id, '_monk_term_language', true );
-		$option_name            = 'monk_term_translations_' . $monk_term_id;
-		$monk_term_translations = get_option( $option_name, false );
-
-		if ( isset( $monk_term_translations ) && $monk_term_translations ) {
-			unset( $monk_term_translations[ $term_language ] );
-			if ( empty( $monk_term_translations ) ) {
-				delete_option( $option_name );
-			} else {
-				update_option( $option_name, $monk_term_translations );
-			}
-		} else {
-			delete_option( $option_name );
-		}
 	}
 }
