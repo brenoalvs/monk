@@ -173,7 +173,7 @@ class Monk_Admin {
 	 * @since    1.0.0
 	 */
 	public function monk_default_language_render() {
-		$default_language = get_option( 'monk_default_language' );
+		$default_language = get_option( 'monk_default_language', false );
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-render.php';
 	}
 
@@ -222,8 +222,8 @@ class Monk_Admin {
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
 		global $monk_languages;
-		$site_default_language = get_option( 'monk_default_language' );
-		$active_languages      = get_option( 'monk_active_languages' );
+		$site_default_language = get_option( 'monk_default_language', false );
+		$active_languages      = get_option( 'monk_active_languages', false );
 		$monk_id               = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language = get_post_meta( $post->ID, '_monk_post_language', true );
 		$monk_translation_url  = admin_url( 'post-new.php' );
@@ -518,10 +518,10 @@ class Monk_Admin {
 
 			$monk_language    = get_post_meta( $post_id, '_monk_post_language', true );
 			$monk_satan_id    = get_post_meta( $post_id, '_monk_post_translations_id', true );
-			$monk_satan       = get_option( 'monk_post_translations_' . $monk_satan_id );
-			$default_language = get_option( 'monk_default_language' );
+			$monk_satan       = get_option( 'monk_post_translations_' . $monk_satan_id, false );
+			$default_language = get_option( 'monk_default_language', false );
 			$base_url         = admin_url( 'post.php?action=edit' );
-			$active_languages = get_option( 'monk_active_languages' );
+			$active_languages = get_option( 'monk_active_languages', false );
 			$new_post_url     = add_query_arg( array(
 					'monk_id' => $monk_satan_id,
 			), admin_url( 'post-new.php?' ) );
@@ -535,9 +535,9 @@ class Monk_Admin {
 	 */
 	public function monk_custom_taxonomy_field() {
 		global $monk_languages;
-		$languages = get_option( 'monk_active_languages' );
+		$languages = get_option( 'monk_active_languages', false );
 		$taxonomies = get_taxonomies();
-		$default_language = get_option( 'monk_default_language' );
+		$default_language = get_option( 'monk_default_language', false );
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-term.php';
 	}
@@ -579,7 +579,7 @@ class Monk_Admin {
 	public function monk_edit_custom_taxonomy_field( $term ) {
 		$monk_language = get_term_meta( $term->term_id, '_monk_term_language', true );
 		global $monk_languages;
-		$languages = get_option( 'monk_active_languages' );
+		$languages = get_option( 'monk_active_languages', false );
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-update-term.php';
 	}
 
@@ -606,11 +606,11 @@ class Monk_Admin {
 		if ( 'languages' === $column_name ) :
 			global $monk_languages;
 			$monk_language      = get_term_meta( $term_id, '_monk_term_language', true );
-			$languages          = get_option( 'monk_active_languages' );
+			$languages          = get_option( 'monk_active_languages', false );
 			$taxonomies         = get_taxonomies();
 			$monk_term_satan_id = get_term_meta( $term_id, 'monk_term_id', true );
-			$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
-			$default_language   = get_option( 'monk_default_language' );
+			$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id, false );
+			$default_language   = get_option( 'monk_default_language', false );
 
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-taxonomy-monk-language-column.php';
 		endif;
@@ -624,10 +624,10 @@ class Monk_Admin {
 	public function monk_term_translation_meta_field( $term ) {
 		global $monk_languages;
 		$monk_language      = get_term_meta( $term->term_id, '_monk_term_language', true );
-		$languages          = get_option( 'monk_active_languages' );
+		$languages          = get_option( 'monk_active_languages', false );
 		$taxonomies         = get_taxonomies();
 		$monk_term_satan_id = get_term_meta( $term->term_id, 'monk_term_id', true );
-		$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
+		$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id, false );
 
 		foreach ( $taxonomies as $taxonomy ) {
 			if ( isset( $_GET['taxonomy'] ) ) {
