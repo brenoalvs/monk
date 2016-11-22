@@ -129,7 +129,7 @@ class Monk_Public {
 
 		$query_args = array();
 		$default_language = get_option( 'monk_default_language', false );
-		if ( empty( get_query_var( 'lang' ) ) || $default_language === get_query_var( 'lang' ) ) {
+		if ( empty( get_query_var( 'lang' ) ) || get_query_var( 'lang' ) === $default_language ) {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
