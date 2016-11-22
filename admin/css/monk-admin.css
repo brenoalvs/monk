@@ -72,7 +72,7 @@
 	border-bottom: 1px solid #fff;
 	color: #fff;
 	display: block;
-	padding: 3px 10px;
+	padding: 3px 3px;
 }
 
 .monk-new-post-link {
@@ -80,7 +80,7 @@
 	color: #fff;
 	display: block;
 	font: 12px arial, sans-serif;
-	padding: 7px 10px 0;
+	padding: 7px 3px 0;
 }
 
 span.flag-icon-monk-pencil {
@@ -89,7 +89,7 @@ span.flag-icon-monk-pencil {
 }
 
 .monk-language-name {
-	font: 12px arial, sans-serif;
+	font: 11px arial, sans-serif;
 	margin-right: 10px;
 }
 
@@ -100,7 +100,6 @@ span.flag-icon-monk-pencil {
 
 .monk-column-translations {
 	background-color: #303030;
-	border-radius: 3px;
 	padding: 7px 0;
 	z-index: 9999;
 }
@@ -114,6 +113,15 @@ span.flag-icon-monk-pencil {
 	width: 0; 
 }
 
-.monk-hide {
+div.monk-hide {
 	display: none;
+}
+
+div.monk-show {
+	position: absolute;
+	min-width: 120px;
+}
+
+.monk-language {
+	color: #0073aa;
 }
