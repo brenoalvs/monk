@@ -627,4 +627,29 @@ class Monk_Admin {
 		}
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-translation.php';
 	}
+
+	/**
+	 * Function that erases the data stored by the plugin when term is deleted
+	 *
+	 * @param $term object of Term API  
+	 *
+	 * @since 1.0.0
+	 */
+	public function monk_delete_term_data( $term_id ) {
+		$monk_term_id           = get_term_meta( $term_id, 'monk_term_id', true );
+		$term_language          = get_term_meta( $term_id, '_monk_term_language', true );
+		$option_name            = 'monk_term_translations_' . $monk_term_id;
+		$monk_term_translations = get_option( $option_name, false );
+
+		if ( isset( $monk_term_translations ) && $monk_term_translations ) {
+			unset( $monk_term_translations[$term_language] );
+			if ( empty( $monk_term_translations ) ) {
+				delete_option( $option_name );
+			} else {
+				update_option( $option_name, $monk_term_translations );
+			}
+		} else {
+			delete_option( $option_name );
+		}
+	}
 }
