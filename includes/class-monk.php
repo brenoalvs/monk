@@ -240,12 +240,12 @@ class Monk {
 			add_action( $taxonomy . '_edit_form_fields', array( $plugin_admin, 'monk_edit_custom_taxonomy_field' ) );
 			add_action( $taxonomy . '_edit_form_fields', array( $plugin_admin, 'monk_term_translation_meta_field' ) );
 			add_action( $taxonomy . '_edit_form_fields', array( $plugin_admin, 'monk_post_meta_box' ) );
-			add_action( 'created_' . $taxonomy, array( $plugin_admin, 'save_monk_meta' ) );
-			add_action( 'edited_' . $taxonomy, array( $plugin_admin, 'update_monk_meta' ) );
 			add_filter( 'manage_edit-' . $taxonomy . '_columns', array( $plugin_admin, 'monk_language_column_head' ) );		
 			add_action( 'manage_' . $taxonomy . '_custom_column', array( $plugin_admin, 'monk_taxonomy_language_column_content' ), 10, 3 );
 		}
 
+		add_action( 'created_terms', array( $plugin_admin, 'save_monk_meta' ) );
+		add_action( 'edited_terms', array( $plugin_admin, 'update_monk_meta' ) );
 		add_action( 'pre_delete_term', array( $plugin_admin, 'monk_delete_term_data' ) );
 	}
 
