@@ -126,19 +126,16 @@ class Monk_Public {
 	 *
 	 */
 	public function monk_public_terms_filter( $term_query ) {
-		$args             = array();
 		$default_language = get_option( 'monk_default_language', false );
 		$language         = get_query_var( 'lang', $default_language );
 
-		if ( ! is_admin() && isset( $language ) ) {
-			$args             = array( 'meta_key' => '_monk_term_language' );
-			$lang_query       = get_query_var( 'lang' );
-
-			if ( isset( $lang_query ) && $lang_query ) {
-				$args['meta_value'] = $lang_query;
-			}
-		}
-
-		return $term_query->parse_query( $args ); 
+		if ( ! is_admin() && ! empty( $language ) ) {
+			$args = array(
+				'meta_key'   => '_monk_term_language',
+				'meta_value' => $language, 
+			);
+			
+			return $term_query->parse_query( $args );
+		} 
 	}
 }
