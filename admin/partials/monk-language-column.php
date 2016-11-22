@@ -15,6 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 ?>
 	<span class="hide-if-no-js flag-icon flag-icon-monk-pencil"></span>
+	<div class="monk-hide monk-column-translations-arrow"></div>
 	<div class="hide-if-js monk-column-translations">
 <?php
 if ( $monk_satan ) :
