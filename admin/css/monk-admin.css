@@ -2,59 +2,127 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.column-languages {
+	text-align: center;
+}
+
+.column-languages,
+.column-languages a {
+	cursor: pointer;
+}
 
  div.monk-post-meta-text label {
- 	font-weight: 600;
- 	line-height: 1em;
- 	margin: 0 0 8px 0;
+	font-weight: 600;
+	line-height: 1em;
+	margin: 0 0 8px 0;
 
  }
 
  div.monk-post-meta-text label:before {
- 	font: 400 20px/1 dashicons;
- 	color: #82878c;
- 	content: '\f326';
- 	margin: 0 7px 0 -2px;
- 	vertical-align: top;
+	font: 400 20px/1 dashicons;
+	color: #82878c;
+	content: '\f326';
+	margin: 0 7px 0 -2px;
+	vertical-align: top;
  }
 
  div.monk-post-meta-text h2 {
- 	color: #82878c;
+	color: #82878c;
  }
 
  .monk-add-translation, .monk-change-language, .button-cancel {
- 	text-decoration: underline;
- 	cursor: pointer;
+	text-decoration: underline;
+	cursor: pointer;
  }
 
  .monk-post-meta-add-translation {
- 	display: none;
- 	margin-top: 15px;
+	display: none;
+	margin-top: 15px;
  }
 
  .monk-change-current-language {
- 	display: none;
- 	margin: 10px 0 15px;
+	display: none;
+	margin: 10px 0 15px;
  }
 
  .monk-post-meta-option:before {
- 	font: 400 20px/1 dashicons;
- 	color: #82878c;
+	font: 400 20px/1 dashicons;
+	color: #82878c;
  }
 
  .monk-translated-to {
- 	margin-top: 10px;
+	margin-top: 10px;
  }
 
  .monk-translated-to li a {
- 	text-decoration: none;
+	text-decoration: none;
  }
 
  .option-disabled {
- 	opacity: 0.5;
- 	pointer-events: none;
+	opacity: 0.5;
+	pointer-events: none;
  }
 
 #monk-language {
 	width: 95%;
+}
+
+.monk-translation-link {
+	text-align: left;
+	border-bottom: 1px solid #fff;
+	color: #fff;
+	display: block;
+	padding: 3px 15px;
+}
+
+.monk-new-post-link {
+	text-align: left;
+	color: #fff;
+	display: block;
+	font: 12px arial, sans-serif;
+	padding: 7px 15px 0;
+}
+
+span.flag-icon-monk-pencil {
+	margin: 0 auto;
+	display: block;
+}
+
+.monk-language-name {
+	font: 11px arial, sans-serif;
+	margin-right: 10px;
+}
+
+.monk-selector-flag {
+	float: right;
+	padding-top: 7px; 
+}
+
+.monk-column-translations {
+	background-color: #303030;
+	padding: 7px 0;
+	z-index: 9999;
+}
+
+.monk-column-translations-arrow {
+	border-bottom: 7px solid #303030;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	height: 0; 
+	margin: 0 auto;
+	width: 0; 
+}
+
+div.monk-hide {
+	display: none;
+}
+
+td.languages div.hide-if-js.monk-show {
+	display: block;
+	position: absolute;
+	min-width: 120px;
+}
+
+.monk-language {
+	color: #0073aa;
 }

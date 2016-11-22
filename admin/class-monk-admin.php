@@ -19,7 +19,6 @@
  * @subpackage Monk/Admin
  * @author     Breno Alves
  */
-
 class Monk_Admin {
 
 	/**
@@ -44,8 +43,8 @@ class Monk_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $monk       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param    string $monk       The name of this plugin.
+	 * @param    string $version    The version of this plugin.
 	 */
 	public function __construct( $monk, $version ) {
 
@@ -174,7 +173,7 @@ class Monk_Admin {
 	 * @since    1.0.0
 	 */
 	public function monk_default_language_render() {
-		$default_language = get_option( 'monk_default_language' );
+		$default_language = get_option( 'monk_default_language', false );
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-render.php';
 	}
 
@@ -200,7 +199,7 @@ class Monk_Admin {
 	 * Function to create the main language meta box for posts
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_post_meta_box() {
 		add_meta_box(
 			'monk_post_meta_box_field',
@@ -216,15 +215,15 @@ class Monk_Admin {
 	/**
 	 * Function to make the view for the post monk meta box
 	 *
-	 * @param    $post object
+	 * @param    object $post Post object.
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
 		global $monk_languages;
-		$site_default_language = get_option( 'monk_default_language' );
-		$active_languages      = get_option( 'monk_active_languages' );
+		$site_default_language = get_option( 'monk_default_language', false );
+		$active_languages      = get_option( 'monk_active_languages', false );
 		$monk_id               = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language = get_post_meta( $post->ID, '_monk_post_language', true );
 		$monk_translation_url  = admin_url( 'post-new.php' );
@@ -243,10 +242,10 @@ class Monk_Admin {
 	/**
 	 * Function to save data from the monk post meta box
 	 *
-	 * @param    $post_id
+	 * @param   string $post_id ID of the post.
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_save_post_meta_box( $post_id ) {
 		if ( ! isset( $_REQUEST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['monk_post_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {
 			return;
@@ -261,7 +260,6 @@ class Monk_Admin {
 		}
 
 		$current_post_language = get_post_meta( $post_id, '_monk_post_language', true );
-
 		if ( isset( $_REQUEST['monk_post_language'] ) ) {
 			$post_language = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
 			update_post_meta(
@@ -304,9 +302,9 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function that erases the data stored by the plugin when post is deleted permanently
+	 * Function that erases the data stored by the plugin when post is deleted permanently.
 	 *
-	 * @param    $post_id ID of the post, page or post_type to be deleted
+	 * @param   string $post_id ID of the post, page or post_type to be deleted.
 	 *
 	 * @since    1.0.0
 	 */
@@ -330,10 +328,10 @@ class Monk_Admin {
 	/**
 	 * Function to filter the query inside the category meta box using the languages
 	 *
-	 * @param    $term_query instance of WP_Term_Query class.
+	 * @param   object $term_query instance of WP_Term_Query class.
 	 *
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_category_language_filter( $term_query ) {
 		if ( is_admin() && ! is_customize_preview() ) {
 			$screen = get_current_screen();
@@ -353,14 +351,15 @@ class Monk_Admin {
 				} elseif ( isset( $meta_lang ) ) {
 					$term_args['meta_value'] = $meta_lang;
 				}
-
 				return $term_query->parse_query( $term_args );
 			}
 		}
 	}
 
 	/**
-	 * Add components on Appearance->Customize
+	 * Add components on Appearance->Customize.
+	 *
+	 * @param object $wp_customize Customize object.
 	 *
 	 * @since    1.0.0
 	 * @access   public
@@ -434,7 +433,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Include styles related to Customize options
+	 * Include styles related to Customize options.
 	 */
 	public function monk_customize_css() {
 		?>
@@ -457,7 +456,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Add parameters to filter by meta_key
+	 * Add parameters to filter by meta_key.
 	 *
 	 * @param object $query Object Query.
 	 */
@@ -481,7 +480,7 @@ class Monk_Admin {
 				$query->set( 'meta_value', $monk_language );
 			} elseif ( ! $not_filter || $is_default ) {
 				$meta_query_args = array(
-					'relation' => 'OR', // Optional, defaults to "AND"
+					'relation' => 'OR', // Optional, defaults to "AND".
 					array(
 						'key'     => '_monk_post_language',
 						'value'   => $default_language,
@@ -500,7 +499,7 @@ class Monk_Admin {
 	/**
 	 * Include styles related to Customize options
 	 *
-	 * @param array $title Title of the column
+	 * @param array $title Title of the column.
 	 */
 	public function monk_language_column_head( $title ) {
 		$title['languages'] = __( 'Languages', 'monk' );
@@ -508,13 +507,25 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Include styles related to Customize options
+	 * Include styles related to Customize options.
 	 *
-	 * @param string $colum_name Title of the column
-	 * @param string $post_ID    Post id
+	 * @param string $column_name Title of the column.
+	 * @param string $post_id    Post id.
 	 */
 	public function monk_language_column_content( $column_name, $post_id ) {
 		if ( 'languages' === $column_name ) {
+			global $monk_languages;
+
+			$monk_language    = get_post_meta( $post_id, '_monk_post_language', true );
+			$monk_satan_id    = get_post_meta( $post_id, '_monk_post_translations_id', true );
+			$monk_satan       = get_option( 'monk_post_translations_' . $monk_satan_id, false );
+			$default_language = get_option( 'monk_default_language', false );
+			$base_url         = admin_url( 'post.php?action=edit' );
+			$active_languages = get_option( 'monk_active_languages', false );
+			$new_post_url     = add_query_arg( array(
+					'monk_id' => $monk_satan_id,
+			), admin_url( 'post-new.php?' ) );
+
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
 		}
 	}
@@ -524,9 +535,9 @@ class Monk_Admin {
 	 */
 	public function monk_custom_taxonomy_field() {
 		global $monk_languages;
-		$languages = get_option( 'monk_active_languages' );
+		$languages = get_option( 'monk_active_languages', false );
 		$taxonomies = get_taxonomies();
-		$default_language = get_option( 'monk_default_language' );
+		$default_language = get_option( 'monk_default_language', false );
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-term.php';
 	}
@@ -534,7 +545,7 @@ class Monk_Admin {
 	/**
 	 * Save term language
 	 *
-	 * @param int $term_id  Id of the term
+	 * @param int $term_id  Id of the term.
 	 */
 	public function monk_create_term_meta( $term_id ) {
 		if ( isset( $_REQUEST['monk-language'] ) && ! empty( $_REQUEST['monk-language'] ) ) {
@@ -615,41 +626,43 @@ class Monk_Admin {
 	public function monk_edit_custom_taxonomy_field( $term ) {
 		$monk_language = get_term_meta( $term->term_id, '_monk_term_language', true );
 		global $monk_languages;
-		$languages = get_option( 'monk_active_languages' );
+		$languages = get_option( 'monk_active_languages', false );
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-update-term.php';
 	}
 
 	/**
 	 * Add column content
 	 *
-	 * @param string $content
-	 * @param string $colum_name Title of the column
-	 * @param int $term_id       Id of the term
+	 * @param string $content    The content.
+	 * @param string $column_name Title of the column.
+	 * @param int    $term_id    Id of the term.
 	 */
 	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
 			global $monk_languages;
 			$monk_language      = get_term_meta( $term_id, '_monk_term_language', true );
-			$languages          = get_option( 'monk_active_languages' );
+			$languages          = get_option( 'monk_active_languages', false );
 			$taxonomies         = get_taxonomies();
 			$monk_term_satan_id = get_term_meta( $term_id, '_monk_term_id', true );
-			$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
-			$default_language = get_option( 'monk_default_language' );
+			$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id, false );
+			$default_language   = get_option( 'monk_default_language', false );
 
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-taxonomy-monk-language-column.php';
 		endif;
 	}
 
 	/**
-	 * Add term translation meta field
+	 * Add term translation meta field.
+	 *
+	 * @param object $term Term object.
 	 */
 	public function monk_term_translation_meta_field( $term ) {
 		global $monk_languages;
 		$monk_language      = get_term_meta( $term->term_id, '_monk_term_language', true );
-		$languages          = get_option( 'monk_active_languages' );
+		$languages          = get_option( 'monk_active_languages', false );
 		$taxonomies         = get_taxonomies();
 		$monk_term_satan_id = get_term_meta( $term->term_id, '_monk_term_id', true );
-		$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id );
+		$monk_term_satan    = get_option( 'monk_term_translations_' . $monk_term_satan_id, false );
 
 		foreach ( $taxonomies as $taxonomy ) {
 			if ( isset( $_GET['taxonomy'] ) ) {

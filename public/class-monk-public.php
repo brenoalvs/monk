@@ -44,6 +44,8 @@ class Monk_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
+	 * @param      string $monk       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 * @param      string    $monk       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
@@ -114,6 +116,40 @@ class Monk_Public {
 		 * This function does enqueue monk widget .js files in public side.
 		 */
 		wp_enqueue_script( 'monk-language-switcher-script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), $this->version, true );
+	}
+
+	/**
+	 * Function to filter posts when in the front-end.
+	 *
+	 * @since    1.0.0
+	 * @param    Object $query WP_query object.
+	 */
+	public function monk_public_posts_filter( $query ) {
+		if ( is_admin() ) {
+			return;
+		}
+
+		$query_args = array();
+		$default_language = get_option( 'monk_default_language', false );
+		if ( empty( get_query_var( 'lang' ) ) || get_query_var( 'lang' ) === $default_language ) {
+			$query_args[] = array(
+				'relation' => 'OR',
+				array(
+					'key'   => '_monk_post_language',
+					'value' => $default_language,
+				),
+				array(
+					'key'     => '_monk_post_language',
+					'compare' => 'NOT EXISTS',
+				)
+			);
+		} else {
+			$query_args[] = array(
+				'key'   => '_monk_post_language',
+				'value' => get_query_var( 'lang' ),
+			);
+		}
+		$query->set( 'meta_query', $query_args );
 	}
 
 	/**
