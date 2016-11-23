@@ -20,13 +20,13 @@ $post_url = add_query_arg( array(
 	<span class="hide-if-no-js dashicons dashicons-edit"></span>
 	<div class="monk-hide monk-column-translations-arrow"></div>
 	<div class="hide-if-js monk-column-translations">
-<?php if ( $monk_satan ) : ?>
+<?php if ( $monk_translations ) : ?>
 	<a class="monk-translation-link monk-language" href="<?php echo esc_url( $post_url ); ?>">
 		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $monk_language ]['name'] ); ?></span>
 		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_language ); ?>"></span>
 	</a>
 	<?php foreach ( $active_languages as $lang ) :
-		foreach ( $monk_satan as $lang_code => $post_id ) :
+		foreach ( $monk_translations as $lang_code => $post_id ) :
 			if ( $lang === $lang_code && $lang_code !== $monk_language ) :
 				$post_url = add_query_arg( array(
 					'post' => $post_id,
