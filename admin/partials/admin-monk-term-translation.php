@@ -25,13 +25,14 @@ if ( ! defined( 'WPINC' ) ) {
 				<select class="postform" id="monk-term-translation" name="monk-term-translation">
 					<?php
 					foreach ( $languages as $language ) :
-						$new_term_url = add_query_arg( array(
-							'monk_term_id'     => $monk_term_translations_id,
-							'translation_lang' => $language,
-						), $base_url );
+						if ( ! array_key_exists( $language, $monk_term_translations ) ) :
+							$new_term_url = add_query_arg( array(
+								'monk_term_id'     => $monk_term_translations_id,
+								'translation_lang' => $language,
+							), $base_url );
 					?>
-						<option value="<?php echo esc_url( $new_term_url ); ?>" <?php selected( $monk_language, $language ); ?>><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
-					<?php endforeach; ?>
+						<option value="<?php echo esc_url( $new_term_url ); ?>"><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
+					<?php endif; endforeach; ?>
 				</select>
 				<?php
 				foreach ( $languages as $language ) :
