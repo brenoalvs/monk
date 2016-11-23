@@ -43,9 +43,6 @@
 					if ( $( this ).hasClass( 'monk-saved-language' ) ) {
 						$( this ).parent().removeClass( 'option-disabled' );
 					} else {
-						$( this ).prop({
-							'checked': false
-						});
 						$( this ).parent().removeClass( 'option-disabled' );
 					}
 				}
@@ -87,6 +84,10 @@
 			var encoded_url = $( 'select[name="monk-term-translation"]' ).val();
 			window.location.replace( encoded_url );
 		});
-	});
 
+		$( document ).on( 'hover', 'td.column-languages', function() {
+			$( this ).children( '.monk-column-translations' ).toggleClass( 'monk-show' );
+			$( this ).children( '.monk-column-translations-arrow' ).toggleClass( 'monk-hide' );
+		});
+	});
 })( jQuery );

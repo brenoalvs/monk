@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide the view for the monk_post_meta_box_field_render function
  *
@@ -16,11 +15,15 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 if ( empty( $monk_id ) ) {
-	if ( isset( $_GET['lang'] ) && isset( $_GET['monk_id'] ) ) {
+	if ( isset( $_GET['lang'] ) ) {
 		$lang    = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
-		$monk_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
 	} else {
 		$lang    = $site_default_language;
+	}
+
+	if ( isset( $_GET['monk_id'] ) ) {
+		$monk_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
+	} else {
 		$monk_id = $post->ID;
 	}
 }
@@ -39,7 +42,10 @@ if ( empty( $monk_id ) ) {
 				<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
 					<?php echo esc_html( $lang_name ); ?>
 				</option>
-			<?php endif; endforeach; ?>
+			<?php
+				endif;
+				endforeach;
+			?>
 			</select>
 		</p>
 	</div>
@@ -80,7 +86,10 @@ if ( empty( $monk_id ) ) {
 						<option  value="<?php echo esc_url( $encoded_url ); ?>"/>
 							<?php echo esc_html( $lang_name ); ?>
 						</option>
-				<?php endif; endforeach; ?>
+				<?php
+					endif;
+				endforeach;
+				?>
 			</select>
 			<button class="monk-submit-translation button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 			<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
@@ -115,7 +124,10 @@ if ( empty( $monk_id ) ) {
 								<option  value="<?php echo esc_attr( $lang_code ); ?>"/>
 									<?php echo esc_html( $lang_name ); ?>
 								</option>
-						<?php endif; endforeach; ?>
+						<?php
+							endif;
+						endforeach;
+						?>
 					</select>
 					<button class="button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 					<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
