@@ -438,11 +438,11 @@ class Monk_Admin {
 	public function monk_customize_css() {
 		?>
 		<style type="text/css">
-			ul#monk-selector li.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color', '#fff' ) ); ?>; }
-			ul#monk-selector li.monk-active-lang span.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color', '#000' ) ); ?>; }
-			ul#monk-selector li.monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
-			ul#monk-selector li.monk-lang a.monk-selector-link { color: <?php echo esc_attr( get_option( 'monk_lang_color', '#001aab' ) ); ?>; }
-			ul#monk-selector span.monk-selector-arrow { color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
+			div.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color', '#fff' ) ); ?>; border-color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
+			div.monk-active-lang span.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color', '#000' ) ); ?>; }
+			ul.monk-language-switcher li.monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
+			ul.monk-language-switcher li.monk-lang a.monk-language-switcher-link { color: <?php echo esc_attr( get_option( 'monk_lang_color', '#001aab' ) ); ?>; }
+			div.monk-active-lang span.monk-language-switcher-arrow { color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
 		</style>
 		<?php
 	}
