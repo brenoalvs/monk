@@ -3,15 +3,17 @@
 	/**
 	 * Defines toggle event on click #monk-seletor to show and hide language list
 	 */
-	$( '.monk-active-lang' ).on( 'click', function( event ) {
+	$( '.monk-current-lang' ).on( 'click', function( event ) {
 		event.stopPropagation();
-		$( '.monk-language-switcher' ).toggle();
+		$( '.monk-current-lang' ).toggleClass( 'monk-language-switcher-open' );
+		$( '.monk-language-dropdown' ).toggle();
 	});
 
 	/**
 	 * Defines toggle event on click #monk-seletor to show and hide language list
 	 */
-	$( document ).on( 'click', '.monk-language-switcher' , function() {
-		$( this ).hide();
+	$( document ).on( 'click', function() {
+		$( '.monk-current-lang' ).removeClass( 'monk-language-switcher-open' );
+		$( '.monk-language-dropdown' ).hide();
 	});
 })( jQuery );
