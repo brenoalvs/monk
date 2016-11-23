@@ -366,69 +366,69 @@ class Monk_Admin {
 	 */
 	public function monk_language_customizer( $wp_customize ) {
 
-		$wp_customize->add_section( 'monk_selector' , array(
-			'title'    => __( 'Monk Selector', 'monk' ),
-			'priority' => 4,
+		$wp_customize->add_section( 'monk_language_switcher' , array(
+			'title'    => __( 'Language Switcher', 'monk' ),
+			'priority' => 1,
 		));
 
 		/**
-		 * Add setting and control related to Language Background.
+		 * Add setting and control related to Language Switcher Background.
 		 */
-		$wp_customize->add_setting( 'monk_selector_color', array(
-			'type'              => 'option',
-			'capability'        => 'manage_options',
-			'default'           => '#ddd',
-			'sanitize_callback' => 'sanitize_hex_color',
-		));
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_color', array(
-			'label'   => __( 'Language Background', 'monk' ),
-			'section' => 'monk_selector',
-		)));
-
-		/**
-		 * Add setting and control related to Active Language Background.
-		 */
-		$wp_customize->add_setting( 'monk_selector_active_color', array(
+		$wp_customize->add_setting( 'monk_background_color', array(
 			'type'              => 'option',
 			'capability'        => 'manage_options',
 			'default'           => '#fff',
 			'sanitize_callback' => 'sanitize_hex_color',
 		));
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_selector_active_color', array(
-			'label'   => __( 'Active Language Background', 'monk' ),
-			'section' => 'monk_selector',
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_background_color', array(
+			'label'   => __( 'Background', 'monk' ),
+			'section' => 'monk_language_switcher',
 		)));
 
 		/**
-		 * Add setting and control related to Language Text Color.
+		 * Add setting and control related to Language Switcher Text Color.
 		 */
-		$wp_customize->add_setting( 'monk_lang_color', array(
-			'type'              => 'option',
-			'capability'        => 'manage_options',
-			'default'           => '#001aab',
-			'sanitize_callback' => 'sanitize_hex_color',
-		));
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_color', array(
-			'label'   => __( 'Language Text Color', 'monk' ),
-			'section' => 'monk_selector',
-		)));
-
-		/**
-		 * Add setting and control related to Active Language Text Color.
-		 */
-		$wp_customize->add_setting( 'monk_lang_active_color', array(
+		$wp_customize->add_setting( 'monk_text_color', array(
 			'type'              => 'option',
 			'capability'        => 'manage_options',
 			'default'           => '#000',
 			'sanitize_callback' => 'sanitize_hex_color',
 		));
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_lang_active_color', array(
-			'label'   => __( 'Active Language Text Color', 'monk' ),
-			'section' => 'monk_selector',
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_text_color', array(
+			'label'   => __( 'Text', 'monk' ),
+			'section' => 'monk_language_switcher',
+		)));
+
+		/**
+		 * Add setting and control related to Language List Background Hover.
+		 */
+		$wp_customize->add_setting( 'monk_language_background_hover', array(
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'default'           => '#000',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_language_background_hover', array(
+			'label'   => __( 'Background Hover', 'monk' ),
+			'section' => 'monk_language_switcher',
+		)));
+
+		/**
+		 * Add setting and control related to Language Text Hover.
+		 */
+		$wp_customize->add_setting( 'monk_language_hover_color', array(
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'default'           => '#fff',
+			'sanitize_callback' => 'sanitize_hex_color',
+		));
+
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_language_hover_color', array(
+			'label'   => __( 'Text Hover', 'monk' ),
+			'section' => 'monk_language_switcher',
 		)));
 	}
 
@@ -438,11 +438,17 @@ class Monk_Admin {
 	public function monk_customize_css() {
 		?>
 		<style type="text/css">
-			div.monk-active-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_active_color', '#fff' ) ); ?>; border-color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
-			div.monk-active-lang span.monk-active-lang-name { color: <?php echo esc_attr( get_option( 'monk_lang_active_color', '#000' ) ); ?>; }
-			ul.monk-language-switcher li.monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
-			ul.monk-language-switcher li.monk-lang a.monk-language-switcher-link { color: <?php echo esc_attr( get_option( 'monk_lang_color', '#001aab' ) ); ?>; }
-			div.monk-active-lang span.monk-language-switcher-arrow { color: <?php echo esc_attr( get_option( 'monk_selector_color', '#ddd' ) ); ?>; }
+			div#monk-language-switcher div.monk-current-lang { background-color: <?php echo esc_attr( get_option( 'monk_background_color', '#fff' ) ); ?>; border-color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
+			div#monk-language-switcher div.monk-current-lang:hover { background-color: <?php echo esc_attr( get_option( 'monk_language_background_hover', '#000' ) ); ?>; }
+			div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name { color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
+			div#monk-language-switcher div.monk-current-lang:hover span.monk-current-lang-name { color: <?php echo esc_attr( get_option( 'monk_language_hover_color', '#fff' ) ); ?>; }
+			div#monk-language-switcher ul.monk-language-dropdown { border-color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
+			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_background_color', '#fff' ) ); ?>; }
+			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:hover { background-color: <?php echo esc_attr( get_option( 'monk_language_background_hover', '#000' ) ); ?>; }
+			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link { color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
+			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:hover a.monk-language-link { color: <?php echo esc_attr( get_option( 'monk_language_hover_color', '#fff' ) ); ?>; }
+			div#monk-language-switcher div.monk-current-lang span.monk-dropdown-arrow { border-top-color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
+			div#monk-language-switcher div.monk-current-lang:hover span.monk-dropdown-arrow { border-top-color: <?php echo esc_attr( get_option( 'monk_language_hover_color', '#fff' ) ); ?>; }
 		</style>
 		<?php
 	}
