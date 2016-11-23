@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 					<?php
 					foreach ( $languages as $language ) :
 						$new_term_url = add_query_arg( array(
-							'monk_term_id'     => $monk_term_satan_id,
+							'monk_term_id'     => $monk_term_translations_id,
 							'translation_lang' => $language,
 						), $base_url );
 					?>
@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
 					if ( $monk_language === $language ) :
 						echo esc_html( $monk_languages[ $language ]['name'] );
 					endif;
-					foreach ( $monk_term_satan as $translation_code => $translation_id ) :
+					foreach ( $monk_term_translations as $translation_code => $translation_id ) :
 						$translation_term_url = add_query_arg( array(
 							'tag_ID'     => $translation_id,
 						), $base_url_translation );
