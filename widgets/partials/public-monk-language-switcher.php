@@ -31,12 +31,11 @@ $active_languages = get_option( 'monk_active_languages' );
 echo $args['before_widget'];
 ?>
 	<?php echo $args['before_title'] . esc_html( $title ) . $args['after_title']; ?>
-	<div id="monk-widget-content">
-		<div class="monk-active-lang">
-			<span class="dashicons dashicons-arrow-down monk-language-switcher-arrow"></span>
-			<span class="monk-active-lang-name">
+	<div id="monk-language-switcher">
+		<div class="monk-current-lang">
+			<span class="monk-current-lang-name">
 				<?php if ( $flag ) : ?>
-					<span class="monk-language-switcher-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $select_value ); ?>"></span>
+					<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $select_value ); ?>"></span>
 				<?php endif; ?>
 				<?php if ( $name ) : ?>
 					<span><?php echo esc_html( $monk_languages[ $select_value ][ $lang_type ] ); ?></span>
@@ -44,14 +43,15 @@ echo $args['before_widget'];
 					<span class="screen-reader-text"><?php echo esc_html( $monk_languages[ $select_value ][ $lang_type ] ); ?></span>
 				<?php endif; ?>
 			</span>
+			<span class="monk-dropdown-arrow"></span>
 		</div>
-		<ul class="monk-language-switcher">
+		<ul class="monk-language-dropdown">
 			<?php foreach ( $active_languages as $lang_code ) : ?>
 				<?php if ( strcmp( $lang_code, $select_value ) !== 0 ) : ?>
 					<li class="monk-lang">
-						<a class="monk-language-switcher-link" href="<?php echo esc_url( add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), home_url() ) ); ?>">
+						<a class="monk-language-link" href="<?php echo esc_url( add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), home_url() ) ); ?>">
 							<?php if ( $flag ) : ?>
-								<span class="monk-language-switcher-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $lang_code ); ?>"></span>
+								<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $lang_code ); ?>"></span>
 							<?php endif; ?>
 							<?php if ( $name ) : ?>
 								<span><?php echo esc_html( $monk_languages[ $lang_code ][ $lang_type ] ); ?></span>
