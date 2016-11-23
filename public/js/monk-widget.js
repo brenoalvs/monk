@@ -3,14 +3,15 @@
 	/**
 	 * Defines toggle event on click #monk-seletor to show and hide language list
 	 */
-	$( '#monk-selector' ).on( 'click', function() {
-		$( '.monk-lang' ).toggle();
+	$( '.monk-active-lang' ).on( 'click', function( event ) {
+		event.stopPropagation();
+		$( '.monk-language-switcher' ).toggle();
 	});
 
 	/**
 	 * Defines toggle event on click #monk-seletor to show and hide language list
 	 */
-	$( '#monk-selector' ).on( 'mouseleave', function() {
-		$( '.monk-lang' ).hide();
+	$( document ).on( 'click', '.monk-language-switcher' , function() {
+		$( this ).hide();
 	});
 })( jQuery );
