@@ -7,6 +7,9 @@ div#monk-language-switcher {
 	position: relative;
 	text-overflow: ellipsis;
 	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
 }
 
 div#monk-language-switcher ul.monk-language-dropdown {
@@ -64,11 +67,16 @@ div#monk-language-switcher div.monk-current-lang.monk-language-switcher-open {
 
 div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name {
 	color: #000;
-	display: inline-block;
+	display: block;
 	width: 70%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name span.monk-language-name,
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link span.monk-language-name {
+	padding-left: 10px;
 }
 
 div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link {
@@ -79,8 +87,6 @@ div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-languag
 
 div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link span.monk-language-flag,
 div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name span.monk-language-flag {
-	margin-bottom: 6px;
 	margin-left: 10px;
-	margin-right: 10px;
 	width: 16px;
 }
