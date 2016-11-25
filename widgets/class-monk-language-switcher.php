@@ -63,8 +63,6 @@ class Monk_Language_Switcher extends WP_Widget {
 		$instance                = $old_instance;
 		$instance['title']       = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
 		$instance['flag']        = ! empty( $new_instance['flag'] ) ? true : false;
-		$instance['name']        = ! empty( $new_instance['name'] ) ? true : false;
-		$instance['lang-native'] = ! empty( $new_instance['lang-native'] ) ? true : false;
 
 		return $instance;
 	}
