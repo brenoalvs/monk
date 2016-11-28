@@ -2,6 +2,13 @@
  * All of the CSS on public side of the Monk_Language_Switcher widget should be
  * included in this file.
  */
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:before,
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:after {
+	content: '';
+	padding: 0;
+	margin: 0;
+}
+
 div#monk-language-switcher {
 	max-width: 230px;
 	position: relative;
