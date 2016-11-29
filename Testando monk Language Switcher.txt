@@ -1,0 +1,35 @@
+## Testando monk Language Switcher
+
+# Temas instalados
+
+-- Twenty thirteen - certo
+-- Twenty fourteen - certo
+-- Twenty fifteen - certo
+-- Twenty sixteen - certo
+
+-- modernize - certo
+-- Total - certo
+-- Eleganto - certo
+-- Sydney - certo
+-- Storefront e child-themes
+-- Primer - certo
+-- Spacious - certo
+-- Vega - 1 erro de css apenas
+-- Poseidon - certo
+-- Activello - 1 erro
+
+# Erros encontrados
+
+-- Antes de definir a 'default_language' na options page mostra erro no widget
+-- No storefront o link das flags do language switcher estão sublinhadas - Tirar print
+-- Lista aparece com espaço extra entre os 'li'. Provavelmente por falta de inicialização (tema - Vega)
+-- No tema 'Activello', apenas a língua ativa aparece no 'switcher'
+-- No teme 'modernizr' a página de widgets quebra
+
+# Ideias
+
+-- Mostrar link para a página do plugin e/ou página de documentação
+-- Mover language switcher customizer para a classe do widget
+-- Usar função is_active_widget para verificar se o widget está ativo. Para então ativar/desativar as opções do Customizer e o CSS renderizado no wp_head.
+-- Adicionar três pontinhos na lista de idiomas não selecionados (language switcher)
+-- 
