@@ -41,6 +41,22 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance The widget options.
 	 */
 	public function widget( $args, $instance ) {
+		global $monk_languages;
+		$switchable_languages = array();
+		$title                = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
+		$flag                 = ! empty( $instance['flag'] ) ? true : false;
+		$active_languages     = get_option( 'monk_active_languages' );
+		$current_language     = isset( $_GET['lang'] ) ? sanitize_text_field( wp_unslash( $_GET['lang'] ) ) : get_option( 'monk_default_language' );
+		if ( is_front_page() || is_post_type_archive() ) {
+			$current_url = monk_get_current_url();
+
+			foreach ( $active_languages as $lang_code ) {
+				if ( $lang_code !== $current_language ) {
+					$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url );
+				}
+			}
+		}
+
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
 
