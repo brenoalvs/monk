@@ -15,3 +15,17 @@ function monk_is_language_code( $language_code ) {
 	
 	return in_array( $language_code , $language_codes );
 }
+
+/**
+ * Returns WordPress current URL
+ *
+ * @since 1.0.0
+ * 
+ * @return string Current URL
+ */
+function monk_get_current_url() {
+	global $wp;
+	$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+
+	return $current_url;
+}
