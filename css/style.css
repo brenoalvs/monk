@@ -1,0 +1,130 @@
+body {
+	font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+.jumbotron {
+	background-image: url("back.jpg");
+	background-size: cover;
+	margin-bottom: 0;
+}
+
+.logo {
+	max-height: 120px;
+	max-width: auto;
+}
+
+.description {
+	background-color: #FC800A;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.description h1 {
+	font-weight: bold;
+}
+
+.description h2 {
+	font-weight: bold;
+	color: #FFFFFF;
+	margin-bottom: 50px; 
+}
+
+.description h4 {
+	color: #FFFFFF;
+}
+
+.content {
+	margin-top: 50px;
+}
+
+.block {
+	margin-top: 
+	50px;
+}
+
+.feature-content p {
+	font-size: 20px;
+}
+
+.title {
+	font-weight: bold;
+	color: #FC800A;
+}
+
+.border {
+	border-top: 1px solid #FC800A;
+	height: 2px;
+	margin-bottom: 30px;
+}
+
+.monk-download-primary {
+	border-radius: 0;
+	border: 2px solid #FFFFFF;
+	padding: 10px 40px;
+	background-color: #FFFFFF;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	text-transform: uppercase;
+	color: #FC800A;
+	font-weight: bold;
+	font-size: 15px;
+	transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+}
+
+.monk-download-primary:hover {
+	background-color: transparent;
+	border: 2px solid #FFFFFF;
+	color: #FFFFFF;
+}
+
+.monk-download {
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	border: 2px solid #FC800A;
+	border-radius: 0;
+	background-color: #FC800A;
+	padding: 10px 40px;
+	margin-top: 30px;
+	margin-bottom: 40px;
+	transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+}
+
+
+.monk-download:hover {
+	background-color: transparent;
+	border: 2px solid #FC800A;
+	color: #FC800A;
+}
+
+.footer {
+	margin-top: 50px;
+	height: 160px;
+	width: 100%;
+}
+
+.logo-footer {
+	max-height: 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.thanks {
+	margin-bottom: 20px;
+}
+
+.thanks span {
+	font-size: 13px;
+	word-spacing: 3px;
+}
+
+.footer-icon {
+	max-height: 20px;
+	display: inline;
+}
