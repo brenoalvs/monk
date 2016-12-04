@@ -2,78 +2,98 @@
  * All of the CSS on public side of the Monk_Language_Switcher widget should be
  * included in this file.
  */
-.ui-selectmenu-text {
-	display: inline;
-	margin: 0 25px;
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:before,
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:after {
+	content: '';
+	padding: 0;
+	margin: 0;
 }
 
-.ui-selectmenu-button {
-	padding: 3px;
-}
-
-.monk-widget-option {
-	background-repeat: no-repeat !important;
-	padding-left: 20px;
-}
-.monk-widget-option .ui-icon {
-	background-position: left top;
-}
-
-#monk-widget-language-selector {
-	border-radius: 5px;
-    width: 150px;
-}
-
-#monk-selector {
-    background-color: #fff;
-	border: 1px solid #ddd;
-	border-radius: 5px 5px 0 0;
-	height: 21px;
-	margin: 0 0 0 -1px;
-	width: 22.9%;
-	min-width: 180px;
-	position: absolute;
-    z-index: 9999;
-}
-
-#monk-selector .monk-lang {
-	background-color: #ddd;
-	display: none;
-	list-style: none;
-}
-
-#monk-selector .monk-active-lang {
-	display: block;
-	list-style: none;
-}
-
-.monk-active-lang {
-	background-color: #fff;
-}
-
-.monk-selector-link {
-	color: #001aab;
-	display: block;
-}
-
-.monk-active-lang .monk-selector-link {
-	color: #000;
-}
-
-.monk-selector-link:hover {
-	color: #5a55ff;
-}
-
-.monk-selector-flag {
-	margin-bottom: 3px;
-	margin-left: 20px;
-	margin-right: 10px;
-	width: 16px;
-}
-
-.monk-selector-arrow {
-	float: right;
+div#monk-language-switcher {
+	max-width: 230px;
 	position: relative;
-	right: 10px;
-	top: -21px;
+	text-overflow: ellipsis;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+div#monk-language-switcher ul.monk-language-dropdown {
+	background-color: #fff;
+	border: 1px solid;
+	border-top: none;
+	box-sizing: border-box;
+	display: none;
+	margin: 0;
+	width: 100%;
+	padding: 0;
+	position: absolute;
+	z-index: 9999;
+}
+
+div#monk-language-switcher div.monk-current-lang span.monk-dropdown-arrow {
+	float: right;
+	margin-right: 10px;
+	margin-top: 10px;
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #000;
+}
+
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang {
+	background-color: #000;
+	font: 400 13px/1.8 "Open Sans", sans-serif;
+	list-style: none;
+	padding: 0;
+}
+
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:hover {
+	background-color: #0e0e0e;
+}
+
+div#monk-language-switcher div.monk-current-lang {
+	background-color: #fff;
+	border: 1px solid;
+	display: block;
+	font: 400 13px/1.8 "Open Sans", sans-serif;
+	list-style: none;
+	padding: 3px 0;
+}
+
+div#monk-language-switcher div.monk-current-lang:hover {
+	background-color: #efefef;
+}
+
+div#monk-language-switcher div.monk-current-lang.monk-language-switcher-open {
+	box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+	color: #efefef;
+}
+
+div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name {
+	color: #000;
+	display: block;
+	width: 70%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name span.monk-language-name,
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link span.monk-language-name {
+	padding-left: 10px;
+}
+
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link {
+	color: #fff;
+	display: block;
+	padding: 4px 0;
+}
+
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link span.monk-language-flag,
+div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name span.monk-language-flag {
+	margin-left: 10px;
+	width: 16px;
 }
