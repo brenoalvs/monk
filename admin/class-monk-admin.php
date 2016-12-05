@@ -586,9 +586,9 @@ class Monk_Admin {
 		if ( isset( $_REQUEST['monk-language'] ) && ! empty( $_REQUEST['monk-language'] ) ) {
 			$current_language          = get_term_meta( $term_id, '_monk_term_language', true );
 			$new_language              = sanitize_text_field( wp_unslash( $_REQUEST['monk-language'] ) );
-			$monk_term_translations_id = get_term_meta( $term_id, '_monk_translations_term_id', true );
+			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
 
-			update_term_meta( $term_id, '_monk_term_language', $language );
+			update_term_meta( $term_id, '_monk_term_language', $new_language );
 			$monk_term_translations = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
 
 			if ( ! empty( $monk_term_translations ) ) {
