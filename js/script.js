@@ -10,8 +10,8 @@ $(document).ready(function() {
       var text_end = $(this).offset().top + $(this).outerHeight();
       var window_end = $(window).scrollTop() + $(window).height();
 
-      if (window_end > text_end) {
-        $(this).animate({'opacity':'1'}, 700);
+      if (window_end >= text_end) {
+        $(this).animate({'opacity':'1'}, 800);
       }
     });
 
@@ -19,8 +19,8 @@ $(document).ready(function() {
       var image_end = $(this).offset().top + $(this).outerHeight();
       var window_end = $(window).scrollTop() + $(window).height();
 
-      if (window_end > image_end) {
-        $(this).animate({'opacity':'1'}, 700);
+      if (window_end >= image_end) {
+        $(this).animate({'opacity':'1'}, 800);
       }
     });
   });
