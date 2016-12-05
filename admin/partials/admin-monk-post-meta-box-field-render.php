@@ -102,7 +102,7 @@ if ( empty( $monk_id ) ) {
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
 							$lang_name = $monk_languages[ $lang_code ]['name'];
 					?>
-							<option  value="<?php echo esc_url( $language_url ); ?>"/>
+							<option value="<?php echo esc_url( $language_url ); ?>"/>
 								<?php echo esc_html( $lang_name ); ?>
 							</option>
 					<?php
