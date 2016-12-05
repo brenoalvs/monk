@@ -41,6 +41,47 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance The widget options.
 	 */
 	public function widget( $args, $instance ) {
+		global $monk_languages;
+		$switchable_languages = array();
+		$title                = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
+		$flag                 = ! empty( $instance['flag'] ) ? true : false;
+		$active_languages     = get_option( 'monk_active_languages' );
+		$current_language     = isset( $_GET['lang'] ) ? sanitize_text_field( wp_unslash( $_GET['lang'] ) ) : get_option( 'monk_default_language' );
+
+		if ( is_front_page() || is_post_type_archive() ) {
+			$current_url = monk_get_current_url();
+
+			foreach ( $active_languages as $lang_code ) {
+				if ( $lang_code !== $current_language ) {
+					$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url );
+				}
+			}
+		}
+
+		if ( is_singular() ) {
+			$current_language          = get_post_meta( get_the_id(), '_monk_post_language', true );
+			$monk_post_translations_id = get_post_meta( get_the_id(), '_monk_post_translations_id', true );
+			$monk_translations         = get_option( 'monk_post_translations_' . $monk_post_translations_id, false );
+
+			foreach ( $monk_translations as $lang_code => $post_id ) {
+				if ( $lang_code !== $current_language ) {
+					$switchable_languages[ $lang_code ] = get_permalink( $post_id );
+				}
+			}
+		}
+
+		if ( is_archive() && ( is_category() || is_tag() ) ) {
+			$current_language          = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
+			$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
+			$monk_translations         = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+
+			foreach ( $monk_translations as $lang_code => $term_id ) {
+				if ( $lang_code !== $current_language ) {
+					$switchable_languages[ $lang_code ] = get_term_link( $term_id );
+				}
+			}
+		}
+
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
 
