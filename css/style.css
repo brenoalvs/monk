@@ -3,18 +3,18 @@ body {
 }
 
 header.description {
-	background-color: #FC710A;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	overflow: hidden;
-	width: 100%;
-	z-index: 999;
-	top: 0;
-	left: 0;
-	transition: height .2s;
-	-webkit-transition: height .2s;
 	-moz-transition: height .2s;
 	-o-transition: height .2s;
+	-webkit-transition: height .2s;
+	background-color: #FC710A;
+	left: 0;
+	overflow: hidden;
+	padding-bottom: 20px;
+	padding-top: 20px;
+	top: 0;
+	transition: height .2s;
+	width: 100%;
+	z-index: 999;
 }
 
 header.description.small {
@@ -22,8 +22,8 @@ header.description.small {
 }
 
 header.description #site-name {
-	font-weight: bold;
 	color: #000000;
+	font-weight: bold;
 }
 
 header.description #site-name.site-name-small {
@@ -31,8 +31,8 @@ header.description #site-name.site-name-small {
 }
 
 header.description h2#brief-desc {
-	font-weight: bold;
 	color: #FFFFFF;
+	font-weight: bold;
 	margin-bottom: 15px; 
 }
 
@@ -57,8 +57,8 @@ header.description h4#long-desc {
 }
 
 .block {
-	margin-top: 
 	50px;
+	margin-top: 
 }
 
 .feature-content p {
@@ -66,9 +66,9 @@ header.description h4#long-desc {
 }
 
 .title {
+	color: #FC710A;
 	font-size: 35px;
 	font-weight: bold;
-	color: #FC710A;
 }
 
 .border {
@@ -78,20 +78,20 @@ header.description h4#long-desc {
 }
 
 .monk-download-primary {
-	border-radius: 0;
-	border: 2px solid #FFFFFF;
-	padding: 10px 40px;
-	background-color: #FFFFFF;
-	margin-top: 30px;
-	margin-bottom: 30px;
-	text-transform: uppercase;
-	color: #FC710A;
-	font-weight: bold;
-	font-size: 15px;
-	transition: all .2s ease-in-out;
-	-webkit-transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;
 	-o-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	background-color: #FFFFFF;
+	border-radius: 0;
+	border: 2px solid #FFFFFF;
+	color: #FC710A;
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	padding: 10px 40px;
+	text-transform: uppercase;
+	transition: all .2s ease-in-out;
 }
 
 .monk-download-primary:hover {
@@ -101,19 +101,19 @@ header.description h4#long-desc {
 }
 
 .monk-download {
-	font-weight: bold;
-	text-transform: uppercase;
-	color: #FFFFFF;
-	border: 2px solid #FC710A;
-	border-radius: 0;
-	background-color: #FC710A;
-	padding: 10px 40px;
-	margin-top: 30px;
-	margin-bottom: 40px;
-	transition: all .2s ease-in-out;
-	-webkit-transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;
 	-o-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	background-color: #FC710A;
+	border-radius: 0;
+	border: 2px solid #FC710A;
+	color: #FFFFFF;
+	font-weight: bold;
+	margin-bottom: 40px;
+	margin-top: 30px;
+	padding: 10px 40px;
+	text-transform: uppercase;
+	transition: all .2s ease-in-out;
 }
 
 
@@ -124,15 +124,15 @@ header.description h4#long-desc {
 }
 
 .footer {
-	margin-top: 50px;
 	height: 160px;
+	margin-top: 50px;
 	width: 100%;
 }
 
 .logo-footer {
-	max-height: 50px;
-	margin-top: 30px;
 	margin-bottom: 30px;
+	margin-top: 30px;
+	max-height: 50px;
 }
 
 .thanks {
@@ -145,9 +145,9 @@ header.description h4#long-desc {
 }
 
 .footer-icon i {
-	max-height: 20px;
-	display: inline;
 	color: #000000;
+	display: inline;
+	max-height: 20px;
 }
 
 @media screen and ( max-width: 990px ) {
