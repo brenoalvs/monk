@@ -32,6 +32,7 @@ header.description.small {
 
 header.description #site-name {
 	font-weight: bold;
+	color: #000000;
 }
 
 header.description #site-name.site-name-small {

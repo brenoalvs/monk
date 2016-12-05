@@ -1,4 +1,10 @@
 $(document).ready(function() {
+  var wH = $(window).height();
+  $('.description').css('height', wH);
+  $(window).resize(function() {
+    var wR = $(window).height();
+      $('.description').css('height', wR);
+  });
   $(window).scroll(function() {
     $('.feature-content').each(function(s) {
       var text_end = $(this).offset().top + $(this).outerHeight();
