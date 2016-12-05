@@ -5,8 +5,12 @@
 div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:before,
 div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:after {
 	content: '';
-	padding: 0;
 	margin: 0;
+	padding: 0;
+}
+
+.monk_language_switcher {
+	overflow: visible !important;
 }
 
 div#monk-language-switcher {
@@ -45,8 +49,10 @@ div#monk-language-switcher div.monk-current-lang span.monk-dropdown-arrow {
 
 div#monk-language-switcher ul.monk-language-dropdown li.monk-lang {
 	background-color: #000;
+	border: none;
 	font: 400 13px/1.8 "Open Sans", sans-serif;
 	list-style: none;
+	margin: 0;
 	padding: 0;
 }
 
@@ -90,6 +96,14 @@ div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-languag
 	color: #fff;
 	display: block;
 	padding: 4px 0;
+	text-decoration: none;
+}
+
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link:before,
+div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link:after {
+	content: '';
+	margin: 0;
+	padding: 0;
 }
 
 div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link span.monk-language-flag,
