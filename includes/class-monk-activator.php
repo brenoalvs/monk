@@ -30,7 +30,8 @@ class Monk_Activator {
 	 */
 	public static function activate() {
 		global $monk_languages;
-		if ( $monk_languages[ get_locale() ]['native_name'] ) {
+		$locale = get_locale();
+		if ( array_key_exists( $locale, $monk_languages ) ) {
 			$language = get_locale();
 		} else {
 			$language = 'en_US';
