@@ -125,18 +125,30 @@ class Monk_Public {
 	 * @param    Object $query WP_query object.
 	 */
 	public function monk_public_posts_filter( $query ) {
-		if ( is_admin() ) {
+		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() ) ) {
 			return;
 		}
 
-		$query_args = array();
+		$query_args       = array();
 		$default_language = get_option( 'monk_default_language', false );
-		if ( empty( get_query_var( 'lang' ) ) || get_query_var( 'lang' ) === $default_language ) {
+		$current_language = get_query_var( 'lang', false );
+
+		if ( ! $current_language ) {
+			if ( is_singular() ) {
+				$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
+			} elseif ( is_archive() && ( is_category() || is_tag() ) ) {
+				$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
+			} else {
+				$current_language = $default_language;
+			}
+		}
+
+		if ( $default_language === $current_language ) {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
 					'key'   => '_monk_post_language',
-					'value' => $default_language,
+					'value' => $current_language,
 				),
 				array(
 					'key'     => '_monk_post_language',
@@ -146,9 +158,10 @@ class Monk_Public {
 		} else {
 			$query_args[] = array(
 				'key'   => '_monk_post_language',
-				'value' => get_query_var( 'lang' ),
+				'value' => $current_language,
 			);
 		}
+
 		$query->set( 'meta_query', $query_args );
 	}
 
@@ -157,21 +170,47 @@ class Monk_Public {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param  string $version    The version of this plugin.
-	 * @return Object $term_query Instance of $WP_Term_Query 
-	 *
+	 * @param  Object $term_query Instance of $WP_Term_Query.
+	 * @return Object $term_query Instance of $WP_Term_Query .
 	 */
 	public function monk_public_terms_filter( $term_query ) {
-		$default_language = get_option( 'monk_default_language', false );
-		$language         = get_query_var( 'lang', $default_language );
+		if ( is_admin() ) {
+			return;
+		}
 
-		if ( ! is_admin() && ! empty( $language ) ) {
-			$args = array(
-				'meta_key'   => '_monk_term_language',
-				'meta_value' => $language, 
+		$query_args       = array();
+		$default_language = get_option( 'monk_default_language', false );
+		$current_language = get_query_var( 'lang', false );
+
+		if ( ! $current_language ) {
+			if ( is_singular() ) {
+				$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
+			} elseif ( is_archive() && ( is_category() || is_tag() ) ) {
+				$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
+			} else {
+				$current_language = $default_language;
+			}
+		}
+
+		if ( $default_language === $current_language ) {
+			$query_args['meta_query'] = array(
+				'relation' => 'OR',
+				array(
+					'key'   => '_monk_term_language',
+					'value' => $current_language,
+				),
+				array(
+					'key'     => '_monk_term_language',
+					'compare' => 'NOT EXISTS',
+				)
 			);
-			
-			return $term_query->parse_query( $args );
-		} 
+		} else {
+			$query_args = array(
+				'meta_key'   => '_monk_term_language',
+				'meta_value' => $current_language,
+			);
+		}
+
+		$term_query->parse_query( $query_args );
 	}
 }
