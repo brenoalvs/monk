@@ -144,9 +144,10 @@ header.description h4#long-desc {
 	word-spacing: 3px;
 }
 
-.footer-icon {
+.footer-icon i {
 	max-height: 20px;
 	display: inline;
+	color: #000000;
 }
 
 @media screen and ( max-width: 990px ) {

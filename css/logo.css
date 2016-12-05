@@ -6,23 +6,28 @@
 }
 
 svg {
-	height: 130px;
-	width: 95px;
+	height: 160px;
+	width: 117px;
 	transition: height .2s;
 	-webkit-transition: height .2s;
 	-moz-transition: height .2s;
 	-o-transition: height .2s;
 }
 
-svg:hover {
-	height: 150px;
-	width: 110px;
-	transition: height .2s;
-	-webkit-transition: height .2s;
-	-moz-transition: height .2s;
-	-o-transition: height .2s;
+.black {
+	animation: white 5s ease infinite;
 }
 
 .white {
-	fill: red;
+	animation: black 5s ease infinite;
+}
+
+@keyframes white {
+	0% { fill: #000000; }
+	50% { fill: #ffffff; }
+}
+
+@keyframes black {
+	0% { fill: #ffffff; }
+	50% { fill: #000000; }
 }
