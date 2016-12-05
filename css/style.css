@@ -2,15 +2,13 @@ body {
 	font-family: 'Alegreya Sans SC', sans-serif;
 }
 
-.jumbotron {
-	background-image: url("back.jpg");
-	background-size: cover;
-	margin-bottom: 0;
-}
-
 .logo {
-	max-height: 120px;
+	max-height: 130px;
 	max-width: auto;
+	transition: height .2s;
+	-webkit-transition: height .2s;
+	-moz-transition: height .2s;
+	-o-transition: height .2s;
 }
 
 header.description {
@@ -18,29 +16,44 @@ header.description {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	overflow: hidden;
-	position: fixed;
 	width: 100%;
 	z-index: 999;
 	top: 0;
 	left: 0;
-	transition: all .2s ease-in-out;
-	-webkit-transition: all .2s ease-in-out;
-	-moz-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
+	transition: height .2s;
+	-webkit-transition: height .2s;
+	-moz-transition: height .2s;
+	-o-transition: height .2s;
 }
 
-header.description h1#site-name {
+header.description.small {
+	height: 200px;
+}
+
+header.description #site-name {
 	font-weight: bold;
 }
 
-header.description h2 {
+header.description #site-name.site-name-small {
+	float: right;
+}
+
+header.description h2#brief-desc {
 	font-weight: bold;
 	color: #FFFFFF;
 	margin-bottom: 50px; 
 }
 
-header.description h4 {
+header.description h4#long-desc {
 	color: #FFFFFF;
+}
+
+.feature-content {
+	opacity: 0;
+}
+
+.feature-image {
+	opacity: 0;
 }
 
 .feature-content p {
