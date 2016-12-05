@@ -2,15 +2,6 @@ body {
 	font-family: 'Alegreya Sans SC', sans-serif;
 }
 
-.logo {
-	max-height: 130px;
-	max-width: auto;
-	transition: height .2s;
-	-webkit-transition: height .2s;
-	-moz-transition: height .2s;
-	-o-transition: height .2s;
-}
-
 header.description {
 	background-color: #FC710A;
 	padding-top: 20px;
