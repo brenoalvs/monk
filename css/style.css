@@ -12,7 +12,7 @@ body {
 }
 
 header.description {
-	background-color: #CA8800;
+	background-color: #FC710A;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	overflow: hidden;
@@ -42,7 +42,7 @@ header.description #site-name.site-name-small {
 header.description h2#brief-desc {
 	font-weight: bold;
 	color: #FFFFFF;
-	margin-bottom: 50px; 
+	margin-bottom: 15px; 
 }
 
 header.description h4#long-desc {
@@ -156,4 +156,14 @@ header.description h4#long-desc {
 .footer-icon {
 	max-height: 20px;
 	display: inline;
+}
+
+@media screen and ( max-width: 990px ) {
+	.invert {
+		display: flex;
+		flex-flow: column;
+	}
+	.feature-image {
+		order: 2;
+	}
 }
