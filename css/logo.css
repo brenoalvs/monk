@@ -1,0 +1,28 @@
+.logo {
+	transition: height .2s;
+	-webkit-transition: height .2s;
+	-moz-transition: height .2s;
+	-o-transition: height .2s;
+}
+
+svg {
+	height: 130px;
+	width: 95px;
+	transition: height .2s;
+	-webkit-transition: height .2s;
+	-moz-transition: height .2s;
+	-o-transition: height .2s;
+}
+
+svg:hover {
+	height: 150px;
+	width: 110px;
+	transition: height .2s;
+	-webkit-transition: height .2s;
+	-moz-transition: height .2s;
+	-o-transition: height .2s;
+}
+
+.white {
+	fill: red;
+}
