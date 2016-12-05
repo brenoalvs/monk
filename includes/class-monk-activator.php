@@ -32,7 +32,7 @@ class Monk_Activator {
 		global $monk_languages;
 		$locale = get_locale();
 		if ( array_key_exists( $locale, $monk_languages ) ) {
-			$language = get_locale();
+			$language = $locale;
 		} else {
 			$language = 'en_US';
 		}
