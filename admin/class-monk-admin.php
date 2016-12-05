@@ -531,12 +531,12 @@ class Monk_Admin {
 			$post_type            = isset( $post_type ) && ! empty( $post_type ) ? sanitize_text_field( wp_unslash( $post_type ) ) : false;
 
 			if ( 'post' !== $post_type ) {
-				$new_post_url         = add_query_arg( array(
+				$new_post_url = add_query_arg( array(
 					'post_type' => $post_type,
 					'monk_id'   => $monk_translations_id,
 				), admin_url( 'post-new.php' ) );
 			} else {
-				$new_post_url         = add_query_arg( array(
+				$new_post_url = add_query_arg( array(
 					'monk_id'   => $monk_translations_id,
 				), admin_url( 'post-new.php' ) );
 			}
