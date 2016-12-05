@@ -74,21 +74,41 @@ if ( empty( $monk_id ) ) {
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 			<select name="monk_post_translation_id">
 				<?php
-				foreach ( $active_languages as $lang_code ) :
-					$encoded_url = add_query_arg( array(
-							'lang'    => $lang_code,
-							'monk_id' => $monk_id,
-					), $monk_translation_url );
-					$lang_id = sanitize_title( $lang_code );
-					if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-						$lang_name = $monk_languages[ $lang_code ]['name'];
-				?>
-						<option  value="<?php echo esc_url( $encoded_url ); ?>"/>
-							<?php echo esc_html( $lang_name ); ?>
-						</option>
-				<?php
-					endif;
-				endforeach;
+				$post_type = get_post_type( $post->ID );
+				if ( 'post' !== $post_type ) :
+					foreach ( $active_languages as $lang_code ) :
+						$language_url = add_query_arg( array(
+							'post_type' => $post_type,
+							'lang'      => $lang_code,
+							'monk_id'   => $monk_id,
+						), $monk_translation_url );
+						$lang_id = sanitize_title( $lang_code );
+						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
+							$lang_name = $monk_languages[ $lang_code ]['name'];
+					?>
+							<option value="<?php echo esc_url( $language_url ); ?>"/>
+								<?php echo esc_html( $lang_name ); ?>
+							</option>
+					<?php
+						endif;
+					endforeach;
+				else :
+					foreach ( $active_languages as $lang_code ) :
+						$language_url = add_query_arg( array(
+							'lang'      => $lang_code,
+							'monk_id'   => $monk_id,
+						), $monk_translation_url );
+						$lang_id = sanitize_title( $lang_code );
+						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
+							$lang_name = $monk_languages[ $lang_code ]['name'];
+					?>
+							<option value="<?php echo esc_url( $language_url ); ?>"/>
+								<?php echo esc_html( $lang_name ); ?>
+							</option>
+					<?php
+						endif;
+					endforeach;
+				endif;
 				?>
 			</select>
 			<button class="monk-submit-translation button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
@@ -138,9 +158,9 @@ if ( empty( $monk_id ) ) {
 		if ( isset( $post_translations ) && $post_translations ) :
 			foreach ( $post_translations as $lang_code => $monk_id ) :
 				if ( strval( $monk_id ) !== $post->ID ) :
-					$encoded_url = get_edit_post_link( $monk_id ); ?>
+					$language_url = get_edit_post_link( $monk_id ); ?>
 					<li>
-						<a href="<?php echo esc_url( $encoded_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?></a>
+						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?></a>
 					</li>
 		<?php
 				endif;

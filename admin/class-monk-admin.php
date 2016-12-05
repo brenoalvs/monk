@@ -527,9 +527,19 @@ class Monk_Admin {
 			$default_language     = get_option( 'monk_default_language', false );
 			$base_url             = admin_url( 'post.php?action=edit' );
 			$active_languages     = get_option( 'monk_active_languages', false );
-			$new_post_url         = add_query_arg( array(
-					'monk_id' => $monk_translations_id,
-			), admin_url( 'post-new.php?' ) );
+			$post_type            = get_query_var( 'post_type' );
+			$post_type            = isset( $post_type ) && ! empty( $post_type ) ? sanitize_text_field( wp_unslash( $post_type ) ) : false;
+
+			if ( 'post' !== $post_type ) {
+				$new_post_url = add_query_arg( array(
+					'post_type' => $post_type,
+					'monk_id'   => $monk_translations_id,
+				), admin_url( 'post-new.php' ) );
+			} else {
+				$new_post_url = add_query_arg( array(
+					'monk_id'   => $monk_translations_id,
+				), admin_url( 'post-new.php' ) );
+			}
 
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
 		}
