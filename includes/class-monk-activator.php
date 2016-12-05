@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -30,7 +29,16 @@ class Monk_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+		global $monk_languages;
+		$locale = get_locale();
+		if ( array_key_exists( $locale, $monk_languages ) ) {
+			$language = $locale;
+		} else {
+			$language = 'en_US';
+		}
 
+		update_option( 'monk_default_language', $language );
+		update_option( 'monk_active_languages', array( $language ) );
 	}
 
 }
