@@ -78,15 +78,15 @@ if ( empty( $monk_id ) ) {
 				if ( 'post' !== $post_type ) :
 					foreach ( $active_languages as $lang_code ) :
 						$language_url = add_query_arg( array(
-								'post_type' => $post_type,
-								'lang'      => $lang_code,
-								'monk_id'   => $monk_id,
+							'post_type' => $post_type,
+							'lang'      => $lang_code,
+							'monk_id'   => $monk_id,
 						), $monk_translation_url );
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
 							$lang_name = $monk_languages[ $lang_code ]['name'];
 					?>
-							<option  value="<?php echo esc_url( $language_url ); ?>"/>
+							<option value="<?php echo esc_url( $language_url ); ?>"/>
 								<?php echo esc_html( $lang_name ); ?>
 							</option>
 					<?php
@@ -95,8 +95,8 @@ if ( empty( $monk_id ) ) {
 				else :
 					foreach ( $active_languages as $lang_code ) :
 						$language_url = add_query_arg( array(
-								'lang'      => $lang_code,
-								'monk_id'   => $monk_id,
+							'lang'      => $lang_code,
+							'monk_id'   => $monk_id,
 						), $monk_translation_url );
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
