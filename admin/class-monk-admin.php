@@ -696,6 +696,7 @@ class Monk_Admin {
 				$avaliable_languages = true;
 			}
 		}
+
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-translation.php';
 	}
 }
