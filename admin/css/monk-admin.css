@@ -2,7 +2,14 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.column-languages {
+th.column-languages {
+	width: 15%;
+}
+
+td.languages.column-languages {
+	padding-left: 0;
+	padding-right: 0;
+	position: relative;
 	text-align: center;
 }
 
@@ -68,29 +75,34 @@
 }
 
 .monk-translation-link {
-	text-align: left;
 	border-bottom: 1px solid #fff;
-	color: #fff;
+	color: #32373c;
 	display: block;
 	padding: 3px 15px;
+	text-align: left;
 }
 
 .monk-new-post-link {
-	text-align: left;
-	color: #fff;
+	color: #32373c;
 	display: block;
 	font: 12px arial, sans-serif;
 	padding: 7px 15px 0;
+	text-align: left;
 }
 
 span.flag-icon-monk-pencil {
-	margin: 0 auto;
 	display: block;
+	margin: 0 auto;
 }
 
 .monk-language-name {
 	font: 11px arial, sans-serif;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 65%;
 }
 
 .monk-selector-flag {
@@ -99,7 +111,6 @@ span.flag-icon-monk-pencil {
 }
 
 .monk-column-translations {
-	background-color: #303030;
 	padding: 7px 0;
 	z-index: 9999;
 }
@@ -118,9 +129,24 @@ div.monk-hide {
 }
 
 td.languages div.hide-if-js.monk-show {
+	background-color: #303030;
 	display: block;
 	position: absolute;
-	min-width: 120px;
+	width: 100%;
+}
+
+td.languages div.hide-if-js.monk-show a.monk-translation-link,
+td.languages div.hide-if-js.monk-show a.monk-new-post-link {
+	color: #fff;
+}
+
+td.languages div.hide-if-js.monk-show a.monk-translation-link.monk-language {
+	color: #0073aa;
+}
+
+td.languages div.hide-if-js.monk-show a.monk-translation-link:hover,
+td.languages div.hide-if-js.monk-show a.monk-new-post-link:hover {
+	color: #00a0d2;
 }
 
 .monk-language {
