@@ -177,8 +177,8 @@ class Monk {
 	 * @since   1.0.0
 	 */
 	public function monk_display_activation_notice() {
-		$settings_url = admin_url( 'admin.php?page=monk' );
 		add_option( 'monk_activated', true );
+		$settings_url = admin_url( 'admin.php?page=monk' );
 		$monk_activated = get_option( 'monk_activated', false );
 		if ( ! empty( $monk_activated ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
