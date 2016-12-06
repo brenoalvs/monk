@@ -23,6 +23,9 @@ if ( ! defined( 'WPINC' ) ) {
 			</th>
 			<td>
 				<ul>
+					<li> <?php
+						echo esc_html( $monk_languages[ $monk_language ]['name'] );
+					?> </li>
 <?php foreach ( $languages as $language ) :
 	foreach ( $monk_term_translations as $translation_code => $translation_id ) :
 		$translation_term_url = add_query_arg( array(
