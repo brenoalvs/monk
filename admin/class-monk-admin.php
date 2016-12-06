@@ -679,6 +679,7 @@ class Monk_Admin {
 		$taxonomies                = get_taxonomies();
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
 		$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+		$avaliable_languages       = false;
 
 		foreach ( $taxonomies as $taxonomy ) {
 			if ( isset( $_GET['taxonomy'] ) ) {
@@ -687,6 +688,12 @@ class Monk_Admin {
 					$base_url = admin_url( 'edit-tags.php?taxonomy=' . $taxonomy );
 					$base_url_translation = admin_url( 'term.php?taxonomy=' . $taxonomy );
 				}
+			}
+		}
+
+		foreach ( $languages as $language ) {
+			if ( ! array_key_exists( $language, $monk_term_translations ) ) {
+				$avaliable_languages = true;
 			}
 		}
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-translation.php';
