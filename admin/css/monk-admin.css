@@ -82,7 +82,7 @@ td.languages.column-languages {
 	text-align: left;
 }
 
-.monk-new-post-link {
+.monk-new-translation-link {
 	color: #32373c;
 	display: block;
 	font: 12px arial, sans-serif;
@@ -136,7 +136,7 @@ td.languages div.hide-if-js.monk-show {
 }
 
 td.languages div.hide-if-js.monk-show a.monk-translation-link,
-td.languages div.hide-if-js.monk-show a.monk-new-post-link {
+td.languages div.hide-if-js.monk-show a.monk-new-translation-link {
 	color: #fff;
 }
 
@@ -145,7 +145,7 @@ td.languages div.hide-if-js.monk-show a.monk-translation-link.monk-language {
 }
 
 td.languages div.hide-if-js.monk-show a.monk-translation-link:hover,
-td.languages div.hide-if-js.monk-show a.monk-new-post-link:hover {
+td.languages div.hide-if-js.monk-show a.monk-new-translation-link:hover {
 	color: #00a0d2;
 }
 
