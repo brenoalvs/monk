@@ -2,6 +2,11 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+.monk-banner h2 {
+	font-weight: 400;
+}
+
 .column-languages {
 	text-align: center;
 }
