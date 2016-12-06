@@ -19,40 +19,41 @@ if ( ! defined( 'WPINC' ) ) {
 	<tbody>
 		<tr class="form-field term-language">
 			<th scope="row">
-				<label for="monk-language"><?php esc_html_e( 'Translation', 'monk' ); ?></label>
+				<label for="monk-language"><?php esc_html_e( 'Translations', 'monk' ); ?></label>
 			</th>
 			<td>
-				<select class="postform" id="monk-term-translation" name="monk-term-translation">
-					<?php
-					foreach ( $languages as $language ) :
-						if ( ! array_key_exists( $language, $monk_term_translations ) ) :
-							$new_term_url = add_query_arg( array(
-								'monk_term_id'     => $monk_term_translations_id,
-								'translation_lang' => $language,
-							), $base_url );
-					?>
-						<option value="<?php echo esc_url( $new_term_url ); ?>"><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
-					<?php endif; endforeach; ?>
-				</select>
-				<?php
-				foreach ( $languages as $language ) :
-					if ( $monk_language === $language ) :
-						echo esc_html( $monk_languages[ $language ]['name'] );
-					endif;
-					foreach ( $monk_term_translations as $translation_code => $translation_id ) :
-						$translation_term_url = add_query_arg( array(
-							'tag_ID'     => $translation_id,
-						), $base_url_translation );
+				<ul>
+					<li> <?php
+						echo esc_html( $monk_languages[ $monk_language ]['name'] );
+					?> </li>
+<?php foreach ( $languages as $language ) :
+	foreach ( $monk_term_translations as $translation_code => $translation_id ) :
+		$translation_term_url = add_query_arg( array(
+			'tag_ID'     => $translation_id,
+		), $base_url_translation );
 
-						if ( $translation_code === $language && $monk_language !== $language ) : ?>
-							<a href="<?php echo esc_url( $translation_term_url ); ?>">
-								<?php echo esc_html( $monk_languages[ $language ]['name'] ); ?>
-							</a>
-						<?php
-						endif;
-					endforeach;
-				endforeach;
+		if ( $translation_code === $language && $monk_language !== $language ) :
+			?> <li>
+				<a href="<?php echo esc_url( $translation_term_url ); ?>">
+					<?php echo esc_html( $monk_languages[ $language ]['name'] ); ?>
+				</a>
+			</li>
+		<?php
+		endif;
+	endforeach;
+endforeach;
 				?>
+				</ul>
+				<?php
+				if ( $avaliable_languages ) :
+					$new_term_url = add_query_arg( array(
+						'monk_term_id'     => $monk_term_translations_id,
+					), $base_url );
+				?>
+					<a href="<?php echo esc_url( $new_term_url ); ?>" class="button">Add a translation +</a>
+				<?php else : ?>
+					<p><?php esc_html_e( 'No Avaliable Translations!', 'monk' ); ?></p>
+				<?php endif; ?>
 			</td>
 		</tr>
 	</tbody>
