@@ -63,10 +63,6 @@
 	pointer-events: none;
  }
 
-#monk-language {
-	width: 95%;
-}
-
 .monk-translation-link {
 	text-align: left;
 	border-bottom: 1px solid #fff;
