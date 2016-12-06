@@ -89,7 +89,9 @@ header.description h4#long-desc {
 	font-weight: bold;
 	margin-bottom: 30px;
 	margin-top: 30px;
-	padding: 10px 40px;
+	height: 45px;
+	width: 100px;
+	line-height: 2;
 	text-transform: uppercase;
 	transition: all .2s ease-in-out;
 }
@@ -121,6 +123,10 @@ header.description h4#long-desc {
 	background-color: transparent;
 	border: 2px solid #FC710A;
 	color: #FC710A;
+}
+
+.git {
+	color: #000000;
 }
 
 .footer {
