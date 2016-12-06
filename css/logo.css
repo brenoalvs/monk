@@ -1,33 +1,11 @@
 .logo {
+	background: url('../img/logo.svg');
+	background-position: center;
+	background-size: cover;
+	height: 250px;
+	width: 183px;
 	transition: height .2s;
 	-webkit-transition: height .2s;
 	-moz-transition: height .2s;
 	-o-transition: height .2s;
-}
-
-svg {
-	height: 200px;
-	width: 146px;
-	transition: height .2s;
-	-webkit-transition: height .2s;
-	-moz-transition: height .2s;
-	-o-transition: height .2s;
-}
-
-.black {
-	animation: white 5s ease infinite;
-}
-
-.white {
-	animation: black 5s ease infinite;
-}
-
-@keyframes white {
-	0% { fill: #000000; }
-	50% { fill: #ffffff; }
-}
-
-@keyframes black {
-	0% { fill: #ffffff; }
-	50% { fill: #000000; }
 }

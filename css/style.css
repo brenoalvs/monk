@@ -3,6 +3,7 @@ body {
 }
 
 header.description {
+	position: relative;
 	-moz-transition: height .2s;
 	-o-transition: height .2s;
 	-webkit-transition: height .2s;
@@ -17,11 +18,42 @@ header.description {
 	z-index: 999;
 }
 
+header {
+	position: relative;
+}
+
+ul.menu li {
+	display: inline-flex;
+	margin-right: 10px;
+	margin-left: 5px;
+	color: #ffffff;
+}
+
+ul.menu li a {
+	font-size: 15px;
+	color: #ffffff;
+	border: 1px solid transparent;
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+}
+
+ul.menu li a:hover {
+	transition: all .1s ease-in-out;
+	border: 1px solid #ffffff;
+	background-color: transparent;
+	-moz-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	-webkit-transition: all .1s ease-in-out;
+}
+
 header.description.small {
 	height: 200px;
 }
 
 header.description #site-name {
+	font-family: 'Quicksand', sans-serif;
 	color: #000000;
 	font-weight: bold;
 }
@@ -33,7 +65,7 @@ header.description #site-name.site-name-small {
 header.description h2#brief-desc {
 	color: #FFFFFF;
 	font-weight: bold;
-	margin-bottom: 15px; 
+	margin-bottom: 15px;
 }
 
 header.description h4#long-desc {
@@ -73,7 +105,7 @@ header.description h4#long-desc {
 
 .border {
 	border-top: 1px solid #FC710A;
-	height: 2px;
+	height: 1px;
 	margin-bottom: 30px;
 }
 
@@ -83,8 +115,8 @@ header.description h4#long-desc {
 	-webkit-transition: all .2s ease-in-out;
 	background-color: #FFFFFF;
 	border-radius: 0;
-	border: 2px solid #FFFFFF;
-	color: #FC710A;
+	border: 1px solid #FFFFFF;
+	color: #000000;
 	font-size: 15px;
 	font-weight: bold;
 	margin-bottom: 30px;
@@ -98,7 +130,7 @@ header.description h4#long-desc {
 
 .monk-download-primary:hover {
 	background-color: transparent;
-	border: 2px solid #FFFFFF;
+	border: 1px solid #FFFFFF;
 	color: #FFFFFF;
 }
 
@@ -108,7 +140,7 @@ header.description h4#long-desc {
 	-webkit-transition: all .2s ease-in-out;
 	background-color: #FC710A;
 	border-radius: 0;
-	border: 2px solid #FC710A;
+	border: 1px solid #FC710A;
 	color: #FFFFFF;
 	font-weight: bold;
 	margin-bottom: 40px;
@@ -121,7 +153,7 @@ header.description h4#long-desc {
 
 .monk-download:hover {
 	background-color: transparent;
-	border: 2px solid #FC710A;
+	border: 1px solid #FC710A;
 	color: #FC710A;
 }
 
