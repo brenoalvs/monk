@@ -77,6 +77,8 @@ class Monk {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->define_widget_hooks();
+
+		add_action( 'admin_notices', array( $this, 'monk_display_activation_notice' ) );
 	}
 
 	/**
@@ -164,7 +166,26 @@ class Monk {
 	 */
 	private function define_global_hooks() {
 
-		$this->loader->add_filter( 'query_vars', $this, 'monk_query_vars', 10, 1 );		
+		$this->loader->add_filter( 'query_vars', $this, 'monk_query_vars', 10, 1 );
+	}
+
+	/**
+	 * Function to display a notice on plugin activation
+	 *
+	 * This function gets the user to the configuration page
+	 *
+	 * @since   1.0.0
+	 */
+	public function monk_display_activation_notice() {
+		$settings_url = admin_url( 'admin.php?page=monk' );
+		add_option( 'monk_activated', true );
+		$monk_activated = get_option( 'monk_activated', false );
+		if ( ! empty( $monk_activated ) ) {
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
+		} else {
+			return;
+		}
+		update_option( 'monk_activated', false );
 	}
 
 	/**
