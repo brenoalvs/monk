@@ -91,15 +91,14 @@
 		});
 
 		var monk_id = $( '#monk_id' ).val();
-		var tax = window.location.search.split('=');
-		var path = window.location.pathname.split('/');
+		var tax     = window.location.search.split( '=' );
+		var path    = window.location.pathname.split( '/' );
+		var url     = window.location.href.split( '&' );
+		console.log(url[0]);
 
 		if ( 'edit-tags.php' === path[ path.length - 1 ] && '?taxonomy' === tax[0] && monk_id ) {
 			$( document ).ajaxComplete( function() {
-				var monk_id = $( '#monk_id' ).val();
-				console.log(monk_id);
-				var tax = window.location.search.split('=');
-				console.log(tax);
+				$( location ).attr( 'href', url[0] );
 			});
 		}
 	});
