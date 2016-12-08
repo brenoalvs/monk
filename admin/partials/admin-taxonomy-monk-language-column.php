@@ -43,7 +43,7 @@ if ( $monk_term_translations ) :
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
-	<?php if ( $avaliable_languages ) : ?>
+	<?php if ( $available_languages ) : ?>
 		<a class="monk-new-translation-link" href="<?php echo esc_url( $new_term_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
 	<?php endif; ?>
 <?php else : ?>
