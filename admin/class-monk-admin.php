@@ -529,7 +529,7 @@ class Monk_Admin {
 			$active_languages     = get_option( 'monk_active_languages', false );
 			$post_type            = get_query_var( 'post_type' );
 			$post_type            = isset( $post_type ) && ! empty( $post_type ) ? sanitize_text_field( wp_unslash( $post_type ) ) : false;
-			$avaliable_languages  = false;
+			$available_languages  = false;
 			$post_url             = add_query_arg( array(
 				'post' => $post_id,
 			), $base_url );
@@ -547,7 +547,7 @@ class Monk_Admin {
 
 			foreach ( $active_languages as $language ) {
 				if ( $monk_translations && ! array_key_exists( $language, $monk_translations ) ) {
-					$avaliable_languages = true;
+					$available_languages = true;
 				}
 			}
 
@@ -672,11 +672,11 @@ class Monk_Admin {
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
 			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
 			$default_language          = get_option( 'monk_default_language', false );
-			$avaliable_languages       = false;
+			$available_languages       = false;
 
 			foreach ( $languages as $language ) {
 				if ( $monk_term_translations && ! array_key_exists( $language, $monk_term_translations ) ) {
-					$avaliable_languages = true;
+					$available_languages = true;
 				}
 			}
 
