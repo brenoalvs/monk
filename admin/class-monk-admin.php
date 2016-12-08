@@ -679,7 +679,7 @@ class Monk_Admin {
 		$taxonomies                = get_taxonomies();
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
 		$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
-		$avaliable_languages       = false;
+		$available_languages       = false;
 
 		foreach ( $taxonomies as $taxonomy ) {
 			if ( isset( $_GET['taxonomy'] ) ) {
@@ -693,7 +693,7 @@ class Monk_Admin {
 
 		foreach ( $languages as $language ) {
 			if ( ! array_key_exists( $language, $monk_term_translations ) ) {
-				$avaliable_languages = true;
+				$available_languages = true;
 			}
 		}
 
