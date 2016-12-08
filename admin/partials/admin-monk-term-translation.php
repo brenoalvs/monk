@@ -27,12 +27,13 @@ if ( ! defined( 'WPINC' ) ) {
 					foreach ( $languages as $language ) :
 						if ( ! array_key_exists( $language, $monk_term_translations ) ) :
 							$new_term_url = add_query_arg( array(
-								'monk_term_id'     => $monk_term_translations_id,
+								'monk_id'     => $monk_term_translations_id,
 								'translation_lang' => $language,
 							), $base_url );
 					?>
 						<option value="<?php echo esc_url( $new_term_url ); ?>"><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
-					<?php endif; endforeach; ?>
+						<?php endif; ?>
+					<?php endforeach; ?>
 				</select>
 				<?php
 				foreach ( $languages as $language ) :
