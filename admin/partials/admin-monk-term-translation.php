@@ -26,33 +26,31 @@ if ( ! defined( 'WPINC' ) ) {
 					<li> <?php
 						echo esc_html( $monk_languages[ $monk_language ]['name'] );
 					?> </li>
-<?php foreach ( $languages as $language ) :
-	foreach ( $monk_term_translations as $translation_code => $translation_id ) :
+<?php foreach ( $monk_term_translations as $translation_code => $translation_id ) :
+	if ( in_array( $translation_code, $languages, true ) && $monk_language !== $translation_code ) :
 		$translation_term_url = add_query_arg( array(
 			'tag_ID'     => $translation_id,
 		), $base_url_translation );
 
-		if ( $translation_code === $language && $monk_language !== $language ) :
-			?> <li>
-				<a href="<?php echo esc_url( $translation_term_url ); ?>">
-					<?php echo esc_html( $monk_languages[ $language ]['name'] ); ?>
-				</a>
-			</li>
-		<?php
-		endif;
-	endforeach;
+		?> <li>
+			<a href="<?php echo esc_url( $translation_term_url ); ?>">
+				<?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?>
+			</a>
+		</li>
+	<?php
+	endif;
 endforeach;
 				?>
 				</ul>
 				<?php
-				if ( $avaliable_languages ) :
+				if ( $available_languages ) :
 					$new_term_url = add_query_arg( array(
 						'monk_term_id'     => $monk_term_translations_id,
 					), $base_url );
 				?>
-					<a href="<?php echo esc_url( $new_term_url ); ?>" class="button">Add a translation +</a>
+					<a href="<?php echo esc_url( $new_term_url ); ?>" class="button"><?php esc_html_e( 'Add a translation +', 'monk' ); ?></a>
 				<?php else : ?>
-					<p><?php esc_html_e( 'No Avaliable Translations!', 'monk' ); ?></p>
+					<p><?php esc_html_e( 'No Available Translations!', 'monk' ); ?></p>
 				<?php endif; ?>
 			</td>
 		</tr>
