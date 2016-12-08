@@ -47,6 +47,10 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</select>
+		<p><?php
+			esc_html_e( 'This is a translation of ', 'monk' );
+			echo esc_html( get_term( $monk_term_translations_id )->name );
+		?></p>
 	</div>
 
 	<?php
