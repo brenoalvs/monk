@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! isset( $_GET['monk_term_id'] ) ) {
+if ( ! isset( $_GET['monk_id'] ) ) {
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Monk language', 'monk' ); ?></label>
@@ -26,7 +26,7 @@ if ( ! isset( $_GET['monk_term_id'] ) ) {
 	</div>
 	<?php
 } else {
-	$monk_term_translations = get_option( 'monk_term_translations_' . $_GET['monk_term_id'], false );
+	$monk_term_translations = get_option( 'monk_term_translations_' . $_GET['monk_id'], false );
 
 	if ( isset( $_GET['translation_lang'] ) ) {
 		$translation_lang = sanitize_text_field( wp_unslash( $_GET['translation_lang'] ) );
@@ -34,18 +34,18 @@ if ( ! isset( $_GET['monk_term_id'] ) ) {
 		$translation_lang = $default_language;
 	}
 
-	$monk_term_translations_id = sanitize_text_field( wp_unslash( $_GET['monk_term_id'] ) );
+	$monk_term_translations_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
 
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Monk language', 'monk' ); ?></label>
-		<input type="hidden" name="monk_term_id" value="<?php echo esc_attr( $monk_term_translations_id ); ?>">
+		<input type="hidden" name="monk_id" id="monk_id" value="<?php echo esc_attr( $monk_term_translations_id ); ?>">
 		<select class="postform" id="monk-language" name="monk-language">
-			<?php foreach ( $languages as $language ) :
-				if ( ! array_key_exists( $language, $monk_term_translations ) ) :
-			?>
-				<option value="<?php echo esc_attr( $language ); ?>" <?php selected( $translation_lang, $language ); ?>><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
-			<?php endif; endforeach; ?>
+			<?php foreach ( $languages as $language ) : ?>
+				<?php if ( ! array_key_exists( $language, $monk_term_translations ) ) : ?>
+					<option value="<?php echo esc_attr( $language ); ?>" <?php selected( $translation_lang, $language ); ?>><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
+				<?php endif; ?>
+			<?php endforeach; ?>
 		</select>
 	</div>
 
