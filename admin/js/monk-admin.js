@@ -89,5 +89,18 @@
 			$( this ).children( '.monk-column-translations' ).toggleClass( 'monk-show' );
 			$( this ).children( '.monk-column-translations-arrow' ).toggleClass( 'monk-hide' );
 		});
+
+		var monk_id = $( '#monk_id' ).val();
+		var tax = window.location.search.split('=');
+		var path = window.location.pathname.split('/');
+
+		if ( 'edit-tags.php' === path[ path.length - 1 ] && '?taxonomy' === tax[0] && monk_id ) {
+			$( document ).ajaxComplete( function() {
+				var monk_id = $( '#monk_id' ).val();
+				console.log(monk_id);
+				var tax = window.location.search.split('=');
+				console.log(tax);
+			});
+		}
 	});
 })( jQuery );
