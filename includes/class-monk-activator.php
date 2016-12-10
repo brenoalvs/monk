@@ -39,6 +39,7 @@ class Monk_Activator {
 
 		update_option( 'monk_default_language', $language );
 		update_option( 'monk_active_languages', array( $language ) );
+		update_option( 'monk_settings_notice', true );
 	}
 
 }
