@@ -77,8 +77,6 @@ class Monk {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->define_widget_hooks();
-
-		add_action( 'admin_notices', array( $this, 'monk_display_activation_notice' ) );
 	}
 
 	/**
@@ -170,25 +168,6 @@ class Monk {
 	}
 
 	/**
-	 * Function to display a notice on plugin activation
-	 *
-	 * This function gets the user to the configuration page
-	 *
-	 * @since   1.0.0
-	 */
-	public function monk_display_activation_notice() {
-		add_option( 'monk_activated', true );
-		$settings_url = admin_url( 'admin.php?page=monk' );
-		$monk_activated = get_option( 'monk_activated', false );
-		if ( ! empty( $monk_activated ) ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
-		} else {
-			return;
-		}
-		update_option( 'monk_activated', false );
-	}
-
-	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -201,6 +180,7 @@ class Monk {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'monk_activation_notice' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
