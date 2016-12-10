@@ -164,7 +164,10 @@ class Monk_Admin {
 	 * @since    1.0.0
 	 */
 	public function monk_general_settings_render() {
-		esc_html_e( 'Adjust the way you want', 'monk' );
+		?>
+		<p>Here you can configure your language preferences.<br />
+		Select a default language for your site and check the languages you will translate.</p>
+		<?php
 	}
 
 	/**
@@ -690,5 +693,20 @@ class Monk_Admin {
 			}
 		}
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-translation.php';
+	}
+
+	/**
+	 * Function to display a notice on plugin activation
+	 *
+	 * This function gets the user to the configuration page
+	 *
+	 * @since   1.0.0
+	 */
+	public function monk_activation_notice() {
+		$monk_settings_notice = get_option( 'monk_settings_notice', false );
+		
+		if ( $monk_settings_notice ) {
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
+		}
 	}
 }
