@@ -7,7 +7,7 @@ header.description {
 	-moz-transition: height .2s;
 	-o-transition: height .2s;
 	-webkit-transition: height .2s;
-	background-color: #FC710A;
+	background-color: #E0036C;
 	left: 0;
 	overflow: hidden;
 	padding-bottom: 20px;
@@ -48,28 +48,24 @@ ul.menu li a:hover {
 	-webkit-transition: all .1s ease-in-out;
 }
 
-header.description.small {
-	height: 200px;
+.pink {
+	color: #E0036C;
 }
 
-header.description #site-name {
-	font-family: 'Quicksand', sans-serif;
-	color: #000000;
-	font-weight: bold;
+.logo {
+	width: 300px;
 }
 
-header.description #site-name.site-name-small {
-	float: right;
+.site-description {
+	font-size: 20px;
+	line-height: 1.3em;
+	color: #fff;
+	margin: 0 0 60px;
 }
 
-header.description h2#brief-desc {
-	color: #FFFFFF;
-	font-weight: bold;
-	margin-bottom: 15px;
-}
-
-header.description h4#long-desc {
-	color: #FFFFFF;
+.feature-title {
+	color: #E0036C;
+	font-size: 35px;
 }
 
 .feature-content {
@@ -82,110 +78,37 @@ header.description h4#long-desc {
 
 .feature-content p {
 	font-family: 'Abel', sans-serif;
+	font-size: 20px;
 }
 
 .content {
 	margin-top: 50px;
 }
 
-.block {
-	50px;
-	margin-top: 
-}
-
-.feature-content p {
-	font-size: 20px;
-}
-
-.title {
-	color: #FC710A;
-	font-size: 35px;
-	font-weight: bold;
-}
-
-.border {
-	border-top: 1px solid #FC710A;
-	height: 1px;
-	margin-bottom: 30px;
-}
-
-.monk-download-primary {
-	-moz-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	-webkit-transition: all .2s ease-in-out;
-	background-color: #FFFFFF;
-	border-radius: 0;
-	border: 1px solid #FFFFFF;
-	color: #000000;
-	font-size: 15px;
-	font-weight: bold;
-	margin-bottom: 30px;
-	margin-top: 30px;
-	height: 45px;
-	width: 100px;
-	line-height: 2;
-	text-transform: uppercase;
-	transition: all .2s ease-in-out;
-}
-
-.monk-download-primary:hover {
-	background-color: transparent;
-	border: 1px solid #FFFFFF;
-	color: #FFFFFF;
-}
-
-.monk-download {
-	-moz-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	-webkit-transition: all .2s ease-in-out;
-	background-color: #FC710A;
-	border-radius: 0;
-	border: 1px solid #FC710A;
-	color: #FFFFFF;
-	font-weight: bold;
-	margin-bottom: 40px;
-	margin-top: 30px;
-	padding: 10px 40px;
-	text-transform: uppercase;
-	transition: all .2s ease-in-out;
-}
-
-
-.monk-download:hover {
-	background-color: transparent;
-	border: 1px solid #FC710A;
-	color: #FC710A;
-}
-
-.git {
-	color: #000000;
-}
-
 .footer {
-	height: 160px;
+	height: 50px;
 	margin-top: 50px;
 	width: 100%;
 }
 
-.logo-footer {
-	margin-bottom: 30px;
-	margin-top: 30px;
-	max-height: 50px;
+.footer .fa {
+	display: inline-block;
+	margin: 0 2px;
+	transition: color .3s;
+}
+
+.footer .footer-icon {
+	color: #000;
+	transition: color .3s;
+}
+
+.footer .footer-icon:hover {
+	color: #E0036C;
 }
 
 .thanks {
-	margin-bottom: 20px;
-}
-
-.thanks span {
-	font-size: 13px;
-	word-spacing: 3px;
-}
-
-.footer-icon i {
-	color: #000000;
-	display: inline;
-	max-height: 20px;
+	font-size: 14px;
+	padding: 30px;
 }
 
 @media screen and ( max-width: 990px ) {
@@ -193,6 +116,7 @@ header.description h4#long-desc {
 		display: flex;
 		flex-flow: column;
 	}
+	
 	.feature-image {
 		order: 2;
 	}
