@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 	<tbody>
 		<tr class="form-field term-language">
 			<th scope="row">
-				<label for="monk-language"><?php esc_html_e( 'Monk language', 'monk' ); ?></label>
+				<label for="monk-language"><?php esc_html_e( 'Language', 'monk' ); ?></label>
 			</th>
 			<td>
 				<select class="postform" id="monk-language" name="monk-language">

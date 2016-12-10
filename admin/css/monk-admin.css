@@ -70,10 +70,6 @@ td.languages.column-languages {
 	pointer-events: none;
  }
 
-#monk-language {
-	width: 95%;
-}
-
 .monk-translation-link {
 	border-bottom: 1px solid #fff;
 	color: #32373c;
