@@ -23,33 +23,30 @@ if ( ! defined( 'WPINC' ) ) {
 			</th>
 			<td>
 				<ul>
-					<li> <?php
-						echo esc_html( $monk_languages[ $monk_language ]['name'] );
-					?> </li>
-<?php foreach ( $monk_term_translations as $translation_code => $translation_id ) :
-	if ( in_array( $translation_code, $languages, true ) && $monk_language !== $translation_code ) :
-		$translation_term_url = add_query_arg( array(
-			'tag_ID'     => $translation_id,
-		), $base_url_translation );
-		?> <li>
-			<a href="<?php echo esc_url( $translation_term_url ); ?>">
-				<?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?>
-			</a>
-		</li>
-	<?php
-	endif;
-endforeach;
-				?>
+					<li><?php echo esc_html( $monk_languages[ $monk_language ]['name'] ); ?></li>
+					<?php
+						foreach ( $monk_term_translations as $translation_code => $translation_id ) :
+							if ( in_array( $translation_code, $languages, true ) && $monk_language !== $translation_code ) :
+								$translation_term_url = add_query_arg( 'tag_ID', $translation_id, $base_url_translation );
+					?>
+						<li>
+							<a href="<?php echo esc_url( $translation_term_url ); ?>">
+								<?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?>
+							</a>
+						</li>
+					<?php
+							endif;
+						endforeach;
+					?>
 				</ul>
+
 				<?php
-				if ( $available_languages ) :
-					$new_term_url = add_query_arg( array(
-						'monk_term_id'     => $monk_term_translations_id,
-					), $base_url );
+					if ( $available_languages ) :
+						$new_term_url = add_query_arg( 'monk_term_id', $monk_term_translations_id, $base_url );
 				?>
 					<a href="<?php echo esc_url( $new_term_url ); ?>" class="button"><?php esc_html_e( 'Add a translation +', 'monk' ); ?></a>
 				<?php else : ?>
-					<p><?php esc_html_e( 'No Available Translations!', 'monk' ); ?></p>
+					<p><?php esc_html_e( 'No available translations!', 'monk' ); ?></p>
 				<?php endif; ?>
 			</td>
 		</tr>
