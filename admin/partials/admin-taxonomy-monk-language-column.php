@@ -53,9 +53,10 @@ if ( $monk_term_translations ) :
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
-	<a class="monk-new-post-link" href="<?php echo esc_url( $new_term_url ); ?>">Add +</a>
-<?php
-	else : ?>
+	<?php if ( $available_languages ) : ?>
+		<a class="monk-new-translation-link" href="<?php echo esc_url( $new_term_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
+	<?php endif; ?>
+<?php else : ?>
 	<span class="dashicons dashicons-minus"></span>
 <?php endif; ?>
 </div>

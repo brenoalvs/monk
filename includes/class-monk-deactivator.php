@@ -30,7 +30,7 @@ class Monk_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+		delete_option( 'monk_settings_notice' );
 	}
 
 }
