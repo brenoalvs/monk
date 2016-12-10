@@ -26,7 +26,8 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 	</div>
 	<?php
 } else {
-	$monk_term_translations = get_option( 'monk_term_translations_' . $_GET['monk_id'], false );
+	$monk_id                = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
+	$monk_term_translations = get_option( 'monk_term_translations_' . $monk_id, false );
 
 	if ( isset( $_GET['translation_lang'] ) ) {
 		$translation_lang = sanitize_text_field( wp_unslash( $_GET['translation_lang'] ) );
@@ -34,12 +35,10 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 		$translation_lang = $default_language;
 	}
 
-	$monk_term_translations_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
-
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Monk language', 'monk' ); ?></label>
-		<input type="hidden" name="monk_id" id="monk_id" value="<?php echo esc_attr( $monk_term_translations_id ); ?>">
+		<input type="hidden" name="monk_id" id="monk_id" value="<?php echo esc_attr( $monk_id ); ?>">
 		<select class="postform" id="monk-language" name="monk-language">
 			<?php foreach ( $languages as $language ) : ?>
 				<?php if ( ! array_key_exists( $language, $monk_term_translations ) ) : ?>
@@ -49,7 +48,7 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 		</select>
 		<p><?php
 			esc_html_e( 'This is a translation of ', 'monk' );
-			echo esc_html( get_term( $monk_term_translations_id )->name );
+			echo esc_html( get_term( $monk_id )->name );
 		?></p>
 	</div>
 
