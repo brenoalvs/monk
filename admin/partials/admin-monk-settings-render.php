@@ -16,12 +16,15 @@ if ( ! defined( 'WPINC' ) ) {
 ?>
 	<div class="wrap">
 		<h2>Monk</h2>
-		<?php settings_errors(); ?>
+		<?php
+			update_option( 'monk_settings_notice', false );
+			settings_errors();
+		?>
 		<form action="options.php" method="POST">
 			<?php
-			settings_fields( 'monk_settings' );
-			do_settings_sections( 'monk_settings' );
-			submit_button();
+				settings_fields( 'monk_settings' );
+				do_settings_sections( 'monk_settings' );
+				submit_button();
 			?>
 		</form>
 	</div>

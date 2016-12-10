@@ -164,7 +164,7 @@ class Monk {
 	 */
 	private function define_global_hooks() {
 
-		$this->loader->add_filter( 'query_vars', $this, 'monk_query_vars', 10, 1 );		
+		$this->loader->add_filter( 'query_vars', $this, 'monk_query_vars', 10, 1 );
 	}
 
 	/**
@@ -180,6 +180,7 @@ class Monk {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'monk_activation_notice' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
