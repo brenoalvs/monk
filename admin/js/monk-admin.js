@@ -89,5 +89,15 @@
 			$( this ).children( '.monk-column-translations' ).toggleClass( 'monk-show' );
 			$( this ).children( '.monk-column-translations-arrow' ).toggleClass( 'monk-hide' );
 		});
+
+		var monk_id = $( '#monk_id' ).val();
+		var path    = window.location.pathname.split( '/' );
+		var url     = window.location.href.split( '&' );
+
+		if ( 'edit-tags.php' === path[ path.length - 1 ] && monk_id ) {
+			$( document ).ajaxComplete( function() {
+				$( location ).attr( 'href', url[0] );
+			});
+		}
 	});
 })( jQuery );

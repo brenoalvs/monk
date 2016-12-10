@@ -31,7 +31,6 @@ if ( ! defined( 'WPINC' ) ) {
 		$translation_term_url = add_query_arg( array(
 			'tag_ID'     => $translation_id,
 		), $base_url_translation );
-
 		?> <li>
 			<a href="<?php echo esc_url( $translation_term_url ); ?>">
 				<?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?>

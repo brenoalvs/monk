@@ -19,6 +19,16 @@ if ( ! defined( 'WPINC' ) ) {
 	<div class="monk-hide monk-column-translations-arrow"></div>
 	<div class="hide-if-js monk-column-translations monk-column-translations-terms">
 <?php
+foreach ( $taxonomies as $taxonomy ) {
+	if ( isset( $_GET['taxonomy'] ) ) {
+		if ( $_GET['taxonomy'] === $taxonomy ) {
+			$base_url     = admin_url( 'term.php?taxonomy=' . $taxonomy );
+			$new_term_url = add_query_arg( array(
+					'monk_id' => $monk_term_translations_id,
+			), admin_url( 'edit-tags.php?taxonomy=' . $taxonomy ) );
+		}
+	}
+}
 
 if ( $monk_term_translations ) :
 	$translation_term_url = add_query_arg( array(
