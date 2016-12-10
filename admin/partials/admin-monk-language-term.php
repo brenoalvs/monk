@@ -38,7 +38,7 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Language', 'monk' ); ?></label>
-		<input type="hidden" name="monk_term_id" value="<?php echo esc_attr( $monk_term_translations_id ); ?>">
+		<input type="hidden" name="monk_id" value="<?php echo esc_attr( $monk_term_translations_id ); ?>">
 		<select class="postform" id="monk-language" name="monk-language">
 			<?php foreach ( $languages as $language ) : ?>
 				<?php if ( ! array_key_exists( $language, $monk_term_translations ) ) : ?>
