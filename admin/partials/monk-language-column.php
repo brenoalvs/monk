@@ -13,9 +13,7 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-$post_url = add_query_arg( array(
-	'post' => $post_id,
-), $base_url );
+
 ?>
 	<span class="hide-if-no-js dashicons dashicons-edit"></span>
 	<div class="monk-hide monk-column-translations-arrow"></div>
@@ -39,9 +37,10 @@ $post_url = add_query_arg( array(
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
-	<a class="monk-new-post-link" href="<?php echo esc_url( $new_post_url ); ?>">Add +</a>
-<?php
-	else : ?>
+	<?php if ( $available_languages ) : ?>
+		<a class="monk-new-translation-link" href="<?php echo esc_url( $new_post_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
+	<?php endif; ?>
+<?php else : ?>
 	<span class="dashicons dashicons-minus"></span>
 <?php endif; ?>
 </div>

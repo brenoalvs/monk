@@ -19,16 +19,6 @@ if ( ! defined( 'WPINC' ) ) {
 	<div class="monk-hide monk-column-translations-arrow"></div>
 	<div class="hide-if-js monk-column-translations monk-column-translations-terms">
 <?php
-foreach ( $taxonomies as $taxonomy ) {
-	if ( isset( $_GET['taxonomy'] ) ) {
-		if ( $_GET['taxonomy'] === $taxonomy ) {
-			$base_url     = admin_url( 'term.php?taxonomy=' . $taxonomy );
-			$new_term_url = add_query_arg( array(
-					'monk_term_id' => $monk_term_translations_id,
-			), admin_url( 'edit-tags.php?taxonomy=' . $taxonomy ) );
-		}
-	}
-}
 
 if ( $monk_term_translations ) :
 	$translation_term_url = add_query_arg( array(
@@ -53,9 +43,10 @@ if ( $monk_term_translations ) :
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
-	<a class="monk-new-post-link" href="<?php echo esc_url( $new_term_url ); ?>">Add +</a>
-<?php
-	else : ?>
+	<?php if ( $available_languages ) : ?>
+		<a class="monk-new-translation-link" href="<?php echo esc_url( $new_term_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
+	<?php endif; ?>
+<?php else : ?>
 	<span class="dashicons dashicons-minus"></span>
 <?php endif; ?>
 </div>
