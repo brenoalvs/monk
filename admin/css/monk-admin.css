@@ -23,6 +23,11 @@ td.languages.column-languages {
 	cursor: pointer;
 }
 
+.column-languages a:focus {
+	box-shadow: none;
+	outline: none;
+}
+
  div.monk-post-meta-text label {
 	font-weight: 600;
 	line-height: 1em;
