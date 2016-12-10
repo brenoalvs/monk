@@ -688,7 +688,7 @@ class Monk_Admin {
 					if ( $_GET['taxonomy'] === $taxonomy ) {
 						$base_url     = admin_url( 'term.php?taxonomy=' . $taxonomy );
 						$new_term_url = add_query_arg( array(
-								'monk_term_id' => $monk_term_translations_id,
+								'monk_id' => $monk_term_translations_id,
 						), admin_url( 'edit-tags.php?taxonomy=' . $taxonomy ) );
 					}
 				}

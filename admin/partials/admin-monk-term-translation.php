@@ -42,7 +42,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 				<?php
 					if ( $available_languages ) :
-						$new_term_url = add_query_arg( 'monk_term_id', $monk_term_translations_id, $base_url );
+						$new_term_url = add_query_arg( 'monk_id', $monk_term_translations_id, $base_url );
 				?>
 					<a href="<?php echo esc_url( $new_term_url ); ?>" class="button"><?php esc_html_e( 'Add a translation +', 'monk' ); ?></a>
 				<?php else : ?>
