@@ -272,8 +272,8 @@ class Monk_Admin {
 			);
 		}
 
-		if ( isset( $_REQUEST['monk_id'] ) ) {
-			$monk_id = sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
+		if ( isset( $_REQUEST['monk-id'] ) ) {
+			$monk_id = sanitize_text_field( wp_unslash( $_REQUEST['monk-id'] ) );
 			update_post_meta(
 				$post_id,
 				'_monk_post_translations_id',
@@ -540,11 +540,11 @@ class Monk_Admin {
 			if ( 'post' !== $post_type ) {
 				$new_post_url = add_query_arg( array(
 					'post_type' => $post_type,
-					'monk_id'   => $monk_translations_id,
+					'monk-id'   => $monk_translations_id,
 				), admin_url( 'post-new.php' ) );
 			} else {
 				$new_post_url = add_query_arg( array(
-					'monk_id'   => $monk_translations_id,
+					'monk-id'   => $monk_translations_id,
 				), admin_url( 'post-new.php' ) );
 			}
 
@@ -580,8 +580,8 @@ class Monk_Admin {
 			$language = sanitize_text_field( wp_unslash( $_REQUEST['monk-language'] ) );
 			add_term_meta( $term_id, '_monk_term_language', $language, true );
 
-			if ( isset( $_REQUEST['monk_id'] ) ) {
-				$monk_term_translations_id = sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
+			if ( isset( $_REQUEST['monk-id'] ) ) {
+				$monk_term_translations_id = sanitize_text_field( wp_unslash( $_REQUEST['monk-id'] ) );
 				add_term_meta( $term_id, '_monk_term_translations_id', $monk_term_translations_id, true );
 
 				if ( get_option( 'monk_term_translations_' . $monk_term_translations_id ) !== false ) {
@@ -688,7 +688,7 @@ class Monk_Admin {
 					if ( $_GET['taxonomy'] === $taxonomy ) {
 						$base_url     = admin_url( 'term.php?taxonomy=' . $taxonomy );
 						$new_term_url = add_query_arg( array(
-								'monk_id' => $monk_term_translations_id,
+								'monk-id' => $monk_term_translations_id,
 						), admin_url( 'edit-tags.php?taxonomy=' . $taxonomy ) );
 					}
 				}

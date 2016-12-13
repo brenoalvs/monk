@@ -21,8 +21,8 @@ if ( empty( $monk_id ) ) {
 		$lang    = $site_default_language;
 	}
 
-	if ( isset( $_GET['monk_id'] ) ) {
-		$monk_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
+	if ( isset( $_GET['monk-id'] ) ) {
+		$monk_id = sanitize_text_field( wp_unslash( $_GET['monk-id'] ) );
 	} else {
 		$monk_id = $post->ID;
 	}
@@ -80,7 +80,7 @@ if ( empty( $monk_id ) ) {
 						$language_url = add_query_arg( array(
 							'post_type' => $post_type,
 							'lang'      => $lang_code,
-							'monk_id'   => $monk_id,
+							'monk-id'   => $monk_id,
 						), $monk_translation_url );
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
@@ -96,7 +96,7 @@ if ( empty( $monk_id ) ) {
 					foreach ( $active_languages as $lang_code ) :
 						$language_url = add_query_arg( array(
 							'lang'      => $lang_code,
-							'monk_id'   => $monk_id,
+							'monk-id'   => $monk_id,
 						), $monk_translation_url );
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
