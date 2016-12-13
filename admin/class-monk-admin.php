@@ -740,7 +740,6 @@ class Monk_Admin {
 	 */
 	public function monk_activation_notice() {
 		$monk_settings_notice = get_option( 'monk_settings_notice', false );
-		
 		if ( $monk_settings_notice ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
 		}
