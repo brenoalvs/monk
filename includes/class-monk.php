@@ -181,9 +181,14 @@ class Monk {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'monk_activation_notice' );
+
 		// rewrite.
-		$this->loader->add_action( 'init', $plugin_admin, 'monk_create_rewrite_tag' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'monk_create_rewrite_functions' );
+		//$this->loader->add_filter( 'post_link', $plugin_admin, 'monk_filter_permalinks', 10, 3 );
+
 		// end rewrite.
+		
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
