@@ -122,6 +122,17 @@ class Monk_Admin {
 	}
 
 	/**
+	 *  Adds a custom structure for permalinks and
+	 * a new rewrite tag
+	 *
+	 * @since 0.0.1
+	 */
+	public function monk_create_rewrite_tag() {
+		add_rewrite_tag( '%lang%', '([^/]+)', 'lang=' );
+		add_permastruct( 'translated_single', '/%lang%/%postname%', false );
+	}
+
+	/**
 	 * Function to register the settings page of the plugin
 	 *
 	 * @since    1.0.0
