@@ -127,9 +127,44 @@ class Monk_Admin {
 	 *
 	 * @since 0.0.1
 	 */
-	public function monk_create_rewrite_tag() {
+	public function monk_create_rewrite_functions() {
+		$default_permalinks = array(
+			'post_name' => '%lang%/%postname%',
+			'day_and_name' => '%lang%/%year%/%monthnum%/%day%/%postname%/',
+			'month_and_name' => '%lang%/%year%/%monthnum%/%postname%/',
+			'numeric' => '%lang%/archives/%post_id%',
+		);
 		add_rewrite_tag( '%lang%', '([^/]+)', 'lang=' );
-		add_permastruct( 'translated_single', '/%lang%/%postname%', false );
+
+		foreach ( $default_permalinks as $name => $structure ) {
+			add_permastruct( 'translated_' . $name , $structure, array( 'ep_mask' => EP_ALL ) );
+		}
+
+		add_rewrite_rule( '^/([a-zA-Z]{2})/?', 'index.php?lang=$matches[1]','top' );
+		// add_permastruct( 'translated_archive', '/%lang%/archives/projects/%postname%' );
+		// add_permastruct( 'translated_category', '/%lang%/category/%postname%' );
+
+	}
+
+	/**
+	 *  Adds a custom structure for permalinks and
+	 * a new rewrite tag
+	 *
+	 * @since 0.0.1
+	 * @param string  $permalink post link during query.
+	 * @param object  $post post object.
+	 * @param boolean $leavename wether use the unaltered name of post.
+	 */
+	public function monk_filter_permalinks( $permalink, $post, $leavename = true ) {
+		if ( -1 === strpos( $permalink, '%lang%' ) ) {
+			return;
+		}
+
+		$lang = get_post_meta( $post->ID, '_monk_post_language', true );
+		var_dump( $permalink );
+		$permalink = str_replace( '%lang%', $lang, $permalink );
+
+		return $permalink;
 	}
 
 	/**
