@@ -131,7 +131,7 @@ class Monk_Admin {
 		$default_permalinks = array(
 			'day_and_name'   => '%lang%/%year%/%monthnum%/%day%/%postname%/',
 			'month_and_name' => '%lang%/%year%/%monthnum%/%postname%/',
-			'numeric'        => '%lang%/archives/%post_id%',
+			'numeric'        => '%lang%/%post_id%',
 			'post_name'      => '%lang%/%postname%',
 		);
 		add_rewrite_tag( '%lang%', '([^/]+)', 'lang=' );
@@ -140,18 +140,20 @@ class Monk_Admin {
 			add_permastruct( 'translated_' . $name , $structure, array( 'ep_mask' => EP_ALL ) );
 		}
 
-		add_rewrite_rule( '^/([a-z]{2}|[a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'bottom' );
+		add_rewrite_rule( '^/([a-z]{2}|[a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'top' );
 	}
 
 	/**
-	 *  Adds a custom structure for permalinks and
-	 * a new rewrite tag.
+	 *  Adds filter to filter permalinks
 	 *
 	 * @since 0.0.1
 	 * @param string  $permalink Post link during query.
 	 * @param object  $post Post object.
 	 */
 	public function monk_filter_permalinks( $permalink, $post ) {
+		if ( ! get_option( 'permalink_structure' ) ) {
+			return $permalink;
+		}
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
 		preg_match( '/^([^.]+.{4})\//', $permalink, $matches );
 
