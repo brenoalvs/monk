@@ -129,10 +129,10 @@ class Monk_Admin {
 	 */
 	public function monk_create_rewrite_functions() {
 		$default_permalinks = array(
-			'post_name' => '%lang%/%postname%',
-			'day_and_name' => '%lang%/%year%/%monthnum%/%day%/%postname%/',
+			'day_and_name'   => '%lang%/%year%/%monthnum%/%day%/%postname%/',
 			'month_and_name' => '%lang%/%year%/%monthnum%/%postname%/',
-			'numeric' => '%lang%/archives/%post_id%',
+			'numeric'        => '%lang%/archives/%post_id%',
+			'post_name'      => '%lang%/%postname%',
 		);
 		add_rewrite_tag( '%lang%', '([^/]+)', 'lang=' );
 
@@ -140,29 +140,26 @@ class Monk_Admin {
 			add_permastruct( 'translated_' . $name , $structure, array( 'ep_mask' => EP_ALL ) );
 		}
 
-		add_rewrite_rule( '^/([a-zA-Z]{2})/?', 'index.php?lang=$matches[1]','top' );
-		// add_permastruct( 'translated_archive', '/%lang%/archives/projects/%postname%' );
-		// add_permastruct( 'translated_category', '/%lang%/category/%postname%' );
-
+		add_rewrite_rule( '^/([a-z]{2}|[a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'bottom' );
 	}
 
 	/**
 	 *  Adds a custom structure for permalinks and
-	 * a new rewrite tag
+	 * a new rewrite tag.
 	 *
 	 * @since 0.0.1
-	 * @param string  $permalink post link during query.
-	 * @param object  $post post object.
-	 * @param boolean $leavename wether use the unaltered name of post.
+	 * @param string  $permalink Post link during query.
+	 * @param object  $post Post object.
 	 */
-	public function monk_filter_permalinks( $permalink, $post, $leavename = true ) {
-		if ( -1 === strpos( $permalink, '%lang%' ) ) {
-			return;
+	public function monk_filter_permalinks( $permalink, $post ) {
+		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
+		preg_match( '/^([^.]+.{4})\//', $permalink, $matches );
+
+		if ( ( isset( $post_language ) && empty( $post_language ) ) || ( ! isset( $post_language ) ) ) {
+			return $permalink;
 		}
 
-		$lang = get_post_meta( $post->ID, '_monk_post_language', true );
-		var_dump( $permalink );
-		$permalink = str_replace( '%lang%', $lang, $permalink );
+		$permalink = str_replace( $matches[0], $matches[0] . $post_language . '/', $permalink );
 
 		return $permalink;
 	}
