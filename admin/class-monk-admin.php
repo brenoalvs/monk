@@ -173,7 +173,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 *  Adds filter to filter permalinks
+	 *  Adds filter to change permalinks
 	 *
 	 * @since 0.0.1
 	 * @param string  $permalink Post link during query.
