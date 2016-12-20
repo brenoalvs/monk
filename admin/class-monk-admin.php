@@ -137,39 +137,11 @@ class Monk_Admin {
 
 		add_rewrite_tag( '%lang%', '([a-z]{2}\_[A-Z]{2})', 'lang=' );
 
-		$default_permalinks = array(
-			'category'       => '%lang%/category/%category%',
-			'day_and_name'   => '%lang%/%year%/%monthnum%/%day%/%postname%/',
-			'month_and_name' => '%lang%/%year%/%monthnum%/%postname%/',
-			'numeric'        => '%lang%/%post_id%',
-			'post_name'      => '%lang%/%postname%',
-			'page_long'      => '%lang%/%pagename%/%page%',
-			'post_long'      => '%lang%/%pagename%/%postname%',
-		);
-
-		foreach ( $default_permalinks as $name => $structure ) {
-			add_permastruct( 'translated_' . $name , $structure, array( 'ep_mask' => EP_ALL ) );
-		}
+			$current_structure = get_option( 'permalink_structure', false );
+			$structure         = 'en_US' . $current_structure;
+			add_permastruct( 'translated_current_permastruct', $structure, array( 'ep_mask' => EP_ALL ) );
 
 		add_rewrite_rule( '/([a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'top' );
-	}
-
-	/**
-	 * This function add a new 'permastruct' when the user alterates
-	 * the permalink settings
-	 *
-	 * @since 0.0.1
-	 */
-	public function monk_filter_custom_permastructures() {
-		global $wp_rewrite;
-		$saved_permastructs = $wp_rewrite->extra_permastructs;
-
-		if ( did_action( 'update_option_permalink_structure' ) ) {
-			$current_structure = get_option( 'permalink_structure', false );
-			add_permastruct( 'translated_permastruct', $structure, array( 'ep_mask' => EP_ALL ) );
-		} else {
-			return;
-		}
 	}
 
 	/**
