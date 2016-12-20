@@ -128,19 +128,48 @@ class Monk_Admin {
 	 * @since 0.0.1
 	 */
 	public function monk_create_rewrite_functions() {
+		$taxonomies = get_taxonomies( '', 'objects' );
+
+		foreach ( $taxonomies as $taxonomy ) {
+			$taxonomy_name = $taxonomy->rewrite['slug'];
+			$default_permalinks[ $taxonomy_name ] = '%lang%/' . $taxonomy_name . '/%category%';
+		}
+
+		add_rewrite_tag( '%lang%', '([a-z]{2}\_[A-Z]{2})', 'lang=' );
+
 		$default_permalinks = array(
+			'category'       => '%lang%/category/%category%',
 			'day_and_name'   => '%lang%/%year%/%monthnum%/%day%/%postname%/',
 			'month_and_name' => '%lang%/%year%/%monthnum%/%postname%/',
 			'numeric'        => '%lang%/%post_id%',
 			'post_name'      => '%lang%/%postname%',
+			'page_long'      => '%lang%/%pagename%/%page%',
+			'post_long'      => '%lang%/%pagename%/%postname%',
 		);
-		add_rewrite_tag( '%lang%', '([^/]+)', 'lang=' );
 
 		foreach ( $default_permalinks as $name => $structure ) {
 			add_permastruct( 'translated_' . $name , $structure, array( 'ep_mask' => EP_ALL ) );
 		}
 
-		add_rewrite_rule( '^/([a-z]{2}|[a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'top' );
+		add_rewrite_rule( '/([a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'top' );
+	}
+
+	/**
+	 * This function add a new 'permastruct' when the user alterates
+	 * the permalink settings
+	 *
+	 * @since 0.0.1
+	 */
+	public function monk_filter_custom_permastructures() {
+		global $wp_rewrite;
+		$saved_permastructs = $wp_rewrite->extra_permastructs;
+
+		if ( did_action( 'update_option_permalink_structure' ) ) {
+			$current_structure = get_option( 'permalink_structure', false );
+			add_permastruct( 'translated_permastruct', $structure, array( 'ep_mask' => EP_ALL ) );
+		} else {
+			return;
+		}
 	}
 
 	/**
@@ -151,17 +180,17 @@ class Monk_Admin {
 	 * @param object  $post Post object.
 	 */
 	public function monk_filter_permalinks( $permalink, $post ) {
-		if ( ! get_option( 'permalink_structure' ) ) {
-			return $permalink;
-		}
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
-		preg_match( '/^([^.]+.{4})\//', $permalink, $matches );
+		if ( ! get_option( 'permalink_structure' ) || ( isset( $post_language ) && empty( $post_language ) ) || ( ! isset( $post_language ) ) ) {
+			$permalink = $permalink;
+		} elseif ( '/archives/%post_id%' === get_option( 'permalink_structure' ) ) {
+			preg_match( '/^([^.]+.{4})\/archives\//', $permalink, $matches );
+			$permalink = str_replace( $matches[0], $matches[0] . $post_language . '/', $permalink );
+		} else {
+			preg_match( '/^([^.]+.{4})\//', $permalink, $matches );
 
-		if ( ( isset( $post_language ) && empty( $post_language ) ) || ( ! isset( $post_language ) ) ) {
-			return $permalink;
+			$permalink = str_replace( $matches[0], $matches[0] . $post_language . '/', $permalink );
 		}
-
-		$permalink = str_replace( $matches[0], $matches[0] . $post_language . '/', $permalink );
 
 		return $permalink;
 	}
