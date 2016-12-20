@@ -185,10 +185,11 @@ class Monk {
 		// rewrite.
 
 		$this->loader->add_action( 'init', $plugin_admin, 'monk_create_rewrite_functions' );
-		//$this->loader->add_filter( 'post_link', $plugin_admin, 'monk_filter_permalinks', 10, 3 );
+		$this->loader->add_filter( 'post_link', $plugin_admin, 'monk_filter_permalinks', 10, 0 );
+		$this->loader->add_filter( 'update_option_permalink_structure', $plugin_admin, 'monk_filter_custom_permastructures', 10, 2 );
 
 		// end rewrite.
-		
+
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
