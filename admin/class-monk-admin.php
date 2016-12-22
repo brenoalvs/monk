@@ -138,7 +138,7 @@ class Monk_Admin {
 		add_rewrite_tag( '%lang%', '([a-z]{2}\_[A-Z]{2})', 'lang=' );
 
 			$current_structure = get_option( 'permalink_structure', false );
-			$structure         = 'en_US' . $current_structure;
+			$structure         = '%lang%' . $current_structure;
 			add_permastruct( 'translated_current_permastruct', $structure, array( 'ep_mask' => EP_ALL ) );
 
 		add_rewrite_rule( '/([a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'top' );
