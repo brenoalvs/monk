@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! isset( $_GET['monk-id'] ) ) {
+if ( ! isset( $_GET['monk_id'] ) ) {
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Language', 'monk' ); ?></label>
@@ -26,7 +26,7 @@ if ( ! isset( $_GET['monk-id'] ) ) {
 	</div>
 	<?php
 } else {
-	$monk_id                = sanitize_text_field( wp_unslash( $_GET['monk-id'] ) );
+	$monk_id                = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
 	$monk_term_translations = get_option( 'monk_term_translations_' . $monk_id, false );
 
 	if ( isset( $_GET['translation_lang'] ) ) {

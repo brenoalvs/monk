@@ -261,7 +261,7 @@ class Monk {
 	*/
 	public function monk_query_vars( $vars ) {
 		$vars[] = 'lang';
-		$vars[] = 'monk-id';
+		$vars[] = 'monk_id';
 		return $vars;
 	}
 
