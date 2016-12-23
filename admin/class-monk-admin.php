@@ -110,7 +110,7 @@ class Monk_Admin {
 	/**
 	 * Function to display a notice on plugin activation
 	 *
-	 * This function gets the user to the configuration page
+	 * The created notice gets the user to the configuration page
 	 *
 	 * @since   1.0.0
 	 */
