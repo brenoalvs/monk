@@ -148,8 +148,8 @@ class Monk_Admin {
 	 *  Adds filter to change permalinks
 	 *
 	 * @since 0.0.1
-	 * @param string  $permalink Post link during query.
-	 * @param object  $post Post object.
+	 * @param string $permalink Post link during query.
+	 * @param object $post Post object.
 	 */
 	public function monk_filter_permalinks( $permalink, $post ) {
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
