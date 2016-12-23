@@ -153,14 +153,16 @@ class Monk_Admin {
 	 */
 	public function monk_filter_permalinks( $permalink, $post ) {
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
+
 		if ( ! get_option( 'permalink_structure' ) || ( isset( $post_language ) && empty( $post_language ) ) || ( ! isset( $post_language ) ) ) {
 			$permalink = $permalink;
+
 		} elseif ( '/archives/%post_id%' === get_option( 'permalink_structure' ) ) {
 			preg_match( '/^([^.]+.{4})\/archives\//', $permalink, $matches );
 			$permalink = str_replace( $matches[0], $matches[0] . $post_language . '/', $permalink );
+
 		} else {
 			preg_match( '/^([^.]+.{4})\//', $permalink, $matches );
-
 			$permalink = str_replace( $matches[0], $matches[0] . $post_language . '/', $permalink );
 		}
 
