@@ -184,7 +184,7 @@ class Monk {
 
 		// rewrite.
 
-		$this->loader->add_action( 'init', $plugin_admin, 'monk_create_rewrite_functions' );
+		$this->loader->add_action( 'rewrite_rules_array', $plugin_admin, 'monk_create_rewrite_functions' );
 		$this->loader->add_filter( 'post_link', $plugin_admin, 'monk_filter_permalinks', 10, 2 );
 		$this->loader->add_filter( 'update_option_permalink_structure', $plugin_admin, 'monk_filter_custom_permastructures', 10, 2 );
 
