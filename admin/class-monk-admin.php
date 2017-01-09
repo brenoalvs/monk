@@ -160,6 +160,16 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Reinitialize the rewrite functions array whenever the option
+	 * 'monk_active_languages' gets updated
+	 *
+	 * @since 0.0.1
+	 */
+	public function monk_flush_on_update() {
+		flush_rewrite_rules();
+	}
+
+	/**
 	 *  Adds filter to change permalinks
 	 *
 	 * @since 0.0.1
