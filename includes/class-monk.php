@@ -7,7 +7,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Includes
@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Monk
  * @subpackage Monk/Includes
  * @author     Breno Alves <email@example.com>
@@ -33,7 +33,7 @@ class Monk {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      Monk_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -42,7 +42,7 @@ class Monk {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      string    $monk    The string used to uniquely identify this plugin.
 	 */
@@ -51,7 +51,7 @@ class Monk {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -64,12 +64,12 @@ class Monk {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '1.0.0';
+		$this->version = '0.1.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -93,7 +93,7 @@ class Monk {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -145,7 +145,7 @@ class Monk {
 	 * Uses the Monk_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -159,7 +159,7 @@ class Monk {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_global_hooks() {
@@ -171,7 +171,7 @@ class Monk {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -203,7 +203,7 @@ class Monk {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -220,7 +220,7 @@ class Monk {
 	/**
 	 * Register all of the hooks related to Monk Widgets
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 */
 	private function define_widget_hooks() {
@@ -231,7 +231,7 @@ class Monk {
 	/**
 	 * Register all of the hooks related to terms
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   public
 	 */
 	public function add_term_hooks() {
@@ -257,7 +257,7 @@ class Monk {
 	 *
 	 * @param    $vars
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	*/
 	public function monk_query_vars( $vars ) {
 		$vars[] = 'lang';
@@ -268,7 +268,7 @@ class Monk {
 	/**
 	 * Register all the widgets
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   public
 	 */
 	public function register_widgets() {
@@ -282,7 +282,7 @@ class Monk {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function run() {
 		$this->loader->run();
@@ -292,7 +292,7 @@ class Monk {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -302,7 +302,7 @@ class Monk {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    Monk_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -312,7 +312,7 @@ class Monk {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {

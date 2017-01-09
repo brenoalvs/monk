@@ -3,7 +3,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Admin
@@ -24,7 +24,7 @@ class Monk_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string    $monk    The ID of this plugin.
 	 */
@@ -33,7 +33,7 @@ class Monk_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -42,7 +42,7 @@ class Monk_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @param    string $monk       The name of this plugin.
 	 * @param    string $version    The version of this plugin.
 	 */
@@ -56,7 +56,7 @@ class Monk_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function enqueue_styles() {
 
@@ -88,7 +88,7 @@ class Monk_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function enqueue_scripts() {
 
@@ -110,7 +110,7 @@ class Monk_Admin {
 	/**
 	 * Function to register the settings page of the plugin
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_add_menu_page() {
 		add_menu_page(
@@ -127,7 +127,7 @@ class Monk_Admin {
 	/**
 	 * Function to create a section for the Monk General Options in the administration menu
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_options_init() {
 		add_settings_section(
@@ -161,7 +161,7 @@ class Monk_Admin {
 	 *
 	 * Prints a description in the section
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_general_settings_render() {
 		?>
@@ -173,7 +173,7 @@ class Monk_Admin {
 	/**
 	 * Function to render the select field, callback for the monk_default_language element
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_default_language_render() {
 		$default_language = get_option( 'monk_default_language', false );
@@ -183,7 +183,7 @@ class Monk_Admin {
 	/**
 	 * Function to render the checkbox field, callback for the monk_active_languages element
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_active_languages_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-active-languages-render.php';
@@ -192,7 +192,7 @@ class Monk_Admin {
 	/**
 	 * Function to render the admin settings page for the plugin
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_settings_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
@@ -201,7 +201,7 @@ class Monk_Admin {
 	/**
 	 * Function to create the main language meta box for posts
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_post_meta_box() {
 		add_meta_box(
@@ -220,7 +220,7 @@ class Monk_Admin {
 	 *
 	 * @param    object $post Post object.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
@@ -247,7 +247,7 @@ class Monk_Admin {
 	 *
 	 * @param   string $post_id ID of the post.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_save_post_meta_box( $post_id ) {
 		if ( ! isset( $_REQUEST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['monk_post_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {
@@ -309,7 +309,7 @@ class Monk_Admin {
 	 *
 	 * @param   string $post_id ID of the post, page or post_type to be deleted.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_delete_post_data( $post_id ) {
 		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
@@ -333,7 +333,7 @@ class Monk_Admin {
 	 *
 	 * @param   object $term_query instance of WP_Term_Query class.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function monk_category_language_filter( $term_query ) {
 		if ( is_admin() && ! is_customize_preview() ) {
@@ -364,7 +364,7 @@ class Monk_Admin {
 	 *
 	 * @param object $wp_customize Customize object.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   public
 	 */
 	public function monk_language_customizer( $wp_customize ) {
@@ -627,7 +627,7 @@ class Monk_Admin {
 	 *
 	 * @param int $term_id ID of the Term object.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 */
 	public function monk_delete_term_meta( $term_id ) {
 		$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
@@ -736,7 +736,7 @@ class Monk_Admin {
 	 *
 	 * This function gets the user to the configuration page
 	 *
-	 * @since   1.0.0
+	 * @since   0.1.0
 	 */
 	public function monk_activation_notice() {
 		$monk_settings_notice = get_option( 'monk_settings_notice', false );
