@@ -152,7 +152,7 @@ class Monk_Admin {
 			}
 		}
 
-		if ( 'root' == $filter && isset( $slug ) ) {
+		if ( 'root' === $filter && isset( $slug ) ) {
 			$monkrules[ $slug . '?$' ] = $wp_rewrite->index . '?lang=matches[1]';
 		}
 
