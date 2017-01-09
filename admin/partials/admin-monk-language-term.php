@@ -18,7 +18,7 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Language', 'monk' ); ?></label>
-		<select class="postform" id="monk-language" name="monk-language">
+		<select class="postform" id="monk-language" name="monk_language">
 			<?php foreach ( $languages as $language ) : ?>
 				<option value="<?php echo esc_attr( $language ); ?>" <?php selected( $default_language, $language ); ?>><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
 			<?php endforeach; ?>
@@ -38,8 +38,8 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Language', 'monk' ); ?></label>
-		<input type="hidden" name="monk_id" id="monk_id" value="<?php echo esc_attr( $monk_id ); ?>">
-		<select class="postform" id="monk-language" name="monk-language">
+		<input type="hidden" name="monk_id" id="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
+		<select class="postform" id="monk-language" name="monk_language">
 			<?php foreach ( $languages as $language ) : ?>
 				<?php if ( ! array_key_exists( $language, $monk_term_translations ) ) : ?>
 					<option value="<?php echo esc_attr( $language ); ?>" <?php selected( $translation_lang, $language ); ?>><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
