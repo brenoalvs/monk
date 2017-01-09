@@ -122,26 +122,41 @@ class Monk_Admin {
 	}
 
 	/**
-	 *  Adds a custom structure for permalinks and
-	 * a new rewrite tag
+	 *  Adds all custom structures for pretty-permalinks
 	 *
+	 * @param array $rules rewrite rules.
 	 * @since 0.0.1
 	 */
-	public function monk_create_rewrite_functions() {
-		$taxonomies = get_taxonomies( '', 'objects' );
+	public function monk_create_rewrite_functions( $rules ) {
+		$filter = str_replace( '_rewrite_rules', '', current_filter() );
 
-		foreach ( $taxonomies as $taxonomy ) {
-			$taxonomy_name = $taxonomy->rewrite['slug'];
-			$default_permalinks[ $taxonomy_name ] = '%lang%/' . $taxonomy_name . '/%category%';
+		global $wp_rewrite;
+
+		$monkrules      = array();
+		$language_codes = array();
+		$monk_languages = get_option( 'monk_active_languages', false );
+
+		foreach ( $monk_languages as $codes ) {
+			$language_codes[ $codes ] = $codes;
 		}
 
-		add_rewrite_tag( '%lang%', '([a-z]{2}\_[A-Z]{2})', 'lang=' );
+		$slug = $wp_rewrite->root . '(' . implode( '|', $language_codes ) . ')/';
 
-			$current_structure = get_option( 'permalink_structure', false );
-			$structure         = '%lang%' . $current_structure;
-			add_permastruct( 'translated_current_permastruct', $structure, array( 'ep_mask' => EP_ALL ) );
+		foreach ( $rules as $key => $rule ) {
+			if ( isset( $slug ) ) {
+				$monkrules[ $slug . str_replace( $wp_rewrite->root, '', $key ) ] = str_replace(
+					array( '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '[1]', '?' ),
+					array( '[9]', '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '?lang=$matches[1]&' ),
+					$rule
+				);
+			}
+		}
 
-		add_rewrite_rule( '/([a-z]{2}\_[A-Z]{2})/?', 'index.php?lang=$matches[1]', 'top' );
+		if ( 'root' == $filter && isset( $slug ) ) {
+			$monkrules[ $slug . '?$' ] = $wp_rewrite->index . '?lang=matches[1]';
+		}
+
+		return $monkrules + $rules;
 	}
 
 	/**
