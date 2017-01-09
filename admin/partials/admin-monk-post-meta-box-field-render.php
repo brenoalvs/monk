@@ -28,7 +28,7 @@ if ( empty( $monk_id ) ) {
 	}
 }
 ?>
-<input type="hidden" name="monk_id" value="<?php echo esc_attr( $monk_id ); ?>" />
+<input type="hidden" name="monk-id" value="<?php echo esc_attr( $monk_id ); ?>" />
 	<?php if ( 'add' === $current_screen->action || '' === $post_default_language ) : ?>
 	<div>
 		<h4><?php esc_html_e( 'Default post language', 'monk' ); ?></h4>

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -153,6 +152,7 @@ class Monk {
 		$monk_i18n = new Monk_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $monk_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_filter( 'locale', $monk_i18n, 'monk_define_locale' );
 	}
 
 	/**
