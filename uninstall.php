@@ -31,8 +31,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 global $wpdb;
 
-$wpdb->query( "Delete FROM wp_termmeta WHERE meta_key LIKE '_monk_%';" );
-$wpdb->query( "Delete FROM wp_postmeta WHERE meta_key LIKE '_monk_%';" );
+$wpdb->query( "DELETE FROM wp_termmeta WHERE meta_key LIKE '_monk_%';" );
+$wpdb->query( "DELETE FROM wp_postmeta WHERE meta_key LIKE '_monk_%';" );
 
 delete_option( 'monk_default_language' );
 delete_option( 'monk_active_languages' );
