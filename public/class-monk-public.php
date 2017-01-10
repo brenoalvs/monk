@@ -88,7 +88,7 @@ class Monk_Public {
 		/**
 		 * This function does enqueue flag icon .css files in public side.
 		 */
-		wp_enqueue_style( 'monk-flags', plugin_dir_url( dirname( __FILE__ ) ) . 'lib/css/flag-icon.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'monk-flags', plugin_dir_url( dirname( __FILE__ ) ) . 'admin/css/flag-icon.css', array(), $this->version, 'all' );
 	}
 
 	/**
