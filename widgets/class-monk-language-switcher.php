@@ -3,7 +3,7 @@
  * Monk Language Switcher.
  *
  * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Widgets
@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @package    Monk
  * @subpackage Monk/Widgets
- * @author     Leonardo Onofre <leonardodias.14.ld@gmail.com>
+ * @author     Leonardo Onofre <leoonofre.oliversoft@gmail.com>
  */
 class Monk_Language_Switcher extends WP_Widget {
 

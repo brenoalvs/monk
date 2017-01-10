@@ -3,7 +3,7 @@
  * Show flags in Languages column on taxonomies list.
  *
  * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Admin/Partials

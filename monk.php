@@ -1,27 +1,35 @@
 <?php
 /**
- * The plugin bootstrap file
- *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
+ * Monk - Translation plugin for Wordpress
  *
  * @link              https://github.com/brenoalvs/monk
- * @since             1.0.0
+ * @since             0.1.0
  * @package           Monk
  *
  * @wordpress-plugin
  * Plugin Name:       Monk
  * Plugin URI:        https://github.com/brenoalvs/monk
  * Description:       An open source WordPress plugin to create multilanguage sites.
- * Version:           1.0.0
+ * Version:           0.1.0
  * Author:            Breno Alves
- * Author URI:        http://brenoalves.com.br/
- * License:           GPL-3.0+
- * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
+ * Author URI:        https://github.com/brenoalvs
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       monk
  * Domain Path:       /languages
+
+ * Monk is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
+ *
+ * Monk is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Monk. If not, see http://www.gnu.org/licenses/gpl-2.0.txt.
  */
 
 // If this file is called directly, abort.
@@ -63,7 +71,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-monk.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.1.0
  */
 function run_monk() {
 
