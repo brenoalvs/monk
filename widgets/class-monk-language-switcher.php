@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @package    Monk
  * @subpackage Monk/Widgets
- * @author     Leonardo Onofre <leonardodias.14.ld@gmail.com>
+ * @author     Leonardo Onofre <leoonofre.oliversoft@gmail.com>
  */
 class Monk_Language_Switcher extends WP_Widget {
 
