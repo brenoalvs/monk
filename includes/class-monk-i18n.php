@@ -22,7 +22,7 @@
  * @since      0.1.0
  * @package    Monk
  * @subpackage Monk/Includes
- * @author     Breno Alves <email@example.com>
+ * @author     Breno Alves <breno.alvs@gmail.com>
  */
 class Monk_i18n {
 
