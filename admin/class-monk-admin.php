@@ -205,7 +205,7 @@ class Monk_Admin {
 		global $wp_rewrite;
 
 		$site_default_language = get_option( 'monk_default_language', false );
-		$post_language         = get_post_meta( get_the_id(), '_monk_post_language', true );
+		$post_language         = get_post_meta( ( is_page() ) ? get_the_id() : $post->ID, '_monk_post_language', true );
 		$structure             = get_option( 'permalink_structure', false );
 		$language              = ( empty( $post_language ) ) ? $site_default_language : $post_language;
 
