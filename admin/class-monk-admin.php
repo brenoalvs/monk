@@ -195,6 +195,47 @@ class Monk_Admin {
 	}
 
 	/**
+	 *  Change the post permalinks adding the language
+	 *
+	 * @since 0.0.1
+	 * @param string $permalink Post link during query.
+	 * @param object $post Post object.
+	 */
+	public function monk_add_language_post_permalink( $permalink, $post ) {
+		global $wp_rewrite;
+
+		$site_default_language = get_option( 'monk_default_language', false );
+		$post_language         = get_post_meta( $post->ID, '_monk_post_language', true );
+		$structure             = get_option( 'permalink_structure', false );
+		$language              = ( empty( $post_language ) ) ? $site_default_language : $post_language;
+
+		if ( empty( $structure ) ) {
+			$url = add_query_arg( 'lang', $language, $permalink );
+			return $url;
+		} else {
+			$path = wp_make_link_relative( $permalink );
+			$url = trailingslashit( $wp_rewrite->root ) . $language . $path;
+			return $url;
+		}
+	}
+
+	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
+		$site_default_language = get_option( 'monk_default_language', false );
+		$term_language         = get_term_meta( $term->ID, '_monk_term_language', true );
+		$structure             = get_option( 'permalink_structure', false );
+		$language              = ( empty( $term_language ) ) ? $site_default_language : $term_language;
+
+		if ( empty( $structure ) ) {
+			$link = add_query_arg( 'lang', $language, $url );
+			return $link;
+		} else {
+			$path = wp_make_link_relative( $url );
+			$url = trailingslashit( $wp_rewrite->root ) . $language . $path;
+			return $url;
+		}
+	}
+
+	/**
 	 * Function to register the settings page of the plugin
 	 *
 	 * @since    1.0.0
