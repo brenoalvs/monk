@@ -219,7 +219,14 @@ class Monk_Admin {
 		}
 	}
 
-	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
+	/**
+	 *  Change the term permalinks adding the language
+	 *
+	 * @since 0.0.1
+	 * @param string $url Term link during query.
+	 * @param object $term Term object.
+	 */
+	public function monk_add_language_term_permalink( $url, $term ) {
 		$site_default_language = get_option( 'monk_default_language', false );
 		$term_language         = get_term_meta( $term->ID, '_monk_term_language', true );
 		$structure             = get_option( 'permalink_structure', false );
