@@ -73,6 +73,26 @@
 			e.preventDefault();
 		});
 
+		$( document ).on( 'click', 'button#monk-attach', function( event ) {
+			var form_data = {
+				monk_id : $( '#monk-id' ).val(),
+				lang : $( 'select[name="monk_post_translation_id"]' ).val(),
+				action : 'monkattach'
+			}
+			
+			$.ajax({
+				type: 'POST',
+				url: monkattach.monk_ajax,
+				data: form_data,
+				success: function( response ) {
+					console.log(response);
+					window.location.replace( response );
+				}
+			});
+
+			return false;
+		});
+
 		$( document ).on( 'click', 'button.monk-submit-translation', function( e ) {
 			e.preventDefault();
 			var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
