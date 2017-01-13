@@ -105,6 +105,9 @@ class Monk_Admin {
 		 */
 
 		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->monk, 'monkattach', array(
+			'monk_ajax' => admin_url( 'admin-ajax.php' )
+		));
 	}
 
 	/**
@@ -744,5 +747,45 @@ class Monk_Admin {
 		if ( $monk_settings_notice ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
 		}
+	}
+
+	public function monk_add_attachment() {
+		$monk_id       = $_REQUEST['monk_id'];
+		$lang          = $_REQUEST['lang'];
+		$attach_path   = wp_get_attachment_url( $monk_id );
+		$filetype      = wp_check_filetype( basename( $attach_path ), null );
+		$wp_upload_dir = wp_upload_dir();
+
+		$attachment    = array(
+			'guid'           => $wp_upload_dir['url'] . '/' . basename( $attach_path ),
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $attach_path ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
+		);
+
+		$attach_id                         = wp_insert_attachment( $attachment, $attach_path );
+		$monk_attach_translations          = get_option( 'monk_post_translations_' . $monk_id, false );
+		$monk_attach_translations[ $lang ] = $attach_id;
+
+		update_option( 'monk_post_translations_' . $monk_id, $monk_attach_translations );
+		update_post_meta( $attachment_id, '_monk_post_language', $lang );
+		update_post_meta( $attachment_id, '_monk_post_translations_id', $monk_id );
+
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $attach_path );
+		wp_update_attachment_metadata( $attach_id, $attach_data );
+
+		$monk_attach_url = admin_url( 'post.php' . $taxonomy );
+		$language_url = add_query_arg( array(
+			'post'    => $attach_id,
+			'action'  => 'edit',
+			'lang'    => $lang,
+			'monk_id' => $monk_id,
+		), $monk_attach_url );
+
+		echo $language_url;
+		wp_die();
 	}
 }
