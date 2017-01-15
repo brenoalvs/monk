@@ -1,41 +1,38 @@
-=== Monk ===
-Contributors: breno-alves, ale-correa, leonofre
-Tags: translation, content translation
-Requires at least: 4.6
-Tested up to: 4.6
-Stable tag: 0.1.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+# Monk
 
-Monk is an elegant and lightweight solution to make your content reach the world. 
+Monk is an elegant and lightweight WordPress plugin to make your content reach the world.
 
-== Description ==
+You can create translations for your posts, pages, tags, categories or any content you need.
 
-Monk is an elegant and lightweight solution to make your content reach the world.
+### Highly user focused
 
-= Easy translation management =
+Don't get a confusing and buggy administration screen. We use consistent WordPress-like interface elements.
+Activate the language switcher to allow visitors comfortably navigate in your website in their languages.
 
-= Consistent WordPress interface =
+## Installation
 
-= built for developers, but highly user focused =
+1. Install and activate Monk as usual from Plugins menu in WordPress.
+2. Go to Monk > Settings and configure your current site language and add other languages that you want to translate.
 
-== Installation ==
+## Frequently Asked Questions
 
-To install and activate Monk follow the steps bellow.
+> Will this plugin work with any theme?
 
-1. Download Monk and place the folder inside `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+Yeah! Well, that's what we expect, right?<br />
+But if you find anything buggy [open a new issue](https://github.com/brenoalvs/monk/issues/new).
 
-== Frequently Asked Questions ==
+> Where can I find a documentation?
 
-= How can I change the default language of my site? =
+Try in our [Wiki](https://github.com/brenoalvs/monk/wiki) or open a new issue so we can help you.
 
+> Can I contribute or report bugs to Monk?
 
-== Screenshots ==
+You must! We'll post some contribution guidelines soon.
 
+## Changelog
 
+- **0.1.0**
+    - Initial release.
 
-== Changelog ==
-
-= 0.1.0 =
-* . Initial release.
+## License
+This plugin is licensed under [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html).

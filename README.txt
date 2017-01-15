@@ -1,8 +1,8 @@
 === Monk ===
 Contributors: breno-alves, ale-correa, leonofre
-Tags: translation, content translation
+Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
-Tested up to: 4.6
+Tested up to: 4.7.1
 Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,32 +11,35 @@ Monk is an elegant and lightweight solution to make your content reach the world
 
 == Description ==
 
-Monk is an elegant and lightweight solution to make your content reach the world.
+Monk is a free translation plugin that allows you to create translations for your posts, pages, tags, categories or any content you need.
 
-= Easy translation management =
+= Highly user focused =
 
-= Consistent WordPress interface =
-
-= built for developers, but highly user focused =
+Don't get a confusing and buggy administration screen. We use consistent WordPress-like interface elements.
+Activate the language switcher to allow visitors comfortably navigate in your website in their languages.
 
 == Installation ==
 
-To install and activate Monk follow the steps bellow.
-
-1. Download Monk and place the folder inside `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+1. Install and activate Monk as usual from Plugins menu in WordPress.
+2. Go to Monk > Settings and configure your current site language and add other languages that you want to translate.
 
 == Frequently Asked Questions ==
 
-= How can I change the default language of my site? =
+= Will this plugin work with any theme? =
 
+Yeah! Well, that's what we expect, right? :)
+But if you find anything buggy or weird get in touch or open a ticket.
 
-== Screenshots ==
+= Where can I find a documentation? =
 
+Try in our [GitHub Wiki](https://github.com/brenoalvs/monk/wiki) or open a new ticket so we can help you.
 
+= Can I contribute or report bugs to Monk? =
+
+You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) :)
 
 == Changelog ==
 
 = 0.1.0 =
-* . Initial release.
+* Initial release.
 
