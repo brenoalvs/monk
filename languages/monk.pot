@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Monk "
 "0.1.0\n"
 "POT-Creation-Date: "
-"2017-01-15 05:01-0200\n"
+"2017-01-15 05:05-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Breno "
 "Alves\n"
@@ -72,6 +72,7 @@ msgid "Language"
 msgstr ""
 
 #: admin/class-monk-admin.php:373
+#: widgets/class-monk-language-switcher.php:34
 msgid "Language Switcher"
 msgstr ""
 
