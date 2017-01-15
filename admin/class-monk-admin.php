@@ -165,8 +165,8 @@ class Monk_Admin {
 	 */
 	public function monk_general_settings_render() {
 		?>
-		<p>Here you can configure your language preferences.<br />
-		Select a default language for your site and check the languages you will translate.</p>
+		<p><?php esc_html_e( 'Here you can configure your language preferences.', 'monk' ); ?><br />
+		<?php esc_html_e( 'Select a default language for your site and check the languages you will translate.', 'monk' ); ?></p>
 		<?php
 	}
 
