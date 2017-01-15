@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Monk "
 "0.1.0\n"
 "POT-Creation-Date: "
-"2017-01-15 05:05-0200\n"
+"2017-01-15 05:48-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Breno "
 "Alves\n"
@@ -62,6 +62,21 @@ msgstr ""
 #: admin/class-monk-admin.php:152
 #: admin/partials/admin-monk-post-meta-box-field-render.php:69
 msgid "Add new translation"
+msgstr ""
+
+#: admin/class-monk-admin.php:168
+msgid ""
+"Here you can configure "
+"your language "
+"preferences."
+msgstr ""
+
+#: admin/class-monk-admin.php:169
+msgid ""
+"Select a default "
+"language for your site "
+"and check the languages "
+"you will translate."
 msgstr ""
 
 #: admin/class-monk-admin.php:209

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Monk 0.1.0\n"
 "Report-Msgid-Bugs-To: Monk\n"
-"POT-Creation-Date: 2017-01-15 05:06-0200\n"
+"POT-Creation-Date: 2017-01-15 05:49-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Monk\n"
@@ -40,6 +40,18 @@ msgstr "Idioma padrão do site"
 #: admin/partials/admin-monk-post-meta-box-field-render.php:69
 msgid "Add new translation"
 msgstr "Adicionar nova tradução"
+
+#: admin/class-monk-admin.php:168
+msgid "Here you can configure your language preferences."
+msgstr "Aqui você pode configurar suas preferências de idioma."
+
+#: admin/class-monk-admin.php:169
+msgid ""
+"Select a default language for your site and check the languages you will "
+"translate."
+msgstr ""
+"Selecione um idioma padrão para o seu site e marque os idiomas que você "
+"irá traduzir."
 
 #: admin/class-monk-admin.php:209
 #: admin/partials/admin-monk-language-term.php:20
