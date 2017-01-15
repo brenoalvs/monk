@@ -1,0 +1,215 @@
+# Monk POT File
+# Copyright (C) 2016
+# This file is distributed under the GNU General Public License v2 or later.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Monk "
+"0.1.0\n"
+"POT-Creation-Date: "
+"2017-01-15 05:01-0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Breno "
+"Alves\n"
+"Language-Team: Monk\n"
+"Report-Msgid-Bugs-To: "
+"Monk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/"
+"plain; charset=UTF-8\n"
+"Content-Transfer-"
+"Encoding: 8bit\n"
+"Plural-Forms: "
+"nplurals=2; plural=n != "
+"1;\n"
+"X-Textdomain-Support: "
+"yesX-Generator: Poedit "
+"1.6.4\n"
+"X-Poedit-SourceCharset: "
+"UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;esc_html_e;"
+"esc_html_x:1,2c;"
+"esc_html__;esc_attr_e;"
+"esc_attr_x:1,2c;"
+"esc_attr__;_ex:1,2c;"
+"_nx:4c,1,2;"
+"_nx_noop:4c,1,2;_x:1,2c;"
+"_n:1,2;_n_noop:1,2;"
+"__ngettext:1,2;"
+"__ngettext_noop:1,2;_c,"
+"_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"Language: en_US\n"
+"X-Generator: Poedit "
+"1.8.7\n"
+"X-Poedit-"
+"SearchPath-0: .\n"
+
+#: admin/class-monk-admin.php:117
+msgid "Monk Settings"
+msgstr ""
+
+#: admin/class-monk-admin.php:135
+msgid "General Settings"
+msgstr ""
+
+#: admin/class-monk-admin.php:143
+msgid ""
+"Default site language"
+msgstr ""
+
+#: admin/class-monk-admin.php:152
+#: admin/partials/admin-monk-post-meta-box-field-render.php:69
+msgid "Add new translation"
+msgstr ""
+
+#: admin/class-monk-admin.php:209
+#: admin/partials/admin-monk-language-term.php:20
+#: admin/partials/admin-monk-language-term.php:40
+#: admin/partials/admin-monk-language-update-term.php:22
+msgid "Language"
+msgstr ""
+
+#: admin/class-monk-admin.php:373
+msgid "Language Switcher"
+msgstr ""
+
+#: admin/class-monk-admin.php:388
+msgid "Background"
+msgstr ""
+
+#: admin/class-monk-admin.php:403
+msgid "Text"
+msgstr ""
+
+#: admin/class-monk-admin.php:418
+msgid "Background Hover"
+msgstr ""
+
+#: admin/class-monk-admin.php:433
+msgid "Text Hover"
+msgstr ""
+
+#: admin/class-monk-admin.php:513
+#: widgets/class-monk-language-switcher.php:46
+#: widgets/partials/admin-monk-language-switcher.php:17
+msgid "Languages"
+msgstr ""
+
+#: admin/partials/admin-monk-language-term.php:50
+msgid ""
+"This is a translation of "
+msgstr ""
+
+#: admin/partials/admin-monk-notice-render.php:14
+#, php-format
+msgid ""
+"<strong>Monk:</strong> "
+"You need to <a href=\"%s"
+"\">configure your "
+"language preferences</a>."
+msgstr ""
+
+#: admin/partials/admin-monk-post-meta-box-field-render.php:34
+msgid ""
+"Default post language"
+msgstr ""
+
+#: admin/partials/admin-monk-post-meta-box-field-render.php:63
+#: admin/partials/admin-monk-term-translation.php:22
+msgid "Translations"
+msgstr ""
+
+#: admin/partials/admin-monk-post-meta-box-field-render.php:114
+#: admin/partials/admin-monk-post-meta-box-field-render.php:152
+msgid "Ok"
+msgstr ""
+
+#: admin/partials/admin-monk-post-meta-box-field-render.php:115
+#: admin/partials/admin-monk-post-meta-box-field-render.php:153
+msgid "Cancel"
+msgstr ""
+
+#: admin/partials/admin-monk-post-meta-box-field-render.php:129
+msgid "Edit"
+msgstr ""
+
+#: admin/partials/admin-monk-post-meta-box-field-render.php:131
+msgid ""
+"Change current language"
+msgstr ""
+
+#: admin/partials/admin-monk-post-meta-box-field-render.php:171
+msgid ""
+"Not translated, add one"
+msgstr ""
+
+#: admin/partials/admin-monk-term-translation.php:47
+msgid "Add a translation +"
+msgstr ""
+
+#: admin/partials/admin-monk-term-translation.php:49
+msgid ""
+"No available "
+"translations!"
+msgstr ""
+
+#: admin/partials/admin-taxonomy-monk-language-column.php:57
+#: admin/partials/monk-language-column.php:41
+msgid "Add+"
+msgstr ""
+
+#: admin/partials/monk-language-filter.php:21
+msgid "All Languages"
+msgstr ""
+
+#: includes/monk-available-languages.php:6
+msgid "Danish"
+msgstr ""
+
+#: includes/monk-available-languages.php:10
+msgid "English"
+msgstr ""
+
+#: includes/monk-available-languages.php:14
+msgid "French"
+msgstr ""
+
+#: includes/monk-available-languages.php:18
+msgid "German"
+msgstr ""
+
+#: includes/monk-available-languages.php:22
+msgid "Italian"
+msgstr ""
+
+#: includes/monk-available-languages.php:26
+msgid "Japanese"
+msgstr ""
+
+#: includes/monk-available-languages.php:30
+msgid "Portuguese (Brazil)"
+msgstr ""
+
+#: includes/monk-available-languages.php:34
+msgid "Russian"
+msgstr ""
+
+#: includes/monk-available-languages.php:38
+msgid "Spanish"
+msgstr ""
+
+#: widgets/class-monk-language-switcher.php:32
+msgid ""
+"Switch between site "
+"translations."
+msgstr ""
+
+#: widgets/partials/admin-monk-language-switcher.php:21
+msgid "Title: "
+msgstr ""
+
+#: widgets/partials/admin-monk-language-switcher.php:26
+msgid "Hide Flags"
+msgstr ""
