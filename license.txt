@@ -1,4 +1,4 @@
-Monk - Translation plugin for Wordpress
+Monk - An elegant and lightweight WordPress plugin to make your content reach the world.
 
 Copyright 2016 by the contributors
 
