@@ -1,23 +1,19 @@
 <?php
 /**
- * Monk - Translation plugin for Wordpress
- *
- * @link              https://github.com/brenoalvs/monk
- * @since             0.1.0
- * @package           Monk
- *
- * @wordpress-plugin
  * Plugin Name:       Monk
  * Plugin URI:        https://github.com/brenoalvs/monk
- * Description:       An open source WordPress plugin to create multilanguage sites.
+ * Description:       Monk is an elegant and lightweight solution to make your content reach the world.
  * Version:           0.1.0
  * Author:            Breno Alves
  * Author URI:        https://github.com/brenoalvs
- * License:           GPL-2.0+
+ * License:           GPL-2.0 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ *
  * Text Domain:       monk
  * Domain Path:       /languages
-
+ *
+ * @package           Monk
+ *
  * Monk is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
