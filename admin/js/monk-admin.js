@@ -73,10 +73,11 @@
 			e.preventDefault();
 		});
 
-		$( document ).on( 'click', 'button#monk-attach', function( event ) {
+		$( document ).on( 'click', '#monk-attach', function( event ) {
+			event.preventDefault();
 			var form_data = {
 				monk_id : $( '#monk-id' ).val(),
-				lang : $( 'select[name="monk_post_translation_id"]' ).val(),
+				lang : $( '#monk-lang' ).val(),
 				action : 'monkattach'
 			}
 			
