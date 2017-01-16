@@ -198,9 +198,11 @@ class Monk {
 		$this->loader->add_filter( 'manage_media_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
+		$this->loader->add_action( 'manage_media_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 		$this->loader->add_action( 'wp_loaded', $this, 'add_term_hooks' );
 		$this->loader->add_action( 'edit_attachment', $plugin_admin, 'monk_save_post_meta_box' );
 		$this->loader->add_action( 'wp_ajax_monkattach', $plugin_admin, 'monk_add_attachment' );
+		$this->loader->add_filter( 'attachment_fields_to_edit', $plugin_admin, 'monk_attachment_meta_box', 10, 2 );
 	}
 
 	/**
