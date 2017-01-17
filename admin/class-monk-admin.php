@@ -440,6 +440,8 @@ class Monk_Admin {
 
 	/**
 	 * Include styles related to Customize options.
+	 *
+	 * @since  0.1.0
 	 */
 	public function monk_customize_css() {
 		?>
@@ -460,7 +462,9 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Add select filter
+	 * Add select filter.
+	 *
+	 * @since  0.1.0
 	 */
 	public function monk_admin_languages_selector() {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
@@ -774,8 +778,8 @@ class Monk_Admin {
 		$monk_attach_translations[ $lang ] = $attach_id;
 
 		update_option( 'monk_post_translations_' . $monk_id, $monk_attach_translations );
-		update_post_meta( $attachment_id, '_monk_post_language', $lang );
-		update_post_meta( $attachment_id, '_monk_post_translations_id', $monk_id );
+		update_post_meta( $attach_id, '_monk_post_language', $lang );
+		update_post_meta( $attach_id, '_monk_post_translations_id', $monk_id );
 
 		require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
@@ -790,7 +794,7 @@ class Monk_Admin {
 			'monk_id' => $monk_id,
 		), $monk_attach_url );
 
-		echo $language_url;
+		echo esc_url( $language_url );
 		wp_die();
 	}
 
