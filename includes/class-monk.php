@@ -62,6 +62,7 @@ class Monk {
 	 * the public-facing side of the site.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function __construct() {
 
@@ -92,6 +93,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function load_dependencies() {
 
@@ -144,6 +146,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function set_locale() {
 
@@ -159,6 +162,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_global_hooks() {
 
@@ -171,6 +175,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_admin_hooks() {
 
@@ -203,6 +208,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_public_hooks() {
 
@@ -220,6 +226,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_widget_hooks() {
 
@@ -231,6 +238,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   public
+	 * @return  void
 	 */
 	public function add_term_hooks() {
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
@@ -251,12 +259,13 @@ class Monk {
 	}
 
 	/**
-	 * Registrate the query vars to generate the custom urls
+	 * Registrate the query vars to generate the custom urls.
 	 *
-	 * @param    $vars
+	 * @param array $vars Array of monk query vars.
+	 * @return array $vars
 	 *
 	 * @since    0.1.0
-	*/
+	 */
 	public function monk_query_vars( $vars ) {
 		$vars[] = 'lang';
 		$vars[] = 'monk_id';
@@ -268,6 +277,7 @@ class Monk {
 	 *
 	 * @since    0.1.0
 	 * @access   public
+	 * @return  void
 	 */
 	public function register_widgets() {
 
@@ -281,6 +291,7 @@ class Monk {
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function run() {
 		$this->loader->run();

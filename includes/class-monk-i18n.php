@@ -28,6 +28,7 @@ class Monk_i18n {
 	 * Load the plugin text domain for translation.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function load_plugin_textdomain() {
 
@@ -42,6 +43,7 @@ class Monk_i18n {
 	/**
 	 * Change locale accordingly Language Switcher.
 	 *
+	 * @since  0.1.0
 	 * @param  string $lang Language of locale.
 	 * @return string $lang New language of locale.
 	 */

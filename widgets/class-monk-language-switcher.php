@@ -23,6 +23,8 @@ class Monk_Language_Switcher extends WP_Widget {
 
 	/**
 	 * Sets up the widgets classname and description.
+	 * 
+	 * @since  0.1.0
 	 */
 	public function __construct() {
 		$widget_options = array(
@@ -35,6 +37,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	/**
 	 * Outputs the content of the front-end side
 	 *
+	 * @since  0.1.0
 	 * @param array $args     Args.
 	 * @param array $instance The widget options.
 	 */
@@ -109,7 +112,9 @@ class Monk_Language_Switcher extends WP_Widget {
 	/**
 	 * Outputs the options form on admin side
 	 *
+	 * @since  0.1.0
 	 * @param array $instance The widget options.
+	 * @return  void
 	 */
 	public function form( $instance ) {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/admin-monk-language-switcher.php';
@@ -118,8 +123,10 @@ class Monk_Language_Switcher extends WP_Widget {
 	/**
 	 * Process widget options on save
 	 *
+	 * @since  0.1.0
 	 * @param array $new_instance The new options.
 	 * @param array $old_instance The previous options.
+	 * @return array $instance
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance                = $old_instance;

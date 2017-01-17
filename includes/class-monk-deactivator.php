@@ -25,6 +25,7 @@ class Monk_Deactivator {
 	 * Desactivation function
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public static function deactivate() {
 		delete_option( 'monk_settings_notice' );

@@ -43,6 +43,7 @@ class Monk_Admin {
 	 * @since    0.1.0
 	 * @param    string $monk       The name of this plugin.
 	 * @param    string $version    The version of this plugin.
+	 * @return  void
 	 */
 	public function __construct( $monk, $version ) {
 
@@ -55,6 +56,7 @@ class Monk_Admin {
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function enqueue_styles() {
 
@@ -87,6 +89,7 @@ class Monk_Admin {
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function enqueue_scripts() {
 
@@ -109,6 +112,7 @@ class Monk_Admin {
 	 * Function to register the settings page of the plugin
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_add_menu_page() {
 		add_menu_page(
@@ -126,6 +130,7 @@ class Monk_Admin {
 	 * Function to create a section for the Monk General Options in the administration menu
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_options_init() {
 		add_settings_section(
@@ -160,6 +165,7 @@ class Monk_Admin {
 	 * Prints a description in the section
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_general_settings_render() {
 		?>
@@ -172,6 +178,7 @@ class Monk_Admin {
 	 * Function to render the select field, callback for the monk_default_language element
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_default_language_render() {
 		$default_language = get_option( 'monk_default_language', false );
@@ -182,6 +189,7 @@ class Monk_Admin {
 	 * Function to render the checkbox field, callback for the monk_active_languages element
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_active_languages_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-active-languages-render.php';
@@ -191,6 +199,7 @@ class Monk_Admin {
 	 * Function to render the admin settings page for the plugin
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_settings_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
@@ -200,6 +209,7 @@ class Monk_Admin {
 	 * Function to create the main language meta box for posts
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_post_meta_box() {
 		add_meta_box(
@@ -219,6 +229,7 @@ class Monk_Admin {
 	 * @param    object $post Post object.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
@@ -246,6 +257,7 @@ class Monk_Admin {
 	 * @param   string $post_id ID of the post.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_save_post_meta_box( $post_id ) {
 		if ( ! isset( $_REQUEST['monk_post_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['monk_post_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {
@@ -308,6 +320,7 @@ class Monk_Admin {
 	 * @param   string $post_id ID of the post, page or post_type to be deleted.
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function monk_delete_post_data( $post_id ) {
 		$monk_id           = get_post_meta( $post_id, '_monk_post_translations_id', true );
@@ -332,6 +345,7 @@ class Monk_Admin {
 	 * @param   object $term_query instance of WP_Term_Query class.
 	 *
 	 * @since    0.1.0
+	 * @return  Object $term_query
 	 */
 	public function monk_category_language_filter( $term_query ) {
 		if ( is_admin() && ! is_customize_preview() ) {
@@ -364,6 +378,7 @@ class Monk_Admin {
 	 *
 	 * @since    0.1.0
 	 * @access   public
+	 * @return  void
 	 */
 	public function monk_language_customizer( $wp_customize ) {
 
@@ -435,6 +450,9 @@ class Monk_Admin {
 
 	/**
 	 * Include styles related to Customize options.
+	 *
+	 * @since  0.1.0
+	 * @return  void
 	 */
 	public function monk_customize_css() {
 		?>
@@ -456,6 +474,9 @@ class Monk_Admin {
 
 	/**
 	 * Add select filter
+	 *
+	 * @since  0.1.0
+	 * @return  void
 	 */
 	public function monk_admin_languages_selector() {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
@@ -464,7 +485,10 @@ class Monk_Admin {
 	/**
 	 * Add parameters to filter by meta_key.
 	 *
+	 * 
+	 * @since  0.1.0
 	 * @param object $query Object Query.
+	 * @return  void
 	 */
 	public function monk_admin_languages_filter( $query ) {
 		if ( is_admin() && $query->is_main_query() ) {
@@ -505,7 +529,10 @@ class Monk_Admin {
 	/**
 	 * Include styles related to Customize options
 	 *
+	 * 
+	 * @since  0.1.0
 	 * @param array $title Title of the column.
+	 * @return array $title
 	 */
 	public function monk_language_column_head( $title ) {
 		$title['languages'] = __( 'Languages', 'monk' );
@@ -515,8 +542,11 @@ class Monk_Admin {
 	/**
 	 * Include styles related to Customize options.
 	 *
+	 * 
+	 * @since  0.1.0
 	 * @param string $column_name Title of the column.
 	 * @param string $post_id    Post id.
+	 * @return  void
 	 */
 	public function monk_language_column_content( $column_name, $post_id ) {
 		if ( 'languages' === $column_name ) {
@@ -558,6 +588,9 @@ class Monk_Admin {
 
 	/**
 	 * Add select term language
+	 *
+	 * @since  0.1.0
+	 * @return  void
 	 */
 	public function monk_custom_taxonomy_field() {
 		global $monk_languages;
@@ -570,8 +603,10 @@ class Monk_Admin {
 
 	/**
 	 * Save term language
-	 *
+	 * 
+	 * @since  0.1.0
 	 * @param int $term_id  Id of the term.
+	 * @return  void
 	 */
 	public function monk_create_term_meta( $term_id ) {
 		if ( isset( $_REQUEST['monk_language'] ) && ! empty( $_REQUEST['monk_language'] ) ) {
@@ -601,7 +636,9 @@ class Monk_Admin {
 	/**
 	 * Update term language
 	 *
+	 * @since  0.1.0
 	 * @param int $term_id Id of the term.
+	 * @return  void
 	 */
 	public function monk_update_term_meta( $term_id ) {
 		if ( isset( $_REQUEST['monk_language'] ) && ! empty( $_REQUEST['monk_language'] ) ) {
@@ -624,6 +661,7 @@ class Monk_Admin {
 	 * Function that erases the data stored by the plugin when term is deleted.
 	 *
 	 * @param int $term_id ID of the Term object.
+	 * @return  void
 	 *
 	 * @since 0.1.0
 	 */
@@ -648,7 +686,9 @@ class Monk_Admin {
 	/**
 	 * Add select term language inside edit page
 	 *
+	 * @since  0.1.0
 	 * @param Object $term Object term.
+	 * @return  void
 	 */
 	public function monk_edit_custom_taxonomy_field( $term ) {
 		$monk_language = get_term_meta( $term->term_id, '_monk_term_language', true );
@@ -660,9 +700,11 @@ class Monk_Admin {
 	/**
 	 * Add column content
 	 *
+	 * @since  0.1.0
 	 * @param string $content    The content.
 	 * @param string $column_name Title of the column.
 	 * @param int    $term_id    Id of the term.
+	 * @return  void
 	 */
 	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
@@ -699,7 +741,9 @@ class Monk_Admin {
 	/**
 	 * Add term translation meta field.
 	 *
+	 * @since  0.1.0
 	 * @param object $term Term object.
+	 * @return  void
 	 */
 	public function monk_term_translation_meta_field( $term ) {
 		global $monk_languages;
@@ -735,10 +779,11 @@ class Monk_Admin {
 	 * This function gets the user to the configuration page
 	 *
 	 * @since   0.1.0
+	 * @return  void
 	 */
 	public function monk_activation_notice() {
 		$monk_settings_notice = get_option( 'monk_settings_notice', false );
-		
+
 		if ( $monk_settings_notice ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
 		}

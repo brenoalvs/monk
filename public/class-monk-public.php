@@ -43,20 +43,18 @@ class Monk_Public {
 	 * @since    0.1.0
 	 * @param      string $monk       The name of the plugin.
 	 * @param      string $version    The version of this plugin.
-	 * @param      string    $monk       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @return void
 	 */
 	public function __construct( $monk, $version ) {
-
 		$this->plugin_name = $monk;
 		$this->version = $version;
-
 	}
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
 	 * @since    0.1.0
+	 * @return void
 	 */
 	public function enqueue_styles() {
 
@@ -93,6 +91,7 @@ class Monk_Public {
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
 	 * @since    0.1.0
+	 * @return void
 	 */
 	public function enqueue_scripts() {
 
@@ -120,6 +119,7 @@ class Monk_Public {
 	 *
 	 * @since    0.1.0
 	 * @param    Object $query WP_query object.
+	 * @return void
 	 */
 	public function monk_public_posts_filter( $query ) {
 		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() ) ) {
@@ -168,7 +168,7 @@ class Monk_Public {
 	 * @since    0.1.0
 	 *
 	 * @param  Object $term_query Instance of $WP_Term_Query.
-	 * @return Object $term_query Instance of $WP_Term_Query .
+	 * @return Object $term_query Instance of $WP_Term_Query.
 	 */
 	public function monk_public_terms_filter( $term_query ) {
 		if ( is_admin() ) {
