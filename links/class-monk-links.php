@@ -15,7 +15,7 @@
  * @package    Monk
  * @subpackage Monk/Links
  */
-class Monk_Links_Controller {
+class Monk_Links {
 
 	/**
 	 * The ID of this plugin.
