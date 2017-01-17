@@ -76,6 +76,7 @@ class Monk {
 		$this->define_global_hooks();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_link_hooks();
 		$this->define_widget_hooks();
 	}
 
@@ -186,22 +187,6 @@ class Monk {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'monk_activation_notice' );
-
-		// rewrite.
-
-		$this->loader->add_action( 'rewrite_rules_array', $plugin_admin, 'monk_create_rewrite_functions' );
-		$this->loader->add_filter( 'post_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'page_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'term_link', $plugin_admin, 'monk_add_language_term_permalink', 10, 3 );
-		$this->loader->add_filter( 'post_type_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'post_type_archive_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'day_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'month_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'year_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'update_option_monk_active_languages', $plugin_admin, 'monk_flush_on_update' );
-
-		// end rewrite.
-
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
@@ -236,6 +221,31 @@ class Monk {
 
 		$this->loader->add_filter( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 		$this->loader->add_action( 'pre_get_terms', $plugin_public, 'monk_public_terms_filter' );
+	}
+
+	/**
+	 * Register all of the hooks related to links and permalinks
+	 *
+	 * @since    0.2.0
+	 * @access   private
+	 */
+	private function define_link_hooks() {
+
+		$plugin_links = new Monk_Links_Controller( $this->get_plugin_name(), $this->get_version() );
+
+		// rewrite.
+		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions' );
+		$this->loader->add_filter( 'post_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'page_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'term_link', $plugin_links, 'monk_add_language_term_permalink', 10, 3 );
+		$this->loader->add_filter( 'post_type_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'post_type_archive_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'day_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'month_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'year_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'update_option_monk_active_languages', $plugin_links, 'monk_flush_on_update' );
+
+		// end rewrite.
 	}
 
 	/**
