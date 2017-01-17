@@ -124,6 +124,35 @@ class Monk_Links {
 	}
 
 	/**
+	 *  Change the page links adding the language
+	 *
+	 * @since 0.0.1
+	 * @param string  $link Post link during query.
+	 * @param integer $post_id Post object.
+	 * @return string $url Altered url.
+	 */
+	public function monk_add_language_page_permalink( $link, $post_id ) {
+
+		$site_default_language = get_option( 'monk_default_language', false );
+		$page_language		   = get_post_meta( $post_id, '_monk_post_language', true );
+		$structure			   = get_option( 'permalink_structure', false );
+		$language			   = ( empty( $page_language ) ) ? $site_default_language : $page_language;
+
+		if ( empty( $language ) ) {
+			return $link;
+		}
+
+		if ( empty( $structure ) ) {
+			$url = add_query_arg( 'lang', $language, $link );
+			return $url;
+		} else {
+			$path = wp_make_link_relative( $link );
+			$url = trailingslashit( site_url() ) . $language . $path;
+			return $url;
+		}
+	}
+
+	/**
 	 *  Change the term permalinks adding the language
 	 *
 	 * @since 0.0.1
