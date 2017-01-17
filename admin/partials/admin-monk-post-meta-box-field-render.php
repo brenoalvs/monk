@@ -2,7 +2,6 @@
 /**
  * Provide the view for the monk_post_meta_box_field_render function
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk

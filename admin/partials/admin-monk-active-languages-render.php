@@ -2,7 +2,6 @@
 /**
  * Provide the view for the monk_active_languages_render function
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk

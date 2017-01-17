@@ -2,7 +2,6 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk
@@ -17,7 +16,6 @@
  *
  * @package    Monk
  * @subpackage Monk/Admin
- * @author     Breno Alves
  */
 class Monk_Admin {
 

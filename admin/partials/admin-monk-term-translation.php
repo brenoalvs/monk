@@ -2,7 +2,6 @@
 /**
  * Field to translate the Term.
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk

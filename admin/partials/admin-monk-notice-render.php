@@ -2,7 +2,6 @@
 /**
  * Provide the view for the monk_display_activation_notice function
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk

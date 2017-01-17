@@ -1,9 +1,7 @@
 <?php
-
 /**
  * Register all actions and filters for the plugin
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk
@@ -19,7 +17,6 @@
  *
  * @package    Monk
  * @subpackage Monk/Includes
- * @author     Breno Alves <breno.alvs@gmail.com>
  */
 class Monk_Loader {
 

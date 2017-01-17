@@ -2,7 +2,6 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk
@@ -17,7 +16,6 @@
  *
  * @package    Monk
  * @subpackage Monk/Public
- * @author     Breno Alves <breno.alvs@gmail.com>
  */
 class Monk_Public {
 
