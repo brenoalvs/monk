@@ -130,7 +130,7 @@ class Monk {
 		/**
 		 * The class responsible for changing the links structure
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'links/class-monk-links-controller.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'links/class-monk-links.php';
 
 		/**
 		 * Class responsible for create Monk_Language_Switcher widget.
@@ -231,7 +231,7 @@ class Monk {
 	 */
 	private function define_link_hooks() {
 
-		$plugin_links = new Monk_Links_Controller( $this->get_plugin_name(), $this->get_version() );
+		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version() );
 
 		// rewrite.
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions' );
