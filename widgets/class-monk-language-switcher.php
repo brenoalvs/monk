@@ -3,7 +3,7 @@
  * Monk Language Switcher.
  *
  * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Widgets
@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @package    Monk
  * @subpackage Monk/Widgets
- * @author     Leonardo Onofre <leonardodias.14.ld@gmail.com>
+ * @author     Leonardo Onofre <leoonofre.oliversoft@gmail.com>
  */
 class Monk_Language_Switcher extends WP_Widget {
 
@@ -29,9 +29,9 @@ class Monk_Language_Switcher extends WP_Widget {
 	public function __construct() {
 		$widget_options = array(
 			'classname'   => 'monk_language_switcher',
-			'description' => __( 'The Monk Language Switcher is the best language selector widget', 'monk' ),
+			'description' => __( 'Switch between site translations.', 'monk' ),
 			);
-		parent::__construct( 'monk_language_switcher', 'Monk Language Switcher', $widget_options );
+		parent::__construct( 'monk_language_switcher', __( 'Language Switcher', 'monk' ), $widget_options );
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * Fired during plugin activation
  *
  * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Includes
@@ -14,10 +14,10 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Monk
  * @subpackage Monk/Includes
- * @author     Breno Alves <email@example.com>
+ * @author     Breno Alves <breno.alvs@gmail.com>
  */
 class Monk_Activator {
 
@@ -26,7 +26,7 @@ class Monk_Activator {
 	 *
 	 * Activation function
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public static function activate() {
 		global $monk_languages;
