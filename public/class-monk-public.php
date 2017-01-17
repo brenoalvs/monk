@@ -84,7 +84,7 @@ class Monk_Public {
 		/**
 		 * This function does enqueue flag icon .css files in public side.
 		 */
-		wp_enqueue_style( 'monk-flags', plugin_dir_url( dirname( __FILE__ ) ) . 'admin/css/flag-icon.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'monk-flags', plugin_dir_url( dirname( __FILE__ ) ) . 'admin/css/monk-flags.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -146,6 +146,7 @@ class Monk_Public {
 				array(
 					'key'   => '_monk_post_language',
 					'value' => $current_language,
+					'compare' => 'LIKE',
 				),
 				array(
 					'key'     => '_monk_post_language',
@@ -156,6 +157,7 @@ class Monk_Public {
 			$query_args[] = array(
 				'key'   => '_monk_post_language',
 				'value' => $current_language,
+				'compare' => 'LIKE',
 			);
 		}
 

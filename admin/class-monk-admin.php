@@ -82,7 +82,7 @@ class Monk_Admin {
 		/**
 		 * This function does enqueue flag icon .css files in admin side.
 		 */
-		wp_enqueue_style( 'monk-flags', plugin_dir_url( __FILE__ ) . 'css/flag-icon.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'monk-flags', plugin_dir_url( __FILE__ ) . 'css/monk-flags.css', array(), $this->version, 'all' );
 	}
 
 	/**
