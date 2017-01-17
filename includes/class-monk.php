@@ -187,8 +187,12 @@ class Monk {
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_admin, 'monk_create_rewrite_functions' );
 		$this->loader->add_filter( 'post_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
 		$this->loader->add_filter( 'page_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
-		$this->loader->add_filter( 'term_link', $plugin_admin, 'monk_add_language_term_permalink', 10, 2 );
+		$this->loader->add_filter( 'term_link', $plugin_admin, 'monk_add_language_term_permalink', 10, 3 );
 		$this->loader->add_filter( 'post_type_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'post_type_archive_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'day_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'month_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
+		$this->loader->add_filter( 'year_link', $plugin_admin, 'monk_add_language_post_permalink', 10, 2 );
 		$this->loader->add_filter( 'update_option_monk_active_languages', $plugin_admin, 'monk_flush_on_update' );
 
 		// end rewrite.
