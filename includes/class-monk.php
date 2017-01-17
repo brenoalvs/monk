@@ -127,6 +127,11 @@ class Monk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-monk-public.php';
 
 		/**
+		 * The class responsible for changing the links structure
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'links/class-monk-links-controller.php';
+
+		/**
 		 * Class responsible for create Monk_Language_Switcher widget.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/class-monk-language-switcher.php';
