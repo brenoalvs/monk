@@ -20,7 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 <?php if ( $monk_translations ) : ?>
 	<a class="monk-translation-link monk-language" href="<?php echo esc_url( $post_url ); ?>">
 		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $monk_language ]['name'] ); ?></span>
-		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_language ); ?>"></span>
+		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $monk_language ]['slug'] ); ?>"></span>
 	</a>
 	<?php foreach ( $active_languages as $lang ) :
 		foreach ( $monk_translations as $lang_code => $post_id ) :
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 				?>
 				<a class="monk-translation-link <?php if ( $lang_code === $monk_language ) : ?>monk-language<?php endif; ?>" href="<?php echo esc_url( $post_url ); ?>">
 					<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $lang ]['name'] ); ?></span>
-					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $lang ); ?>"></span>
+					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $lang ]['slug'] ); ?>"></span>
 				</a>
 			<?php endif; ?>
 		<?php endforeach; ?>

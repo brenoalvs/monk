@@ -36,7 +36,7 @@ if ( $monk_term_translations ) :
 ?>
 	<a class="monk-translation-link monk-language" href="<?php echo esc_url( $translation_term_url ); ?>">
 		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $monk_language ]['name'] ); ?></span>
-		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_language ); ?>"></span>
+		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $monk_language ]['slug'] ); ?>"></span>
 	</a>
 	<?php foreach ( $languages as $language ) :
 		foreach ( $monk_term_translations as $translation_code => $translation_id ) :
@@ -47,7 +47,7 @@ if ( $monk_term_translations ) :
 				?>
 					<a class="monk-translation-link <?php if ( $translation_code === $monk_language ) : ?>monk-language<?php endif; ?>" href="<?php echo esc_url( $translation_term_url ); ?>">
 						<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?></span>
-						<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $translation_code ); ?>"></span>
+						<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $translation_code ]['slug'] ); ?>"></span>
 					</a>
 			<?php endif; ?>
 		<?php endforeach; ?>
