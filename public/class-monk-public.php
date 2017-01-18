@@ -72,11 +72,6 @@ class Monk_Public {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/monk-public.css', array(), $this->version, 'all' );
 
 		/**
-		 * This function does enqueue jquery-ui .css files in public side.
-		 */
-		wp_enqueue_style( 'jquery-ui-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.min.css', array(), $this->version, 'all' );
-
-		/**
 		 * This function does enqueue monk widget .css files in public side.
 		 */
 		wp_enqueue_style( 'public-monk-language-switcher-style', plugin_dir_url( __FILE__ ) . 'css/monk-widget.css', array(), $this->version, 'all' );
@@ -140,7 +135,7 @@ class Monk_Public {
 			}
 		}
 
-		if ( $default_language === $current_language ) {
+		if ( substr( $default_language, 0, 2 ) === $current_language ) {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
@@ -191,12 +186,13 @@ class Monk_Public {
 			}
 		}
 
-		if ( $default_language === $current_language ) {
+		if ( substr( $default_language, 0, 2 ) === $current_language ) {
 			$query_args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
-					'key'   => '_monk_term_language',
-					'value' => $current_language,
+					'key'     => '_monk_term_language',
+					'value'   => $current_language,
+					'compare' => 'LIKE',
 				),
 				array(
 					'key'     => '_monk_term_language',
@@ -204,9 +200,12 @@ class Monk_Public {
 				)
 			);
 		} else {
-			$query_args = array(
-				'meta_key'   => '_monk_term_language',
-				'meta_value' => $current_language,
+			$query_args['meta_query'] = array(
+				array(
+					'key'   => '_monk_term_language',
+					'value' => $current_language,
+					'compare'    => 'LIKE',
+				),
 			);
 		}
 
