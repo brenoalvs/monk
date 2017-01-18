@@ -117,7 +117,7 @@ class Monk_Public {
 	 * @return void
 	 */
 	public function monk_public_posts_filter( $query ) {
-		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() ) ) {
+		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_archive() ) ) {
 			return;
 		}
 
@@ -139,19 +139,19 @@ class Monk_Public {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
-					'key'   => '_monk_post_language',
-					'value' => $current_language,
+					'key'     => '_monk_post_language',
+					'value'   => $current_language,
 					'compare' => 'LIKE',
 				),
 				array(
 					'key'     => '_monk_post_language',
 					'compare' => 'NOT EXISTS',
-				)
+				),
 			);
 		} else {
 			$query_args[] = array(
-				'key'   => '_monk_post_language',
-				'value' => $current_language,
+				'key'     => '_monk_post_language',
+				'value'   => $current_language,
 				'compare' => 'LIKE',
 			);
 		}
@@ -177,7 +177,9 @@ class Monk_Public {
 		$current_language = get_query_var( 'lang', false );
 
 		if ( ! $current_language ) {
-			if ( is_singular() ) {
+			if ( is_archive() && is_date() ) {
+				$current_language = 'pt_BR';
+			} elseif ( is_singular() ) {
 				$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
 			} elseif ( is_archive() && ( is_category() || is_tag() ) ) {
 				$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
@@ -186,7 +188,7 @@ class Monk_Public {
 			}
 		}
 
-		if ( substr( $default_language, 0, 2 ) === $current_language ) {
+		if ( substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
 			$query_args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
@@ -202,9 +204,9 @@ class Monk_Public {
 		} else {
 			$query_args['meta_query'] = array(
 				array(
-					'key'   => '_monk_term_language',
-					'value' => $current_language,
-					'compare'    => 'LIKE',
+					'key'     => '_monk_term_language',
+					'value'   => $current_language,
+					'compare' => 'LIKE',
 				),
 			);
 		}
