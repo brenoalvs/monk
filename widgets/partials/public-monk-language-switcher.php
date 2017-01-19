@@ -12,8 +12,9 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-foreach ($monk_languages as $code => $name) {
-	if ( $current_language === substr( $code, 0, 2) ) {
+
+foreach ( $monk_languages as $code => $name ) {
+	if ( substr( $code, 0, 2 ) === $current_language ) {
 		$current_language = $code;
 	}
 }
@@ -36,7 +37,7 @@ echo $args['before_widget'];
 				<li class="monk-lang">
 					<a class="monk-language-link" href="<?php echo esc_url( $url ); ?>">
 						<?php if ( ! $flag ) : ?>
-							<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . substr( $monk_languages[ $code ]['slug'], 0, 2 ) ); ?>"></span>
+							<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . substr( $monk_languages[ $code ]['slug'], 0, 2 ) ) ?>"></span>
 						<?php endif; ?>
 							<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $code ]['native_name'] ); ?></span>
 					</a>
