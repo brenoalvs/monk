@@ -11,9 +11,6 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
  * @package    Monk
  * @subpackage Monk/Public
  */
@@ -57,28 +54,8 @@ class Monk_Public {
 	 * @return void
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Monk_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Monk_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/monk-public.css', array(), $this->version, 'all' );
-
-		/**
-		 * This function does enqueue monk widget .css files in public side.
-		 */
 		wp_enqueue_style( 'public-monk-language-switcher-style', plugin_dir_url( __FILE__ ) . 'css/monk-widget.css', array(), $this->version, 'all' );
-
-		/**
-		 * This function does enqueue flag icon .css files in public side.
-		 */
 		wp_enqueue_style( 'monk-flags', plugin_dir_url( dirname( __FILE__ ) ) . 'admin/css/monk-flags.css', array(), $this->version, 'all' );
 	}
 
@@ -89,23 +66,7 @@ class Monk_Public {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Monk_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Monk_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/monk-public.js', array( 'jquery' ), $this->version, false );
-
-		/**
-		 * This function does enqueue monk widget .js files in public side.
-		 */
 		wp_enqueue_script( 'monk-language-switcher-script', plugin_dir_url( __FILE__ ) . 'js/monk-widget.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-selectmenu' ), $this->version, true );
 	}
 
@@ -117,7 +78,7 @@ class Monk_Public {
 	 * @return void
 	 */
 	public function monk_public_posts_filter( $query ) {
-		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_archive() ) ) {
+		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() || is_date() ) ) {
 			return;
 		}
 
@@ -135,7 +96,7 @@ class Monk_Public {
 			}
 		}
 
-		if ( substr( $default_language, 0, 2 ) === $current_language ) {
+		if ( substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
@@ -177,9 +138,7 @@ class Monk_Public {
 		$current_language = get_query_var( 'lang', false );
 
 		if ( ! $current_language ) {
-			if ( is_archive() && is_date() ) {
-				$current_language = 'pt_BR';
-			} elseif ( is_singular() ) {
+			if ( is_singular() ) {
 				$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
 			} elseif ( is_archive() && ( is_category() || is_tag() ) ) {
 				$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
