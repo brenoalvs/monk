@@ -55,6 +55,16 @@ if ( empty( $monk_id ) ) {
 				endforeach;
 			?>
 			</select>
+			<?php
+			if ( $post_translations ) {
+				?> 
+				<p>
+					<?php esc_html_e( 'This post is a translation of ', 'monk' ); ?>
+					<?php echo esc_html( get_post( $monk_id )->post_title . '.' ); ?>
+				</p>
+				<?php
+			}
+			?>
 	</div>
 	<?php else :
 	$translation_counter = 0;
