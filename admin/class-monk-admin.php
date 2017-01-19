@@ -11,9 +11,6 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
  * @package    Monk
  * @subpackage Monk/Admin
  */
@@ -59,29 +56,8 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Monk_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->monk, plugin_dir_url( __FILE__ ) . 'css/monk-admin.css', array(), $this->version, 'all' );
-
-		/**
-		 * This function does enqueue widget .css files in admin side.
-		 */
 		wp_enqueue_style( 'monk-widgets', plugin_dir_url( __FILE__ ) . 'css/monk-widgets.css', array(), $this->version, 'all' );
-
-		/**
-		 * This function does enqueue flag icon .css files in admin side.
-		 */
 		wp_enqueue_style( 'monk-flags', plugin_dir_url( __FILE__ ) . 'css/monk-flags.css', array(), $this->version, 'all' );
 	}
 
@@ -92,19 +68,6 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Monk_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Monk_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
@@ -351,7 +314,7 @@ class Monk_Admin {
 		if ( is_admin() && ! is_customize_preview() ) {
 			$screen = get_current_screen();
 
-			if ( 'edit' === $screen->parent_base ) {
+			if ( 'edit' === $screen->parent_base && 'post' === $screen->base ) {
 				$term_args  = '';
 				$post_id    = get_the_id();
 				$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
@@ -369,6 +332,7 @@ class Monk_Admin {
 				return $term_query->parse_query( $term_args );
 			}
 		}
+		return $term_query;
 	}
 
 	/**
