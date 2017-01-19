@@ -43,11 +43,13 @@ class Monk_Links {
 	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $monk, $version ) {
+		$structure = get_option( 'permalink_structure' );
 
 		$this->plugin_name = $monk;
-		$this->version     = $version;
-		$this->home        = home_url();
-
+		$this->version	   = $version;
+		$this->index	   = 'index.php';
+		$this->home		   = home_url();
+		$this->root		   = preg_match( '#^/*' . $this->index . '#', $structure ) ? $this->index . '/' : '';
 	}
 
 	/**
@@ -193,6 +195,38 @@ class Monk_Links {
 	}
 
 	/**
+	 * Changes the language inside a given url
+	 *
+	 * @param string $url provided url.
+	 * @param string $lang the correct language to use.
+	 */
+	public function monk_change_language_url( $url, $lang ) {
+		if ( empty( $lang ) ) {
+			return $url;
+		} else {
+
+			$active_languages = $this->monk_get_active_languages();
+
+			if ( $this->monk_using_permalinks() ) {
+
+				if ( ! empty( $active_languages ) ) {
+
+					$pattern = str_replace( '/', '\/', $this->home . '/' . $this->root );
+					$pattern = '#' . $pattern . '(' . implode( '|', $languages ) . ')(\/|$)#';
+					$url = preg_replace( $pattern,  $this->home . '/' . $this->root, $url );
+					$slug = $lang . '/';
+
+					return str_replace( $this->home . '/' . $this->root, $this->home . '/' . $this->root . $slug, $url );
+				}
+			} else {
+				$url = remove_query_arg( 'lang', $url );
+				$url = ( empty( $lang ) ) ? $url : add_query_arg( 'lang', $lang, $url );
+				return $url;
+			}
+		}
+	}
+
+	/**
 	 * Redirects the incoming url when a wrong language is detected
 	 * preventing duplicated content
 	 *
@@ -254,7 +288,7 @@ class Monk_Links {
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $language );
 		}
 
-		if ( $do_redirect && $redirect_url && $requested_url != $redirect_url ) {
+		if ( $do_redirect && $redirect_url && $requested_url !== $redirect_url ) {
 			wp_safe_redirect( $redirect_url, 301 );
 			exit;
 		}
