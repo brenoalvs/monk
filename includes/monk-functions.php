@@ -33,7 +33,7 @@ function monk_is_language_code( $language_code ) {
  */
 function monk_get_current_url() {
 	global $wp;
-	$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+	$current_url = add_query_arg( $_SERVER['QUERY_STRING'], '', home_url( $wp->request ) );
 
 	return $current_url;
 }
