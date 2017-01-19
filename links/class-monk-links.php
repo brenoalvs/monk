@@ -175,4 +175,74 @@ class Monk_Links {
 			return $permalink;
 		}
 	}
+
+	/**
+	 * Redirects the incoming url when a wrong language is detected
+	 * preventing duplicated content
+	 *
+	 * @since 0.0.1
+	 * @param string $requested_url the incoming url.
+	 * @param bool   $do_redirect whether to redirect or not.
+	 */
+	public function monk_need_canonical_redirect( $requested_url = '', $do_redirect = true ) {
+		global $wp_query, $post, $is_IIS;
+
+		// we do not want to redirect in these cases.
+		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
+			return;
+		}
+
+		if ( is_attachment() && isset( $_GET['attachment_id'] ) ) {
+			return;
+		}
+
+		if ( isset( $_POST['wp_customize'], $_POST['customized'] ) ) {
+			return;
+		}
+
+		// get the correct url.
+		if ( empty( $requested_url ) ) {
+			$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		}
+
+		// decidind what type of content is this.
+		if ( is_single() || is_page() ) {
+
+			if ( isset( $post->ID ) ) {
+				$language = get_post_meta( $post->ID, '_monk_post_language', true );
+			}
+		} elseif ( is_category() || is_tax() || is_tag() ) {
+
+			$obj = $wp_query->get_queried_object();
+			$language = get_term_meta( $obj->ID, '_monk_term_language', true );
+
+		} elseif ( $wp_query->is_posts_page ) {
+
+			$obj = $wp_query->get_queried_object();
+			$language = get_post_meta( $obj->ID, '_monk_post_language', true );
+
+		} elseif ( is_404() && ! empty( $wp_query->query['page_id'] ) && $id = get_query_var( 'page_id' ) ) {
+
+			$language = get_post_meta( $id, '_monk_post_language', true );
+		}
+
+		if ( empty( $language ) ) {
+
+			$redirect_url = $requested_url;
+			$language     = get_option( 'monk_default_language', false );
+
+		} else {
+			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
+			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_requested_url, false ) ) ? $_requested_url: $redirect_url;
+
+			$redirect_url = $this->monk_change_language_url( $redirect_url, $language );
+		}
+
+		if ( $do_redirect && $redirect_url && $requested_url != $redirect_url ) {
+			wp_safe_redirect( $redirect_url, 301 );
+			exit;
+		}
+
+		return $redirect_url;
+	}
 }
