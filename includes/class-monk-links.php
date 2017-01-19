@@ -45,8 +45,18 @@ class Monk_Links {
 	public function __construct( $monk, $version ) {
 
 		$this->plugin_name = $monk;
-		$this->version = $version;
+		$this->version     = $version;
+		$this->home        = home_url();
 
+	}
+
+	/**
+	 * Function to retrieve all user active languages
+	 *
+	 * @return array active_languages.
+	 */
+	public function monk_get_active_languages() {
+		return get_option( 'monk_active_languages', false );
 	}
 
 	/**
@@ -62,7 +72,7 @@ class Monk_Links {
 
 		$monkrules      = array();
 		$language_codes = array();
-		$monk_languages = get_option( 'monk_active_languages', false );
+		$monk_languages = $this->monk_get_active_languages();
 
 		foreach ( $monk_languages as $codes ) {
 			$language_codes[ $codes ] = $codes;
@@ -179,14 +189,6 @@ class Monk_Links {
 		} else {
 			$link = add_query_arg( 'lang', $language, $url );
 			return $link;
-		}
-	}
-
-	public function monk_change_language_url( $url, $language ) {
-		if ( $this->monk_using_permalinks() ) {
-
-		} else {
-			
 		}
 	}
 
