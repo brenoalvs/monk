@@ -98,6 +98,15 @@ class Monk_Links {
 	}
 
 	/**
+	 * Check whether the pretty permalinks are active or not
+	 *
+	 * @return bool
+	 */
+	public function monk_using_permalinks() {
+		return ( empty( get_option( 'permalink_structure', false ) ) ) ? false : true;
+	}
+
+	/**
 	 *  Change the post permalinks adding the language
 	 *
 	 * @since 0.0.1
@@ -110,15 +119,14 @@ class Monk_Links {
 		$site_default_language = get_option( 'monk_default_language', false );
 		$post_language		   = get_post_meta( ( is_page() ) ? get_the_id() : $post->ID, '_monk_post_language', true );
 		$url_language		   = get_query_var( 'lang' );
-		$structure		       = get_option( 'permalink_structure', false );
 		$language		       = ( empty( $post_language ) ) ? $site_default_language : $post_language;
 
-		if ( empty( $structure ) ) {
-			$url = add_query_arg( 'lang', $language, $permalink );
-			return $url;
-		} else {
+		if ( $this->monk_using_permalinks() ) {
 			$path = wp_make_link_relative( $permalink );
 			$url = trailingslashit( $wp_rewrite->root ) . $language . $path;
+			return $url;
+		} else {
+			$url = add_query_arg( 'lang', $language, $permalink );
 			return $url;
 		}
 	}
@@ -135,19 +143,18 @@ class Monk_Links {
 
 		$site_default_language = get_option( 'monk_default_language', false );
 		$page_language		   = get_post_meta( $post_id, '_monk_post_language', true );
-		$structure			   = get_option( 'permalink_structure', false );
 		$language			   = ( empty( $page_language ) ) ? $site_default_language : $page_language;
 
 		if ( empty( $language ) ) {
 			return $link;
 		}
 
-		if ( empty( $structure ) ) {
-			$url = add_query_arg( 'lang', $language, $link );
-			return $url;
-		} else {
+		if ( $this->monk_using_permalinks() ) {
 			$path = wp_make_link_relative( $link );
 			$url = trailingslashit( site_url() ) . $language . $path;
+			return $url;
+		} else {
+			$url = add_query_arg( 'lang', $language, $link );
 			return $url;
 		}
 	}
@@ -163,16 +170,15 @@ class Monk_Links {
 	public function monk_add_language_term_permalink( $url, $term_id, $taxonomy ) {
 		$site_default_language = get_option( 'monk_default_language', false );
 		$term_language         = get_term_meta( $term_id, '_monk_term_language', true );
-		$structure             = get_option( 'permalink_structure', false );
 		$language              = ( empty( $term_language ) ) ? $site_default_language : $term_language;
 
-		if ( empty( $structure ) ) {
-			$link = add_query_arg( 'lang', $language, $url );
-			return $link;
-		} else {
+		if ( $this->monk_using_permalinks() ) {
 			$path = wp_make_link_relative( $url );
 			$permalink = trailingslashit( $wp_rewrite->root ) . $language . $path;
 			return $permalink;
+		} else {
+			$link = add_query_arg( 'lang', $language, $url );
+			return $link;
 		}
 	}
 
