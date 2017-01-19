@@ -1,4 +1,13 @@
 <?php
+/**
+ * The public-facing functionality of the plugin.
+ *
+ * @since      0.1.0
+ *
+ * @package    Monk
+ * @subpackage Monk/Includes
+ */
+
 	global $monk_languages;
 	$monk_languages = array(
 		'da_DK' => array(
@@ -34,7 +43,7 @@
 		'pt_BR' => array(
 			'native_name' => 'Português (Brasil)',
 			'name'        => __( 'Portuguese (Brazil)', 'monk' ),
-			'slug'        => 'pt',
+			'slug'        => 'pt-br',
 		),
 		'ru_RU' => array(
 			'native_name' => 'Pусский',
