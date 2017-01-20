@@ -329,10 +329,9 @@ class Monk_Admin {
 				} elseif ( isset( $meta_lang ) ) {
 					$term_args['meta_value'] = $meta_lang;
 				}
-				return $term_query->parse_query( $term_args );
+				$term_query->parse_query( $term_args );
 			}
 		}
-		return $term_query;
 	}
 
 	/**
@@ -449,7 +448,6 @@ class Monk_Admin {
 	/**
 	 * Add parameters to filter by meta_key.
 	 *
-	 * 
 	 * @since  0.1.0
 	 * @param object $query Object Query.
 	 * @return  void
@@ -493,7 +491,6 @@ class Monk_Admin {
 	/**
 	 * Include styles related to Customize options
 	 *
-	 * 
 	 * @since  0.1.0
 	 * @param array $title Title of the column.
 	 * @return array $title
@@ -506,7 +503,6 @@ class Monk_Admin {
 	/**
 	 * Include styles related to Customize options.
 	 *
-	 * 
 	 * @since  0.1.0
 	 * @param string $column_name Title of the column.
 	 * @param string $post_id    Post id.
@@ -567,7 +563,7 @@ class Monk_Admin {
 
 	/**
 	 * Save term language
-	 * 
+	 *
 	 * @since  0.1.0
 	 * @param int $term_id  Id of the term.
 	 * @return  void
@@ -751,5 +747,15 @@ class Monk_Admin {
 		if ( $monk_settings_notice ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
 		}
+	}
+
+	/**
+	 * This function shows a message if widget needs activation.
+	 *
+	 * @since   0.1.0
+	 * @return  void
+	 */
+	public function monk_widget_message() {
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-widget-notice.php';
 	}
 }
