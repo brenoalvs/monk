@@ -23,7 +23,7 @@ class Monk_Language_Switcher extends WP_Widget {
 
 	/**
 	 * Sets up the widgets classname and description.
-	 * 
+	 *
 	 * @since  0.1.0
 	 */
 	public function __construct() {
