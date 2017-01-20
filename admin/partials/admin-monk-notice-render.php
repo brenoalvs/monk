@@ -10,5 +10,5 @@
 
 ?>
 <div class="updated notice is-dismissible monk-banner">
-	<p><?php printf( __( '<strong>Monk:</strong> You need to <a href="%s">configure your language preferences</a>.', 'monk' ), admin_url( 'admin.php?page=monk' ) ); ?></p>
+	<p><?php printf( esc_attr__( '<strong>Monk:</strong> You need to <a href="%s">configure your language preferences</a>.', 'monk' ), esc_url( admin_url( 'admin.php?page=monk' ) ) ); ?></p>
 </div>
