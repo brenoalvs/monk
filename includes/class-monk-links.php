@@ -212,7 +212,7 @@ class Monk_Links {
 				if ( ! empty( $active_languages ) ) {
 
 					$pattern = str_replace( '/', '\/', $this->home . '/' . $this->root );
-					$pattern = '#' . $pattern . '(' . implode( '|', $languages ) . ')(\/|$)#';
+					$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
 					$url = preg_replace( $pattern,  $this->home . '/' . $this->root, $url );
 					$slug = $lang . '/';
 
@@ -250,14 +250,13 @@ class Monk_Links {
 			return;
 		}
 
-		// get the correct url.
+		// get the correct url and scheme.
 		if ( empty( $requested_url ) ) {
 			$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		}
 
 		// decidind what type of content is this.
 		if ( is_single() || is_page() ) {
-
 			if ( isset( $post->ID ) ) {
 				$language = get_post_meta( $post->ID, '_monk_post_language', true );
 			}
@@ -278,12 +277,12 @@ class Monk_Links {
 
 		if ( empty( $language ) ) {
 
-			$redirect_url = $requested_url;
 			$language     = get_option( 'monk_default_language', false );
+			$redirect_url = $requested_url;
 
 		} else {
 			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
-			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_requested_url, false ) ) ? $_requested_url: $redirect_url;
+			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url: $redirect_url;
 
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $language );
 		}
