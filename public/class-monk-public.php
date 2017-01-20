@@ -81,10 +81,23 @@ class Monk_Public {
 		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() || is_date() ) ) {
 			return;
 		}
+		global $monk_languages;
 
 		$query_args       = array();
 		$default_language = get_option( 'monk_default_language', false );
 		$current_language = get_query_var( 'lang', false );
+		$active_languages = get_option( 'monk_active_languages' );
+		$current_url      = monk_get_current_url();
+
+		foreach ( $active_languages as $lang_code ) {
+			$active_slug[ $lang_code ] = $monk_languages[ $lang_code ]['slug'];
+		}
+
+		if ( $current_language && ! in_array( $current_language, $active_slug ) ) {
+			$current_url = add_query_arg( 'lang', esc_attr( $monk_languages[ $default_language ]['slug'], 'monk' ), $current_url );
+			wp_safe_redirect( $current_url );
+			exit;
+		}
 
 		if ( ! $current_language ) {
 			if ( is_singular() ) {
@@ -96,12 +109,12 @@ class Monk_Public {
 			}
 		}
 
-		if ( substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
+		if ( ! $current_language || substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
 					'key'     => '_monk_post_language',
-					'value'   => $current_language,
+					'value'   => $default_language,
 					'compare' => 'LIKE',
 				),
 				array(
@@ -147,12 +160,12 @@ class Monk_Public {
 			}
 		}
 
-		if ( substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
+		if ( ! $current_language || substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
 			$query_args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
 					'key'     => '_monk_term_language',
-					'value'   => $current_language,
+					'value'   => $default_language,
 					'compare' => 'LIKE',
 				),
 				array(
