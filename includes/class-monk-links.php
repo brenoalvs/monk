@@ -115,7 +115,12 @@ class Monk_Links {
 	 * @return bool
 	 */
 	public function monk_using_permalinks() {
-		return ( empty( get_option( 'permalink_structure', false ) ) ) ? false : true;
+		$structure = get_option( 'permalink_structure', false );
+		if ( ( empty( $structure ) ) ) {
+			return false;
+		} else {
+			return $structure;
+		}
 	}
 
 	/**
