@@ -112,7 +112,7 @@ class Monk_Links {
 	/**
 	 * Check whether the pretty permalinks are active or not
 	 *
-	 * @return bool
+	 * @return bool|string $structure
 	 */
 	public function monk_using_permalinks() {
 		$structure = get_option( 'permalink_structure', false );
@@ -120,6 +120,18 @@ class Monk_Links {
 			return false;
 		} else {
 			return $structure;
+		}
+	}
+
+	/**
+	 * Function to check for the usage of a trailing slash
+	 *
+	 * @return bool
+	 */
+	public function monk_apply_slash() {
+		if ( $this->monk_using_permalinks() ) {
+			$structure = $this->monk_using_permalinks();
+			return ( '/' === substr( $structure, -1, 1 ) ) ? true : false;
 		}
 	}
 
