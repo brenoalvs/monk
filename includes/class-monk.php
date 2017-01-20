@@ -243,6 +243,7 @@ class Monk {
 		$this->loader->add_filter( 'month_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
 		$this->loader->add_filter( 'year_link', $plugin_links, 'monk_add_language_post_permalink', 10, 2 );
 		$this->loader->add_filter( 'update_option_monk_active_languages', $plugin_links, 'monk_flush_on_update' );
+		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_need_canonical_redirect', 4 );
 	}
 
 	/**
