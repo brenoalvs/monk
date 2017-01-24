@@ -157,7 +157,7 @@ class Monk_Links {
 		global $wp_rewrite;
 
 		$site_default_language = get_option( 'monk_default_language', false );
-		$post_language		   = get_post_meta( ( is_page() ) ? get_the_id() : $post->ID, '_monk_post_language', true );
+		$post_language		   = get_post_meta( $post->ID, '_monk_post_language', true );
 		$url_language		   = get_query_var( 'lang' );
 		$language		       = ( empty( $post_language ) ) ? $site_default_language : $post_language;
 
