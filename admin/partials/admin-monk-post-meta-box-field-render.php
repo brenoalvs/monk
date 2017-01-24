@@ -30,31 +30,33 @@ if ( empty( $monk_id ) ) {
 <input type="hidden" name="monk_id" value="<?php echo esc_attr( $monk_id ); ?>" />
 	<?php if ( 'add' === $current_screen->action || '' === $post_default_language ) : ?>
 	<div>
-		<strong><?php esc_html_e( 'Post language', 'monk' ); ?></strong><br>
-			<select name="monk_post_language">
-			<?php
-			$option_current_name = 'monk_post_translations_' . $monk_id;
-			$post_translations   = get_option( $option_current_name, false );
-			if ( $post_translations ) {
-				foreach ( $active_languages as $lang_code ) {
-					if ( ! array_key_exists( $lang_code, $post_translations ) ) {
-						$available_languages[] = $lang_code;
+		<strong><?php esc_html_e( 'Post language', 'monk' ); ?></strong>
+			<p>
+				<select name="monk_post_language">
+				<?php
+				$option_current_name = 'monk_post_translations_' . $monk_id;
+				$post_translations   = get_option( $option_current_name, false );
+				if ( $post_translations ) {
+					foreach ( $active_languages as $lang_code ) {
+						if ( ! array_key_exists( $lang_code, $post_translations ) ) {
+							$available_languages[] = $lang_code;
+						}
 					}
+				} else {
+					$available_languages = $active_languages;
 				}
-			} else {
-				$available_languages = $active_languages;
-			}
 
-			foreach ( $available_languages as $lang_code ) :
-					$lang_name = $monk_languages[ $lang_code ]['name'];
-			?>
-				<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
-					<?php echo esc_html( $lang_name ); ?>
-				</option>
-			<?php
-				endforeach;
-			?>
-			</select>
+				foreach ( $available_languages as $lang_code ) :
+						$lang_name = $monk_languages[ $lang_code ]['name'];
+				?>
+					<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
+						<?php echo esc_html( $lang_name ); ?>
+					</option>
+				<?php
+					endforeach;
+				?>
+				</select>
+			</p>
 			<?php
 			if ( $post_translations ) {
 				?> 
