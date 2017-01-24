@@ -172,7 +172,7 @@ class Monk_Links {
 	}
 
 	/**
-	 *  Changes the page links adding the language
+	 *  Changes the page links to add its language
 	 *
 	 * @since 0.0.1
 	 * @param string  $link Post link during query.
