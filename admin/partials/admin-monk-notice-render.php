@@ -10,5 +10,7 @@
 
 ?>
 <div class="updated notice is-dismissible monk-banner">
-	<p><?php printf( esc_attr__( '<strong>Monk:</strong> You need to <a href="%s">configure your language preferences</a>.', 'monk' ), esc_url( admin_url( 'admin.php?page=monk' ) ) ); ?></p>
+	<p><strong><?php esc_html_e( 'Monk: ', 'monk' ); ?></strong><?php esc_html_e( 'You need to ', 'monk' ); ?>
+	<a href="<?php echo esc_html( esc_url( admin_url( 'admin.php?page=monk' ) ) ); ?>"><?php esc_html_e( 'configure your language preferences', 'monk' ); ?></a>.
+	</p>
 </div>
