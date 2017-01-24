@@ -14,32 +14,11 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 ?>
-	<span class="hide-if-no-js dashicons dashicons-edit"></span>
-	<div class="monk-hide monk-column-translations-arrow"></div>
-	<div class="hide-if-js monk-column-translations">
+	<div class="monk-column-translations">
 <?php if ( $monk_translations ) : ?>
-	<a class="monk-translation-link monk-language" href="<?php echo esc_url( $post_url ); ?>">
-		<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $monk_language ]['name'] ); ?></span>
+	<div class="monk-flag-wrapper">
 		<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $monk_language ]['slug'] ); ?>"></span>
-	</a>
-	<?php foreach ( $active_languages as $lang ) :
-		foreach ( $monk_translations as $lang_code => $post_id ) :
-			if ( $lang === $lang_code && $lang_code !== $monk_language ) :
-				$post_url = add_query_arg( array(
-					'post' => $post_id,
-				), $base_url );
-				?>
-				<a class="monk-translation-link <?php if ( $lang_code === $monk_language ) : ?>monk-language<?php endif; ?>" href="<?php echo esc_url( $post_url ); ?>">
-					<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $lang ]['name'] ); ?></span>
-					<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $lang ]['slug'] ); ?>"></span>
-				</a>
-			<?php endif; ?>
-		<?php endforeach; ?>
-	<?php endforeach; ?>
-	<?php if ( $available_languages ) : ?>
-		<a class="monk-new-translation-link" href="<?php echo esc_url( $new_post_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
-	<?php endif; ?>
-<?php else : ?>
-	<span class="dashicons dashicons-minus"></span>
+	</div>
 <?php endif; ?>
+	<a class="monk-new-translation-link button" href="<?php echo esc_url( $new_post_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
 </div>

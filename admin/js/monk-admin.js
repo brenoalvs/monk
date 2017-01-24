@@ -57,11 +57,6 @@
 			window.location.replace( encoded_url );
 		});
 
-		$( document ).on( 'hover', 'td.column-languages', function() {
-			$( this ).children( '.monk-column-translations' ).toggleClass( 'monk-show' );
-			$( this ).children( '.monk-column-translations-arrow' ).toggleClass( 'monk-hide' );
-		});
-
 		var monk_id = $( '#monk-id' ).val();
 		var path    = window.location.pathname.split( '/' );
 		var url     = window.location.href.split( '&' );
