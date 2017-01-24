@@ -60,11 +60,16 @@ class Monk_Language_Switcher extends WP_Widget {
 
 		if ( is_singular() ) {
 			$monk_post_translations_id = get_post_meta( get_the_id(), '_monk_post_translations_id', true );
-			$monk_translations         = get_option( 'monk_post_translations_' . $monk_post_translations_id, false );
+			$monk_total_translations   = get_option( 'monk_post_translations_' . $monk_post_translations_id, false );
+			$current_language = $monk_languages[ get_post_meta( get_the_id(), '_monk_post_language', true ) ]['slug'];
+
+			foreach ( $monk_total_translations as $lang_code => $post_id ) {
+				if ( in_array( $lang_code, $active_languages ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
+					$monk_translations[ $lang_code ] = $post_id;
+				}
+			}
 
 			if ( $monk_translations ) {
-				$current_language = $monk_languages[ get_post_meta( get_the_id(), '_monk_post_language', true ) ]['slug'];
-
 				foreach ( $monk_translations as $lang_code => $post_id ) {
 					if ( $lang_code !== $current_language ) {
 						$switchable_languages[ $lang_code ] = get_permalink( $post_id );
@@ -83,11 +88,16 @@ class Monk_Language_Switcher extends WP_Widget {
 
 		if ( is_archive() && ( is_category() || is_tag() ) ) {
 			$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
-			$monk_translations         = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+			$monk_total_translations   = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+			$current_language = $monk_languages[ get_term_meta( get_queried_object_id(), '_monk_term_language', true ) ]['slug'];
+
+			foreach ( $monk_total_translations as $lang_code => $post_id ) {
+				if ( in_array( $lang_code, $active_languages ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
+					$monk_translations[ $lang_code ] = $post_id;
+				}
+			}
 
 			if ( $monk_translations ) {
-				$current_language = $monk_languages[ get_term_meta( get_queried_object_id(), '_monk_term_language', true ) ]['slug'];
-
 				foreach ( $monk_translations as $lang_code => $term_id ) {
 					if ( $lang_code !== $current_language ) {
 						$switchable_languages[ $lang_code ] = get_term_link( $term_id );
