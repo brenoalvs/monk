@@ -92,11 +92,22 @@ class Monk_Links {
 			}
 		}
 
-		if ( 'root' === $filter && isset( $slug ) ) {
-			$monkrules[ $slug . '?$' ] = $wp_rewrite->index . '?lang=matches[1]';
+		if ( 'root' === $filter ) {
+			return;
 		}
 
 		return $monkrules + $rules;
+	}
+
+	/**
+	 * Adds the rewrite rule for the home page
+	 * Uses global $wp_rewrite
+	 *
+	 * @since 0.0.1
+	 */
+	public function monk_add_home_rewrite_rule() {
+		global $wp_rewrite;
+		add_rewrite_rule( '^(([a-z]){2}\_([A-Z]){2})', 'index.php?lang=$matches[1]', 'top' );
 	}
 
 	/**
