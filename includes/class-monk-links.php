@@ -36,7 +36,7 @@ class Monk_Links {
 	private $version;
 
 	/**
-	 * Initialize the class and set its properties.
+	 * Initializes the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @param      string $monk       The name of the plugin.
@@ -111,7 +111,7 @@ class Monk_Links {
 	}
 
 	/**
-	 * Reinitialize the rewrite functions array whenever the option
+	 * Reinitializes the rewrite functions array whenever the option
 	 * 'monk_active_languages' gets updated
 	 *
 	 * @since 0.0.1
@@ -121,7 +121,7 @@ class Monk_Links {
 	}
 
 	/**
-	 * Check whether the pretty permalinks are active or not
+	 * Checks whether the pretty permalinks are active or not
 	 *
 	 * @return bool|string $structure
 	 */
@@ -147,7 +147,7 @@ class Monk_Links {
 	}
 
 	/**
-	 * Change the post permalinks to add its language
+	 * Changes the post permalinks to add its language
 	 *
 	 * @since 0.0.1
 	 * @param string $permalink Post link during query.
@@ -172,7 +172,7 @@ class Monk_Links {
 	}
 
 	/**
-	 *  Change the page links adding the language
+	 *  Changes the page links adding the language
 	 *
 	 * @since 0.0.1
 	 * @param string  $link Post link during query.
@@ -200,7 +200,27 @@ class Monk_Links {
 	}
 
 	/**
-	 *  Change the term permalinks adding the language
+	 * Changes the date archive links adding the language to filter results
+	 *
+	 * @since 0.0.1
+	 * @param string $link Url to the requested date archive.
+	 */
+	public function monk_add_language_date_permalink( $link ) {
+
+		$date_language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
+
+		if ( $this->monk_using_permalinks() ) {
+			$path = wp_make_link_relative( $link );
+			$url = trailingslashit( site_url() ) . $date_language . $path;
+			return $url;
+		} else {
+			$url = add_query_arg( 'lang', $language, $link );
+			return $url;
+		}
+	}
+
+	/**
+	 *  Changes the term permalinks adding the language
 	 *
 	 * @since 0.0.1
 	 * @param string $url Term link during query.
@@ -283,7 +303,7 @@ class Monk_Links {
 			$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		}
 
-		// decidind what type of content is this.
+		// then decide what type of content being requested.
 		if ( is_single() || is_page() ) {
 			if ( isset( $post->ID ) ) {
 				$language = get_post_meta( $post->ID, '_monk_post_language', true );
