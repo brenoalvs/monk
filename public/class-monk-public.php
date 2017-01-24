@@ -109,6 +109,10 @@ class Monk_Public {
 			}
 		}
 
+		if ( 'pt-br' === $current_language ) {
+			$current_language = substr( $current_language, 0, 2 );
+		}
+
 		if ( ! $current_language || substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
 			$query_args[] = array(
 				'relation' => 'OR',
@@ -138,15 +142,14 @@ class Monk_Public {
 	 *
 	 * @since    0.1.0
 	 *
-	 * @param  Object $term_query Instance of $WP_Term_Query.
-	 * @return Object $term_query Instance of $WP_Term_Query.
+	 * @param  array $args Array of arguments.
+	 * @return array $args Array of arguments.
 	 */
-	public function monk_public_terms_filter( $term_query ) {
+	public function monk_public_terms_filter( $args ) {
 		if ( is_admin() ) {
-			return;
+			return $args;
 		}
 
-		$query_args       = array();
 		$default_language = get_option( 'monk_default_language', false );
 		$current_language = get_query_var( 'lang', false );
 
@@ -160,8 +163,12 @@ class Monk_Public {
 			}
 		}
 
+		if ( 'pt-br' === $current_language ) {
+			$current_language = substr( $current_language, 0, 2 );
+		}
+
 		if ( ! $current_language || substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
-			$query_args['meta_query'] = array(
+			$args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
 					'key'     => '_monk_term_language',
@@ -174,7 +181,7 @@ class Monk_Public {
 				)
 			);
 		} else {
-			$query_args['meta_query'] = array(
+			$args['meta_query'] = array(
 				array(
 					'key'     => '_monk_term_language',
 					'value'   => $current_language,
@@ -182,7 +189,6 @@ class Monk_Public {
 				),
 			);
 		}
-
-		$term_query->parse_query( $query_args );
+		return $args;
 	}
 }

@@ -305,33 +305,35 @@ class Monk_Admin {
 	/**
 	 * Function to filter the query inside the category meta box using the languages
 	 *
-	 * @param   object $term_query instance of WP_Term_Query class.
+	 * @param   array $args Array of arguments.
 	 *
 	 * @since    0.1.0
-	 * @return  Object $term_query
+	 * @return  array $args.
 	 */
-	public function monk_category_language_filter( $term_query ) {
+	public function monk_category_language_filter( $args ) {
 		if ( is_admin() && ! is_customize_preview() ) {
 			$screen = get_current_screen();
 
 			if ( 'edit' === $screen->parent_base && 'post' === $screen->base ) {
-				$term_args  = '';
-				$post_id    = get_the_id();
-				$meta_lang  = sanitize_title( get_post_meta( $post_id, '_monk_post_language', true ) );
-				$term_args  = array( 'meta_key' => '_monk_term_language' );
+				$post_id              = get_the_id();
+				$default_language     = get_option( 'monk_default_language', false );
+				$meta_lang            = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
+				$args['meta_key']     = '_monk_term_language';
 
 				if ( isset( $_GET['lang'] ) ) {
 					$query_lang = sanitize_title( wp_unslash( $_GET['lang'] ) );
 				}
 
 				if ( isset( $query_lang ) ) {
-					$term_args['meta_value'] = $query_lang;
-				} elseif ( isset( $meta_lang ) ) {
-					$term_args['meta_value'] = $meta_lang;
+					$args['meta_value'] = $query_lang;
+				} elseif ( $meta_lang ) {
+					$args['meta_value'] = $meta_lang;
+				} else {
+					$args['meta_value'] = $default_language;
 				}
-				$term_query->parse_query( $term_args );
 			}
 		}
+		return $args;
 	}
 
 	/**
