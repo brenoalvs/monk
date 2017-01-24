@@ -62,6 +62,25 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Handle redirects to setup page after install.
+	 *
+	 * @since    0.1.0
+	 * @return  void
+	 */
+	public function monk_activation_redirect() {
+		global $pagenow;
+		if ( 'plugins.php' === $pagenow ) {
+			$monk_settings_notice = get_option( 'monk_settings_notice', false );
+			$activate_multi       = isset( $_GET['activate-multi'] ) ? true : false;
+
+			if ( ! $activate_multi && $monk_settings_notice ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=monk' ) );
+				exit();
+			}
+		}
+	}
+
+	/**
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @since    0.1.0
