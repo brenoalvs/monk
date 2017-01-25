@@ -548,18 +548,18 @@ class Monk_Admin {
 			), $base_url );
 
 			if ( 'post' !== $post_type ) {
-				$new_post_url = add_query_arg( array(
+				$new_url = add_query_arg( array(
 					'post_type' => $post_type,
 					'monk_id'   => $monk_translations_id,
 				), admin_url( 'post-new.php' ) );
 			} else {
-				$new_post_url = add_query_arg( array(
+				$new_url = add_query_arg( array(
 					'monk_id'   => $monk_translations_id,
 				), admin_url( 'post-new.php' ) );
 			}
 
 			foreach ( $active_languages as $language ) {
-				if ( $monk_translations && ! array_key_exists( $language, $monk_translations ) ) {
+				if ( ! $monk_language || $monk_translations && ! array_key_exists( $language, $monk_translations ) ) {
 					$available_languages = true;
 				}
 			}
@@ -691,10 +691,10 @@ class Monk_Admin {
 	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
 			global $monk_languages;
-			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
-			$languages                 = get_option( 'monk_active_languages', false );
 			$taxonomies                = get_taxonomies();
+			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
+			$languages                 = get_option( 'monk_active_languages', false );
 			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
 			$default_language          = get_option( 'monk_default_language', false );
 			$available_languages       = false;
@@ -709,14 +709,14 @@ class Monk_Admin {
 				if ( isset( $_GET['taxonomy'] ) ) {
 					if ( $_GET['taxonomy'] === $taxonomy ) {
 						$base_url     = admin_url( 'term.php?taxonomy=' . $taxonomy );
-						$new_term_url = add_query_arg( array(
+						$new_url = add_query_arg( array(
 								'monk_id' => $monk_term_translations_id,
 						), admin_url( 'edit-tags.php?taxonomy=' . $taxonomy ) );
 					}
 				}
 			}
 
-			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-taxonomy-monk-language-column.php';
+			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
 		endif;
 	}
 

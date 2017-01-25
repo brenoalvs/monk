@@ -11,12 +11,6 @@ th.column-languages {
 	width: 15%;
 }
 
-td.languages.column-languages {
-	padding-left: 0;
-	padding-right: 0;
-	position: relative;
-}
-
 .column-languages a:focus {
 	box-shadow: none;
 	outline: none;
