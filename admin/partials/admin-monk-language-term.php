@@ -33,7 +33,7 @@ if ( ! isset( $_GET['monk_id'] ) ) {
 	} else {
 		$translation_lang = $default_language;
 	}
-	var_dump( $monk_term_translations );
+
 	?>
 	<div class="form-field term-language-wrap">
 		<label for="monk-language"><?php esc_html_e( 'Language', 'monk' ); ?></label>
