@@ -53,7 +53,16 @@ class Monk_Language_Switcher extends WP_Widget {
 
 			foreach ( $active_languages as $lang_code ) {
 				if ( $lang_code !== $current_language ) {
-					$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url );
+					if ( get_option( 'permalink_structure', false ) ) {
+						if ( get_query_var( 'lang' ) ) {
+							$current_url = remove_query_arg( 'lang', $current_url );
+							$pattern = '/\/(' . implode( '|', $active_languages ) . ')/';
+							$current_url = preg_replace( $pattern, '', $current_url );
+						}
+						$switchable_languages[ $lang_code ] = $current_url . '/' . $lang_code;
+					} else {
+						$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url );
+					}
 				}
 			}
 		}
