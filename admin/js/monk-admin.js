@@ -45,6 +45,11 @@
 			e.preventDefault();
 		});
 
+		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
+			e.preventDefault();
+			$( '.monk-change-current-language' ).slideUp( 150 );
+		});
+
 		$( document ).on( 'click', 'button.monk-submit-translation', function( e ) {
 			e.preventDefault();
 			var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
