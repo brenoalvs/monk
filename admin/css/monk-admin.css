@@ -76,10 +76,14 @@ th.column-languages {
 	text-align: left;
 }
 
-.monk-new-translation-link {
+.monk-button-wrapper,
+.monk-flag-wrapper {
 	display: table-cell;
-	padding: 7px 15px 7px;
 	vertical-align: middle;
+}
+
+.monk-column-translations .monk-new-translation-link {
+	margin-right: 10px;
 }
 
 .monk-new-translation-link:hover {
@@ -91,10 +95,4 @@ th.column-languages {
 	display: table;
 	padding: 0 0 7px;
 	z-index: 9999;
-}
-
-.monk-flag-wrapper {
-	display: table-cell;
-	padding: 0 10px;
-	vertical-align: middle;
 }
