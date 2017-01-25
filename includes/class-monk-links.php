@@ -224,12 +224,12 @@ class Monk_Links {
 	 *
 	 * @since 0.0.1
 	 * @param string $url Term link during query.
-	 * @param object $term_id Term object.
-	 * @param string $taxonomy The taxonomy of the current term.
+	 * @param object $term Term object.
 	 */
-	public function monk_add_language_term_permalink( $url, $term_id, $taxonomy ) {
+	public function monk_add_language_term_permalink( $url, $term ) {
+
 		$site_default_language = get_option( 'monk_default_language', false );
-		$term_language         = get_term_meta( $term_id, '_monk_term_language', true );
+		$term_language         = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$language              = ( empty( $term_language ) ) ? $site_default_language : $term_language;
 
 		if ( $this->monk_using_permalinks() ) {
