@@ -77,7 +77,7 @@ if ( empty( $monk_id ) ) {
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 		<a class="edit-post-status hide-if-no-js">
 			<span aria-hidden="true" class="monk-add-translation">
-				Add<strong>+</strong>
+				<?php esc_html_e( 'Add+', 'monk' ); ?>
 			</span>
 			<span class="screen-reader-text"><?php esc_html_e( 'Add new translation', 'monk' ); ?></span>
 		</a>
@@ -162,7 +162,7 @@ if ( empty( $monk_id ) ) {
 						endforeach;
 						?>
 					</select>
-					<button class="button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+					<button class="monk-change-post-language button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 					<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
 				<?php endif; ?>
 			</div>
