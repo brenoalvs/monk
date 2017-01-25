@@ -57,17 +57,11 @@ if ( empty( $monk_id ) ) {
 				?>
 				</select>
 			</p>
-			<?php
-			if ( $post_translations ) {
-				?> 
-				<p>
-					<?php esc_html_e( 'This post is a translation of ', 'monk' ); ?>
-					<?php echo esc_html( get_post( $monk_id )->post_title . '.' ); ?>
-				</p>
-				<?php
-			}
-			?>
-	</div>
+			<?php if ( $post_translations ) : ?>
+				<?php $title = get_the_title( $monk_id ); ?> 
+				<p><?php echo esc_html( sprintf( __( 'This will be translation of %s.', 'monk' ), $title ) ); ?></p>
+			<?php endif; ?>
+		</div>
 	<?php else :
 	$translation_counter = 0;
 	$option_current_name = 'monk_post_translations_' . $monk_id;
