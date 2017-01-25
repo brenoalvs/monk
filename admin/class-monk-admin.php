@@ -73,10 +73,11 @@ class Monk_Admin {
 			$monk_settings_notice = get_option( 'monk_settings_notice', false );
 			$activate_multi       = isset( $_GET['activate-multi'] ) ? true : false;
 
-			if ( ! $activate_multi && $monk_settings_notice ) {
+			if ( get_transient( '_monk_redirect' ) && ! $activate_multi && $monk_settings_notice ) {
 				wp_safe_redirect( admin_url( 'admin.php?page=monk' ) );
 				exit();
 			}
+			delete_transient( '_monk_redirect' );
 		}
 	}
 
