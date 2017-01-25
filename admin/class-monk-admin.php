@@ -680,9 +680,13 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_edit_custom_taxonomy_field( $term ) {
-		$monk_language = get_term_meta( $term->term_id, '_monk_term_language', true );
 		global $monk_languages;
-		$languages = get_option( 'monk_active_languages', false );
+		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
+		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
+		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
+		$languages                 = get_option( 'monk_active_languages', false );
+		$monk_term_translations    = get_option( $option_name, false );
+
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-update-term.php';
 	}
 
@@ -757,8 +761,12 @@ class Monk_Admin {
 			}
 		}
 
+		if ( ! is_array( $monk_term_translations ) ) {
+			$monk_term_translations = array( $monk_term_translations );
+		}
+
 		foreach ( $languages as $language ) {
-			if ( ! array_key_exists( $language, array( $monk_term_translations ) ) ) {
+			if ( ! array_key_exists( $language, $monk_term_translations ) ) {
 				$available_languages = true;
 			}
 		}
