@@ -45,8 +45,6 @@ if ( ! defined( 'WPINC' ) ) {
 						$new_term_url = add_query_arg( 'monk_id', $monk_term_translations_id, $base_url );
 					?>
 						<a href="<?php echo esc_url( $new_term_url ); ?>" class="button"><?php esc_html_e( 'Add a translation +', 'monk' ); ?></a>
-					<?php else : ?>
-						<p><?php esc_html_e( 'No available translations.', 'monk' ); ?></p>
 					<?php endif; ?>
 				<?php else : ?>
 					<p><?php esc_html_e( 'You must set a language before add translations.', 'monk' ); ?></p>
