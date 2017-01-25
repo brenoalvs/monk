@@ -16,6 +16,4 @@ global $wpdb;
 
 $wpdb->query( "DELETE FROM $wpdb->termmeta WHERE meta_key LIKE '_monk_%';" );
 $wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_key LIKE '_monk_%';" );
-
-delete_option( 'monk_default_language' );
-delete_option( 'monk_active_languages' );
+$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'monk_%';" );
