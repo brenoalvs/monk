@@ -16,6 +16,10 @@ div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:after {
 div#monk-language-switcher {
 	border: none;
 	cursor: pointer;
+	-webkit-hyphens: initial;
+    -moz-hyphens: initial;
+    -ms-hyphens: initial;
+    hyphens: initial;
 	margin: 0;
 	max-width: 230px;
 	padding: 0;
