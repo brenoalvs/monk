@@ -225,6 +225,7 @@ class Monk_Links {
 	 * @since 0.0.1
 	 * @param string $url Term link during query.
 	 * @param object $term Term object.
+	 * @param string $taxonomy The taxonomy of each queried term.
 	 */
 	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
 
