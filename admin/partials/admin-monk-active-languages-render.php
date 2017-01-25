@@ -2,7 +2,6 @@
 /**
  * Provide the view for the monk_active_languages_render function
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk
@@ -22,10 +21,6 @@ $default_language = get_option( 'monk_default_language', false );
 <fieldset>
 <?php
 
-	/**
-	 * Walks through each value in the active languages array creating the checkboxes
-	 * based on the values, making possible and more reliable updating that list
-	 */
 foreach ( $monk_languages as $lang_code => $lang_names ) :
 	$id = sanitize_title( $lang_code );
 

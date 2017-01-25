@@ -11,18 +11,6 @@ th.column-languages {
 	width: 15%;
 }
 
-td.languages.column-languages {
-	padding-left: 0;
-	padding-right: 0;
-	position: relative;
-	text-align: center;
-}
-
-.column-languages,
-.column-languages a {
-	cursor: pointer;
-}
-
 .column-languages a:focus {
 	box-shadow: none;
 	outline: none;
@@ -88,73 +76,23 @@ td.languages.column-languages {
 	text-align: left;
 }
 
-.monk-new-translation-link {
-	color: #32373c;
-	display: block;
-	font: 12px arial, sans-serif;
-	padding: 7px 15px 0;
-	text-align: left;
+.monk-button-wrapper,
+.monk-flag-wrapper {
+	display: table-cell;
+	vertical-align: middle;
 }
 
-span.flag-icon-monk-pencil {
-	display: block;
-	margin: 0 auto;
+.monk-column-translations .monk-new-translation-link {
+	margin-right: 10px;
 }
 
-.monk-language-name {
-	font: 11px arial, sans-serif;
-    display: inline-block;
-    margin-right: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 65%;
-}
-
-.monk-selector-flag {
-	float: right;
-	padding-top: 7px; 
+.monk-new-translation-link:hover {
+	background-color: #d8d8d8;
+	border: 1px solid #fff;
 }
 
 .monk-column-translations {
-	padding: 7px 0;
+	display: table;
+	padding: 0 0 7px;
 	z-index: 9999;
-}
-
-.monk-column-translations-arrow {
-	border-bottom: 7px solid #303030;
-	border-left: 7px solid transparent;
-	border-right: 7px solid transparent;
-	height: 0; 
-	margin: 0 auto;
-	width: 0; 
-}
-
-div.monk-hide {
-	display: none;
-}
-
-td.languages div.hide-if-js.monk-show {
-	background-color: #303030;
-	display: block;
-	position: absolute;
-	width: 100%;
-}
-
-td.languages div.hide-if-js.monk-show a.monk-translation-link,
-td.languages div.hide-if-js.monk-show a.monk-new-translation-link {
-	color: #fff;
-}
-
-td.languages div.hide-if-js.monk-show a.monk-translation-link.monk-language {
-	color: #0073aa;
-}
-
-td.languages div.hide-if-js.monk-show a.monk-translation-link:hover,
-td.languages div.hide-if-js.monk-show a.monk-new-translation-link:hover {
-	color: #00a0d2;
-}
-
-.monk-language {
-	color: #0073aa;
 }

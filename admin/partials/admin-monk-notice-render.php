@@ -2,7 +2,6 @@
 /**
  * Provide the view for the monk_display_activation_notice function
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk
@@ -11,5 +10,7 @@
 
 ?>
 <div class="updated notice is-dismissible monk-banner">
-	<p><?php printf( __( '<strong>Monk:</strong> You need to <a href="%s">configure your language preferences</a>.', 'monk' ), admin_url( 'admin.php?page=monk' ) ); ?></p>
+	<p><strong><?php esc_html_e( 'Monk: ', 'monk' ); ?></strong><?php esc_html_e( 'You need to ', 'monk' ); ?>
+	<a href="<?php echo esc_html( esc_url( admin_url( 'admin.php?page=monk' ) ) ); ?>"><?php esc_html_e( 'configure your language preferences', 'monk' ); ?></a>.
+	</p>
 </div>

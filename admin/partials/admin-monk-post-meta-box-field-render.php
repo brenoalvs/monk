@@ -2,7 +2,6 @@
 /**
  * Provide the view for the monk_post_meta_box_field_render function
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk
@@ -31,24 +30,38 @@ if ( empty( $monk_id ) ) {
 <input type="hidden" name="monk_id" value="<?php echo esc_attr( $monk_id ); ?>" />
 	<?php if ( 'add' === $current_screen->action || '' === $post_default_language ) : ?>
 	<div>
-		<h4><?php esc_html_e( 'Default post language', 'monk' ); ?></h4>
-		<p>
-			<select name="monk_post_language">
-			<?php
-			foreach ( $active_languages as $lang_code ) :
-				if ( array_key_exists( $lang_code, $monk_languages ) ) :
-					$lang_name = $monk_languages[ $lang_code ]['name'];
-			?>
-				<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
-					<?php echo esc_html( $lang_name ); ?>
-				</option>
-			<?php
-				endif;
-				endforeach;
-			?>
-			</select>
-		</p>
-	</div>
+		<strong><?php esc_html_e( 'Post language', 'monk' ); ?></strong>
+			<p>
+				<select name="monk_post_language">
+				<?php
+				$option_current_name = 'monk_post_translations_' . $monk_id;
+				$post_translations   = get_option( $option_current_name, false );
+				if ( $post_translations ) {
+					foreach ( $active_languages as $lang_code ) {
+						if ( ! array_key_exists( $lang_code, $post_translations ) ) {
+							$available_languages[] = $lang_code;
+						}
+					}
+				} else {
+					$available_languages = $active_languages;
+				}
+
+				foreach ( $available_languages as $lang_code ) :
+						$lang_name = $monk_languages[ $lang_code ]['name'];
+				?>
+					<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
+						<?php echo esc_html( $lang_name ); ?>
+					</option>
+				<?php
+					endforeach;
+				?>
+				</select>
+			</p>
+			<?php if ( $post_translations && $post->ID !== $monk_id ) : ?>
+				<?php $title = get_the_title( $monk_id ); ?> 
+				<p><?php echo esc_html( sprintf( __( 'This will be translation of %s.', 'monk' ), $title ) ); ?></p>
+			<?php endif; ?>
+		</div>
 	<?php else :
 	$translation_counter = 0;
 	$option_current_name = 'monk_post_translations_' . $monk_id;
@@ -64,7 +77,7 @@ if ( empty( $monk_id ) ) {
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 		<a class="edit-post-status hide-if-no-js">
 			<span aria-hidden="true" class="monk-add-translation">
-				Add<strong>+</strong>
+				<?php esc_html_e( 'Add+', 'monk' ); ?>
 			</span>
 			<span class="screen-reader-text"><?php esc_html_e( 'Add new translation', 'monk' ); ?></span>
 		</a>
@@ -149,7 +162,7 @@ if ( empty( $monk_id ) ) {
 						endforeach;
 						?>
 					</select>
-					<button class="button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+					<button class="monk-change-post-language button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 					<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
 				<?php endif; ?>
 			</div>

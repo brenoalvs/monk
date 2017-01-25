@@ -1,34 +1,6 @@
 (function( $ ) {
 	'use strict';
 
-	/**
-	 * All of the code for your admin-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-
 	$( document ).ready( function() {
 		$( document ).on( 'change', 'select[name="monk_default_language"]', function() {
 			var selected_language = $( this ).val();
@@ -73,6 +45,11 @@
 			e.preventDefault();
 		});
 
+		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
+			e.preventDefault();
+			$( '.monk-change-current-language' ).slideUp( 150 );
+		});
+
 		$( document ).on( 'click', 'button.monk-submit-translation', function( e ) {
 			e.preventDefault();
 			var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
@@ -83,11 +60,6 @@
 			e.preventDefault();
 			var encoded_url = $( 'select[name="monk-term-translation"]' ).val();
 			window.location.replace( encoded_url );
-		});
-
-		$( document ).on( 'hover', 'td.column-languages', function() {
-			$( this ).children( '.monk-column-translations' ).toggleClass( 'monk-show' );
-			$( this ).children( '.monk-column-translations-arrow' ).toggleClass( 'monk-hide' );
 		});
 
 		var monk_id = $( '#monk-id' ).val();

@@ -2,7 +2,6 @@
 /**
  * Taxonomy Languages Selector Field.
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk

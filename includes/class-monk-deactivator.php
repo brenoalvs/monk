@@ -2,7 +2,6 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.1.0
  *
  * @package    Monk
@@ -17,7 +16,6 @@
  * @since      0.1.0
  * @package    Monk
  * @subpackage Monk/Includes
- * @author     Breno Alves <breno.alvs@gmail.com>
  */
 class Monk_Deactivator {
 
@@ -27,6 +25,7 @@ class Monk_Deactivator {
 	 * Desactivation function
 	 *
 	 * @since    0.1.0
+	 * @return  void
 	 */
 	public static function deactivate() {
 		delete_option( 'monk_settings_notice' );

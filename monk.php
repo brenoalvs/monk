@@ -36,6 +36,9 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-monk-activator.php
+ *
+ * @since  0.1.0
+ * @return  void
  */
 function activate_monk() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-monk-activator.php';
@@ -45,6 +48,9 @@ function activate_monk() {
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-monk-deactivator.php
+ *
+ * @since  0.1.0
+ * @return  void
  */
 function deactivate_monk() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-monk-deactivator.php';
@@ -68,11 +74,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-monk.php';
  * not affect the page life cycle.
  *
  * @since    0.1.0
+ * @return  void
  */
 function run_monk() {
-
 	$monk = new Monk();
 	$monk->run();
-
 }
 run_monk();
