@@ -57,7 +57,7 @@ if ( empty( $monk_id ) ) {
 				?>
 				</select>
 			</p>
-			<?php if ( $post_translations ) : ?>
+			<?php if ( $post_translations && $post->ID !== $monk_id ) : ?>
 				<?php $title = get_the_title( $monk_id ); ?> 
 				<p><?php echo esc_html( sprintf( __( 'This will be translation of %s.', 'monk' ), $title ) ); ?></p>
 			<?php endif; ?>

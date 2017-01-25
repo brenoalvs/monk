@@ -547,6 +547,10 @@ class Monk_Admin {
 				'post' => $post_id,
 			), $base_url );
 
+			if ( ! $monk_translations_id ) {
+				$monk_translations_id = $post_id;
+			}
+
 			if ( 'post' !== $post_type ) {
 				$new_url = add_query_arg( array(
 					'post_type' => $post_type,
