@@ -21,7 +21,7 @@ if ( ! defined( 'WPINC' ) ) {
 				<label for="monk-language"><?php esc_html_e( 'Language', 'monk' ); ?></label>
 			</th>
 			<td>
-				<select class="postform" id="monk-language" name="monk-language">
+				<select class="postform" id="monk-language" name="monk_language">
 					<?php foreach ( $languages as $language ) : ?>
 						<option value="<?php echo esc_attr( $language ); ?>" <?php selected( $monk_language, $language ); ?>><?php echo esc_html( $monk_languages[ $language ]['name'] ); ?></option>
 					<?php endforeach; ?>

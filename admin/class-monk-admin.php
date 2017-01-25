@@ -623,19 +623,22 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_update_term_meta( $term_id ) {
-		if ( isset( $_REQUEST['monk_language'] ) && ! empty( $_REQUEST['monk_language'] ) ) {
-			$current_language          = get_term_meta( $term_id, '_monk_term_language', true );
-			$new_language              = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
-			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
+		$current_language          = get_term_meta( $term_id, '_monk_term_language', true );
+		$new_language              = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
+		$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
 
-			update_term_meta( $term_id, '_monk_term_language', $new_language );
-			$monk_term_translations = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+		if ( ! $monk_term_translations_id ) {
+			$monk_term_translations_id = $term_id;
+			update_term_meta( $term_id, '_monk_term_translations_id', $term_id );
+		}
 
-			if ( ! empty( $monk_term_translations ) ) {
-				unset( $monk_term_translations[ $current_language ] );
-				$monk_term_translations[ $new_language ] = $term_id;
-				update_option( 'monk_term_translations_' . $monk_term_translations_id, $monk_term_translations );
-			}
+		update_term_meta( $term_id, '_monk_term_language', $new_language );
+		$monk_term_translations = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+
+		if ( ! empty( $monk_term_translations ) ) {
+			unset( $monk_term_translations[ $current_language ] );
+			$monk_term_translations[ $new_language ] = $term_id;
+			update_option( 'monk_term_translations_' . $monk_term_translations_id, $monk_term_translations );
 		}
 	}
 
@@ -699,8 +702,12 @@ class Monk_Admin {
 			$default_language          = get_option( 'monk_default_language', false );
 			$available_languages       = false;
 
+			if ( ! is_array( $monk_term_translations ) ) {
+				$monk_term_translations = array( $monk_term_translations );
+			}
+
 			foreach ( $languages as $language ) {
-				if ( ! $monk_language || $monk_term_translations && ! array_key_exists( $language, $monk_term_translations ) ) {
+				if ( ! $monk_language || ( $monk_term_translations && ! array_key_exists( $language, $monk_term_translations ) ) ) {
 					$available_languages = true;
 				}
 			}
