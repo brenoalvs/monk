@@ -700,7 +700,7 @@ class Monk_Admin {
 			$available_languages       = false;
 
 			foreach ( $languages as $language ) {
-				if ( $monk_term_translations && ! array_key_exists( $language, $monk_term_translations ) ) {
+				if ( ! $monk_language || $monk_term_translations && ! array_key_exists( $language, $monk_term_translations ) ) {
 					$available_languages = true;
 				}
 			}
