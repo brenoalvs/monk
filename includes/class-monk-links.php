@@ -226,7 +226,7 @@ class Monk_Links {
 	 * @param string $url Term link during query.
 	 * @param object $term Term object.
 	 */
-	public function monk_add_language_term_permalink( $url, $term ) {
+	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
 
 		$site_default_language = get_option( 'monk_default_language', false );
 		$term_language         = get_term_meta( $term->term_id, '_monk_term_language', true );
