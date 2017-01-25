@@ -25,7 +25,9 @@ function monk_is_language_code( $language_code ) {
  */
 function monk_get_current_url() {
 	global $wp;
-	$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+
+	$query_arg   = http_build_query( $_GET );
+	$current_url = add_query_arg( $query_arg, '', home_url( $wp->request ) );
 
 	return $current_url;
 }
