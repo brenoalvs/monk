@@ -729,11 +729,11 @@ class Monk_Admin {
 			}
 
 			foreach ( $taxonomies as $taxonomy ) {
-				if ( isset( $_GET['taxonomy'] ) ) {
-					if ( $_GET['taxonomy'] === $taxonomy ) {
-						$base_url     = admin_url( 'term.php?taxonomy=' . $taxonomy );
-						$new_url = add_query_arg( array(
-								'monk_id' => $monk_term_translations_id,
+				if ( isset( $_REQUEST['taxonomy'] ) ) {
+					if ( $_REQUEST['taxonomy'] === $taxonomy ) {
+						$base_url = admin_url( 'term.php?taxonomy=' . $taxonomy );
+						$new_url  = add_query_arg( array(
+							'monk_id' => $monk_term_translations_id,
 						), admin_url( 'edit-tags.php?taxonomy=' . $taxonomy ) );
 					}
 				}
