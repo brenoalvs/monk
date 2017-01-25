@@ -21,7 +21,7 @@ if ( isset( $_REQUEST['page'] ) ) {
 if ( 'monk' === $page && ! is_active_widget( false, false, 'monk_language_switcher' ) ) {
 	?>
 	<div class="notice notice-success is-dismissible">
-		<p><?php esc_html_e( 'Please activate the ', 'monk' ); ?> <a href="<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>"><?php esc_html_e( 'Monk Language Switcher!', 'monk' ); ?></a></p>
+		<p><?php esc_html_e( 'Remember to activate the ', 'monk' ); ?> <a href="<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>"><?php esc_html_e( 'language switcher.', 'monk' ); ?></a></p>
 	</div>
 	<?php
 }
