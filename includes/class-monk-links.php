@@ -68,6 +68,7 @@ class Monk_Links {
 	 * @since 0.0.1
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
+		// get the filter being applied during the rules creation.
 		$filter = str_replace( '_rewrite_rules', '', current_filter() );
 
 		global $wp_rewrite;
@@ -83,10 +84,26 @@ class Monk_Links {
 		$slug = $wp_rewrite->root . '(' . implode( '|', $language_codes ) . ')/';
 
 		foreach ( $rules as $key => $rule ) {
+
+			$old_order = array();
+			$new_order = array();
+			$max = preg_match_all( '/(\$matches\[[1-9]\])/', $rule, $matches );
+
+			if ( $max ) {
+				for ( $i = $max; $i >= 1; $i-- ) {
+					array_push( $old_order, '[' . $i . ']' );
+					$j           = $i + 1;
+					array_push( $new_order, '[' . $j . ']' );
+				}
+			}
+
+			array_push( $old_order, '?' );
+			array_push( $new_order, '?lang=$matches[1]&' );
+
 			if ( isset( $slug ) ) {
 				$monkrules[ $slug . str_replace( $wp_rewrite->root, '', $key ) ] = str_replace(
-					array( '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '[1]', '?' ),
-					array( '[9]', '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '?lang=$matches[1]&' ),
+					$old_order,
+					$new_order,
 					$rule
 				);
 			}
