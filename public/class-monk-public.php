@@ -78,7 +78,7 @@ class Monk_Public {
 	 * @return void
 	 */
 	public function monk_public_posts_filter( $query ) {
-		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() || is_date() || is_author() ) ) {
+		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() || is_date() || is_author() || is_search() ) ) {
 			return;
 		}
 		global $monk_languages;
