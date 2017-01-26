@@ -217,11 +217,34 @@ class Monk_Admin {
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
 		global $monk_languages;
-		$site_default_language = get_option( 'monk_default_language', false );
-		$active_languages      = get_option( 'monk_active_languages', false );
-		$monk_id               = get_post_meta( $post->ID, '_monk_post_translations_id', true );
-		$post_default_language = get_post_meta( $post->ID, '_monk_post_language', true );
-		$monk_translation_url  = admin_url( 'post-new.php' );
+		$monk_id                = get_post_meta( $post->ID, '_monk_post_translations_id', true );
+		$post_default_language  = get_post_meta( $post->ID, '_monk_post_language', true );
+		$site_default_language  = get_option( 'monk_default_language', false );
+		$active_languages       = get_option( 'monk_active_languages', false );
+
+		if ( empty( $monk_id ) ) {
+			if ( isset( $_GET['lang'] ) ) {
+				$lang    = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
+			} else {
+				$lang    = $site_default_language;
+			}
+
+			if ( isset( $_GET['monk_id'] ) ) {
+				$monk_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
+			} else {
+				$monk_id = $post->ID;
+			}
+		}
+
+		$monk_translations      = get_option( 'monk_post_translations_' . $monk_id, false );
+		$monk_translation_url   = admin_url( 'post-new.php' );
+		$is_available_languages = false;
+
+		foreach ( $active_languages as $language ) {
+			if ( ! array_key_exists( $language, (array) $monk_translations ) ) {
+				$is_available_languages = true;
+			}
+		}
 
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 
@@ -341,7 +364,7 @@ class Monk_Admin {
 				} elseif ( $meta_lang ) {
 					$args['meta_value'] = $meta_lang;
 				} else {
-					$args['meta_value'] = $default_language;
+					$args['meta_value'] = '';
 				}
 			}
 		}
