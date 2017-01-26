@@ -13,19 +13,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( empty( $monk_id ) ) {
-	if ( isset( $_GET['lang'] ) ) {
-		$lang    = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
-	} else {
-		$lang    = $site_default_language;
-	}
-
-	if ( isset( $_GET['monk_id'] ) ) {
-		$monk_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
-	} else {
-		$monk_id = $post->ID;
-	}
-}
 ?>
 <input type="hidden" name="monk_id" value="<?php echo esc_attr( $monk_id ); ?>" />
 	<?php if ( 'add' === $current_screen->action || '' === $post_default_language ) : ?>
@@ -58,7 +45,11 @@ if ( empty( $monk_id ) ) {
 				</select>
 			</p>
 			<?php if ( $post_translations && $post->ID !== $monk_id ) : ?>
-				<?php $title = get_the_title( $monk_id ); ?> 
+				<?php if ( get_the_title( $monk_id ) ) : ?> 
+					<?php $title = get_the_title( $monk_id ); ?>
+				<?php else : ?>
+					<?php $title = get_the_title( reset( $monk_translations ) ); ?>
+				<?php endif; ?>
 				<p><?php echo esc_html( sprintf( __( 'This will be translation of %s.', 'monk' ), $title ) ); ?></p>
 			<?php endif; ?>
 		</div>
@@ -137,35 +128,37 @@ if ( empty( $monk_id ) ) {
 				When the user select this feature,
 				the option containig translations is updated
 			-->
-			<a class="edit-post-status hide-if-no-js">
-				<span aria-hidden="true" class="monk-change-language">
-					<?php esc_html_e( 'Edit', 'monk' ); ?>
-				</span>
-				<span class="screen-reader-text"><?php esc_html_e( 'Change current language', 'monk' ); ?></span>
-			</a>
-			<div class="monk-change-current-language">
-				<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
-					<select name="monk_post_language" id="new-post-language">
-						<option value="<?php echo esc_attr( $post_default_language ); ?>" selected>
-							<?php echo esc_html( $monk_languages[ $post_default_language ]['name'] ); ?>
-						</option>
-						<?php
-						foreach ( $active_languages as $lang_code ) :
-							if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-								$lang_name = $monk_languages[ $lang_code ]['name'];
-						?>
-								<option  value="<?php echo esc_attr( $lang_code ); ?>"/>
-									<?php echo esc_html( $lang_name ); ?>
-								</option>
-						<?php
-							endif;
-						endforeach;
-						?>
-					</select>
-					<button class="monk-change-post-language button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
-					<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
-				<?php endif; ?>
-			</div>
+			<?php if ( $is_available_languages ) : ?>
+				<a class="edit-post-status hide-if-no-js">
+					<span aria-hidden="true" class="monk-change-language">
+						<?php esc_html_e( 'Edit', 'monk' ); ?>
+					</span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Change current language', 'monk' ); ?></span>
+				</a>
+				<div class="monk-change-current-language">
+					<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
+						<select name="monk_post_language" id="new-post-language">
+							<option value="<?php echo esc_attr( $post_default_language ); ?>" selected>
+								<?php echo esc_html( $monk_languages[ $post_default_language ]['name'] ); ?>
+							</option>
+							<?php
+							foreach ( $active_languages as $lang_code ) :
+								if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
+									$lang_name = $monk_languages[ $lang_code ]['name'];
+							?>
+									<option  value="<?php echo esc_attr( $lang_code ); ?>"/>
+										<?php echo esc_html( $lang_name ); ?>
+									</option>
+							<?php
+								endif;
+							endforeach;
+							?>
+						</select>
+						<button class="monk-change-post-language button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+						<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
 		</li>
 		<?php
 		if ( isset( $post_translations ) && $post_translations ) :
