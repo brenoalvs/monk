@@ -85,25 +85,25 @@ class Monk_Links {
 
 		foreach ( $rules as $key => $rule ) {
 
-			$old_order = array();
-			$new_order = array();
-			$max = preg_match_all( '/(\$matches\[[1-9]\])/', $rule, $matches );
+			$old_matches = array();
+			$new_matches = array();
+			$max = preg_match_all( '/(\$matches\[[1-9]{1,}\])/', $rule, $matches );
 
 			if ( $max ) {
-				for ( $i = $max; $i >= 1; $i-- ) {
-					array_push( $old_order, '[' . $i . ']' );
-					$j           = $i + 1;
-					array_push( $new_order, '[' . $j . ']' );
+				for ( $old = $max; $i >= 1; $i-- ) {
+					$new = $old + 1;
+					array_push( $old_matches, '[' . $i . ']' );
+					array_push( $new_matches, '[' . $j . ']' );
 				}
 			}
 
-			array_push( $old_order, '?' );
-			array_push( $new_order, '?lang=$matches[1]&' );
+			array_push( $old_matches, '?' );
+			array_push( $new_matches, '?lang=$matches[1]&' );
 
 			if ( isset( $slug ) ) {
 				$monkrules[ $slug . str_replace( $wp_rewrite->root, '', $key ) ] = str_replace(
-					$old_order,
-					$new_order,
+					$old_matches,
+					$new_matches,
 					$rule
 				);
 			}
