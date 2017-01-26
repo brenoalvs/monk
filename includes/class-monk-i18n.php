@@ -2,26 +2,19 @@
 /**
  * Define the internationalization functionality
  *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
- *
- * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Includes
  */
 
 /**
- * Define the internationalization functionality.
- *
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Monk
  * @subpackage Monk/Includes
- * @author     Breno Alves <email@example.com>
  */
 class Monk_i18n {
 
@@ -29,7 +22,8 @@ class Monk_i18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function load_plugin_textdomain() {
 
@@ -44,21 +38,29 @@ class Monk_i18n {
 	/**
 	 * Change locale accordingly Language Switcher.
 	 *
-	 * @param  string $lang Language of locale.
-	 * @return string $lang New language of locale.
+	 * @since  0.1.0
+	 * @param  string $locale Language of locale.
+	 * @return string $locale New language of locale.
 	 */
-	public function monk_define_locale( $lang ) {
+	public function monk_define_locale( $locale ) {
+		global $monk_languages;
+		$active_languages = get_option( 'monk_active_languages', false );
 		if ( is_admin() ) {
-			return $lang;
+			return $locale;
 		}
 
 		if ( isset( $_GET['lang'] ) ) {
 			$lang = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
+			foreach ( $active_languages as $lang_code ) {
+				if ( $lang === $monk_languages[ $lang_code ]['slug'] ) {
+					$locale = $lang_code;
+				}
+			}
 		} else {
-			$lang = get_option( 'monk_default_language', false );
+			$locale = get_option( 'monk_default_language', false );
 		}
 
-		return $lang;
+		return $locale;
 	}
 
 }
