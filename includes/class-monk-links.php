@@ -90,10 +90,10 @@ class Monk_Links {
 			$max         = preg_match_all( '/(\$matches\[[1-9]{1,}\])/', $rule, $matches );
 
 			if ( $max ) {
-				for ( $old = $max; $i >= 1; $i-- ) {
+				for ( $old = $max; $old >= 1; $old-- ) {
 					$new = $old + 1;
-					array_push( $old_matches, '[' . $i . ']' );
-					array_push( $new_matches, '[' . $j . ']' );
+					array_push( $old_matches, '[' . $old . ']' );
+					array_push( $new_matches, '[' . $new . ']' );
 				}
 			}
 
@@ -123,7 +123,6 @@ class Monk_Links {
 	 * @since 0.0.1
 	 */
 	public function monk_add_home_rewrite_rule() {
-		global $wp_rewrite;
 		add_rewrite_rule( '^(([a-z]){2}\_([A-Z]){2})', 'index.php?lang=$matches[1]', 'top' );
 	}
 
@@ -249,6 +248,7 @@ class Monk_Links {
 	 * @param string $taxonomy The taxonomy of each queried term.
 	 */
 	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
+		global $wp_rewrite;
 
 		$site_language = get_option( 'monk_default_language', false );
 		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
