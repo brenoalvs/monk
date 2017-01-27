@@ -18,7 +18,11 @@ if ( ! defined( 'WPINC' ) ) {
 	<?php if ( $monk_language ) : ?>
 		<?php if ( $available_languages ) : ?>
 			<div class="monk-button-wrapper">
-				<a class="monk-new-translation-link button" href="<?php echo esc_url( $new_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
+				<?php $is_attachment = 'attachment' === $post_type ? 'monk-attach' : ''; ?>
+				<?php if ( 'monk-attach' === $is_attachment ) : ?>
+					<input type="hidden" id="monk-id" value="<?php echo esc_attr( $monk_translations_id ); ?>">
+				<?php endif; ?>
+				<a class="monk-new-translation-link button" id="<?php echo esc_attr( $is_attachment ); ?>" href="<?php echo esc_url( $new_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
 			</div>
 		<?php endif; ?>
 		<div class="monk-flag-wrapper">
