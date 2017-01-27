@@ -269,6 +269,29 @@ class Monk_Links {
 	}
 
 	/**
+	 * Changes the author archive link, using the current language to filter results
+	 *
+	 * @since 0.0.1
+	 * @param string $link Url to author archive.
+	 */
+	public function monk_add_language_author_permalink( $link ) {
+
+		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
+
+		if ( $language ) {
+			if ( $this->monk_using_permalinks() ) {
+				$link = str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $language . '/', $link );
+				return $link;
+			} else {
+				$link = add_query_arg( 'lang', $language, $link );
+				return $link;
+			}
+		} else {
+			return $link;
+		}
+	}
+
+	/**
 	 * Changes the language inside a given url
 	 *
 	 * @param string $url provided url.
