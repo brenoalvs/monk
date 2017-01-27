@@ -1,13 +1,11 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://github.com/brenoalvs/monk
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Monk
  * @subpackage Monk/Includes
@@ -22,10 +20,9 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Monk
  * @subpackage Monk/Includes
- * @author     Breno Alves <email@example.com>
  */
 class Monk {
 
@@ -33,7 +30,7 @@ class Monk {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      Monk_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -42,7 +39,7 @@ class Monk {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      string    $monk    The string used to uniquely identify this plugin.
 	 */
@@ -51,7 +48,7 @@ class Monk {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -64,12 +61,13 @@ class Monk {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '1.0.0';
+		$this->version = '0.1.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -93,8 +91,9 @@ class Monk {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function load_dependencies() {
 
@@ -145,8 +144,9 @@ class Monk {
 	 * Uses the Monk_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function set_locale() {
 
@@ -160,8 +160,9 @@ class Monk {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_global_hooks() {
 
@@ -172,8 +173,9 @@ class Monk {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_admin_hooks() {
 
@@ -184,11 +186,12 @@ class Monk {
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'monk_activation_notice' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_activation_redirect' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
 		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
-		$this->loader->add_action( 'pre_get_terms', $plugin_admin, 'monk_category_language_filter' );
+		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_category_language_filter', 10, 2 );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
@@ -199,6 +202,7 @@ class Monk {
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 		$this->loader->add_action( 'manage_media_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'monk_widget_message' );
 		$this->loader->add_action( 'wp_loaded', $this, 'add_term_hooks' );
 		$this->loader->add_action( 'edit_attachment', $plugin_admin, 'monk_save_post_meta_box' );
 		$this->loader->add_action( 'wp_ajax_monkattach', $plugin_admin, 'monk_add_attachment' );
@@ -209,8 +213,9 @@ class Monk {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_public_hooks() {
 
@@ -220,14 +225,15 @@ class Monk {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
-		$this->loader->add_action( 'pre_get_terms', $plugin_public, 'monk_public_terms_filter' );
+		$this->loader->add_action( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 	}
 
 	/**
 	 * Register all of the hooks related to Monk Widgets
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
+	 * @return  void
 	 */
 	private function define_widget_hooks() {
 
@@ -237,8 +243,9 @@ class Monk {
 	/**
 	 * Register all of the hooks related to terms
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   public
+	 * @return  void
 	 */
 	public function add_term_hooks() {
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
@@ -254,17 +261,18 @@ class Monk {
 		}
 
 		add_action( 'created_term', array( $plugin_admin, 'monk_create_term_meta' ) );
-		add_action( 'edited_term', array( $plugin_admin, 'monk_update_term_meta' ) );
+		add_action( 'edited_terms', array( $plugin_admin, 'monk_update_term_meta' ) );
 		add_action( 'pre_delete_term', array( $plugin_admin, 'monk_delete_term_meta' ) );
 	}
 
 	/**
-	 * Registrate the query vars to generate the custom urls
+	 * Registrate the query vars to generate the custom urls.
 	 *
-	 * @param    $vars
+	 * @param array $vars Array of monk query vars.
+	 * @return array $vars
 	 *
-	 * @since    1.0.0
-	*/
+	 * @since    0.1.0
+	 */
 	public function monk_query_vars( $vars ) {
 		$vars[] = 'lang';
 		$vars[] = 'monk_id';
@@ -274,8 +282,9 @@ class Monk {
 	/**
 	 * Register all the widgets
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   public
+	 * @return  void
 	 */
 	public function register_widgets() {
 
@@ -288,7 +297,8 @@ class Monk {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
+	 * @return  void
 	 */
 	public function run() {
 		$this->loader->run();
@@ -298,7 +308,7 @@ class Monk {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -308,7 +318,7 @@ class Monk {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    Monk_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -318,7 +328,7 @@ class Monk {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1.0
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {
