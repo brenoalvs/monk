@@ -105,6 +105,9 @@ class Monk_Admin {
 		 */
 
 		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->monk, 'monkattach', array(
+			'monk_ajax' => admin_url( 'admin-ajax.php' )
+		));
 	}
 
 	/**
@@ -437,6 +440,8 @@ class Monk_Admin {
 
 	/**
 	 * Include styles related to Customize options.
+	 *
+	 * @since  0.1.0
 	 */
 	public function monk_customize_css() {
 		?>
@@ -457,7 +462,9 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Add select filter
+	 * Add select filter.
+	 *
+	 * @since  0.1.0
 	 */
 	public function monk_admin_languages_selector() {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
@@ -744,5 +751,109 @@ class Monk_Admin {
 		if ( $monk_settings_notice ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
 		}
+	}
+
+	/**
+	 * Function to create a new media translation.
+	 *
+	 * @since   0.1.0
+	 */
+	public function monk_add_attachment() {
+		$monk_id       = $_REQUEST['monk_id'];
+		$lang          = $_REQUEST['lang'];
+		$attach_path   = wp_get_attachment_url( $monk_id );
+		$filetype      = wp_check_filetype( basename( $attach_path ), null );
+		$wp_upload_dir = wp_upload_dir();
+
+		$attachment    = array(
+			'guid'           => $wp_upload_dir['url'] . '/' . basename( $attach_path ),
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $attach_path ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
+		);
+
+		$attach_id                         = wp_insert_attachment( $attachment, $attach_path );
+		$monk_attach_translations          = get_option( 'monk_post_translations_' . $monk_id, false );
+		$monk_attach_translations[ $lang ] = $attach_id;
+
+		update_option( 'monk_post_translations_' . $monk_id, $monk_attach_translations );
+		update_post_meta( $attach_id, '_monk_post_language', $lang );
+		update_post_meta( $attach_id, '_monk_post_translations_id', $monk_id );
+
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $attach_path );
+		wp_update_attachment_metadata( $attach_id, $attach_data );
+
+		$monk_attach_url = admin_url( 'post.php' );
+		$language_url = add_query_arg( array(
+			'post'    => $attach_id,
+			'action'  => 'edit',
+			'lang'    => $lang,
+			'monk_id' => $monk_id,
+		), $monk_attach_url );
+
+		echo esc_url( $language_url );
+		wp_die();
+	}
+
+	/**
+	 * Function to display meta fields in medias modal on grid mode.
+	 *
+	 * @param Array  $form_fields Form fields array.
+	 * @param Object $post        Post object.
+	 * @since   0.1.0
+	 */
+	public function monk_attachment_meta_box( $form_fields, $post ) {
+		global $monk_languages;
+		$active_languages    = get_option( 'monk_active_languages', false );
+		$post_id             = $post->ID;
+		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
+		$language            = get_post_meta( $post_id, '_monk_post_language', true );
+		$monk_attach_options = array( 'options' => '<select name="monk_post_translation_id">' );
+		$post_translations   = get_option( 'monk_post_translations_' . $monk_id, false );
+		$is_modal            = ! isset( $_REQUEST['post'] ) ? true : false;
+		$post_type           = $post->post_type;
+
+		if ( 'attachment' === $post_type && $is_modal ) {
+			foreach ( $active_languages as $lang_code ) {
+				if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) {
+					if ( $lang_code === $language ) {
+						$monk_attach_options = array(
+							'options' => $monk_attach_options['options'] . '<option value=' . esc_attr( $lang_code ) . ' selected="selected">' . esc_html( $monk_languages[ $lang_code ]['name'] ) . '</option>',
+						);
+					} else {
+						$monk_attach_options = array(
+							'options' => $monk_attach_options['options'] . '<option value="' . esc_attr( $lang_code ) . '">' . esc_html( $monk_languages[ $lang_code ]['name'] ) . '</option>',
+						);
+					}
+				}
+			}
+
+			if ( '<select name="monk_post_translation_id">' === $monk_attach_options['options'] ) {
+				$monk_attach_options['options'] = esc_html__( 'No translations available', 'monk' );
+			} else {
+				$monk_attach_options = array(
+					'options' => $monk_attach_options['options'] . '</select>
+					<input type="hidden" name="monk_id" id="monk-id" value="' . esc_attr( $monk_id ) . '">
+						<button class="button" id="' . esc_attr( $attach ) . '">' . esc_html__( 'Ok', 'monk' ) . '</button>',
+				);
+			}
+
+			$post_type = get_post_type( $post_id );
+			$attach = ( 'attachment' === $post_type ) ? 'monk-attach' : '';
+		    $form_fields['language'] = array(
+				'input' => 'html',
+				'html' => $monk_languages[ $language ]['name'],
+				'label' => __( 'Language', 'monk' ),
+			);
+			$form_fields['translate'] = array(
+				'input' => 'html',
+				'html' => $monk_attach_options['options'],
+				'label' => __( 'Translate', 'monk' ),
+			);
+		}
+		return $form_fields;
 	}
 }
