@@ -226,17 +226,17 @@ class Monk_Admin {
 		$active_languages       = get_option( 'monk_active_languages', false );
 
 		if ( empty( $monk_id ) ) {
-			if ( isset( $_GET['lang'] ) ) {
-				$lang    = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
-			} else {
-				$lang    = $site_default_language;
-			}
-
 			if ( isset( $_GET['monk_id'] ) ) {
 				$monk_id = sanitize_text_field( wp_unslash( $_GET['monk_id'] ) );
 			} else {
 				$monk_id = $post->ID;
 			}
+		}
+
+		if ( isset( $_GET['lang'] ) ) {
+			$lang    = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
+		} else {
+			$lang    = $site_default_language;
 		}
 
 		$monk_translations      = get_option( 'monk_post_translations_' . $monk_id, false );
@@ -308,14 +308,19 @@ class Monk_Admin {
 		$option_name       = 'monk_post_translations_' . $monk_id;
 		$post_translations = get_option( $option_name );
 
-		if ( ! empty( $post_translations ) ) {
-			unset( $post_translations[ $current_language ] );
-			$post_translations[ $language ] = $post_id;
-		} else {
-			$monk_id           = $post_id;
-			$post_translations = array( $current_language => $post_id );
+		if ( $post_translations[''] ) {
+			unset( $post_translations[''] );
 		}
 
+		if ( $post_id !== $post_translations[ $current_language ] ) {
+			if ( ! empty( $post_translations ) ) {
+				unset( $post_translations[ $current_language ] );
+				$post_translations[ $language ] = $post_id;
+			} else {
+				$monk_id           = $post_id;
+				$post_translations = array( $current_language => $post_id );
+			}
+		}
 		update_post_meta( $post_id, '_monk_post_translations_id', $monk_id );
 		update_option( 'monk_post_translations_' . $monk_id, $post_translations );
 	}
@@ -846,7 +851,9 @@ class Monk_Admin {
 		$monk_attach_translations[ $lang ] = $attach_id;
 
 		update_option( 'monk_post_translations_' . $monk_id, $monk_attach_translations );
-		update_post_meta( $attach_id, '_monk_post_language', $lang );
+		if ( $lang ) {
+			update_post_meta( $attach_id, '_monk_post_language', $lang );
+		}
 		update_post_meta( $attach_id, '_monk_post_translations_id', $monk_id );
 
 		require_once( ABSPATH . 'wp-admin/includes/image.php' );
@@ -862,7 +869,7 @@ class Monk_Admin {
 			'monk_id' => $monk_id,
 		), $monk_attach_url );
 
-		echo esc_url( $language_url );
+		echo $language_url;
 		wp_die();
 	}
 
