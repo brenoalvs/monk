@@ -178,8 +178,7 @@ class Monk_Links {
 		}
 
 		if ( $this->monk_using_permalinks() ) {
-			$path = wp_make_link_relative( $permalink );
-			$url  = trailingslashit( $wp_rewrite->root ) . $language . $path;
+			$url = $this->monk_change_language_url( $permalink, $language );
 			return $url;
 		} else {
 			$url = add_query_arg( 'lang', $language, $permalink );
