@@ -62,6 +62,19 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @since    0.1.0
+	 * @return  void
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->monk, 'monkattach', array(
+			'monk_ajax' => admin_url( 'admin-ajax.php' ),
+		));
+	}
+
+	/**
 	 * Handle redirects to setup page after install.
 	 *
 	 * @since    0.1.0
@@ -79,19 +92,6 @@ class Monk_Admin {
 			}
 			delete_transient( '_monk_redirect' );
 		}
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    0.1.0
-	 * @return  void
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->monk, 'monkattach', array(
-			'monk_ajax' => admin_url( 'admin-ajax.php' )
-		));
 	}
 
 	/**
@@ -283,6 +283,11 @@ class Monk_Admin {
 
 		$active_languages  = get_option( 'monk_active_languages' );
 		$current_language  = get_post_meta( $post_id, '_monk_post_language', true );
+
+		if ( ! $current_language ) {
+			$current_language = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
+		}
+
 		$post_translations = array( $current_language => $post_id );
 		$language          = '';
 
