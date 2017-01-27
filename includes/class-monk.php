@@ -234,12 +234,12 @@ class Monk {
 		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $plugin_links, 'monk_add_home_rewrite_rule' );
-		$this->loader->add_filter( 'day_link', $plugin_links, 'monk_add_language_date_permalink', 10, 2 );
+		$this->loader->add_filter( 'day_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
 		$this->loader->add_filter( 'post_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
 		$this->loader->add_filter( 'page_link', $plugin_links, 'monk_add_language_page_permalink', 20, 2 );
 		$this->loader->add_filter( 'term_link', $plugin_links, 'monk_add_language_term_permalink', 10, 3 );
-		$this->loader->add_filter( 'year_link', $plugin_links, 'monk_add_language_date_permalink', 10, 2 );
-		$this->loader->add_filter( 'month_link', $plugin_links, 'monk_add_language_date_permalink', 10, 2 );
+		$this->loader->add_filter( 'year_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
+		$this->loader->add_filter( 'month_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
 		$this->loader->add_filter( 'author_link', $plugin_links, 'monk_add_language_author_permalink', 20 );
 		$this->loader->add_filter( 'post_type_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_need_canonical_redirect', 4 );
