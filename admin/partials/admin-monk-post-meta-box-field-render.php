@@ -50,7 +50,7 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php else : ?>
 					<?php $title = get_the_title( reset( $monk_translations ) ); ?>
 				<?php endif; ?>
-				<p><?php echo esc_html( sprintf( __( 'This will be translation of %s.', 'monk' ), $title ) ); ?></p>
+				<p><?php echo esc_html( sprintf( __( 'Translating %s.', 'monk' ), $title ) ); ?></p>
 			<?php endif; ?>
 		</div>
 	<?php else :
