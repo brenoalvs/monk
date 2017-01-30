@@ -184,7 +184,8 @@ class Monk_Links {
 				array( 'function' => 'wp_nav_menu' ),
 				array( 'function' => 'login_footer' ),
 				array( 'function' => 'get_custom_logo' ),
-			) );
+				)
+			);
 		}
 
 		// Created once.
@@ -219,8 +220,13 @@ class Monk_Links {
 		$site_language = get_option( 'monk_default_language', false );
 		$url_language  = get_query_var( 'lang' );
 		$language      = ( empty( $url_language ) ) ? $site_language : $url_language;
+
 		if ( $language && $ok ) {
-			return trailingslashit( $url ) . $language;
+			if ( $this->monk_using_permalinks() ) {
+				return trailingslashit( $url ) . $language;
+			} else {
+				return add_query_arg( 'lang', $language, $url );
+			}
 		} else {
 			return $url;
 		}
