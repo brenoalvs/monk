@@ -234,6 +234,7 @@ class Monk {
 		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $plugin_links, 'monk_add_home_rewrite_rule' );
+		$this->loader->add_filter( 'home_url', $plugin_links, 'monk_add_language_home_permalink', 10, 2 );
 		$this->loader->add_filter( 'day_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
 		$this->loader->add_filter( 'post_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
 		$this->loader->add_filter( 'page_link', $plugin_links, 'monk_add_language_page_permalink', 20, 2 );
