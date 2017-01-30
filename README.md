@@ -36,3 +36,6 @@ You must! We'll post some contribution guidelines soon.
 
 ## License
 This plugin is licensed under [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html).
+
+## Credits
+Special thanks to Lipis for the [beautiful SVG icons](https://github.com/lipis/flag-icon-css).

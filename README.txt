@@ -43,3 +43,7 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 = 0.1.0 =
 * Initial release.
 
+== Credits ==
+
+Special thanks to Lipis for the [beautiful SVG icons](https://github.com/lipis/flag-icon-css).
+
