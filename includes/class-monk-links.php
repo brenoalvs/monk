@@ -158,6 +158,66 @@ class Monk_Links {
 		}
 	}
 
+	public function monk_add_language_home_permalink( $url, $path ) {
+		if ( ! ( did_action( 'login_init' ) || did_action( 'template_redirect' ) ) ) {
+			return $url;
+		}
+		// Not necessary to evaluate at every function call.
+		static $to_filter, $dont_filter;
+
+		// Created once.
+		if ( empty( $to_filter ) ) {
+			$root_dir = get_theme_root();
+			// Windows directory support.
+			$root_dir = ( true === strpos( $root_dir, '\\' ) ) ? str_replace( '/', '\\', $root_dir ) : $root_dir;
+
+			$to_filter = apply_filters( 'add_language_to_home',  array(
+				array( 'file' => $root_dir ),
+				array( 'function' => 'wp_nav_menu' ),
+				array( 'function' => 'login_footer' ),
+				array( 'function' => 'get_custom_logo' ),
+			) );
+		}
+
+		// Created once.
+		if ( empty( $dont_filter ) ) {
+
+			$dont_filter = apply_filters( 'add_language_to_home_dont_filter',  array(
+				array( 'file' => 'searchform.php' ), // Since WP 3.6 searchform.php is passed through get_search_form.
+				array( 'function' => 'get_search_form' ),
+			) );
+		}
+
+		/**
+		 * Using backwards compatibility, thanks to Polylang Plugin for the inspiration
+		 */
+		$execution = version_compare( PHP_VERSION, '5.2.5', '>=' ) ? debug_backtrace( false ) : debug_backtrace();
+		unset( $execution[0], $execution[1] ); // The last 2 calls are not necessary: this function + call_user_func_array (or apply_filters on PHP7+).
+
+		foreach ( $execution as $trace ) {
+			foreach ( $dont_filter as $part ) {
+				if ( ( isset( $trace['file'], $part['file'] ) && false !== strpos( $trace['file'], $part['file'] ) ) || ( isset( $trace['function'], $part['function'] ) && $trace['function'] === $part['function'] ) ) {
+					return $url;
+				}
+			}
+
+			foreach ( $to_filter as $part ) {
+				if ( ( isset( $trace['function'], $part['function'] ) && $trace['function'] === $part['function'] ) || ( isset( $trace['file'], $part['file'] ) && false !== strpos( $trace['file'], $part['file'] ) && in_array( $trace['function'], array( 'home_url', 'get_home_url', 'bloginfo', 'get_bloginfo' ), true ) ) ) {
+					$ok = true;
+				}
+			}
+		}
+
+		$site_language = get_option( 'monk_default_language', false );
+		$url_language  = get_query_var( 'lang' );
+		$language      = ( empty( $url_language ) ) ? $site_language : $url_language;
+		if ( $language && $ok ) {
+			return trailingslashit( $url ) . $language;
+		} else {
+			return $url;
+		}
+	}
+
 	/**
 	 * Changes the post permalinks to add its language
 	 *
