@@ -65,7 +65,7 @@ class Monk_Links {
 	 *  Adds all custom structures for pretty-permalinks
 	 *
 	 * @param array $rules rewrite rules.
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
 		// get the filter being applied during the rules creation.
@@ -120,7 +120,7 @@ class Monk_Links {
 	 * Adds the rewrite rule for the home page
 	 * Uses global $wp_rewrite
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 */
 	public function monk_add_home_rewrite_rule() {
 		add_rewrite_rule( '^(([a-z]){2}\_([A-Z]){2})', 'index.php?lang=$matches[1]', 'top' );
@@ -130,7 +130,7 @@ class Monk_Links {
 	 * Reinitializes the rewrite functions array whenever the option
 	 * 'monk_active_languages' gets updated
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 */
 	public function monk_flush_on_update() {
 		flush_rewrite_rules();
@@ -158,6 +158,14 @@ class Monk_Links {
 		}
 	}
 
+	/**
+	 * Changes the link to the home page using the apropriate language.
+	 *
+	 * @since 0.2.0
+	 * @param string $url home link during query.
+	 * @param string $path path requested.
+	 * @return string $url.
+	 */
 	public function monk_add_language_home_permalink( $url, $path ) {
 		if ( ! ( did_action( 'login_init' ) || did_action( 'template_redirect' ) ) ) {
 			return $url;
@@ -192,7 +200,7 @@ class Monk_Links {
 		 * Using backwards compatibility, thanks to Polylang Plugin for the inspiration
 		 */
 		$execution = version_compare( PHP_VERSION, '5.2.5', '>=' ) ? debug_backtrace( false ) : debug_backtrace();
-		unset( $execution[0], $execution[1] ); // The last 2 calls are not necessary: this function + call_user_func_array (or apply_filters on PHP7+).
+		unset( $execution[0], $execution[1] ); // The last 2 calls are not necessary depending on the version retrieved.
 
 		foreach ( $execution as $trace ) {
 			foreach ( $dont_filter as $part ) {
@@ -221,7 +229,7 @@ class Monk_Links {
 	/**
 	 * Changes the post permalinks to add its language
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 * @param string $permalink Post link during query.
 	 * @param object $post Post object.
 	 */
@@ -249,7 +257,7 @@ class Monk_Links {
 	/**
 	 *  Changes the page links to add its language
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 * @param string  $link Post link during query.
 	 * @param integer $post_id Post object.
 	 * @return string $url Altered url.
@@ -276,7 +284,7 @@ class Monk_Links {
 	/**
 	 * Changes the date archive links adding the language to filter results
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 * @param string $link Url to the requested date archive.
 	 */
 	public function monk_add_language_date_permalink( $link ) {
@@ -300,7 +308,7 @@ class Monk_Links {
 	/**
 	 *  Changes the term permalinks adding the language
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 * @param string $url Term link during query.
 	 * @param object $term Term object.
 	 * @param string $taxonomy The taxonomy of each queried term.
@@ -329,7 +337,7 @@ class Monk_Links {
 	/**
 	 * Changes the author archive link, using the current language to filter results
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 * @param string $link Url to author archive.
 	 */
 	public function monk_add_language_author_permalink( $link ) {
@@ -385,7 +393,7 @@ class Monk_Links {
 	 * Redirects the incoming url when a wrong language is detected
 	 * preventing duplicated content
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 * @param string $requested_url the incoming url.
 	 * @param bool   $do_redirect whether to redirect or not.
 	 */
