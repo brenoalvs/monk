@@ -187,6 +187,29 @@ class Monk_Links {
 	}
 
 	/**
+	 * This function to perform a redirect from the home url,
+	 * ensuring use of the site language.
+	 *
+	 * @since 0.2.0
+	 */
+	public function monk_redirect_home_url() {
+		if ( is_home() && ! get_query_var( 'lang' ) ) {
+
+			$site_language = get_option( 'monk_default_language', false );
+			$url_language  = get_query_var( 'lang' );
+			$language      = ( empty( $url_language ) ) ? $site_language : $url_language;
+
+			if ( $this->monk_using_permalinks() ) {
+				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
+			} else {
+				wp_safe_redirect( add_query_arg( 'lang', $language, trailingslashit( home_url() ) ), 301 );
+			}
+		} else {
+			return;
+		}
+	}
+
+	/**
 	 * Changes the post permalinks to add its language
 	 *
 	 * @since 0.2.0
