@@ -883,50 +883,80 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to display meta fields in medias modal on grid mode.
+	 * Function to render input type select.
 	 *
-	 * @param Array  $form_fields Form fields array.
-	 * @param Object $post        Post object.
-	 * @since   0.1.0
+	 * @param  object $post Post object.
+	 * @return string $monk_attach_options
+	 * @since  0.1.0
 	 */
-	public function monk_attachment_meta_box( $form_fields, $post ) {
+	public function monk_language_selector_render( $post ) {
 		global $monk_languages;
-		$active_languages    = get_option( 'monk_active_languages', false );
+
 		$post_id             = $post->ID;
 		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$language            = get_post_meta( $post_id, '_monk_post_language', true );
-		$monk_attach_options = array( 'options' => '<select name="monk_post_translation_id">' );
+		$active_languages    = get_option( 'monk_active_languages', false );
 		$post_translations   = get_option( 'monk_post_translations_' . $monk_id, false );
 		$is_modal            = ! isset( $_REQUEST['post'] ) ? true : false;
 		$post_type           = $post->post_type;
 
+		ob_start();
 		if ( 'attachment' === $post_type && $is_modal ) {
+			$attach = 'monk-attach';
+			?>
+			<select name="monk_post_translation_id">
+			<?php
 			foreach ( $active_languages as $lang_code ) {
 				if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) {
-					if ( $lang_code === $language ) {
-						$monk_attach_options = array(
-							'options' => $monk_attach_options['options'] . '<option value=' . esc_attr( $lang_code ) . ' selected="selected">' . esc_html( $monk_languages[ $lang_code ]['name'] ) . '</option>',
-						);
-					} else {
-						$monk_attach_options = array(
-							'options' => $monk_attach_options['options'] . '<option value="' . esc_attr( $lang_code ) . '">' . esc_html( $monk_languages[ $lang_code ]['name'] ) . '</option>',
-						);
-					}
+					if ( $lang_code === $language ) :
+						?>
+						<option value='<?php echo esc_attr( $lang_code ); ?>' selected="selected">
+							<?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?>
+						</option>
+						<?php
+					else :
+						?>
+						<option value="<?php echo esc_attr( $lang_code ); ?>">
+							<?php echo esc_html( $monk_languages[ $lang_code ]['name'] )?>
+						</option>;
+						<?php
+					endif;
 				}
 			}
+			?>
+			</select>
+			<input type="hidden" name="monk_id" id="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
+			<button class="button" id="<?php echo esc_attr( $attach ); ?>">
+				<?php echo esc_html__( 'Ok', 'monk' ); ?>
+			</button>
+			<?php
+			$monk_attach_options = ob_get_contents();
+			ob_end_clean();
 
-			if ( '<select name="monk_post_translation_id">' === $monk_attach_options['options'] ) {
-				$monk_attach_options['options'] = esc_html__( 'No translations available', 'monk' );
-			} else {
-				$monk_attach_options = array(
-					'options' => $monk_attach_options['options'] . '</select>
-					<input type="hidden" name="monk_id" id="monk-id" value="' . esc_attr( $monk_id ) . '">
-						<button class="button" id="' . esc_attr( $attach ) . '">' . esc_html__( 'Ok', 'monk' ) . '</button>',
-				);
+			if ( ! $monk_attach_options ) {
+				$monk_attach_options = 'No translations available';
 			}
+			return $monk_attach_options;
+		}
+	}
 
-			$post_type = get_post_type( $post_id );
-			$attach = ( 'attachment' === $post_type ) ? 'monk-attach' : '';
+	/**
+	 * Function to display meta fields in medias modal on grid mode.
+	 *
+	 * @param  array  $form_fields Form fields array.
+	 * @param  object $post        Post object.
+	 * @return array $form_fields Form fields array.
+	 * @since  0.1.0
+	 */
+	public function monk_attachment_meta_box( $form_fields, $post ) {
+		global $monk_languages;
+
+		$post_id   = $post->ID;
+		$language  = get_post_meta( $post_id, '_monk_post_language', true );
+		$is_modal  = ! isset( $_REQUEST['post'] ) ? true : false;
+		$post_type = $post->post_type;
+
+		if ( 'attachment' === $post_type && $is_modal ) {
 		    $form_fields['language'] = array(
 				'input' => 'html',
 				'html' => $monk_languages[ $language ]['name'],
@@ -934,7 +964,7 @@ class Monk_Admin {
 			);
 			$form_fields['translate'] = array(
 				'input' => 'html',
-				'html' => $monk_attach_options['options'],
+				'html' => $this->monk_language_selector_render( $post ),
 				'label' => __( 'Translate', 'monk' ),
 			);
 		}
