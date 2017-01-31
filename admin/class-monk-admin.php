@@ -902,39 +902,12 @@ class Monk_Admin {
 
 		ob_start();
 		if ( 'attachment' === $post_type && $is_modal ) {
-			$attach = 'monk-attach';
-			?>
-			<select name="monk_post_translation_id">
-			<?php
-			foreach ( $active_languages as $lang_code ) {
-				if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) {
-					if ( $lang_code === $language ) :
-						?>
-						<option value='<?php echo esc_attr( $lang_code ); ?>' selected="selected">
-							<?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?>
-						</option>
-						<?php
-					else :
-						?>
-						<option value="<?php echo esc_attr( $lang_code ); ?>">
-							<?php echo esc_html( $monk_languages[ $lang_code ]['name'] )?>
-						</option>;
-						<?php
-					endif;
-				}
-			}
-			?>
-			</select>
-			<input type="hidden" name="monk_id" id="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
-			<button class="button" id="<?php echo esc_attr( $attach ); ?>">
-				<?php echo esc_html__( 'Ok', 'monk' ); ?>
-			</button>
-			<?php
+			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-selector-render.php';
 			$monk_attach_options = ob_get_contents();
 			ob_end_clean();
 
 			if ( ! $monk_attach_options ) {
-				$monk_attach_options = 'No translations available';
+				$monk_attach_options = __( 'No translations available', 'monk' );
 			}
 			return $monk_attach_options;
 		}
