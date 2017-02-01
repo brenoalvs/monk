@@ -241,7 +241,8 @@ class Monk {
 		$this->loader->add_filter( 'term_link', $plugin_links, 'monk_add_language_term_permalink', 10, 3 );
 		$this->loader->add_filter( 'year_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
 		$this->loader->add_filter( 'month_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
-		$this->loader->add_filter( 'author_link', $plugin_links, 'monk_add_language_author_permalink', 20 );
+		$this->loader->add_filter( 'author_link', $plugin_links, 'monk_add_language_author_permalink', 20, 2 );
+		$this->loader->add_filter( 'search_link', $plugin_links, 'monk_add_language_search_permalink', 10, 2 );
 		$this->loader->add_filter( 'post_type_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_need_canonical_redirect', 4 );
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_redirect_home_url', 10, 2 );
