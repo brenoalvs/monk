@@ -953,4 +953,11 @@ class Monk_Admin {
 	public function monk_widget_message() {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-widget-notice.php';
 	}
+
+	public function teste( $file ) {
+		$file = null;
+
+		var_dump( did_action( 'delete_attachment' ) );
+		wp_die();
+	}
 }
