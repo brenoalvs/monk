@@ -201,8 +201,10 @@ class Monk_Links {
 
 			if ( $this->monk_using_permalinks() ) {
 				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
+				exit();
 			} else {
 				wp_safe_redirect( add_query_arg( 'lang', $language, trailingslashit( home_url() ) ), 301 );
+				exit();
 			}
 		} else {
 			return;
@@ -338,6 +340,7 @@ class Monk_Links {
 				return $link;
 			}
 		} else {
+			$link = add_query_arg( 'author', $author_id, home_url() );
 			return $link;
 		}
 	}
