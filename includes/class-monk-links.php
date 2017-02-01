@@ -322,8 +322,9 @@ class Monk_Links {
 	 *
 	 * @since 0.2.0
 	 * @param string $link Url to author archive.
+	 * @param int    $author_id current query author id.
 	 */
-	public function monk_add_language_author_permalink( $link ) {
+	public function monk_add_language_author_permalink( $link, $author_id ) {
 
 		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
 
@@ -332,7 +333,8 @@ class Monk_Links {
 				$link = str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $language . '/', $link );
 				return $link;
 			} else {
-				$link = add_query_arg( 'lang', $language, $link );
+				$link = add_query_arg( 'lang', $language, home_url() );
+				$link = add_query_arg( 'author', $author_id, $link );
 				return $link;
 			}
 		} else {
