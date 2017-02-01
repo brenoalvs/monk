@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -289,10 +288,10 @@ class Monk {
 	/**
 	 * Registrate the query vars to generate the custom urls
 	 *
-	 * @param    $vars
-	 *
+	 * @param array $vars the return array to add new query vars.
+	 * @return $vars.
 	 * @since    1.0.0
-	*/
+	 */
 	public function monk_query_vars( $vars ) {
 		$vars[] = 'lang';
 		$vars[] = 'monk_id';
