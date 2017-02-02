@@ -286,7 +286,7 @@ class Monk {
 	}
 
 	/**
-	 * Registrate the query vars to generate the custom urls
+	 * Registers the query vars to generate the custom urls
 	 *
 	 * @param array $vars the return array to add new query vars.
 	 * @return $vars.
