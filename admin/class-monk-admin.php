@@ -518,7 +518,7 @@ class Monk_Admin {
 		} elseif ( $query->is_archive() ) {
 			$lang = ( empty( get_query_var( 'lang' ) ) ) ? get_option( 'monk_default_language', false ) : get_query_var( 'lang' );
 			if ( $query->is_archive ) {
-				$query->set( 'mata_key', '_monk_post_language' );
+				$query->set( 'meta_key', '_monk_post_language' );
 				$query->set( 'meta_value', $lang );
 			}
 		}
