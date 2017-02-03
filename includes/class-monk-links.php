@@ -193,7 +193,7 @@ class Monk_Links {
 	 * @since 0.2.0
 	 */
 	public function monk_redirect_home_url() {
-		if ( is_home() && ! get_query_var( 'lang' ) ) {
+		if ( is_home() && ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) ) {
 
 			$site_language = get_option( 'monk_default_language', false );
 			$url_language  = get_query_var( 'lang' );
@@ -393,11 +393,11 @@ class Monk_Links {
 			return;
 		}
 
-		if ( is_attachment() && isset( $_GET['attachment_id'] ) ) {
+		if ( is_attachment() && filter_input( INPUT_GET, 'attachment_id' ) ) {
 			return;
 		}
 
-		if ( isset( $_POST['wp_customize'], $_POST['customized'] ) ) {
+		if ( filter_input( INPUT_GET, 'wp_customize' ) || filter_input( INPUT_GET, 'customized' ) ) {
 			return;
 		}
 
