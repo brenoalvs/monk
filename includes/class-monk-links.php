@@ -177,7 +177,7 @@ class Monk_Links {
 
 		if ( $language && '/' === $path ) {
 			if ( $this->monk_using_permalinks() ) {
-				return trailingslashit( $url ) . $language;
+				return trailingslashit( trailingslashit( $url ) . $language );
 			} else {
 				return add_query_arg( 'lang', $language, $url );
 			}
@@ -193,6 +193,7 @@ class Monk_Links {
 	 * @since 0.2.0
 	 */
 	public function monk_redirect_home_url() {
+		// url is wether site.com/en or site.com/?lang=en.
 		if ( is_home() && ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) ) {
 
 			$site_language = get_option( 'monk_default_language', false );
@@ -346,6 +347,27 @@ class Monk_Links {
 	}
 
 	/**
+	 * Changes link to use in searches( i.e get_search_link() ).
+	 *
+	 * @param string $link provided url.
+	 */
+	public function monk_add_language_search_permalink( $link ) {
+		$language = get_query_var( 'lang' ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
+
+		if ( empty( $language ) ) {
+			return $link;
+		}
+
+		if ( $this->monk_using_permalinks() ) {
+			$link = $this->monk_change_language_url( $link, $language );
+			return $link;
+		} else {
+			$link = add_query_arg( 'lang', $language, $link );
+			return $link;
+		}
+	}
+
+	/**
 	 * Changes the language inside a given url
 	 *
 	 * @param string $url provided url.
@@ -382,10 +404,8 @@ class Monk_Links {
 	 * preventing duplicated content
 	 *
 	 * @since 0.2.0
-	 * @param string $requested_url the incoming url.
-	 * @param bool   $do_redirect whether to redirect or not.
 	 */
-	public function monk_need_canonical_redirect( $requested_url = '', $do_redirect = true ) {
+	public function monk_need_canonical_redirect() {
 		global $wp_query, $post, $is_IIS;
 
 		// we do not want to redirect in these cases.
@@ -402,9 +422,7 @@ class Monk_Links {
 		}
 
 		// get the correct url and scheme.
-		if ( empty( $requested_url ) ) {
-			$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		}
+		$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 		// then decide what type of content being requested.
 		if ( is_single() || is_page() ) {
@@ -438,7 +456,7 @@ class Monk_Links {
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $language );
 		}
 
-		if ( $do_redirect && $redirect_url && $requested_url !== $redirect_url ) {
+		if ( $redirect_url && $requested_url !== $redirect_url ) {
 			wp_safe_redirect( $redirect_url, 301 );
 			exit;
 		}
