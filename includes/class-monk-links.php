@@ -368,6 +368,29 @@ class Monk_Links {
 	}
 
 	/**
+	 * Function to add hidden field with the value of lang
+	 * Is used when permalinks are disabled
+	 *
+	 * @param string $form provided url.
+	 * @return $form
+	 */
+	public function monk_change_search_form( $form ) {
+		if ( $form ) {
+			$site_language = get_option( 'monk_default_language', false );
+			$page_language = get_query_var( 'lang' );
+			$language	   = ( empty( $page_language ) ) ? $site_language : $page_language;
+
+			if ( $this->monk_using_permalinks() ) {
+				return $form;
+			} else {
+				$form = str_replace( '</form>', '<input type="hidden" name="lang" value="' . esc_attr( $language ) . '" /></form>', $form );
+			}
+		}
+
+		return $form;
+	}
+
+	/**
 	 * Changes the language inside a given url
 	 *
 	 * @param string $url provided url.
