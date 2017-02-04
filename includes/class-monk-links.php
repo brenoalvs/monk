@@ -1,14 +1,6 @@
 <?php
 /**
- * The engine to change links to use the apprpriate language
- *
- * @since      0.2.0
- *
- * @package    Monk
- * @subpackage Monk/Links
- */
-
-/**
+ * The engine that change links to use the apprpriate language
  * This class holds all functions related to links transformation
  * the permalinks are filtered to return content related to
  * the language defined by the user.
@@ -19,9 +11,9 @@
 class Monk_Links {
 
 	/**
-	 * The ID of this plugin.
+	 * The plugin ID.
 	 *
-	 * @since    0.1.0
+	 * @since    0.2.0
 	 * @access   private
 	 * @var      string    $monk    The ID of this plugin.
 	 */
@@ -30,7 +22,7 @@ class Monk_Links {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    0.1.0
+	 * @since    0.2.0
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -39,9 +31,9 @@ class Monk_Links {
 	/**
 	 * Initializes the class and set its properties.
 	 *
-	 * @since    1.0.0
-	 * @param      string $monk       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
+	 * @since    0.2.0
+	 * @param    string $monk       The name and ID of the plugin.
+	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
 		$structure = get_option( 'permalink_structure', false );
@@ -54,37 +46,50 @@ class Monk_Links {
 	}
 
 	/**
-	 * Function to retrieve all user active languages
+	 * Function to retrieve all user active languages from the option
+	 * These languages are defined under the Monk Settings page
 	 *
-	 * @return array active_languages.
+	 * @return    array active_languages.
 	 */
 	public function monk_get_active_languages() {
 		return get_option( 'monk_active_languages', false );
 	}
 
 	/**
-	 *  Adds all custom structures for pretty-permalinks
+	 * Adds the set of custom rewrite rules for pretty permalinks
+	 * This function is used inside rewrite_rules filter,
+	 * which retrieves the array containing every rule
 	 *
-	 * @param array $rules rewrite rules.
-	 * @since 0.2.0
+	 * @since  0.2.0
+	 * @param  array $rules rewrite rules.
+	 * @return array $monk_rules + $rules.
+	 * 
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
-		// get the filter being applied during the rules creation.
+
+		// get the filter being applied during the rules creation, except the root_rewrite_rules.
 		$filter = str_replace( '_rewrite_rules', '', current_filter() );
 
 		global $wp_rewrite;
 
-		$monkrules      = array();
+		$monk_rules      = array();
 		$language_codes = array();
 		$monk_languages = $this->monk_get_active_languages();
 
+		// constructs the array to hold all language codes.
 		foreach ( $monk_languages as $codes ) {
 			$language_codes[ $codes ] = $codes;
 		}
 
+		// the $slug i.e (en|pt|es)
 		$slug = $wp_rewrite->root . '(' . implode( '|', $language_codes ) . ')/';
 
-		foreach ( $rules as $key => $rule ) {
+		/**
+		 * The following foreach takes the rules as name => value,
+		 * count every 'match[ $counter ]' and replace them with match[ $counter + 1 ]
+		 * also add the lang parameter in place of '?' symbol
+		 */
+		foreach ( $rules as $name => $rule ) {
 
 			$old_matches = array();
 			$new_matches = array();
@@ -102,7 +107,7 @@ class Monk_Links {
 			array_push( $new_matches, '?lang=$matches[1]&' );
 
 			if ( isset( $slug ) ) {
-				$monkrules[ $slug . str_replace( $wp_rewrite->root, '', $key ) ] = str_replace(
+				$monk_rules[ $slug . str_replace( $wp_rewrite->root, '', $name ) ] = str_replace(
 					$old_matches,
 					$new_matches,
 					$rule
@@ -114,14 +119,15 @@ class Monk_Links {
 			return;
 		}
 
-		return $monkrules + $rules;
+		return $monk_rules + $rules;
 	}
 
 	/**
 	 * Adds the rewrite rule for the home page
 	 * Uses global $wp_rewrite
 	 *
-	 * @since 0.2.0
+	 * @since  0.2.0
+	 * @return void
 	 */
 	public function monk_add_home_rewrite_rule() {
 		add_rewrite_rule( '^(([a-z]){2}\_([A-Z]){2})', 'index.php?lang=$matches[1]', 'top' );
@@ -131,7 +137,8 @@ class Monk_Links {
 	 * Reinitializes the rewrite functions array whenever the option
 	 * 'monk_active_languages' gets updated
 	 *
-	 * @since 0.2.0
+	 * @since  0.2.0
+	 * @return void
 	 */
 	public function monk_flush_on_update() {
 		flush_rewrite_rules();
@@ -139,6 +146,7 @@ class Monk_Links {
 
 	/**
 	 * Checks whether the pretty permalinks are active or not
+	 * if it is, return the structure
 	 *
 	 * @return bool|string $structure
 	 */
@@ -160,14 +168,16 @@ class Monk_Links {
 	}
 
 	/**
-	 * Changes the link to the home page using the apropriate language.
+	 * Changes the link to the home page using the current language.
 	 *
-	 * @since 0.2.0
-	 * @param string $url home link during query.
-	 * @param string $path path requested.
+	 * @since  0.2.0
+	 * @param  string $url home link during query.
+	 * @param  string $path path requested.
 	 * @return string $url.
 	 */
 	public function monk_add_language_home_permalink( $url, $path ) {
+
+		// these cases are exceptions
 		if ( is_admin() || ! ( did_action( 'login_init' ) || did_action( 'template_redirect' ) ) ) {
 			return $url;
 		}
@@ -188,10 +198,11 @@ class Monk_Links {
 	}
 
 	/**
-	 * This function to perform a redirect from the home url,
-	 * ensuring use of the site language.
+	 * This function performs a redirect from the home url
+	 * when the user try to access it with no language
 	 *
-	 * @since 0.2.0
+	 * @since  0.2.0
+	 * @return void
 	 */
 	public function monk_redirect_home_url() {
 		// url is wether site.com/en or site.com/?lang=en.
@@ -216,9 +227,10 @@ class Monk_Links {
 	/**
 	 * Changes the post permalinks to add its language
 	 *
-	 * @since 0.2.0
-	 * @param string $permalink Post link during query.
-	 * @param object $post Post object.
+	 * @since  0.2.0
+	 * @param  string $permalink Post link during query.
+	 * @param  object $post Post object.
+	 * @return string $permalink
 	 */
 	public function monk_add_language_post_permalink( $permalink, $post ) {
 		global $wp_rewrite;
@@ -233,20 +245,20 @@ class Monk_Links {
 		}
 
 		if ( $this->monk_using_permalinks() ) {
-			$url = $this->monk_change_language_url( $permalink, $language );
-			return $url;
+			$permalink = $this->monk_change_language_url( $permalink, $language );
+			return $permalink;
 		} else {
-			$url = add_query_arg( 'lang', $language, $permalink );
-			return $url;
+			$permalink = add_query_arg( 'lang', $language, $permalink );
+			return $permalink;
 		}
 	}
 
 	/**
-	 *  Changes the page links to add its language
+	 *  Changes the page permalinks to add its language
 	 *
-	 * @since 0.2.0
-	 * @param string  $link Post link during query.
-	 * @param integer $post_id Post object.
+	 * @since  0.2.0
+	 * @param  string  $link Post link during query.
+	 * @param  integer $post_id Post object.
 	 * @return string $url Altered url.
 	 */
 	public function monk_add_language_page_permalink( $link, $post_id ) {
@@ -269,10 +281,11 @@ class Monk_Links {
 	}
 
 	/**
-	 * Changes the date archive links adding the language to filter results
+	 * Changes the date archive links adding the language to further filter results
 	 *
-	 * @since 0.2.0
-	 * @param string $link Url to the requested date archive.
+	 * @since  0.2.0
+	 * @param  string $link Url to the requested date archive.
+	 * @return string $url
 	 */
 	public function monk_add_language_date_permalink( $link ) {
 
@@ -284,21 +297,22 @@ class Monk_Links {
 
 		if ( $this->monk_using_permalinks() ) {
 			$path = wp_make_link_relative( $link );
-			$url  = trailingslashit( site_url() ) . $language . $path;
-			return $url;
+			$link  = trailingslashit( site_url() ) . $language . $path;
+			return $link;
 		} else {
-			$url = add_query_arg( 'lang', $language, $link );
-			return $url;
+			$link = add_query_arg( 'lang', $language, $link );
+			return $link;
 		}
 	}
 
 	/**
-	 *  Changes the term permalinks adding the language
+	 * Changes the term permalinks adding the language
 	 *
-	 * @since 0.2.0
-	 * @param string $url Term link during query.
-	 * @param object $term Term object.
-	 * @param string $taxonomy The taxonomy of each queried term.
+	 * @since  0.2.0
+	 * @param  string $url Term link during query.
+	 * @param  object $term Term object.
+	 * @param  string $taxonomy The taxonomy of each queried term.
+	 * @return string $url
 	 */
 	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
 		global $wp_rewrite;
@@ -313,20 +327,21 @@ class Monk_Links {
 
 		if ( $this->monk_using_permalinks() ) {
 			$path      = wp_make_link_relative( $url );
-			$permalink = trailingslashit( $wp_rewrite->root ) . $language . $path;
-			return $permalink;
+			$url = trailingslashit( $wp_rewrite->root ) . $language . $path;
+			return $url;
 		} else {
-			$link = add_query_arg( 'lang', $language, $url );
-			return $link;
+			$url = add_query_arg( 'lang', $language, $url );
+			return $url;
 		}
 	}
 
 	/**
 	 * Changes the author archive link, using the current language to filter results
 	 *
-	 * @since 0.2.0
-	 * @param string $link Url to author archive.
-	 * @param int    $author_id current query author id.
+	 * @since  0.2.0
+	 * @param  string $link Url to author archive.
+	 * @param  int    $author_id current query author id.
+	 * @return $link
 	 */
 	public function monk_add_language_author_permalink( $link, $author_id ) {
 
@@ -348,9 +363,10 @@ class Monk_Links {
 	}
 
 	/**
-	 * Changes link to use in searches( i.e get_search_link() ).
+	 * Changes link to use in searches and functions ( i.e get_search_link() ).
 	 *
-	 * @param string $link provided url.
+	 * @param  string $link provided url.
+	 * @return $link
 	 */
 	public function monk_add_language_search_permalink( $link ) {
 		$language = get_query_var( 'lang' ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
@@ -369,10 +385,10 @@ class Monk_Links {
 	}
 
 	/**
-	 * Function to add hidden field with the value of lang
-	 * Is used when permalinks are disabled
+	 * Function to add a hidden field with the value of the users language
+	 * only used when permalinks are disabled.
 	 *
-	 * @param string $form provided url.
+	 * @param  string $form provided url.
 	 * @return $form
 	 */
 	public function monk_change_search_form( $form ) {
@@ -381,6 +397,9 @@ class Monk_Links {
 			$page_language = get_query_var( 'lang' );
 			$language	   = ( empty( $page_language ) ) ? $site_language : $page_language;
 
+			/**
+			 * Replace the closing form tag with the hidden field
+			*/
 			if ( $this->monk_using_permalinks() ) {
 				return $form;
 			} else {
@@ -392,10 +411,11 @@ class Monk_Links {
 	}
 
 	/**
-	 * Changes the language inside a given url
+	 * Changes the language inside the given url
 	 *
-	 * @param string $url provided url.
-	 * @param string $lang the correct language to use.
+	 * @param  string $url provided url.
+	 * @param  string $lang the correct language to use.
+	 * @return $url
 	 */
 	public function monk_change_language_url( $url, $lang ) {
 		if ( empty( $lang ) ) {
@@ -424,10 +444,11 @@ class Monk_Links {
 	}
 
 	/**
-	 * Redirects the incoming url when a wrong language is detected
-	 * preventing duplicated content
+	 * Redirects the incoming url when a wrong ( or lacking ) language is detected
+	 * preventing duplicated content for SEO performance
 	 *
-	 * @since 0.2.0
+	 * @since  0.2.0
+	 * @return $redirect_url
 	 */
 	public function monk_need_canonical_redirect() {
 		global $wp_query, $post, $is_IIS;
@@ -445,10 +466,13 @@ class Monk_Links {
 			return;
 		}
 
-		// get the correct url and scheme.
+		// first get the correct url and scheme.
 		$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-		// then decide what type of content being requested.
+		/**
+		 * Then decide what type of content is being requested
+		 * prior to get its language
+		 */
 		if ( is_single() || is_page() ) {
 			if ( isset( $post->ID ) ) {
 				$language = get_post_meta( $post->ID, '_monk_post_language', true );
