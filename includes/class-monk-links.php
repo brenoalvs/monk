@@ -1,6 +1,6 @@
 <?php
 /**
- * The engine to change links according to language
+ * The engine to change links to use the apprpriate language
  *
  * @since      0.2.0
  *
@@ -9,8 +9,9 @@
  */
 
 /**
- * Class to hold all functions related to links
- * the permalinks are filtered to return content due to languages
+ * This class holds all functions related to links transformation
+ * the permalinks are filtered to return content related to
+ * the language defined by the user.
  *
  * @package    Monk
  * @subpackage Monk/Links
