@@ -1,6 +1,16 @@
 <?php
 /**
- * The engine that change links to use the apprpriate language
+ * The engine that changes links to use the apprpriate language
+ *
+ * @link       https://github.com/brenoalvs/monk
+ * @since      0.2.0
+ *
+ * @package    Monk
+ * @subpackage Monk/Includes
+ * @author     Alexandre Correa <alexandrecorreadeoliveira@gmail.com>
+ */
+
+/**
  * This class holds all functions related to links transformation
  * the permalinks are filtered to return content related to
  * the language defined by the user.
@@ -63,7 +73,6 @@ class Monk_Links {
 	 * @since  0.2.0
 	 * @param  array $rules rewrite rules.
 	 * @return array $monk_rules + $rules.
-	 * 
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
 
@@ -81,7 +90,7 @@ class Monk_Links {
 			$language_codes[ $codes ] = $codes;
 		}
 
-		// the $slug i.e (en|pt|es)
+		// the $slug i.e (en|pt|es).
 		$slug = $wp_rewrite->root . '(' . implode( '|', $language_codes ) . ')/';
 
 		/**
@@ -177,7 +186,7 @@ class Monk_Links {
 	 */
 	public function monk_add_language_home_permalink( $url, $path ) {
 
-		// these cases are exceptions
+		// these cases are exceptions, do not filter.
 		if ( is_admin() || ! ( did_action( 'login_init' ) || did_action( 'template_redirect' ) ) ) {
 			return $url;
 		}
@@ -341,7 +350,7 @@ class Monk_Links {
 	 * @since  0.2.0
 	 * @param  string $link Url to author archive.
 	 * @param  int    $author_id current query author id.
-	 * @return $link
+	 * @return string $link
 	 */
 	public function monk_add_language_author_permalink( $link, $author_id ) {
 
@@ -366,7 +375,7 @@ class Monk_Links {
 	 * Changes link to use in searches and functions ( i.e get_search_link() ).
 	 *
 	 * @param  string $link provided url.
-	 * @return $link
+	 * @return string $link
 	 */
 	public function monk_add_language_search_permalink( $link ) {
 		$language = get_query_var( 'lang' ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
@@ -389,7 +398,7 @@ class Monk_Links {
 	 * only used when permalinks are disabled.
 	 *
 	 * @param  string $form provided url.
-	 * @return $form
+	 * @return string|html $form
 	 */
 	public function monk_change_search_form( $form ) {
 		if ( $form ) {
