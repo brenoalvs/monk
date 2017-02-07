@@ -44,12 +44,13 @@ class Monk_Links {
 	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
-		$this->$structure = get_option( 'permalink_structure', false );
-		$this->plugin_name = $monk;
-		$this->version	   = $version;
-		$this->index	   = 'index.php';
-		$this->site_home   = home_url();
-		$this->site_root   = preg_match( '#^/*' . $this->index . '#', $this->$structure ) ? $this->index . '/' : '';
+		$this->version	      = $version;
+		$this->plugin_name    = $monk;
+		$this->index	      = 'index.php';
+		$this->site_home      = home_url();
+		$this->$structure     = get_option( 'permalink_structure', false );
+		$this->$site_language = get_option( 'monk_default_language', false );
+		$this->site_root      = preg_match( '#^/*' . $this->index . '#', $this->$structure ) ? $this->index . '/' : '';
 	}
 
 	/**
@@ -173,9 +174,8 @@ class Monk_Links {
 			return $url;
 		}
 
-		$site_language = get_option( 'monk_default_language', false );
 		$url_language  = get_query_var( 'lang' );
-		$language      = ( empty( $url_language ) ) ? $site_language : $url_language;
+		$language      = ( empty( $url_language ) ) ? $this->$site_language : $url_language;
 
 		if ( $language && '/' === $path ) {
 			if ( $this->monk_using_permalinks() ) {
@@ -199,9 +199,8 @@ class Monk_Links {
 		// url is wether site.com/en or site.com/?lang=en.
 		if ( is_home() && ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) ) {
 
-			$site_language = get_option( 'monk_default_language', false );
 			$url_language  = get_query_var( 'lang' );
-			$language      = ( empty( $url_language ) ) ? $site_language : $url_language;
+			$language      = ( empty( $url_language ) ) ? $this->$site_language : $url_language;
 
 			if ( $this->monk_using_permalinks() ) {
 				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
@@ -226,10 +225,9 @@ class Monk_Links {
 	public function monk_add_language_post_permalink( $permalink, $post ) {
 		global $wp_rewrite;
 
-		$site_language = get_option( 'monk_default_language', false );
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
 		$url_language  = get_query_var( 'lang' );
-		$language      = ( empty( $post_language ) ) ? $site_language : $post_language;
+		$language      = ( empty( $post_language ) ) ? $this->$site_language : $post_language;
 
 		if ( empty( $language ) ) {
 			return $permalink;
@@ -253,9 +251,8 @@ class Monk_Links {
 	 * @return string $url Altered url.
 	 */
 	public function monk_add_language_page_permalink( $link, $post_id ) {
-		$site_language = get_option( 'monk_default_language', false );
 		$page_language = get_post_meta( $post_id, '_monk_post_language', true );
-		$language	   = ( empty( $page_language ) ) ? $site_language : $page_language;
+		$language	   = ( empty( $page_language ) ) ? $this->$site_language : $page_language;
 
 		if ( empty( $language ) ) {
 			return $link;
@@ -278,7 +275,7 @@ class Monk_Links {
 	 * @return string $url
 	 */
 	public function monk_add_language_date_permalink( $link ) {
-		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
+		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->$site_language;
 
 		if ( empty( $language ) ) {
 			return $link;
@@ -306,9 +303,8 @@ class Monk_Links {
 	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
 		global $wp_rewrite;
 
-		$site_language = get_option( 'monk_default_language', false );
 		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
-		$language      = ( empty( $term_language ) ) ? $site_language : $term_language;
+		$language      = ( empty( $term_language ) ) ? $this->$site_language : $term_language;
 
 		if ( empty( $language ) ) {
 			return $url;
@@ -333,7 +329,7 @@ class Monk_Links {
 	 * @return string $link
 	 */
 	public function monk_add_language_author_permalink( $link, $author_id ) {
-		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
+		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->$site_language;
 
 		if ( $language ) {
 			if ( $this->monk_using_permalinks() ) {
@@ -357,7 +353,7 @@ class Monk_Links {
 	 * @return string $link
 	 */
 	public function monk_add_language_search_permalink( $link ) {
-		$language = get_query_var( 'lang' ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
+		$language = get_query_var( 'lang' ) ? get_query_var( 'lang' ) : $this->$site_language;
 
 		if ( empty( $language ) ) {
 			return $link;
@@ -381,9 +377,8 @@ class Monk_Links {
 	 */
 	public function monk_change_search_form( $form ) {
 		if ( $form ) {
-			$site_language = get_option( 'monk_default_language', false );
 			$page_language = get_query_var( 'lang' );
-			$language	   = ( empty( $page_language ) ) ? $site_language : $page_language;
+			$language	   = ( empty( $page_language ) ) ? $this->$site_language : $page_language;
 
 			/**
 			 * Replace the closing form tag with the hidden field
@@ -481,7 +476,7 @@ class Monk_Links {
 
 		if ( empty( $language ) ) {
 
-			$language     = get_option( 'monk_default_language', false );
+			$language     = $this->$site_language;
 			$redirect_url = $requested_url;
 
 		} else {
