@@ -156,7 +156,7 @@ class Monk_Links {
 	 * @return bool|string $structure
 	 */
 	public function monk_using_permalinks() {
-		return ( empty( $this->$structure ) ) ? false : $structure;
+		return ( empty( $this->$structure ) ) ? false : $this->$structure;
 	}
 
 	/**
