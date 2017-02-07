@@ -442,7 +442,7 @@ class Monk_Links {
 
 	/**
 	 * Redirects the incoming url when a wrong ( or lacking ) language is detected
-	 * preventing duplicated content for SEO performance
+	 * preventing duplicated content and improving SEO performance
 	 *
 	 * @since  0.2.0
 	 * @return $redirect_url
@@ -455,10 +455,12 @@ class Monk_Links {
 			return;
 		}
 
+		// when a media is being displayed, we do not want the redirection.
 		if ( is_attachment() && filter_input( INPUT_GET, 'attachment_id' ) ) {
 			return;
 		}
 
+		// the customizer functionality uses the admin link, do not filter either.
 		if ( filter_input( INPUT_GET, 'wp_customize' ) || filter_input( INPUT_GET, 'customized' ) ) {
 			return;
 		}
@@ -489,18 +491,23 @@ class Monk_Links {
 			$language = get_post_meta( $id, '_monk_post_language', true );
 		}
 
+		// if is not any of the above content cases, the fallback is the default language.
 		if ( empty( $language ) ) {
 
 			$language     = $this->site_language;
 			$redirect_url = $requested_url;
 
 		} else {
+			// use the redirect_canonical to check the canonical url that wordpress evaluates.
+			// is used twice to correct a bug in which the port is incorrect at the first try
+			// and returns correct in the second try.
 			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
 			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url: $redirect_url;
 
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $language );
 		}
 
+		// if the incoming url is with a wrong language, redirect.
 		if ( $redirect_url && $requested_url !== $redirect_url ) {
 			wp_safe_redirect( $redirect_url, 301 );
 			exit;
