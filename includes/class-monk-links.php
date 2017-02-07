@@ -72,7 +72,10 @@ class Monk_Links {
 	}
 
 	/**
-	 * Function to retrieve all user active languages from the option
+	 * Function to retrieve all user active languages
+	 *
+	 * Gets values from the option 'monk_active_languages'
+	 * or return false if the user did not configure the plugin yet
 	 * These languages are defined under the Monk Settings page
 	 *
 	 * @return    array active_languages.
@@ -83,12 +86,13 @@ class Monk_Links {
 
 	/**
 	 * Adds the set of custom rewrite rules for pretty permalinks
-	 * This function is used inside rewrite_rules filter,
-	 * which retrieves the array containing every rule
 	 *
-	 * @since  0.2.0
-	 * @param  array $rules rewrite rules.
-	 * @return array $monk_rules + $rules.
+	 * This function is used inside rewrite_rules filter,
+	 * which retrieves the array containing every rule and its regex to rewrite
+	 *
+	 * @since     0.2.0
+	 * @param     array $rules rewrite rules.
+	 * @return    array $monk_rules + $rules.
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
 		// get the filter being applied during the rules creation, except the root_rewrite_rules.
@@ -148,7 +152,9 @@ class Monk_Links {
 
 	/**
 	 * Adds the rewrite rule for the home page
-	 * Uses global $wp_rewrite
+	 *
+	 * The rule checks for a word with 2 letters, a '_' and other 2 capital letters
+	 * i.e 'en_US', 'pt_BR'. The mached value is translated to the parameter 'lang'
 	 *
 	 * @since  0.2.0
 	 * @return void
@@ -161,6 +167,10 @@ class Monk_Links {
 	 * Reinitializes the rewrite functions array whenever the option
 	 * 'monk_active_languages' gets updated
 	 *
+	 * The array of rewrite functions is constructed using the active languages,
+	 * using the filter 'pre_update_{option_name}'
+	 * we can tell when the user adds or removes a language
+	 *
 	 * @since  0.2.0
 	 * @return void
 	 */
@@ -170,7 +180,9 @@ class Monk_Links {
 
 	/**
 	 * Checks whether the pretty permalinks are active or not
-	 * if it is, return the structure
+	 *
+	 * Gets the permalink_structure option, which is used to build the links suiting the user preference
+	 * when it is empty, the functions run using query parameters
 	 *
 	 * @return bool|string $structure
 	 */
@@ -180,6 +192,9 @@ class Monk_Links {
 
 	/**
 	 * Changes the link to the home page using the current language.
+	 *
+	 * The link for the home page, in every place needed,
+	 * should take the site to the language the user is choose or the default site language
 	 *
 	 * @since  0.2.0
 	 * @param  string $url home link during query.
@@ -207,8 +222,10 @@ class Monk_Links {
 	}
 
 	/**
-	 * This function performs a redirect from the home url
-	 * when the user try to access it with no language
+	 * This function performs a redirect of the home url
+	 *
+	 * When a visitor try to access the site home without an active language
+	 * or with no language in the link, a redirect is performed bringing the right url
 	 *
 	 * @since  0.2.0
 	 * @return void
@@ -217,7 +234,11 @@ class Monk_Links {
 		$active_languages = $this->monk_get_active_languages();
 		$pattern          = '(' . implode( '|', $active_languages ) . ')';
 
-		// url is wether site.com/en or site.com/?lang=en.
+		/**
+		 * Only used in case home is being displayed and there is no lang parameter
+		 * or is a search result
+		 * Also if a not active language is requested
+		 */
 		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! preg_match( $pattern, get_query_var( 'lang' ) ) ) ) {
 
 			$url_language  = get_query_var( 'lang' );
@@ -238,6 +259,9 @@ class Monk_Links {
 
 	/**
 	 * Changes the post permalinks to add its language
+	 *
+	 * The language is retrieved from post_meta usind its id
+	 * and, in case the post has no language, use the site default language
 	 *
 	 * @since  0.2.0
 	 * @param  string $permalink Post link during query.
@@ -264,7 +288,10 @@ class Monk_Links {
 	}
 
 	/**
-	 *  Changes the page permalinks to add its language
+	 * Changes the page permalinks to add its language
+	 *
+	 * Gets the language from post_meta usind the page's id
+	 * and, in case no language is found, uses the site default language
 	 *
 	 * @since  0.2.0
 	 * @param  string  $link Post link during query.
@@ -288,7 +315,11 @@ class Monk_Links {
 	}
 
 	/**
-	 * Changes the date archive links adding the language to further filter results
+	 * Changes the date archive links adding the language
+	 *
+	 * The generated link comes with the current idiom
+	 * set by the language switcher widget or the default language
+	 * this languege is used to filter the date results
 	 *
 	 * @since  0.2.0
 	 * @param  string $link Url to the requested date archive.
@@ -311,7 +342,7 @@ class Monk_Links {
 	}
 
 	/**
-	 * Changes the term permalinks adding the language
+	 * Changes the term permalinks to add the language
 	 *
 	 * @since  0.2.0
 	 * @param  string $url Term link during query.
@@ -363,7 +394,10 @@ class Monk_Links {
 	}
 
 	/**
-	 * Changes link to use in searches and functions ( i.e get_search_link() ).
+	 * Changes the link used in searches
+	 *
+	 * The query_var retrieved is the idiom activated by the visitor, therefore every function
+	 * that uses the search link will be filtered using that language
 	 *
 	 * @param  string $link provided url.
 	 * @return string $link
@@ -385,7 +419,10 @@ class Monk_Links {
 
 	/**
 	 * Function to add a hidden field with the value of the users language
-	 * only used when permalinks are disabled.
+	 *
+	 * Only used when permalinks are disabled
+	 * Using the get_search_form action the function gets the html about to be used
+	 * in searches
 	 *
 	 * @param  string $form provided url.
 	 * @return string|html $form
@@ -442,7 +479,9 @@ class Monk_Links {
 
 	/**
 	 * Redirects the incoming url when a wrong ( or lacking ) language is detected
-	 * preventing duplicated content and improving SEO performance
+	 *
+	 * This function prevents duplicated content and improves SEO performance
+	 * beacause is executed along with the wordpress redirect_canonical
 	 *
 	 * @since  0.2.0
 	 * @return $redirect_url
