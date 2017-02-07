@@ -2,12 +2,10 @@
 /**
  * The engine that changes links to use the apprpriate language
  *
- * @link       https://github.com/brenoalvs/monk
  * @since      0.2.0
  *
  * @package    Monk
  * @subpackage Monk/Includes
- * @author     Alexandre Correa <alexandrecorreadeoliveira@gmail.com>
  */
 
 /**
@@ -75,7 +73,6 @@ class Monk_Links {
 	 * @return array $monk_rules + $rules.
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
-
 		// get the filter being applied during the rules creation, except the root_rewrite_rules.
 		$filter = str_replace( '_rewrite_rules', '', current_filter() );
 
@@ -185,7 +182,6 @@ class Monk_Links {
 	 * @return string $url.
 	 */
 	public function monk_add_language_home_permalink( $url, $path ) {
-
 		// these cases are exceptions, do not filter.
 		if ( is_admin() || ! ( did_action( 'login_init' ) || did_action( 'template_redirect' ) ) ) {
 			return $url;
@@ -271,7 +267,6 @@ class Monk_Links {
 	 * @return string $url Altered url.
 	 */
 	public function monk_add_language_page_permalink( $link, $post_id ) {
-
 		$site_language = get_option( 'monk_default_language', false );
 		$page_language = get_post_meta( $post_id, '_monk_post_language', true );
 		$language	   = ( empty( $page_language ) ) ? $site_language : $page_language;
@@ -297,7 +292,6 @@ class Monk_Links {
 	 * @return string $url
 	 */
 	public function monk_add_language_date_permalink( $link ) {
-
 		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
 
 		if ( empty( $language ) ) {
@@ -353,7 +347,6 @@ class Monk_Links {
 	 * @return string $link
 	 */
 	public function monk_add_language_author_permalink( $link, $author_id ) {
-
 		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : get_option( 'monk_default_language', false );
 
 		if ( $language ) {
@@ -415,7 +408,6 @@ class Monk_Links {
 				$form = str_replace( '</form>', '<input type="hidden" name="lang" value="' . esc_attr( $language ) . '" /></form>', $form );
 			}
 		}
-
 		return $form;
 	}
 
