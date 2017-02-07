@@ -244,7 +244,6 @@ class Monk {
 		$this->loader->add_filter( 'search_link', $plugin_links, 'monk_add_language_search_permalink', 20 );
 		$this->loader->add_filter( 'post_type_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
 		$this->loader->add_action( 'get_search_form', $plugin_links, 'monk_change_search_form', 50 );
-		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_redirect_search', 10 );
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_redirect_home_url', 10, 2 );
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_need_canonical_redirect', 5 );
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions' );
