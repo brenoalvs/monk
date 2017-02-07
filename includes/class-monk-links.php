@@ -179,7 +179,7 @@ class Monk_Links {
 
 		if ( $language && '/' === $path ) {
 			if ( $this->monk_using_permalinks() ) {
-				return trailingslashit( trailingslashit( $url ) . $language );
+				return trailingslashit( $url . '/' . $language );
 			} else {
 				return add_query_arg( 'lang', $language, $url );
 			}
