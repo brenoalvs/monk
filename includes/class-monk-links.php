@@ -44,13 +44,12 @@ class Monk_Links {
 	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
-		$structure = get_option( 'permalink_structure', false );
-
+		$this->$structure = get_option( 'permalink_structure', false );
 		$this->plugin_name = $monk;
 		$this->version	   = $version;
 		$this->index	   = 'index.php';
 		$this->site_home   = home_url();
-		$this->site_root   = preg_match( '#^/*' . $this->index . '#', $structure ) ? $this->index . '/' : '';
+		$this->site_root   = preg_match( '#^/*' . $this->index . '#', $this->$structure ) ? $this->index . '/' : '';
 	}
 
 	/**
