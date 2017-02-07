@@ -46,7 +46,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$title                = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
 		$flag                 = ! empty( $instance['flag'] ) ? true : false;
 		$active_languages     = get_option( 'monk_active_languages' );
-		$current_language     = get_query_var( 'lang' ) ? sanitize_text_field( wp_unslash( get_query_var( 'lang' ) ) ) : get_option( 'monk_default_language' );
+		$current_language     = get_query_var( 'lang' ) ? sanitize_text_field( get_query_var( 'lang' ) ) : get_option( 'monk_default_language', false );
 
 		if ( is_front_page() || is_post_type_archive() ) {
 			$current_url = monk_get_current_url();
