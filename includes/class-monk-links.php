@@ -37,6 +37,24 @@ class Monk_Links {
 	private $version;
 
 	/**
+	 * The structure for the permalinks used across the site.
+	 *
+	 * @since    0.2.0
+	 * @access   private
+	 * @var      string    $structure    The current permalink structure.
+	 */
+	private $structure;
+
+	/**
+	 * Language the user is using as the primary for the site.
+	 *
+	 * @since    0.2.0
+	 * @access   private
+	 * @var      string    $site_language    The main site language set by user.
+	 */
+	private $site_language;
+
+	/**
 	 * Initializes the class and set its properties.
 	 *
 	 * @since    0.2.0
@@ -44,13 +62,13 @@ class Monk_Links {
 	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
-		$this->version	      = $version;
-		$this->plugin_name    = $monk;
-		$this->index	      = 'index.php';
-		$this->site_home      = home_url();
-		$this->$structure     = get_option( 'permalink_structure', false );
-		$this->$site_language = get_option( 'monk_default_language', false );
-		$this->site_root      = preg_match( '#^/*' . $this->index . '#', $this->$structure ) ? $this->index . '/' : '';
+		$this->version	     = $version;
+		$this->plugin_name   = $monk;
+		$this->index	     = 'index.php';
+		$this->site_home     = home_url();
+		$this->structure     = get_option( 'permalink_structure', false );
+		$this->site_language = get_option( 'monk_default_language', false );
+		$this->site_root     = preg_match( '#^/*' . $this->index . '#', $this->structure ) ? $this->index . '/' : '';
 	}
 
 	/**
@@ -280,8 +298,9 @@ class Monk_Links {
 		}
 
 		if ( $this->monk_using_permalinks() ) {
-			$path = wp_make_link_relative( $link );
-			$link = trailingslashit( site_url() ) . $language . $path;
+			$link = $this->monk_change_language_url( $permalink, $language );
+			//$path = wp_make_link_relative( $link );
+			//$link = trailingslashit( site_url() ) . $language . $path;
 		} else {
 			$link = add_query_arg( 'lang', $language, $link );
 		}
