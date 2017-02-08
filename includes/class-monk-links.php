@@ -258,6 +258,39 @@ class Monk_Links {
 	}
 
 	/**
+	 * Changes the language inside the given url
+	 *
+	 * @param  string $url provided url.
+	 * @param  string $lang the correct language to use.
+	 * @return $url
+	 */
+	public function monk_change_language_url( $url, $lang ) {
+		if ( empty( $lang ) ) {
+			return $url;
+		} else {
+
+			$active_languages = $this->monk_get_active_languages();
+
+			if ( $this->monk_using_permalinks() ) {
+
+				if ( ! empty( $active_languages ) ) {
+
+					$slug    = $lang . '/';
+					$pattern = str_replace( '/', '\/', $this->site_home . '/' . $this->site_root );
+					$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
+					$url     = preg_replace( $pattern, $this->site_home . '/' . $this->site_root, $url );
+
+					return str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $slug, $url );
+				}
+			} else {
+				$url = remove_query_arg( 'lang', $url );
+				$url = ( empty( $lang ) ) ? $url : add_query_arg( 'lang', $lang, $url );
+				return $url;
+			}
+		}
+	}
+
+	/**
 	 * Changes the post permalinks to add its language
 	 *
 	 * The language is retrieved from post_meta usind its id
@@ -442,39 +475,6 @@ class Monk_Links {
 			}
 		}
 		return $form;
-	}
-
-	/**
-	 * Changes the language inside the given url
-	 *
-	 * @param  string $url provided url.
-	 * @param  string $lang the correct language to use.
-	 * @return $url
-	 */
-	public function monk_change_language_url( $url, $lang ) {
-		if ( empty( $lang ) ) {
-			return $url;
-		} else {
-
-			$active_languages = $this->monk_get_active_languages();
-
-			if ( $this->monk_using_permalinks() ) {
-
-				if ( ! empty( $active_languages ) ) {
-
-					$slug    = $lang . '/';
-					$pattern = str_replace( '/', '\/', $this->site_home . '/' . $this->site_root );
-					$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
-					$url     = preg_replace( $pattern, $this->site_home . '/' . $this->site_root, $url );
-
-					return str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $slug, $url );
-				}
-			} else {
-				$url = remove_query_arg( 'lang', $url );
-				$url = ( empty( $lang ) ) ? $url : add_query_arg( 'lang', $lang, $url );
-				return $url;
-			}
-		}
 	}
 
 	/**
