@@ -49,6 +49,7 @@
 			event.preventDefault();
 			var form_data = {
 				monk_id : $( '#monk-id' ).val(),
+				previous_post_id : $( '#previous-post-id' ).val(),
 				lang : $( '#monk-lang' ).val(),
 				action : 'monkattach'
 			}
