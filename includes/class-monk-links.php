@@ -1,6 +1,6 @@
 <?php
 /**
- * The engine that changes links to use the apprpriate language
+ * The engine that changes links in order use the apprpriate language
  *
  * @since      0.2.0
  *
