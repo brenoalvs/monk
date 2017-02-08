@@ -187,7 +187,7 @@ class Monk_Links {
 	 * @return bool|string $structure
 	 */
 	public function monk_using_permalinks() {
-		return ( empty( $this->$structure ) ) ? false : $this->$structure;
+		return ( empty( $this->structure ) ) ? false : $this->structure;
 	}
 
 	/**
@@ -312,11 +312,7 @@ class Monk_Links {
 			return $permalink;
 		}
 
-		if ( $this->monk_using_permalinks() ) {
-			$permalink = $this->monk_change_language_url( $permalink, $language );
-		} else {
-			$permalink = add_query_arg( 'lang', $language, $permalink );
-		}
+		$permalink = $this->monk_change_language_url( $permalink, $language );
 		return $permalink;
 	}
 
@@ -339,11 +335,7 @@ class Monk_Links {
 			return $link;
 		}
 
-		if ( $this->monk_using_permalinks() ) {
-			$link = $this->monk_change_language_url( $permalink, $language );
-		} else {
-			$link = add_query_arg( 'lang', $language, $link );
-		}
+		$link = $this->monk_change_language_url( $permalink, $language );
 		return $link;
 	}
 
@@ -394,8 +386,8 @@ class Monk_Links {
 		}
 
 		if ( $this->monk_using_permalinks() ) {
-			$path      = wp_make_link_relative( $url );
-			$url = trailingslashit( $wp_rewrite->root ) . $language . $path;
+			$path = wp_make_link_relative( $url );
+			$url  = trailingslashit( $wp_rewrite->root ) . $language . $path;
 		} else {
 			$url = add_query_arg( 'lang', $language, $url );
 		}
@@ -442,11 +434,7 @@ class Monk_Links {
 			return $link;
 		}
 
-		if ( $this->monk_using_permalinks() ) {
-			$link = $this->monk_change_language_url( $link, $language );
-		} else {
-			$link = add_query_arg( 'lang', $language, $link );
-		}
+		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
