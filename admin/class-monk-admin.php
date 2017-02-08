@@ -285,6 +285,8 @@ class Monk_Admin {
 			return;
 		}
 
+		global $monk_languages;
+
 		$active_languages  = get_option( 'monk_active_languages' );
 		$current_language  = get_post_meta( $post_id, '_monk_post_language', true );
 
@@ -326,8 +328,10 @@ class Monk_Admin {
 			$post_translations = array( $current_language => $post_id );
 		}
 
-		if ( $post_translations[''] ) {
-			unset( $post_translations[''] );
+		foreach ( $post_translations as $lang_code => $id ) {
+			if ( ! array_key_exists( $lang_code, $monk_languages ) ) {
+				unset( $post_translations[ $lang_code ] );
+			}
 		}
 
 		update_post_meta( $post_id, '_monk_post_translations_id', $monk_id );
@@ -841,14 +845,21 @@ class Monk_Admin {
 	 * @since   0.1.0
 	 */
 	public function monk_add_attachment() {
-		$monk_id       = $_REQUEST['monk_id'];
-		$lang          = $_REQUEST['lang'];
-		$attach_path   = wp_get_attachment_url( $monk_id );
+		$monk_id          = $_REQUEST['monk_id'];
+		$previous_post_id = $_REQUEST['previous_post_id'];
+		$lang             = $_REQUEST['lang'];
+		$attach_path      = get_attached_file( $monk_id );
+		$attach_url       = wp_get_attachment_url( $monk_id );
+
+		if ( empty( $attach_path ) ) {
+			$attach_path = get_attached_file( $previous_post_id );
+		}
+
 		$filetype      = wp_check_filetype( basename( $attach_path ), null );
 		$wp_upload_dir = wp_upload_dir();
 
 		$attachment    = array(
-			'guid'           => $wp_upload_dir['url'] . '/' . basename( $attach_path ),
+			'guid'           => $attach_url,
 			'post_mime_type' => $filetype['type'],
 			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $attach_path ) ),
 			'post_content'   => '',
@@ -954,10 +965,35 @@ class Monk_Admin {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-widget-notice.php';
 	}
 
-	public function teste( $file ) {
-		$file = null;
+	/**
+	 * This function is helper to monk_delete_attachment_file function.
+	 *
+	 * @param  int $post_id Id of the post.
+	 * @since  0.1.0
+	 * @return void
+	 */
+	public function monk_delete_attachment( $post_id ) {
+		global $monk_id;
+		$monk_id = get_post_meta( $post_id, '_monk_post_translations_id', true );
+	}
 
-		var_dump( did_action( 'delete_attachment' ) );
-		wp_die();
+	/**
+	 * This function prevents that the media file to be deleted if attachment has translations.
+	 *
+	 * @param  string $file The path of media file.
+	 * @since  0.1.0
+	 * @return string $file
+	 */
+	public function monk_delete_attachment_file( $file ) {
+		global $monk_id;
+		$monk_translations = get_option( 'monk_post_translations_' . $monk_id, array() );
+
+		if ( 1 <= count( $monk_translations ) ) {
+			$file = '';
+		}
+
+		return $file;
+		// var_dump(count( $monk_translations ));
+		// wp_die();
 	}
 }

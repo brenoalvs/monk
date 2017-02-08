@@ -208,7 +208,8 @@ class Monk {
 		$this->loader->add_action( 'edit_attachment', $plugin_admin, 'monk_save_post_meta_box' );
 		$this->loader->add_action( 'wp_ajax_monkattach', $plugin_admin, 'monk_add_attachment' );
 		$this->loader->add_filter( 'attachment_fields_to_edit', $plugin_admin, 'monk_attachment_meta_box', 10, 2 );
-		$this->loader->add_filter( 'wp_delete_file', $plugin_admin, 'teste' );
+		$this->loader->add_filter( 'wp_delete_file', $plugin_admin, 'monk_delete_attachment_file' );
+		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_attachment' );
 	}
 
 	/**
