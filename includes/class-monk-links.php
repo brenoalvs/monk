@@ -484,7 +484,7 @@ class Monk_Links {
 	 * beacause is executed along with the wordpress redirect_canonical
 	 *
 	 * @since  0.2.0
-	 * @return $redirect_url
+	 * @return string $redirect_url The right link, redirecting or not
 	 */
 	public function monk_need_canonical_redirect() {
 		global $wp_query, $post, $is_IIS;
