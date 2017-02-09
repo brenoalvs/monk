@@ -238,42 +238,6 @@ class Monk_Links {
 	}
 
 	/**
-	 * Performs a redirect to the home url with the right language.
-	 *
-	 * When a visitor try to access the site home without an active language
-	 * or with no language in the link, a redirect is performed bringing the right url
-	 *
-	 * @since    0.2.0
-	 *
-	 * @return void
-	 */
-	public function monk_redirect_home_url() {
-		$active_languages = $this->monk_get_active_languages();
-
-		/*
-		 * Only used in case home is being displayed and there is no lang parameter
-		 * or is a search result.
-		 * Also if a non-active language is requested.
-		 */
-		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! in_array( get_query_var( 'lang' ), $active_languages, true ) ) ) {
-
-			$url_language = get_query_var( 'lang' );
-			$language     = ( empty( $url_language ) ) ? $this->site_language : $url_language;
-			$language     = in_array( $language, $active_languages, true ) ? $language : $this->site_language;
-
-			if ( $this->monk_using_permalinks() ) {
-				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
-				exit();
-			} else {
-				wp_safe_redirect( add_query_arg( 'lang', $language, trailingslashit( home_url() ) ), 301 );
-				exit();
-			}
-		} else {
-			return;
-		}
-	}
-
-	/**
 	 * Changes the language in the given url.
 	 *
 	 * @since    0.2.0
@@ -481,6 +445,29 @@ class Monk_Links {
 	 */
 	public function monk_canonical_redirection() {
 		global $wp_query, $post, $is_IIS;
+
+		$active_languages = $this->monk_get_active_languages();
+
+		/*
+		 * Only use this when the home is being displayed and there is no lang parameter
+		 * or if a non-active language is requested.
+		 */
+		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! in_array( get_query_var( 'lang' ), $active_languages, true ) ) ) {
+
+			$url_language = get_query_var( 'lang' );
+			$language     = ( empty( $url_language ) ) ? $this->site_language : $url_language;
+			$language     = in_array( $language, $active_languages, true ) ? $language : $this->site_language;
+
+			if ( $this->monk_using_permalinks() ) {
+				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
+				exit();
+				return;
+			} else {
+				wp_safe_redirect( add_query_arg( 'lang', $language, trailingslashit( home_url() ) ), 301 );
+				exit();
+				return;
+			}
+		}
 
 		// We do not want to redirect in these cases.
 		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
