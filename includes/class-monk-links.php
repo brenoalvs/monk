@@ -1,19 +1,19 @@
 <?php
 /**
- * The engine that changes links in order use the apropriate language
- *
- * @since      0.2.0
+ * Links Engine: The Monk_Links class
  *
  * @package    Monk
  * @subpackage Monk/Includes
+ * @since      0.2.0
  */
 
 /**
  * Holds all functions to modify links.
  *
- * @since      0.2.0
- * The permalinks are filtered to return content related to
+ * The permalinks are filtered to return the content related to
  * the language defined by the user.
+ *
+ * @since      0.2.0
  *
  * @package    Monk
  * @subpackage Monk/Links
@@ -24,6 +24,7 @@ class Monk_Links {
 	 * The plugin ID.
 	 *
 	 * @since    0.2.0
+	 *
 	 * @access   private
 	 * @var      string    $monk    The ID of this plugin.
 	 */
@@ -33,6 +34,7 @@ class Monk_Links {
 	 * The version of this plugin.
 	 *
 	 * @since    0.2.0
+	 *
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -42,6 +44,7 @@ class Monk_Links {
 	 * The structure for the permalinks used across the site.
 	 *
 	 * @since    0.2.0
+	 *
 	 * @access   private
 	 * @var      string    $structure    The current permalink structure.
 	 */
@@ -51,6 +54,7 @@ class Monk_Links {
 	 * Language the user is using as the primary for the site.
 	 *
 	 * @since    0.2.0
+	 *
 	 * @access   private
 	 * @var      string    $site_language    The main site language set by user.
 	 */
@@ -60,6 +64,7 @@ class Monk_Links {
 	 * Initializes the class and set its properties.
 	 *
 	 * @since    0.2.0
+	 *
 	 * @param    string $monk       The name and ID of the plugin.
 	 * @param    string $version    The plugin version.
 	 */
@@ -80,7 +85,7 @@ class Monk_Links {
 	 * or return false if the user did not configure the plugin yet
 	 * These languages are defined under the Monk Settings page
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
 	 * @return array The active languages.
 	 */
@@ -92,17 +97,17 @@ class Monk_Links {
 	 * Adds the set of custom rewrite rules for pretty permalinks.
 	 *
 	 * This function is used inside rewrite_rules filter,
-	 * which retrieves the array containing every rule and its regex to rewrite
+	 * which retrieves the array containing every rule and its regex to process.
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @global class $wp_rewrite.
+	 * @global   class $wp_rewrite.
 	 *
-	 * @param array $rules The rewrite rules.
+	 * @param    array $rules The rewrite rules.
 	 * @return array $monk_rules + $rules.
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
-		// get the filter being applied during the rules creation, except the root_rewrite_rules.
+		// Get the filter being applied during the rules creation, except the root_rewrite_rules.
 		$filter = str_replace( '_rewrite_rules', '', current_filter() );
 
 		global $wp_rewrite;
@@ -111,18 +116,18 @@ class Monk_Links {
 		$language_codes = array();
 		$monk_languages = $this->monk_get_active_languages();
 
-		// constructs the array to hold all language codes.
+		// Constructs the array to hold all language codes.
 		foreach ( $monk_languages as $codes ) {
 			$language_codes[ $codes ] = $codes;
 		}
 
-		// the $slug i.e (en|pt|es).
+		// The $slug i.e (en|pt|es).
 		$slug = $wp_rewrite->root . '(' . implode( '|', $language_codes ) . ')/';
 
-		/**
-		 * The following foreach takes the rules as name => value,
+		/*
+		 * Takes the rules as name => value,
 		 * count every 'match[ $counter ]' and replace them with match[ $counter + 1 ]
-		 * also add the lang parameter in place of '?' symbol
+		 * also add the lang parameter in place of '?' symbol.
 		 */
 		foreach ( $rules as $name => $rule ) {
 
@@ -163,7 +168,7 @@ class Monk_Links {
 	 * The rule checks for a word with 2 letters, a '_' and other 2 capital letters
 	 * i.e 'en_US', 'pt_BR'. The mached value is translated to the parameter 'lang'
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
 	 * @return void
 	 */
@@ -178,7 +183,7 @@ class Monk_Links {
 	 * using the filter 'pre_update_{option_name}'
 	 * we can tell when the user adds or removes a language
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
 	 * @return void
 	 */
@@ -192,7 +197,7 @@ class Monk_Links {
 	 * Gets the permalink_structure option, which is used to build the links suiting the user preference
 	 * when it is empty, the functions run using query parameters
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
 	 * @return bool|string $structure.
 	 */
@@ -206,14 +211,14 @@ class Monk_Links {
 	 * The link for the home page, in every place needed,
 	 * should take the site to the language the user is choose or the default site language
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param string $url home link during query.
-	 * @param string $path path requested.
+	 * @param    string $url home link during query.
+	 * @param    string $path path requested.
 	 * @return string $url.
 	 */
 	public function monk_add_language_home_permalink( $url, $path ) {
-		// these cases are exceptions, do not filter.
+		// These cases are exceptions, do not filter.
 		if ( is_admin() || ! ( did_action( 'login_init' ) || did_action( 'template_redirect' ) ) ) {
 			return $url;
 		}
@@ -238,17 +243,17 @@ class Monk_Links {
 	 * When a visitor try to access the site home without an active language
 	 * or with no language in the link, a redirect is performed bringing the right url
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
 	 * @return void
 	 */
 	public function monk_redirect_home_url() {
 		$active_languages = $this->monk_get_active_languages();
 
-		/**
+		/*
 		 * Only used in case home is being displayed and there is no lang parameter
-		 * or is a search result
-		 * Also if a not active language is requested
+		 * or is a search result.
+		 * Also if a non-active language is requested.
 		 */
 		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! in_array( get_query_var( 'lang' ), $active_languages, true ) ) ) {
 
@@ -271,10 +276,10 @@ class Monk_Links {
 	/**
 	 * Changes the language in the given url.
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param string $url provided url.
-	 * @param string $lang the correct language to use.
+	 * @param    string $url provided url.
+	 * @param    string $lang the correct language to use.
 	 * @return $url The changed link.
 	 */
 	public function monk_change_language_url( $url, $lang ) {
@@ -304,10 +309,12 @@ class Monk_Links {
 	 * The language is retrieved from post_meta usind its id
 	 * and, in case the post has no language, use the site default language
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param string $permalink Post link during query.
-	 * @param object $post Post object.
+	 * @global    class $wp_rewrite.
+	 *
+	 * @param    string $permalink Post link during query.
+	 * @param    object $post Post object.
 	 * @return string $permalink.
 	 */
 	public function monk_add_language_post_permalink( $permalink, $post ) {
@@ -327,10 +334,10 @@ class Monk_Links {
 	 * Gets the language from post_meta usind the page's id
 	 * and, in case no language is found, uses the site default language
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param string  $link Post link during query.
-	 * @param integer $post_id Post object.
+	 * @param    string $link Post link during query.
+	 * @param    int    $post_id Post object.
 	 * @return string $url Altered url.
 	 */
 	public function monk_add_language_page_permalink( $link, $post_id ) {
@@ -348,9 +355,9 @@ class Monk_Links {
 	 * set by the language switcher widget or the default language
 	 * this languege is used to filter the date results
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param string $link Url to the requested date archive.
+	 * @param    string $link Url to the requested date archive.
 	 * @return string $link.
 	 */
 	public function monk_add_language_date_permalink( $link ) {
@@ -368,11 +375,13 @@ class Monk_Links {
 	/**
 	 * Changes the term permalinks to add the idiom.
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param string $url Term link during query.
-	 * @param object $term Term object.
-	 * @param string $taxonomy The taxonomy of each queried term.
+	 * @global    class $wp_rewrite.
+	 *
+	 * @param    string $url Term link during query.
+	 * @param    object $term Term object.
+	 * @param    string $taxonomy The taxonomy of each queried term.
 	 * @return string $url.
 	 */
 	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
@@ -393,10 +402,10 @@ class Monk_Links {
 	/**
 	 * Changes the author archive link to use the current language.
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param string $link Url to author archive.
-	 * @param int    $author_id current query author id.
+	 * @param    string $link Url to author archive.
+	 * @param    int    $author_id current query author id.
 	 * @return string $link.
 	 */
 	public function monk_add_language_author_permalink( $link, $author_id ) {
@@ -417,9 +426,9 @@ class Monk_Links {
 	 * The query_var retrieved is the idiom activated by the visitor, therefore every function
 	 * that uses the search link will be filtered using that language
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param  string $link provided url.
+	 * @param    string $link provided url.
 	 * @return string $link.
 	 */
 	public function monk_add_language_search_permalink( $link ) {
@@ -436,9 +445,9 @@ class Monk_Links {
 	 * Using the get_search_form action the function gets the html about to be used
 	 * in searches
 	 *
-	 * @since 0.2.0
+	 * @since    0.2.0
 	 *
-	 * @param  string $form provided url.
+	 * @param    string $form provided url.
 	 * @return string|html $form.
 	 */
 	public function monk_change_search_form( $form ) {
@@ -446,9 +455,7 @@ class Monk_Links {
 			$page_language = get_query_var( 'lang' );
 			$language	   = ( empty( $page_language ) ) ? $this->site_language : $page_language;
 
-			/**
-			 * Replace the closing form tag with the hidden field
-			*/
+			// Replace the closing form tag with the hidden field.
 			if ( $this->monk_using_permalinks() ) {
 				return $form;
 			} else {
@@ -462,36 +469,40 @@ class Monk_Links {
 	 * Redirects the incoming url when a wrong ( or lacking ) language is detected.
 	 *
 	 * This function prevents duplicated content and improves SEO performance
-	 * beacause is executed along with the wordpress redirect_canonical
+	 * beacause is executed along with the wordpress redirect_canonical.
 	 *
-	 * @since  0.2.0
+	 * @since    0.2.0
 	 *
-	 * @return string $redirect_url The correct link.
+	 * @global    object $wp_query.
+	 * @global    object $post.
+	 * @global bool $is_IIS.
+	 *
+	 * @return void|string $redirect_url The correct link.
 	 */
 	public function monk_canonical_redirection() {
 		global $wp_query, $post, $is_IIS;
 
-		// we do not want to redirect in these cases.
+		// We do not want to redirect in these cases.
 		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
 			return;
 		}
 
-		// when a media is being displayed, we do not want the redirection.
+		// When a media is being displayed, we do not want the redirection.
 		if ( is_attachment() && filter_input( INPUT_GET, 'attachment_id' ) ) {
 			return;
 		}
 
-		// the customizer functionality uses the admin link, do not filter either.
+		// The customizer functionality uses the admin link, do not filter either.
 		if ( filter_input( INPUT_GET, 'wp_customize' ) || filter_input( INPUT_GET, 'customized' ) ) {
 			return;
 		}
 
-		// first get the correct url and scheme.
+		// First get the correct url and scheme.
 		$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-		/**
+		/*
 		 * Then decide what type of content is being requested
-		 * prior to get its language
+		 * before retrieving its language.
 		 */
 		if ( is_single() || is_page() ) {
 			if ( isset( $post->ID ) ) {
@@ -512,23 +523,25 @@ class Monk_Links {
 			$language = get_post_meta( $id, '_monk_post_language', true );
 		}
 
-		// if is not any of the above content cases, the fallback is the default language.
+		// If is not any of the above content cases, the fallback is the default language.
 		if ( empty( $language ) ) {
 
 			$language     = $this->site_language;
 			$redirect_url = $requested_url;
 
 		} else {
-			// use the redirect_canonical to check the canonical url that wordpress evaluates.
-			// is used twice to correct a bug in which the port is incorrect at the first try
-			// and returns correct in the second try.
+			/*
+			 * Uses the redirect_canonical to check the canonical url that wordpress evaluates.
+			 * Is used twice to correct a bug in which the port is incorrect at the first try
+			 * and returns correct in the second try.
+			 */
 			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
 			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url: $redirect_url;
 
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $language );
 		}
 
-		// if the incoming url is with a wrong language, redirect.
+		// If the incoming url has a wrong language, redirect.
 		if ( $redirect_url && $requested_url !== $redirect_url ) {
 			wp_safe_redirect( $redirect_url, 301 );
 			exit;
