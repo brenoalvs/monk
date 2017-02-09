@@ -11,6 +11,7 @@
 /**
  * Holds all functions to modify links.
  *
+ * @since      0.2.0
  * The permalinks are filtered to return content related to
  * the language defined by the user.
  *
