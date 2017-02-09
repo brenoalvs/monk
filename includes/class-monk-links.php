@@ -232,18 +232,17 @@ class Monk_Links {
 	 */
 	public function monk_redirect_home_url() {
 		$active_languages = $this->monk_get_active_languages();
-		$pattern          = '(' . implode( '|', $active_languages ) . ')';
 
 		/**
 		 * Only used in case home is being displayed and there is no lang parameter
 		 * or is a search result
 		 * Also if a not active language is requested
 		 */
-		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! preg_match( $pattern, get_query_var( 'lang' ) ) ) ) {
+		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! in_array( get_query_var( 'lang' ), $active_languages, true ) ) ) {
 
-			$url_language  = get_query_var( 'lang' );
-			$language      = ( empty( $url_language ) ) ? $this->site_language : $url_language;
-			$language      = preg_match( $pattern, $language ) ? $language : $this->site_language;
+			$url_language = get_query_var( 'lang' );
+			$language     = ( empty( $url_language ) ) ? $this->site_language : $url_language;
+			$language     = in_array( $language, $active_languages, true ) ? $language : $this->site_language;
 
 			if ( $this->monk_using_permalinks() ) {
 				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
