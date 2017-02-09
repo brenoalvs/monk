@@ -921,7 +921,7 @@ class Monk_Admin {
 			if ( ! $monk_attach_options ) {
 				$monk_attach_options = __( 'No translations available', 'monk' );
 			}
-			return $monk_attach_options;
+			return $monk_attach_options . get_current_screen();
 		}
 	}
 
@@ -941,10 +941,16 @@ class Monk_Admin {
 		$is_modal  = ! isset( $_REQUEST['post'] ) ? true : false;
 		$post_type = $post->post_type;
 
+		if ( $language ) {
+			$language = $monk_languages[ $language ]['name'];
+		} else {
+			$language = '-';
+		}
+
 		if ( 'attachment' === $post_type && $is_modal ) {
 		    $form_fields['language'] = array(
 				'input' => 'html',
-				'html' => $monk_languages[ $language ]['name'],
+				'html' => $language,
 				'label' => __( 'Language', 'monk' ),
 			);
 			$form_fields['translate'] = array(
