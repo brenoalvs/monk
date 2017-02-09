@@ -921,7 +921,7 @@ class Monk_Admin {
 			if ( ! $monk_attach_options ) {
 				$monk_attach_options = __( 'No translations available', 'monk' );
 			}
-			return $monk_attach_options . get_current_screen();
+			return $monk_attach_options;
 		}
 	}
 
