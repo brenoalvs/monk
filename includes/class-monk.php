@@ -210,6 +210,7 @@ class Monk {
 		$this->loader->add_filter( 'attachment_fields_to_edit', $plugin_admin, 'monk_attachment_meta_box', 10, 2 );
 		$this->loader->add_filter( 'wp_delete_file', $plugin_admin, 'monk_delete_attachment_file' );
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_attachment' );
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'define_view_mode' );
 	}
 
 	/**

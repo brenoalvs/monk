@@ -758,6 +758,7 @@ class Monk_Admin {
 			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
 			$default_language          = get_option( 'monk_default_language', false );
 			$available_languages       = false;
+			$post_type                 = 'none';
 
 			if ( ! is_array( $monk_term_translations ) ) {
 				$monk_term_translations = array( $monk_term_translations );
@@ -842,7 +843,7 @@ class Monk_Admin {
 	/**
 	 * Function to create a new media translation.
 	 *
-	 * @since   0.1.0
+	 * @since   0.2.0
 	 */
 	public function monk_add_attachment() {
 		$monk_id          = $_REQUEST['monk_id'];
@@ -898,7 +899,7 @@ class Monk_Admin {
 	 *
 	 * @param  object $post Post object.
 	 * @return string $monk_attach_options
-	 * @since  0.1.0
+	 * @since  0.2.0
 	 */
 	public function monk_language_selector_render( $post ) {
 		global $monk_languages;
@@ -930,7 +931,7 @@ class Monk_Admin {
 	 * @param  array  $form_fields Form fields array.
 	 * @param  object $post        Post object.
 	 * @return array $form_fields Form fields array.
-	 * @since  0.1.0
+	 * @since  0.2.0
 	 */
 	public function monk_attachment_meta_box( $form_fields, $post ) {
 		global $monk_languages;
@@ -969,7 +970,7 @@ class Monk_Admin {
 	 * This function is helper to monk_delete_attachment_file function.
 	 *
 	 * @param  int $post_id Id of the post.
-	 * @since  0.1.0
+	 * @since  0.2.0
 	 * @return void
 	 */
 	public function monk_delete_attachment( $post_id ) {
@@ -981,7 +982,7 @@ class Monk_Admin {
 	 * This function prevents that the media file to be deleted if attachment has translations.
 	 *
 	 * @param  string $file The path of media file.
-	 * @since  0.1.0
+	 * @since  0.2.0
 	 * @return string $file
 	 */
 	public function monk_delete_attachment_file( $file ) {
@@ -993,7 +994,24 @@ class Monk_Admin {
 		}
 
 		return $file;
-		// var_dump(count( $monk_translations ));
-		// wp_die();
+	}
+
+	/**
+	 * This function sets the view mode to list when the user first accesses the media list page.
+	 *
+	 * @since  0.2.0
+	 * @return void
+	 */
+	public function difine_view_mode() {
+		global $current_screen;
+
+		$is_first_access = get_option( 'monk_first_media_list_access', false );
+
+		if ( 'upload' === $current_screen->base && $is_first_access ) {
+			delete_option( 'monk_first_media_list_access' );
+			$url = add_query_arg( 'mode', 'list', admin_url( $current_screen->base . '.php' ) );
+			wp_safe_redirect( $url, 303 );
+			exit();
+		}
 	}
 }

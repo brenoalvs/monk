@@ -29,6 +29,7 @@ class Monk_Activator {
 	 */
 	public static function activate() {
 		global $monk_languages;
+
 		$locale = get_locale();
 		if ( array_key_exists( $locale, $monk_languages ) ) {
 			$language = $locale;
@@ -39,6 +40,7 @@ class Monk_Activator {
 		update_option( 'monk_default_language', $language );
 		update_option( 'monk_active_languages', array( $language ) );
 		update_option( 'monk_settings_notice', true );
+		update_option( 'monk_first_media_list_access', true );
 		set_transient( '_monk_redirect', true, 30 );
 	}
 
