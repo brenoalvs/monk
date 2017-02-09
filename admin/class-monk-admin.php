@@ -1002,7 +1002,7 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 * @return void
 	 */
-	public function difine_view_mode() {
+	public function define_view_mode() {
 		global $current_screen;
 
 		$is_first_access = get_option( 'monk_first_media_list_access', false );
