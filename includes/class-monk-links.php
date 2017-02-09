@@ -444,7 +444,7 @@ class Monk_Links {
 	 * @since  0.2.0
 	 * @return string $redirect_url The right link, redirecting or not
 	 */
-	public function monk_need_canonical_redirect() {
+	public function monk_canonical_redirection() {
 		global $wp_query, $post, $is_IIS;
 
 		// we do not want to redirect in these cases.
