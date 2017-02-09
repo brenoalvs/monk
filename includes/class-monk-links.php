@@ -265,28 +265,23 @@ class Monk_Links {
 	 * @return $url
 	 */
 	public function monk_change_language_url( $url, $lang ) {
-		if ( empty( $lang ) ) {
-			return $url;
-		} else {
+		$active_languages = $this->monk_get_active_languages();
 
-			$active_languages = $this->monk_get_active_languages();
+		if ( $this->monk_using_permalinks() ) {
 
-			if ( $this->monk_using_permalinks() ) {
+			if ( ! empty( $active_languages ) ) {
 
-				if ( ! empty( $active_languages ) ) {
+				$slug    = $lang . '/';
+				$pattern = str_replace( '/', '\/', $this->site_home . '/' . $this->site_root );
+				$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
+				$url     = preg_replace( $pattern, $this->site_home . '/' . $this->site_root, $url );
 
-					$slug    = $lang . '/';
-					$pattern = str_replace( '/', '\/', $this->site_home . '/' . $this->site_root );
-					$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
-					$url     = preg_replace( $pattern, $this->site_home . '/' . $this->site_root, $url );
-
-					return str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $slug, $url );
-				}
-			} else {
-				$url = remove_query_arg( 'lang', $url );
-				$url = ( empty( $lang ) ) ? $url : add_query_arg( 'lang', $lang, $url );
-				return $url;
+				return str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $slug, $url );
 			}
+		} else {
+			$url = remove_query_arg( 'lang', $url );
+			$url = ( empty( $lang ) ) ? $url : add_query_arg( 'lang', $lang, $url );
+			return $url;
 		}
 	}
 
@@ -308,10 +303,6 @@ class Monk_Links {
 		$url_language  = get_query_var( 'lang' );
 		$language      = ( empty( $post_language ) ) ? $this->site_language : $post_language;
 
-		if ( empty( $language ) ) {
-			return $permalink;
-		}
-
 		$permalink = $this->monk_change_language_url( $permalink, $language );
 		return $permalink;
 	}
@@ -331,11 +322,7 @@ class Monk_Links {
 		$page_language = get_post_meta( $post_id, '_monk_post_language', true );
 		$language	   = ( empty( $page_language ) ) ? $this->site_language : $page_language;
 
-		if ( empty( $language ) ) {
-			return $link;
-		}
-
-		$link = $this->monk_change_language_url( $permalink, $language );
+		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
@@ -352,10 +339,6 @@ class Monk_Links {
 	 */
 	public function monk_add_language_date_permalink( $link ) {
 		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->site_language;
-
-		if ( empty( $language ) ) {
-			return $link;
-		}
 
 		if ( $this->monk_using_permalinks() ) {
 			$path = wp_make_link_relative( $link );
@@ -381,10 +364,6 @@ class Monk_Links {
 		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$language      = ( empty( $term_language ) ) ? $this->site_language : $term_language;
 
-		if ( empty( $language ) ) {
-			return $url;
-		}
-
 		if ( $this->monk_using_permalinks() ) {
 			$path = wp_make_link_relative( $url );
 			$url  = trailingslashit( $wp_rewrite->root ) . $language . $path;
@@ -405,15 +384,11 @@ class Monk_Links {
 	public function monk_add_language_author_permalink( $link, $author_id ) {
 		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->site_language;
 
-		if ( $language ) {
-			if ( $this->monk_using_permalinks() ) {
-				$link = str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $language . '/', $link );
-			} else {
-				$link = add_query_arg( 'lang', $language, home_url() );
-				$link = add_query_arg( 'author', $author_id, $link );
-			}
+		if ( $this->monk_using_permalinks() ) {
+			$link = str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $language . '/', $link );
 		} else {
-			$link = add_query_arg( 'author', $author_id, home_url() );
+			$link = add_query_arg( 'lang', $language, home_url() );
+			$link = add_query_arg( 'author', $author_id, $link );
 		}
 		return $link;
 	}
@@ -429,10 +404,6 @@ class Monk_Links {
 	 */
 	public function monk_add_language_search_permalink( $link ) {
 		$language = get_query_var( 'lang' ) ? get_query_var( 'lang' ) : $this->site_language;
-
-		if ( empty( $language ) ) {
-			return $link;
-		}
 
 		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
