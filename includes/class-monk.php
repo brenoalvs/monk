@@ -74,6 +74,7 @@ class Monk {
 		$this->define_global_hooks();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_link_hooks();
 		$this->define_widget_hooks();
 	}
 
@@ -124,6 +125,11 @@ class Monk {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-monk-public.php';
+
+		/**
+		 * The class responsible for changing the links structure
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-monk-links.php';
 
 		/**
 		 * Class responsible for create Monk_Language_Switcher widget.
@@ -224,6 +230,34 @@ class Monk {
 	}
 
 	/**
+	 * Register all of the hooks related to links and permalinks
+	 *
+	 * @since    0.2.0
+	 * @access   private
+	 */
+	private function define_link_hooks() {
+
+		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'init', $plugin_links, 'monk_add_home_rewrite_rule' );
+		$this->loader->add_filter( 'home_url', $plugin_links, 'monk_add_language_home_permalink', 10, 2 );
+		$this->loader->add_filter( 'day_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
+		$this->loader->add_filter( 'post_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
+		$this->loader->add_filter( 'page_link', $plugin_links, 'monk_add_language_page_permalink', 20, 2 );
+		$this->loader->add_filter( 'term_link', $plugin_links, 'monk_add_language_term_permalink', 20, 3 );
+		$this->loader->add_filter( 'year_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
+		$this->loader->add_filter( 'month_link', $plugin_links, 'monk_add_language_date_permalink', 20, 2 );
+		$this->loader->add_filter( 'author_link', $plugin_links, 'monk_add_language_author_permalink', 20, 2 );
+		$this->loader->add_filter( 'search_link', $plugin_links, 'monk_add_language_search_permalink', 20 );
+		$this->loader->add_filter( 'post_type_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
+		$this->loader->add_filter( 'post_type_archive_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
+		$this->loader->add_action( 'get_search_form', $plugin_links, 'monk_change_search_form', 50 );
+		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_canonical_redirection', 5 );
+		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions' );
+		$this->loader->add_filter( 'update_option_monk_active_languages', $plugin_links, 'monk_flush_on_update' );
+	}
+
+	/**
 	 * Register all of the hooks related to Monk Widgets
 	 *
 	 * @since    0.1.0
@@ -263,10 +297,10 @@ class Monk {
 	/**
 	 * Registrate the query vars to generate the custom urls.
 	 *
+	 * @since    0.1.0
+	 *
 	 * @param array $vars Array of monk query vars.
 	 * @return array $vars
-	 *
-	 * @since    0.1.0
 	 */
 	public function monk_query_vars( $vars ) {
 		$vars[] = 'lang';

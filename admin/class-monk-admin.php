@@ -92,6 +92,20 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Function to display a notice on plugin activation
+	 *
+	 * The created notice gets the user to the configuration page
+	 *
+	 * @since   1.0.0
+	 */
+	public function monk_activation_notice() {
+		$monk_settings_notice = get_option( 'monk_settings_notice', false );
+		if ( $monk_settings_notice ) {
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-notice-render.php';
+		}
+	}
+
+	/**
 	 * Function to register the settings page of the plugin
 	 *
 	 * @since    0.1.0
@@ -521,6 +535,12 @@ class Monk_Admin {
 				);
 
 				$query->set( 'meta_query', $meta_query_args );
+			}
+		} elseif ( $query->is_archive() ) {
+			$lang = ( empty( get_query_var( 'lang' ) ) ) ? get_option( 'monk_default_language', false ) : get_query_var( 'lang' );
+			if ( $query->is_archive ) {
+				$query->set( 'meta_key', '_monk_post_language' );
+				$query->set( 'meta_value', $lang );
 			}
 		}
 	}
