@@ -936,13 +936,22 @@ class Monk_Admin {
 	public function monk_attachment_meta_box( $form_fields, $post ) {
 		global $monk_languages;
 
-		$post_id   = $post->ID;
-		$language  = get_post_meta( $post_id, '_monk_post_language', true );
-		$is_modal  = ! isset( $_REQUEST['post'] ) ? true : false;
-		$post_type = $post->post_type;
+		$post_id           = $post->ID;
+		$language          = get_post_meta( $post_id, '_monk_post_language', true );
+		$fallback_language = isset( $_REQUEST['post_id'] ) ? get_post_meta( $_REQUEST['post_id'], '_monk_post_language', true ) : '';
+		$is_modal          = ! isset( $_REQUEST['post'] ) ? true : false;
+		$post_type         = $post->post_type;
+		$is_translatable   = true;
+
+		if ( $fallback_language ) {
+			$is_translatable = false;
+		}		
 
 		if ( $language ) {
 			$language = $monk_languages[ $language ]['name'];
+			if ( $fallback_language ) {
+				$is_translatable = false;
+			}
 		} else {
 			$language = '-';
 		}
@@ -950,14 +959,16 @@ class Monk_Admin {
 		if ( 'attachment' === $post_type && $is_modal ) {
 		    $form_fields['language'] = array(
 				'input' => 'html',
-				'html' => $language,
+				'html'  => $language,
 				'label' => __( 'Language', 'monk' ),
 			);
-			$form_fields['translate'] = array(
-				'input' => 'html',
-				'html' => $this->monk_language_selector_render( $post ),
-				'label' => __( 'Translate', 'monk' ),
-			);
+			if ( $is_translatable ) {
+				$form_fields['translate'] = array(
+					'input' => 'html',
+					'html'  => $this->monk_language_selector_render( $post ),
+					'label' => __( 'Translate', 'monk' ),
+				);
+			}
 		}
 		return $form_fields;
 	}
@@ -1018,6 +1029,43 @@ class Monk_Admin {
 			$url = add_query_arg( 'mode', 'list', admin_url( $current_screen->base . '.php' ) );
 			wp_safe_redirect( $url, 303 );
 			exit();
+		}
+	}
+
+	/**
+	 * This function filter attachments by meta_key in post edit page.
+	 *
+	 * @since  0.2.0
+	 * @param object $query Object Query.
+	 * @return  void
+	 */
+	public function medias_modal_filter( $query ) {
+		global $current_screen;
+		if ( is_admin() && isset( $_REQUEST['post_id'] ) && isset( $_REQUEST['action'] ) ) {
+			$default_language = get_option( 'monk_default_language' );
+			$post_id  = $_REQUEST['post_id'];
+			$language = get_post_meta( $post_id, '_monk_post_language', true );
+
+			if ( 'query-attachments' === $_REQUEST['action'] && $language ) {
+				if ( $language !== $default_language ) {
+					$query->set( 'meta_key', '_monk_post_language' );
+					$query->set( 'meta_value', $language );
+				} else {
+					$meta_query_args = array(
+						'relation' => 'OR', // Optional, defaults to "AND".
+						array(
+							'key'   => '_monk_post_language',
+							'value' => $default_language,
+						),
+						array(
+							'key'     => '_monk_post_language',
+							'compare' => 'NOT EXISTS',
+						)
+					);
+
+					$query->set( 'meta_query', $meta_query_args );
+				}
+			}
 		}
 	}
 }
