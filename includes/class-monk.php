@@ -211,6 +211,7 @@ class Monk {
 		$this->loader->add_filter( 'wp_delete_file', $plugin_admin, 'monk_delete_attachment_file' );
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_attachment' );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'define_view_mode' );
+		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'medias_modal_filter' );
 	}
 
 	/**
