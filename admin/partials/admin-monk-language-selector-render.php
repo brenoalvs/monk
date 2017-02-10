@@ -37,6 +37,7 @@ foreach ( $active_languages as $lang_code ) {
 ?>
 </select>
 <input type="hidden" name="monk_id" id="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
+<input type="hidden" id="previous-post-id" value="<?php echo esc_attr( $post_id ); ?>">
 <button class="button" id="<?php echo esc_attr( $attach ); ?>">
 	<?php echo esc_html__( 'Ok', 'monk' ); ?>
 </button>
