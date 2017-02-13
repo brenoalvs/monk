@@ -69,8 +69,8 @@ class Monk_Admin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->monk, 'monkattach', array(
-			'monk_ajax' => admin_url( 'admin-ajax.php' ),
+		wp_localize_script( $this->monk, 'monk', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
 		));
 	}
 
@@ -890,8 +890,7 @@ class Monk_Admin {
 			'monk_id' => $monk_id,
 		), $monk_attach_url );
 
-		echo $language_url;
-		wp_die();
+		wp_send_json_success( $language_url );
 	}
 
 	/**
@@ -945,7 +944,7 @@ class Monk_Admin {
 
 		if ( $fallback_language ) {
 			$is_translatable = false;
-		}		
+		}
 
 		if ( $language ) {
 			$language = $monk_languages[ $language ]['name'];
