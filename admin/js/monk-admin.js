@@ -51,16 +51,15 @@
 				monk_id : $( '#monk-id' ).val(),
 				previous_post_id : $( '#previous-post-id' ).val(),
 				lang : $( '#monk-lang' ).val(),
-				action : 'monkattach'
+				action : 'monk'
 			}
 			
 			$.ajax({
 				type: 'POST',
-				url: monkattach.monk_ajax,
+				url: monk.ajax_url,
 				data: form_data,
 				success: function( response ) {
-					console.log(response);
-					window.location.replace( response );
+					window.location.replace( response.data );
 				}
 			});
 
