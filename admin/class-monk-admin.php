@@ -843,7 +843,8 @@ class Monk_Admin {
 	/**
 	 * Function to create a new media translation.
 	 *
-	 * @since   0.2.0
+	 * @return void
+	 * @since  0.2.0
 	 */
 	public function monk_add_attachment() {
 		$monk_id          = $_REQUEST['monk_id'];
@@ -894,13 +895,14 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to render input type select.
+	 * Function to render input type select in medias modal.
 	 *
 	 * @param  object $post Post object.
+	 * @param  string $language_code Current post language.
 	 * @return string $monk_attach_options
 	 * @since  0.2.0
 	 */
-	public function monk_language_selector_render( $post ) {
+	public function monk_language_selector_render( $post, $language_code ) {
 		global $monk_languages;
 
 		$post_id             = $post->ID;
@@ -929,7 +931,7 @@ class Monk_Admin {
 	 *
 	 * @param  array  $form_fields Form fields array.
 	 * @param  object $post        Post object.
-	 * @return array $form_fields Form fields array.
+	 * @return array  $form_fields Form fields array.
 	 * @since  0.2.0
 	 */
 	public function monk_attachment_meta_box( $form_fields, $post ) {
@@ -937,22 +939,35 @@ class Monk_Admin {
 
 		$post_id           = $post->ID;
 		$language          = get_post_meta( $post_id, '_monk_post_language', true );
-		$fallback_language = isset( $_REQUEST['post_id'] ) ? get_post_meta( $_REQUEST['post_id'], '_monk_post_language', true ) : '';
+		$new_post_language = monk_get_url_args( 'lang' );
+		$post_language     = isset( $_REQUEST['post_id'] ) ? get_post_meta( $_REQUEST['post_id'], '_monk_post_language', true ) : '';
+		$default_language  = get_option( 'monk_default_language', false );
 		$is_modal          = ! isset( $_REQUEST['post'] ) ? true : false;
 		$post_type         = $post->post_type;
 		$is_translatable   = true;
 
-		if ( $fallback_language ) {
+		if ( 'upload.php' !== substr( strrchr( parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
 			$is_translatable = false;
 		}
 
 		if ( $language ) {
-			$language = $monk_languages[ $language ]['name'];
-			if ( $fallback_language ) {
-				$is_translatable = false;
-			}
+			$lang_code = $language;
+			$language  = $monk_languages[ $language ]['name'];
+		} elseif ( ! $language && $post_language ) {
+			$lang_code = $post_language;
+			$language = $monk_languages[ $post_language ]['name'];
+		} elseif ( ! $language && $new_post_language ) {
+			$lang_code = $new_post_language;
+			$language = $monk_languages[ $new_post_language ]['name'];
 		} else {
-			$language = '-';
+			$lang_code = $default_language;
+			$language = $monk_languages[ $default_language ]['name'];
+		}
+
+		if ( $lang_code !== $default_language ) {
+			update_option( 'monk_post_translations_' . $post_id, array( $lang_code => $post_id ) );
+			update_post_meta( $post_id, '_monk_post_language', $lang_code );
+			update_post_meta( $post_id, '_monk_post_translations_id', $post_id );
 		}
 
 		if ( 'attachment' === $post_type && $is_modal ) {
@@ -964,7 +979,7 @@ class Monk_Admin {
 			if ( $is_translatable ) {
 				$form_fields['translate'] = array(
 					'input' => 'html',
-					'html'  => $this->monk_language_selector_render( $post ),
+					'html'  => $this->monk_language_selector_render( $post, $lang_code ),
 					'label' => __( 'Translate', 'monk' ),
 				);
 			}
@@ -1039,13 +1054,21 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function medias_modal_filter( $query ) {
-		global $current_screen;
-		if ( is_admin() && isset( $_REQUEST['post_id'] ) && isset( $_REQUEST['action'] ) ) {
-			$default_language = get_option( 'monk_default_language' );
+		if ( is_admin() && ( isset( $_REQUEST['post_id'] ) && '0' !== $_REQUEST['post_id'] ) && isset( $_REQUEST['action'] ) ) {
+
+			$default_language  = get_option( 'monk_default_language' );
 			$post_id  = $_REQUEST['post_id'];
 			$language = get_post_meta( $post_id, '_monk_post_language', true );
 
-			if ( 'query-attachments' === $_REQUEST['action'] && $language ) {
+			if ( empty( $language ) ) {
+				if ( ! empty( monk_get_url_args( 'lang' ) ) ) {
+					$language = monk_get_url_args( 'lang' );
+				} else {
+					$language = $default_language;
+				}
+			}
+
+			if ( 'query-attachments' === $_REQUEST['action'] ) {
 				if ( $language !== $default_language ) {
 					$query->set( 'meta_key', '_monk_post_language' );
 					$query->set( 'meta_value', $language );
