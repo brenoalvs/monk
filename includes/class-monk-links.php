@@ -267,14 +267,14 @@ class Monk_Links {
 				$pattern = str_replace( '/', '\/', $base );
 				$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
 				$url     = preg_replace( $pattern, $base, $url );
-
-				return str_replace( $base, $base . $slug, $url );
+				$url     = str_replace( $base, $base . $slug, $url );
 			}
 		} else {
 			$url = remove_query_arg( 'lang', $url );
 			$url = ( empty( $lang ) ) ? $url : add_query_arg( 'lang', $lang, $url );
-			return $url;
 		}
+
+		return $url;
 	}
 
 	/**
