@@ -13,11 +13,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-foreach ( $switchable_languages as $code => $name ) {
-	if ( $monk_languages[ $code ]['slug'] === $current_language ) {
-		$current_language = $code;
-		$current_slug = $monk_languages[ $code ]['slug'];
+foreach ( $monk_languages as $lang_code => $list ) {
+	if ( $list['slug'] === $current_language ) {
+		$current_language = $lang_code;
+		$current_slug = $list['slug'];
 	}
+	$monk_languages_reverted[ $list['slug'] ] = $list;
 }
 
 echo $args['before_widget'];
@@ -35,13 +36,13 @@ echo $args['before_widget'];
 		</div>
 		<ul class="monk-language-dropdown">
 			<?php foreach ( $switchable_languages as $code => $url ) : ?>
-				<?php if ( $monk_languages[ $current_language ]['native_name'] !== $monk_languages[ $code ]['native_name'] ) : ?>
+				<?php if ( $code !== $monk_languages[ $current_language ]['slug'] ) : ?>
 					<li class="monk-lang">
 						<a class="monk-language-link" href="<?php echo esc_url( $url ); ?>">
 							<?php if ( ! $flag ) : ?>
-								<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $code ]['slug'] ) ?>"></span>
+								<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages_reverted[ $code ]['slug'] ) ?>"></span>
 							<?php endif; ?>
-								<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $code ]['native_name'] ); ?></span>
+								<span class="monk-language-name"><?php echo esc_html( $monk_languages_reverted[ $code ]['native_name'] ); ?></span>
 						</a>
 					</li>
 				<?php endif; ?>
