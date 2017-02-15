@@ -256,6 +256,9 @@ class Monk_Links {
 	 * @return $url The changed link.
 	 */
 	public function monk_change_language_url( $url, $lang ) {
+		global $monk_languages;
+
+		$language         = $monk_languages[ $lang ]['slug'];
 		$active_languages = $this->monk_get_active_languages();
 
 		if ( $this->monk_using_permalinks() ) {
@@ -263,7 +266,7 @@ class Monk_Links {
 			if ( ! empty( $active_languages ) ) {
 
 				$base    = $this->site_home . '/' . $this->site_root;
-				$slug    = $lang . '/';
+				$slug    = $language . '/';
 				$pattern = str_replace( '/', '\/', $base );
 				$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
 				$url     = preg_replace( $pattern, $base, $url );
@@ -271,7 +274,7 @@ class Monk_Links {
 			}
 		} else {
 			$url = remove_query_arg( 'lang', $url );
-			$url = ( empty( $lang ) ) ? $url : add_query_arg( 'lang', $lang, $url );
+			$url = ( empty( $language ) ) ? $url : add_query_arg( 'lang', $language, $url );
 		}
 
 		return $url;
