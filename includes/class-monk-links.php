@@ -293,8 +293,13 @@ class Monk_Links {
 	public function monk_change_language_url( $url, $lang ) {
 		global $monk_languages;
 
-		$language         = $monk_languages[ $lang ]['slug'];
 		$active_languages = $this->monk_get_active_languages();
+
+		if ( in_array( $lang, $active_languages, true ) ) {
+			$language = $lang;
+		} else {
+			$language = $monk_languages[ $lang ]['slug'];
+		}
 
 		if ( $this->monk_using_permalinks() ) {
 
