@@ -473,13 +473,10 @@ class Monk_Links {
 
 			if ( $this->monk_using_permalinks() ) {
 				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
-				exit();
-				return;
 			} else {
 				wp_safe_redirect( add_query_arg( 'lang', $language, trailingslashit( home_url() ) ), 301 );
-				exit();
-				return;
 			}
+			exit();
 		}
 
 		// We do not want to redirect in these cases.
