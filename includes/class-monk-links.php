@@ -118,8 +118,10 @@ class Monk_Links {
 	 * @return array $monk_rules + $rules.
 	 */
 	public function monk_create_rewrite_functions( $rules ) {
-		// Get the filter being applied during the rules creation, except the root_rewrite_rules.
-		$filter = str_replace( '_rewrite_rules', '', current_filter() );
+		// Do not execute if the current filter applied is referent to root.
+		if ( 'root_rewrite_rules' === current_filter() ) {
+			return $rules;
+		}
 
 		global $wp_rewrite;
 
@@ -164,10 +166,6 @@ class Monk_Links {
 					$rule
 				);
 			}
-		}
-
-		if ( 'root' === $filter ) {
-			return;
 		}
 
 		return $monk_rules + $rules;
