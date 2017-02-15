@@ -104,8 +104,13 @@ class Monk_Links {
 		$this->index	     = 'index.php';
 		$this->site_home     = home_url();
 		$this->structure     = get_option( 'permalink_structure', false );
-		$this->site_language = get_option( 'monk_default_language', false );
 		$this->site_root     = preg_match( '#^/*' . $this->index . '#', $this->structure ) ? $this->index . '/' : '';
+
+		$default_language    = get_option( 'monk_default_language', false );
+
+		if ( $default_language ) {
+			$this->site_language = $monk_languages[ $default_language ]['slug'];
+		}
 	}
 
 	/**
