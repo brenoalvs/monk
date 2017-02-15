@@ -43,22 +43,36 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		global $monk_languages;
-		$switchable_languages = array();
-		$title                = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
-		$flag                 = ! empty( $instance['flag'] ) ? true : false;
-		$active_languages     = get_option( 'monk_active_languages' );
-		$current_language     = get_query_var( 'lang' ) ? sanitize_text_field( get_query_var( 'lang' ) ) : get_option( 'monk_default_language', false );
-		$default_language     = get_option( 'monk_default_language', false );
+
+		$switchable_languages    = array();
+		$active_languages_slug   = array();
+		$title                   = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
+		$flag                    = ! empty( $instance['flag'] ) ? true : false;
+		$active_languages        = get_option( 'monk_active_languages' );
+		$current_language        = '';
+		$monk_languages_reverted = array();
+		$default_language        = get_option( 'monk_default_language', false );
+
+		if ( get_query_var( 'lang' ) ) {
+			$current_language = sanitize_text_field( get_query_var( 'lang' ) );
+		} else {
+			$code = get_option( 'monk_default_language', false );
+			$current_language = $monk_languages[ $code ]['slug'];
+		}
 
 		if ( is_front_page() || is_post_type_archive() || is_date() || is_404() || is_author() || is_search() ) {
 			$current_url = monk_get_current_url();
 
-			foreach ( $active_languages as $lang_code ) {
+			foreach ( $active_languages as $code ) {
+				$active_languages_slug[] = $monk_languages[ $code ]['slug'];
+			}
+
+			foreach ( $active_languages_slug as $lang_code ) {
 				if ( $lang_code !== $current_language ) {
 					if ( get_option( 'permalink_structure', false ) ) {
 						if ( get_query_var( 'lang' ) ) {
 							$current_url = remove_query_arg( 'lang', $current_url );
-							$pattern = '/\/(' . implode( '|', $active_languages ) . ')/';
+							$pattern = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
 							$current_url = preg_replace( $pattern, '', $current_url );
 						}
 						$switchable_languages[ $lang_code ] = $current_url . '/' . $lang_code;
@@ -83,7 +97,7 @@ class Monk_Language_Switcher extends WP_Widget {
 
 			if ( is_array( $monk_total_translations ) ) {
 				foreach ( $monk_total_translations as $lang_code => $post_id ) {
-					if ( in_array( $lang_code, $active_languages ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
+					if ( in_array( $lang_code, $active_languages, true ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
 						$monk_translations[ $lang_code ] = $post_id;
 					}
 				}
@@ -122,7 +136,7 @@ class Monk_Language_Switcher extends WP_Widget {
 
 			if ( is_array( $monk_total_translations ) ) {
 				foreach ( $monk_total_translations as $lang_code => $post_id ) {
-					if ( in_array( $lang_code, $active_languages ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
+					if ( in_array( $lang_code, $active_languages, true ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
 						$monk_translations[ $lang_code ] = $post_id;
 					}
 				}
