@@ -498,7 +498,7 @@ class Monk_Links {
 	 * @return void|string $redirect_url The correct link.
 	 */
 	public function monk_canonical_redirection() {
-		global $wp_query, $post, $is_IIS;
+		global $wp_query, $post, $is_IIS, $monk_languages;
 
 		$active_languages = $this->monk_get_active_languages();
 
@@ -544,27 +544,32 @@ class Monk_Links {
 		 */
 		if ( is_single() || is_page() ) {
 			if ( isset( $post->ID ) ) {
+
 				$language = get_post_meta( $post->ID, '_monk_post_language', true );
+				$slug     = $monk_languages[ $language ]['slug'];
 			}
 		} elseif ( is_category() || is_tax() || is_tag() ) {
 
 			$obj 	  = $wp_query->get_queried_object();
 			$language = get_term_meta( $obj->ID, '_monk_term_language', true );
+			$slug     = $monk_languages[ $language ]['slug'];
 
 		} elseif ( $wp_query->is_posts_page ) {
 
 			$obj 	  = $wp_query->get_queried_object();
 			$language = get_post_meta( $obj->ID, '_monk_post_language', true );
+			$slug     = $monk_languages[ $language ]['slug'];
 
 		} elseif ( is_404() && ! empty( $wp_query->query['page_id'] ) && $id = get_query_var( 'page_id' ) ) {
 
 			$language = get_post_meta( $id, '_monk_post_language', true );
+			$slug     = $monk_languages[ $language ]['slug'];
 		}
 
 		// If is not any of the above content cases, the fallback is the default language.
-		if ( empty( $language ) ) {
+		if ( empty( $slug ) ) {
 
-			$language     = $this->site_language;
+			$slug         = $this->site_language;
 			$redirect_url = $requested_url;
 
 		} else {
@@ -576,7 +581,7 @@ class Monk_Links {
 			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
 			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url: $redirect_url;
 
-			$redirect_url = $this->monk_change_language_url( $redirect_url, $language );
+			$redirect_url = $this->monk_change_language_url( $redirect_url, $slug );
 		}
 
 		// If the incoming url has a wrong language, redirect.
