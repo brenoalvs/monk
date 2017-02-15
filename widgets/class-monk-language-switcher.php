@@ -107,8 +107,8 @@ class Monk_Language_Switcher extends WP_Widget {
 
 			if ( $monk_translations ) {
 				foreach ( $monk_translations as $lang_code => $post_id ) {
-					if ( $lang_code !== $current_language ) {
-						$switchable_languages[ $lang_code ] = get_permalink( $post_id );
+					if ( $monk_languages[ $lang_code ]['slug'] !== $current_language ) {
+						$switchable_languages[ $monk_languages[ $lang_code ]['slug'] ] = get_permalink( $post_id );
 					}
 				}
 			} else {
