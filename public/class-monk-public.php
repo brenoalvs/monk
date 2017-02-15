@@ -93,12 +93,6 @@ class Monk_Public {
 			$active_slug[ $lang_code ] = $monk_languages[ $lang_code ]['slug'];
 		}
 
-		if ( $current_language && ! in_array( $current_language, $active_slug ) ) {
-			$current_url = add_query_arg( 'lang', esc_attr( $monk_languages[ $default_language ]['slug'], 'monk' ), $current_url );
-			wp_safe_redirect( $current_url );
-			exit;
-		}
-
 		if ( ! $current_language ) {
 			if ( is_singular() ) {
 				$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
