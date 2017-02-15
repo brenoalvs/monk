@@ -279,7 +279,7 @@ class Monk_Links {
 			}
 		}
 
-		return $url;
+		return $link;
 	}
 
 	/**
