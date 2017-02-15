@@ -90,7 +90,18 @@ class Monk_Links {
 	 * @return array The active languages.
 	 */
 	public function monk_get_active_languages() {
-		return get_option( 'monk_active_languages', false );
+		global $monk_languages;
+
+		$active_languages = array();
+		$languages        = get_option( 'monk_active_languages', false );
+
+		if ( $languages ) {
+			foreach ( $languages as $lang_code ) {
+				$active_languages[] = $monk_languages[ $lang_code ]['slug'];
+			}
+		}
+
+		return $active_languages;
 	}
 
 	/**
