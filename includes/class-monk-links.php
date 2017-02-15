@@ -41,6 +41,26 @@ class Monk_Links {
 	private $version;
 
 	/**
+	 * Refers to the index file, the fallback for every query.
+	 *
+	 * @since    0.2.0
+	 *
+	 * @access   private
+	 * @var      string    $index    Index file.
+	 */
+	private $index;
+
+	/**
+	 * Link for the home set by the user.
+	 *
+	 * @since    0.2.0
+	 *
+	 * @access   private
+	 * @var      string    $site_home    The link  for the home.
+	 */
+	private $site_home;
+
+	/**
 	 * The structure for the permalinks used across the site.
 	 *
 	 * @since    0.2.0
@@ -61,6 +81,16 @@ class Monk_Links {
 	private $site_language;
 
 	/**
+	 * The root for the site urls, comes from the permalink structure.
+	 *
+	 * @since    0.2.0
+	 *
+	 * @access   private
+	 * @var      string    $site_root    The site root.
+	 */
+	private $site_root;
+
+	/**
 	 * Initializes the class and set its properties.
 	 *
 	 * @since    0.2.0
@@ -69,8 +99,8 @@ class Monk_Links {
 	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
-		$this->version	     = $version;
 		$this->plugin_name   = $monk;
+		$this->version	     = $version;
 		$this->index	     = 'index.php';
 		$this->site_home     = home_url();
 		$this->structure     = get_option( 'permalink_structure', false );
