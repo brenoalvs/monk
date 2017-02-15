@@ -222,14 +222,14 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @param    string $url home link during query.
+	 * @param    string $link home link during query.
 	 * @param    string $path path requested.
-	 * @return string $url.
+	 * @return string $link.
 	 */
-	public function monk_add_language_home_permalink( $url, $path ) {
+	public function monk_add_language_home_permalink( $link, $path ) {
 		// These cases are exceptions, do not filter.
 		if ( is_admin() || ! ( did_action( 'login_init' ) || did_action( 'template_redirect' ) ) ) {
-			return $url;
+			return $link;
 		}
 
 		$url_language  = get_query_var( 'lang' );
@@ -237,9 +237,9 @@ class Monk_Links {
 
 		if ( $language && '/' === $path ) {
 			if ( $this->monk_using_permalinks() ) {
-				$url = trailingslashit( $url . '/' . $language );
+				$link = trailingslashit( $link . '/' . $language );
 			} else {
-				$url = add_query_arg( 'lang', $language, $url );
+				$link = add_query_arg( 'lang', $language, $link );
 			}
 		}
 
@@ -290,19 +290,19 @@ class Monk_Links {
 	 *
 	 * @global    class $wp_rewrite.
 	 *
-	 * @param    string $permalink Post link during query.
+	 * @param    string $link Post link during query.
 	 * @param    object $post Post object.
-	 * @return string $permalink.
+	 * @return string $link.
 	 */
-	public function monk_add_language_post_permalink( $permalink, $post ) {
+	public function monk_add_language_post_permalink( $link, $post ) {
 		global $wp_rewrite;
 
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
 		$url_language  = get_query_var( 'lang' );
 		$language      = ( empty( $post_language ) ) ? $this->site_language : $post_language;
 
-		$permalink = $this->monk_change_language_url( $permalink, $language );
-		return $permalink;
+		$link = $this->monk_change_language_url( $link, $language );
+		return $link;
 	}
 
 	/**
@@ -356,24 +356,24 @@ class Monk_Links {
 	 *
 	 * @global    class $wp_rewrite.
 	 *
-	 * @param    string $url Term link during query.
+	 * @param    string $link Term link during query.
 	 * @param    object $term Term object.
 	 * @param    string $taxonomy The taxonomy of each queried term.
-	 * @return string $url.
+	 * @return string $link.
 	 */
-	public function monk_add_language_term_permalink( $url, $term, $taxonomy ) {
+	public function monk_add_language_term_permalink( $link, $term, $taxonomy ) {
 		global $wp_rewrite;
 
 		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$language      = ( empty( $term_language ) ) ? $this->site_language : $term_language;
 
 		if ( $this->monk_using_permalinks() ) {
-			$path = wp_make_link_relative( $url );
-			$url  = trailingslashit( $wp_rewrite->root ) . $language . $path;
+			$path = wp_make_link_relative( $link );
+			$link  = trailingslashit( $wp_rewrite->root ) . $language . $path;
 		} else {
-			$url = add_query_arg( 'lang', $language, $url );
+			$link = add_query_arg( 'lang', $language, $link );
 		}
-		return $url;
+		return $link;
 	}
 
 	/**
