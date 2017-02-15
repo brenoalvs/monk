@@ -262,12 +262,13 @@ class Monk_Links {
 
 			if ( ! empty( $active_languages ) ) {
 
+				$base    = $this->site_home . '/' . $this->site_root;
 				$slug    = $lang . '/';
-				$pattern = str_replace( '/', '\/', $this->site_home . '/' . $this->site_root );
+				$pattern = str_replace( '/', '\/', $base );
 				$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
-				$url     = preg_replace( $pattern, $this->site_home . '/' . $this->site_root, $url );
+				$url     = preg_replace( $pattern, $base, $url );
 
-				return str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $slug, $url );
+				return str_replace( $base, $base . $slug, $url );
 			}
 		} else {
 			$url = remove_query_arg( 'lang', $url );
