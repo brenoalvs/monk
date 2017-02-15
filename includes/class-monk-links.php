@@ -509,8 +509,9 @@ class Monk_Links {
 		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! in_array( get_query_var( 'lang' ), $active_languages, true ) ) ) {
 
 			$url_language = get_query_var( 'lang' );
-			$language     = ( empty( $url_language ) ) ? $this->site_language : $url_language;
-			$language     = in_array( $language, $active_languages, true ) ? $language : $this->site_language;
+			$site_language = $monk_languages[ get_option( 'monk_default_language', false ) ]['slug'];
+			$language     = ( empty( $url_language ) ) ? $site_language : $url_language;
+			$language     = ( in_array( $language, $active_languages, true ) ) ? $language : $site_language;
 
 			if ( $this->monk_using_permalinks() ) {
 				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
