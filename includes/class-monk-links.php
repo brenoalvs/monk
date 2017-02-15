@@ -403,10 +403,10 @@ class Monk_Links {
 	 * @return string $link.
 	 */
 	public function monk_add_language_term_permalink( $link, $term, $taxonomy ) {
-		global $wp_rewrite;
+		global $wp_rewrite, $monk_languages;
 
 		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
-		$language      = ( empty( $term_language ) ) ? $this->site_language : $term_language;
+		$language      = ( empty( $term_language ) ) ? $this->site_language : $monk_languages[ $term_language ]['slug'];
 
 		if ( $this->monk_using_permalinks() ) {
 			$path = wp_make_link_relative( $link );
