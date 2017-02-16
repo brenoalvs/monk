@@ -39,16 +39,16 @@ function monk_get_current_url() {
 }
 
 /**
- * Returns the URL parameter.
+ * Returns an URL parameter.
  *
  * @since  0.1.0
  * @param  string $arg The desired parameter.
  *
- * @return array URL parameter.
+ * @return array The URL parameter.
  */
 function monk_get_url_args( $arg ) {
 	$url    = $_SERVER['HTTP_REFERER'];
-	$return = parse_url( $url )['query'];
+	$return = array_key_exists( 'query',  parse_url( $url ) ) ? parse_url( $url )['query'] : '';
 	$return = parse_str( $return, $name );
 
 	if ( isset( $name[ $arg ] ) ) {
