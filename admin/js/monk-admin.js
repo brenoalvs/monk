@@ -45,14 +45,15 @@
 			e.preventDefault();
 		});
 
-		$( document ).on( 'click', '#monk-attach', function( event ) {
+		$( document ).on( 'click', '.monk-attach', function( event ) {
 			event.preventDefault();
 			var form_data = {
-				monk_id : $( '#monk-id' ).val(),
-				previous_post_id : $( '#previous-post-id' ).val(),
-				lang : $( '#monk-lang' ).val(),
-				action : 'monk'
+				monk_id          : $( this ).siblings( '.monk-id' ).val(),
+				previous_post_id : $( this ).siblings( '.previous-post-id' ).val(),
+				lang             : $( this ).siblings( '.monk-lang' ).val(),
+				action           : 'monk'
 			}
+			console.log( form_data );
 			
 			$.ajax({
 				type: 'POST',
@@ -65,6 +66,25 @@
 
 			return false;
 		});
+
+		// $( document ).on( 'change', '.setting', function( event ) {
+		// 	event.preventDefault();
+		// 	var form_data = {
+		// 		attach_id  : $( '#attach-id' ).val(),
+		// 		language : $( '#language' ).val(),
+		// 		action   : 'monk_media'
+		// 	}
+			
+		// 	$.ajax({
+		// 		type: 'POST',
+		// 		url: monk_media.ajax_url,
+		// 		data: form_data,
+		// 		success: function( response ) {
+		// 		}
+		// 	});
+
+		// 	return false;
+		// });
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();

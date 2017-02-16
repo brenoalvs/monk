@@ -77,7 +77,7 @@ if ( ! defined( 'WPINC' ) ) {
 	</div>
 	<div class="monk-post-meta-add-translation">
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
-			<select name="monk_post_translation_id" id='monk-lang'>
+			<select name="monk_post_translation_id" class='monk-lang'>
 				<?php
 				$post_type = get_post_type( $post->ID );
 				if ( 'post' !== $post_type && 'attachment' !== $post_type ) :
@@ -133,8 +133,8 @@ if ( ! defined( 'WPINC' ) ) {
 			$attach = ( 'attachment' === $post_type ) ? 'monk-attach' : '';
 			if ( $attach ) :
 				?>
-				<input type="hidden" name="monk_id" id="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
-				<button class="button" id="<?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+				<input type="hidden" name="monk_id" class="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
+				<button class="button <?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 				<?php
 			else :
 			?>
