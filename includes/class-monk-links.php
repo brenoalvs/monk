@@ -178,28 +178,29 @@ class Monk_Links {
 		 * also add the lang parameter in place of '?' symbol.
 		 */
 		foreach ( $rules as $name => $rule ) {
+			if ( ! strpos( $rule, '?lang=$matches[1]' ) ) {
+				$old_matches = array();
+				$new_matches = array();
+				$max         = preg_match_all( '/(\$matches\[[1-9]{1,}\])/', $rule, $matches );
 
-			$old_matches = array();
-			$new_matches = array();
-			$max         = preg_match_all( '/(\$matches\[[1-9]{1,}\])/', $rule, $matches );
-
-			if ( $max ) {
-				for ( $old = $max; $old >= 1; $old-- ) {
-					$new = $old + 1;
-					array_push( $old_matches, '[' . $old . ']' );
-					array_push( $new_matches, '[' . $new . ']' );
+				if ( $max ) {
+					for ( $old = $max; $old >= 1; $old-- ) {
+						$new = $old + 1;
+						array_push( $old_matches, '[' . $old . ']' );
+						array_push( $new_matches, '[' . $new . ']' );
+					}
 				}
-			}
 
-			array_push( $old_matches, '?' );
-			array_push( $new_matches, '?lang=$matches[1]&' );
+				array_push( $old_matches, '?' );
+				array_push( $new_matches, '?lang=$matches[1]&' );
 
-			if ( isset( $slug ) ) {
-				$monk_rules[ $slug . str_replace( $wp_rewrite->root, '', $name ) ] = str_replace(
-					$old_matches,
-					$new_matches,
-					$rule
-				);
+				if ( isset( $slug ) ) {
+					$monk_rules[ $slug . str_replace( $wp_rewrite->root, '', $name ) ] = str_replace(
+						$old_matches,
+						$new_matches,
+						$rule
+					);
+				}
 			}
 		}
 
