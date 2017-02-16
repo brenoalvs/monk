@@ -111,6 +111,20 @@
 			$( document ).ajaxComplete( function() {
 				$( location ).attr( 'href', url[0] );
 			});
-		}
+		};
+
+		/**
+		 * Insert language for new attachments added through media modal.
+		 *
+		 * Hook into uploader success callback getting the uploaded attachment ID and trigger
+		 * a change event on its language hidden field to dispatch an AJAX request provided by core
+		 * to update attachment language.
+		 */
+		$.extend( wp.Uploader.prototype, {
+	        success : function( file_attachment ){
+	        	var attachment_id = file_attachment.attributes.id;
+	            $( '[name="attachments[' + attachment_id + '][language]"]' ).change();
+	        }
+	    });
 	});
 })( jQuery );
