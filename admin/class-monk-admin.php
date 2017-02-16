@@ -919,7 +919,11 @@ class Monk_Admin {
 
 		ob_start();
 		if ( 'attachment' === $post_type && $is_modal ) {
-			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-selector-render.php';
+			if ( $language_code ) {
+				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-selector-render.php';
+			} else {
+				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-name-render.php';
+			}
 			$monk_attach_options = ob_get_contents();
 			ob_end_clean();
 
