@@ -96,3 +96,7 @@ th.column-languages {
 	padding: 0 0 7px;
 	z-index: 9999;
 }
+
+div.monk-language-field {
+	padding-top: 8px;
+}

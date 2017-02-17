@@ -900,22 +900,21 @@ class Monk_Admin {
 	/**
 	 * Function to render input type select in medias modal.
 	 *
-	 * @param  object $post Post object.
+	 * @param  object $post_id       Post object.
 	 * @param  string $language_code Current post language.
 	 * @return string $monk_attach_options
 	 * @since  0.2.0
 	 */
-	public function monk_language_selector_render( $post, $language_code ) {
+	public function monk_language_selector_render( $post_id, $language_code ) {
 		global $monk_languages;
 
-		$post_id             = $post->ID;
 		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$language            = get_post_meta( $post_id, '_monk_post_language', true );
 		$active_languages    = get_option( 'monk_active_languages', false );
 		$default_language    = get_option( 'monk_default_language', false );
 		$post_translations   = get_option( 'monk_post_translations_' . $monk_id, false );
 		$is_modal            = ! isset( $_REQUEST['post'] ) ? true : false;
-		$post_type           = $post->post_type;
+		$post_type           = get_post_type( $post_id );
 
 		ob_start();
 		if ( 'attachment' === $post_type && $is_modal ) {
@@ -987,7 +986,7 @@ class Monk_Admin {
 
 		if ( $language ) {
 			$lang_code = $language;
-			$language  = $monk_languages[ $language ]['name'];
+			$language  = $this->monk_language_selector_render( $post_id );
 		} elseif ( ! $language && $post_language ) {
 			$lang_code = $post_language;
 			$language = $monk_languages[ $post_language ]['name'];
@@ -1008,7 +1007,7 @@ class Monk_Admin {
 		}
 
 		if ( ! $is_translatable && ! get_post_meta( $post_id, '_monk_post_language', true ) ) {
-			$language = $this->monk_language_selector_render( $post );
+			$language = $this->monk_language_selector_render( $post_id );
 		}
 
 		if ( 'attachment' === $post_type && $is_modal ) {
@@ -1020,7 +1019,7 @@ class Monk_Admin {
 			if ( $is_translatable ) {
 				$form_fields['translate'] = array(
 					'input' => 'html',
-					'html'  => $this->monk_language_selector_render( $post, $lang_code ),
+					'html'  => $this->monk_language_selector_render( $post_id, $lang_code ),
 					'label' => __( 'Translate', 'monk' ),
 				);
 			}
