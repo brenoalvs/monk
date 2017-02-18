@@ -135,9 +135,9 @@ class Monk_Language_Switcher extends WP_Widget {
 			}
 
 			if ( is_array( $monk_total_translations ) ) {
-				foreach ( $monk_total_translations as $lang_code => $post_id ) {
+				foreach ( $monk_total_translations as $lang_code => $term_id ) {
 					if ( in_array( $lang_code, $active_languages, true ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
-						$monk_translations[ $lang_code ] = $post_id;
+						$monk_translations[ $lang_code ] = $term_id;
 					}
 				}
 			} else {
@@ -146,8 +146,8 @@ class Monk_Language_Switcher extends WP_Widget {
 
 			if ( $monk_translations ) {
 				foreach ( $monk_translations as $lang_code => $term_id ) {
-					if ( $lang_code !== $current_language ) {
-						$switchable_languages[ $lang_code ] = get_term_link( $term_id );
+					if ( $monk_languages[ $lang_code ]['slug'] !== $current_language ) {
+						$switchable_languages[ $monk_languages[ $lang_code ]['slug'] ] = get_term_link( $term_id );
 					}
 				}
 			} else {
