@@ -201,7 +201,7 @@ class Monk {
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
-		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_languages_filter' );
+		// $this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_languages_filter' );
 		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
@@ -225,7 +225,7 @@ class Monk {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_filter( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
+		// $this->loader->add_filter( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 		$this->loader->add_action( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 	}
 

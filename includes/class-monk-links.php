@@ -162,12 +162,12 @@ class Monk_Links {
 
 		global $wp_rewrite;
 
-		$monk_rules      = array();
-		$language_codes = array();
-		$monk_languages = $this->monk_get_active_languages();
+		$monk_rules       = array();
+		$language_codes   = array();
+		$active_languages = $this->monk_get_active_languages();
 
 		// Constructs the array to hold all language codes.
-		foreach ( $monk_languages as $codes ) {
+		foreach ( $active_languages as $codes ) {
 			$language_codes[ $codes ] = $codes;
 		}
 
@@ -220,8 +220,17 @@ class Monk_Links {
 	 * @return void
 	 */
 	public function monk_add_home_rewrite_rule() {
-		add_rewrite_rule( '([a-z]{2}-[a-z]{2})', 'index.php?lang=$matches[1]', 'top' );
-		add_rewrite_rule( '([a-z]{2})', 'index.php?lang=$matches[1]', 'top' );
+		$active_languages = $this->monk_get_active_languages();
+
+		// Constructs the array to hold all language codes.
+		foreach ( $active_languages as $codes ) {
+			$language_codes[ $codes ] = $codes;
+		}
+
+		// The $slug i.e (en|pt-br|es).
+		$regex = '(' . implode( '|', $language_codes ) . ')/?$';
+
+		add_rewrite_rule( $regex, 'index.php?lang=$matches[1]', 'top' );
 	}
 
 	/**
