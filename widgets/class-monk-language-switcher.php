@@ -61,21 +61,22 @@ class Monk_Language_Switcher extends WP_Widget {
 		}
 
 		if ( is_front_page() || is_post_type_archive() || is_date() || is_404() || is_author() || is_search() ) {
-			$current_url = monk_get_current_url();
 
 			foreach ( $active_languages as $code ) {
 				$active_languages_slug[] = $monk_languages[ $code ]['slug'];
 			}
 
 			foreach ( $active_languages_slug as $lang_code ) {
+				$current_url = monk_get_current_url();
 				if ( $lang_code !== $current_language ) {
 					if ( get_option( 'permalink_structure', false ) ) {
 						if ( get_query_var( 'lang' ) ) {
 							$current_url = remove_query_arg( 'lang', $current_url );
 							$pattern = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
-							$current_url = preg_replace( $pattern, '', $current_url );
+							$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
+							var_dump( $current_url );
+							$switchable_languages[ $lang_code ] = $current_url;
 						}
-						$switchable_languages[ $lang_code ] = $current_url . '/' . $lang_code;
 					} else {
 						$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url );
 					}
