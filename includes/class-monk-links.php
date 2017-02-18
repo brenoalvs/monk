@@ -455,6 +455,26 @@ class Monk_Links {
 	}
 
 	/**
+	 * Changes the attachment permalinks to add its idiom.
+	 *
+	 * Gets the language from the wp_get_attachment_metadata usind the attachment id
+	 * and, if no language is found, uses the site language.
+	 *
+	 * @since    0.2.0
+	 *
+	 * @param     string $link Post link during query.
+	 * @param     int    $post_id Attachment id.
+	 * @return    string $link Altered url.
+	 */
+	public function monk_add_language_attachment_permalink( $link, $post_id ) {
+		$attachment_language = get_post_meta( $post_id, '_monk_post_language' );
+		$language	         = ( empty( $attachment_language[0] ) ) ? $this->site_language : $attachment_language[0];
+		$link                = $this->monk_change_language_url( $link, $language );
+
+		return $link;
+	}
+
+	/**
 	 * Changes the author archive link to use the current language.
 	 *
 	 * @since    0.2.0
