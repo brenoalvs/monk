@@ -564,7 +564,7 @@ class Monk_Links {
 		} elseif ( is_category() || is_tax() || is_tag() ) {
 
 			$obj 	  = $wp_query->get_queried_object();
-			$language = get_term_meta( $obj->ID, '_monk_term_language', true );
+			$language = get_term_meta( $obj->term_id, '_monk_term_language', true );
 			$slug     = $monk_languages[ $language ]['slug'];
 
 		} elseif ( $wp_query->is_posts_page ) {
