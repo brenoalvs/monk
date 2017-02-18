@@ -905,7 +905,7 @@ class Monk_Admin {
 	 * @return string $monk_attach_options
 	 * @since  0.2.0
 	 */
-	public function monk_language_selector_render( $post_id, $language_code ) {
+	public function monk_language_selector_render( $post_id, $language_code = false ) {
 		global $monk_languages;
 
 		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
