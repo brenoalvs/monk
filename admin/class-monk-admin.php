@@ -338,6 +338,51 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Add parameters to filter by meta_key.
+	 *
+	 * @since  0.1.0
+	 * @param object $query Object Query.
+	 * @return  void
+	 */
+	public function monk_admin_posts_filter( $query ) {
+		if ( ! ( is_admin() || $query->is_main_query() ) ) {
+			return;
+		}
+
+		$default_language = get_option( 'monk_default_language', false );
+		$active_languages = get_option( 'monk_active_languages', false );
+		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
+		$language         = filter_input( INPUT_GET , 'lang' );
+
+		if ( $query->is_search() ) {
+			if ( empty( $filter ) ) {
+				return;
+			} else {
+				$language = $filter;
+			}
+		}
+
+		if ( $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
+			$meta_query = array(
+				'relation' => 'OR', // Optional, defaults to "AND".
+				array(
+					'key'     => '_monk_post_language',
+					'value'   => $default_language,
+				),
+				array(
+					'key'     => '_monk_post_language',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+
+			$query->set( 'meta_query', $meta_query );
+		} else {
+			$query->set( 'meta_key', '_monk_post_language' );
+			$query->set( 'meta_value', $language );
+		}
+	}
+
+	/**
 	 * Function to filter the query inside the category meta box using the languages
 	 *
 	 * @param   array $args Array of arguments.
@@ -345,29 +390,44 @@ class Monk_Admin {
 	 * @since    0.1.0
 	 * @return  array $args.
 	 */
-	public function monk_category_language_filter( $args ) {
-		if ( is_admin() && ! is_customize_preview() ) {
-			$screen = get_current_screen();
-
-			if ( 'edit' === $screen->parent_base && 'post' === $screen->base ) {
-				$post_id              = get_the_id();
-				$default_language     = get_option( 'monk_default_language', false );
-				$meta_lang            = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
-				$args['meta_key']     = '_monk_term_language';
-
-				if ( isset( $_GET['lang'] ) ) {
-					$query_lang = sanitize_title( wp_unslash( $_GET['lang'] ) );
-				}
-
-				if ( isset( $query_lang ) ) {
-					$args['meta_value'] = $query_lang;
-				} elseif ( $meta_lang ) {
-					$args['meta_value'] = $meta_lang;
-				} else {
-					$args['meta_value'] = '';
-				}
-			}
+	public function monk_admin_terms_filter( $args ) {
+		if ( ! is_admin() || is_customize_preview() ) {
+			return $args;
 		}
+
+		$screen = get_current_screen();
+
+		if ( 'edit' === $screen->parent_base && 'post' === $screen->base ) {
+			$post_id              = get_the_id();
+			$default_language     = get_option( 'monk_default_language', false );
+			$active_languages     = get_option( 'monk_active_languages', false );
+			$language             = filter_input( INPUT_GET, 'lang' );
+			$post_language        = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
+
+			if ( isset( $language ) && in_array( $language, $active_languages, true ) ) {
+				$relation = array(
+					'key'   => '_monk_term_language',
+					'value' => $language,
+				);
+			} elseif ( $post_language ) {
+				$relation = array(
+					'key'   => '_monk_term_language',
+					'value' => $post_language,
+				);
+			}
+
+			$meta_query = array(
+				'relation' => 'OR', // Optional, defaults to "AND".
+				$relation,
+				array(
+					'key'     => '_monk_term_language',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+
+			$args['meta_query'] = $meta_query;
+		}
+
 		return $args;
 	}
 
@@ -480,49 +540,6 @@ class Monk_Admin {
 	 */
 	public function monk_admin_languages_selector() {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
-	}
-
-	/**
-	 * Add parameters to filter by meta_key.
-	 *
-	 * @since  0.1.0
-	 * @param object $query Object Query.
-	 * @return  void
-	 */
-	public function monk_admin_languages_filter( $query ) {
-		if ( is_admin() && $query->is_main_query() ) {
-			$default_language = get_option( 'monk_default_language' );
-			$not_filter       = false;
-
-			if ( isset( $_GET['monk_language_filter'] ) ) {
-				$not_filter           = true;
-				$monk_language_filter = sanitize_text_field( wp_unslash( $_GET['monk_language_filter'] ) );
-			}
-
-			$has_filter = $not_filter && ! empty( $_GET['monk_language_filter'] ) ? true : false;
-			$is_default = $has_filter && 0 === strcmp( $monk_language_filter, $default_language ) ? true : false;
-
-			if ( $query->is_search() && $has_filter && ! $is_default ) {
-				$monk_language = $monk_language_filter;
-
-				$query->set( 'meta_key', '_monk_post_language' );
-				$query->set( 'meta_value', $monk_language );
-			} elseif ( ! $not_filter || $is_default ) {
-				$meta_query_args = array(
-					'relation' => 'OR', // Optional, defaults to "AND".
-					array(
-						'key'     => '_monk_post_language',
-						'value'   => $default_language,
-					),
-					array(
-						'key'     => '_monk_post_language',
-						'compare' => 'NOT EXISTS',
-					)
-				);
-
-				$query->set( 'meta_query', $meta_query_args );
-			}
-		}
 	}
 
 	/**
