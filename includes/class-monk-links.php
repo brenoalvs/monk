@@ -99,6 +99,8 @@ class Monk_Links {
 	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
+		global $monk_languages;
+		
 		$this->plugin_name   = $monk;
 		$this->version	     = $version;
 		$this->index	     = 'index.php';
