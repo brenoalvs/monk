@@ -250,7 +250,7 @@ class Monk {
 		$this->loader->add_filter( 'author_link', $plugin_links, 'monk_add_language_author_permalink', 20, 2 );
 		$this->loader->add_filter( 'search_link', $plugin_links, 'monk_add_language_search_permalink', 20 );
 		$this->loader->add_filter( 'post_type_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
-		$this->loader->add_filter( 'post_type_archive_link', $plugin_links, 'monk_add_language_post_permalink', 20, 2 );
+		$this->loader->add_filter( 'post_type_archive_link', $plugin_links, 'monk_add_language_post_archive_permalink', 20, 2 );
 		$this->loader->add_action( 'get_search_form', $plugin_links, 'monk_change_search_form', 50 );
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_canonical_redirection', 5 );
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions', 10, 1 );

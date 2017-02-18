@@ -379,6 +379,31 @@ class Monk_Links {
 	}
 
 	/**
+	 * Changes the post type archive permalinks to add its language.
+	 *
+	 * The language is retrieved from query var, in case the query var
+	 * is invalid, use the site default language.
+	 *
+	 * @since    0.2.0
+	 *
+	 * @global    class $wp_rewrite.
+	 *
+	 * @param    string $link Post link during query.
+	 * @param    string $post_type Post type.
+	 * @return   string $link.
+	 */
+	public function monk_add_language_post_archive_permalink( $link, $post_type ) {
+		global $wp_rewrite;
+
+		$active_languages = $this->monk_get_active_languages();
+		$url_language     = get_query_var( 'lang' );
+		$language         = ( in_array( $url_language, $active_languages, true ) ) ? $url_language : $this->site_language;
+
+		$link = $this->monk_change_language_url( $link, $language );
+		return $link;
+	}
+
+	/**
 	 * Changes the date archive links to add the language.
 	 *
 	 * The generated link comes with the current idiom
@@ -538,12 +563,18 @@ class Monk_Links {
 			// From current post.
 			$id       = get_queried_object_id();
 			$language = get_post_meta( $id, '_monk_post_language', true );
-			$slug     = $monk_languages[ $language ]['slug'];
+
+			if ( ! empty( $language ) ) {
+				$slug = $monk_languages[ $language ]['slug'];
+			}
 		} elseif ( is_tax() || is_tag() || is_category() ) {
 			// From current term.
 			$id 	  = get_queried_object_id();
 			$language = get_term_meta( $id, '_monk_term_language', true );
-			$slug     = $monk_languages[ $language ]['slug'];
+
+			if ( ! empty( $language ) ) {
+				$slug = $monk_languages[ $language ]['slug'];
+			}
 		} elseif ( is_home() || is_front_page() || is_archive() && ! ( is_tax() || is_tag() || is_category() ) ) {
 			// From valid query var.
 			$slug = get_query_var( 'lang', $this->site_language );
