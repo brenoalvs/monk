@@ -462,7 +462,7 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @param     string $link Post link during query.
+	 * @param     string $link Attachment link during query.
 	 * @param     int    $post_id Attachment id.
 	 * @return    string $link Altered url.
 	 */
