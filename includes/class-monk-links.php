@@ -510,28 +510,7 @@ class Monk_Links {
 	 * @return void|string $redirect_url The correct link.
 	 */
 	public function monk_canonical_redirection() {
-		global $wp_query, $post, $is_IIS, $monk_languages;
-
-		$active_languages = $this->monk_get_active_languages();
-
-		/*
-		 * Only use this when the home is being displayed and there is no lang parameter
-		 * or if a non-active language is requested.
-		 */
-		if ( is_home() && ( ! ( get_query_var( 'lang' ) || get_query_var( 's' ) ) || ! in_array( get_query_var( 'lang' ), $active_languages, true ) ) ) {
-
-			$url_language = get_query_var( 'lang' );
-			$site_language = $monk_languages[ get_option( 'monk_default_language', false ) ]['slug'];
-			$language     = ( empty( $url_language ) ) ? $site_language : $url_language;
-			$language     = ( in_array( $language, $active_languages, true ) ) ? $language : $site_language;
-
-			if ( $this->monk_using_permalinks() ) {
-				wp_safe_redirect( trailingslashit( home_url( '/' . $language ) ) );
-			} else {
-				wp_safe_redirect( add_query_arg( 'lang', $language, trailingslashit( home_url() ) ), 301 );
-			}
-			exit();
-		}
+		global $wp_query, $is_IIS, $monk_languages;
 
 		// We do not want to redirect in these cases.
 		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
@@ -549,42 +528,31 @@ class Monk_Links {
 		}
 
 		// First get the correct url and scheme.
-		$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$requested_url    = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-		/*
-		 * Then decide what type of content is being requested
-		 * before retrieving its language.
-		 */
-		if ( is_single() || is_page() ) {
-			if ( isset( $post->ID ) ) {
+		// Get current active languages.
+		$active_languages = $this->monk_get_active_languages();
 
-				$language = get_post_meta( $post->ID, '_monk_post_language', true );
-				$slug     = $monk_languages[ $language ]['slug'];
-			}
-		} elseif ( is_category() || is_tax() || is_tag() ) {
-
-			$obj 	  = $wp_query->get_queried_object();
-			$language = get_term_meta( $obj->term_id, '_monk_term_language', true );
-			$slug     = $monk_languages[ $language ]['slug'];
-
-		} elseif ( $wp_query->is_posts_page ) {
-
-			$obj 	  = $wp_query->get_queried_object();
-			$language = get_post_meta( $obj->ID, '_monk_post_language', true );
-			$slug     = $monk_languages[ $language ]['slug'];
-
-		} elseif ( is_404() && ! empty( $wp_query->query['page_id'] ) && $id = get_query_var( 'page_id' ) ) {
-
+		// Now get the language from the correct place.
+		if ( is_singular() ) {
+			// From current post.
+			$id       = get_queried_object_id();
 			$language = get_post_meta( $id, '_monk_post_language', true );
 			$slug     = $monk_languages[ $language ]['slug'];
+		} elseif ( is_tax() || is_tag() || is_category() ) {
+			// From current term.
+			$id 	  = get_queried_object_id();
+			$language = get_term_meta( $id, '_monk_term_language', true );
+			$slug     = $monk_languages[ $language ]['slug'];
+		} elseif ( is_home() || is_front_page() || is_archive() && ! ( is_tax() || is_tag() || is_category() ) ) {
+			// From valid query var.
+			$slug = get_query_var( 'lang', $this->site_language );
 		}
 
 		// If is not any of the above content cases, the fallback is the default language.
 		if ( empty( $slug ) ) {
-
 			$slug         = $this->site_language;
 			$redirect_url = $requested_url;
-
 		} else {
 			/*
 			 * Uses the redirect_canonical to check the canonical url that wordpress evaluates.
@@ -600,7 +568,7 @@ class Monk_Links {
 		// If the incoming url has a wrong language, redirect.
 		if ( $redirect_url && $requested_url !== $redirect_url ) {
 			wp_safe_redirect( $redirect_url, 301 );
-			exit;
+			exit();
 		}
 
 		return $redirect_url;
