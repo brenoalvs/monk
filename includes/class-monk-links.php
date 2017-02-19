@@ -467,8 +467,8 @@ class Monk_Links {
 	 * @return    string $link Altered url.
 	 */
 	public function monk_add_language_attachment_permalink( $link, $post_id ) {
-		$attachment_language = get_post_meta( $post_id, '_monk_post_language' );
-		$language	         = ( empty( $attachment_language[0] ) ) ? $this->site_language : $attachment_language[0];
+		$attachment_language = get_post_meta( $post_id, '_monk_post_language', true );
+		$language	         = ( empty( $attachment_language ) ) ? $this->site_language : $attachment_language;
 		$link                = $this->monk_change_language_url( $link, $language );
 
 		return $link;
