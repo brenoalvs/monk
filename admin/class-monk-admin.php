@@ -908,6 +908,13 @@ class Monk_Admin {
 		$post_translations   = get_option( 'monk_post_translations_' . $monk_id, false );
 		$is_modal            = ! isset( $_REQUEST['post'] ) ? true : false;
 		$post_type           = get_post_type( $post_id );
+		$available_languages = false;
+
+		foreach ( $active_languages as $language ) {
+			if ( ( $post_translations && ! array_key_exists( $language, $post_translations ) ) ) {
+				$available_languages = true;
+			}
+		}
 
 		ob_start();
 		if ( 'attachment' === $post_type && $is_modal ) {
