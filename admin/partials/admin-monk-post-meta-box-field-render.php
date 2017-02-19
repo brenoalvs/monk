@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 ?>
 <input type="hidden" name="monk_id" value="<?php echo esc_attr( $monk_id ); ?>" />
-<input type="hidden" id="previous-post-id" value="<?php echo esc_attr( $post->ID ); ?>">
+<input type="hidden" class="current-post-id" value="<?php echo esc_attr( $post->ID ); ?>">
 	<?php if ( 'add' === $current_screen->action || '' === $post_default_language ) : ?>
 	<div>
 		<strong><?php esc_html_e( 'Post language', 'monk' ); ?></strong>
@@ -134,6 +134,7 @@ if ( ! defined( 'WPINC' ) ) {
 			if ( $attach ) :
 				?>
 				<input type="hidden" name="monk_id" class="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
+				<input type="hidden" class="current-post-id" value="<?php echo esc_attr( $post->ID ); ?>">
 				<button class="button <?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 				<?php
 			else :
