@@ -345,7 +345,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_admin_posts_filter( $query ) {
-		if ( ! ( is_admin() || $query->is_main_query() ) ) {
+		if ( ! is_admin() ) {
 			return;
 		}
 
