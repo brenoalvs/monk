@@ -48,12 +48,12 @@
 		$( document ).on( 'click', '.monk-attach', function( event ) {
 			event.preventDefault();
 			var form_data = {
-				action           : 'monk',
+				action           : 'monk_add_attachment_translation',
 				monk_id          : $( this ).siblings( '.monk-id' ).val(),
-				previous_post_id : $( this ).siblings( '.previous-post-id' ).val(),
+				current_post_id  : $( this ).siblings( '.current-post-id' ).val(),
 				lang             : $( this ).siblings( '.monk-lang' ).val(),
 			};
-			
+
 			$.ajax({
 				type: 'POST',
 				url: monk.ajax_url,
