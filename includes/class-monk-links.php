@@ -562,11 +562,6 @@ class Monk_Links {
 			return;
 		}
 
-		// When a media is being displayed, we do not want the redirection.
-		if ( is_attachment() && filter_input( INPUT_GET, 'attachment_id' ) ) {
-			return;
-		}
-
 		// The customizer functionality uses the admin link, do not filter either.
 		if ( filter_input( INPUT_GET, 'wp_customize' ) || filter_input( INPUT_GET, 'customized' ) ) {
 			return;
