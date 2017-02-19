@@ -341,15 +341,11 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @global    class $wp_rewrite.
-	 *
 	 * @param    string $link Post link during query.
 	 * @param    object $post Post object.
 	 * @return string $link.
 	 */
 	public function monk_add_language_post_permalink( $link, $post ) {
-		global $wp_rewrite;
-
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
 		$url_language  = get_query_var( 'lang' );
 		$language      = ( empty( $post_language ) ) ? $this->site_language : $post_language;
@@ -386,15 +382,11 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @global    class $wp_rewrite.
-	 *
 	 * @param    string $link Post link during query.
 	 * @param    string $post_type Post type.
 	 * @return   string $link.
 	 */
 	public function monk_add_language_post_archive_permalink( $link, $post_type ) {
-		global $wp_rewrite;
-
 		$active_languages = $this->monk_get_active_languages();
 		$url_language     = get_query_var( 'lang' );
 		$language         = ( in_array( $url_language, $active_languages, true ) ) ? $url_language : $this->site_language;
@@ -548,14 +540,12 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @global    object $wp_query.
-	 * @global    object $post.
 	 * @global bool $is_IIS.
 	 *
-	 * @return void|string $redirect_url The correct link.
+	 * @return void
 	 */
 	public function monk_canonical_redirection() {
-		global $wp_query, $is_IIS, $monk_languages;
+		global $monk_languages, $is_IIS;
 
 		// We do not want to redirect in these cases.
 		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
@@ -616,7 +606,5 @@ class Monk_Links {
 			wp_safe_redirect( $redirect_url, 301 );
 			exit();
 		}
-
-		return $redirect_url;
 	}
 }
