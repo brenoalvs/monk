@@ -12,7 +12,11 @@ $(document).ready(function() {
 
       if (window_end >= text_end) {
         $(this).animate({'opacity':'1'}, 800);
-        $('.feature-image').animate({'opacity':'1'}, 800);
+        if ($(this).parent().next('div').length != 0) {
+          $(this).parent().next('div').animate({'opacity':'1'}, 900);
+        } else {
+          $(this).parent().prev('div').animate({'opacity':'1'}, 900);
+        }
       }
     });
   });
