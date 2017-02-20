@@ -198,7 +198,6 @@ class Monk {
 		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_post_data' );
-		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_category_language_filter', 10, 2 );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
