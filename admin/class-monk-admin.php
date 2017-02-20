@@ -371,7 +371,8 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_admin_posts_filter( $query ) {
-		if ( ! is_admin() ) {
+		global $mode;
+		if ( ! is_admin() || ( 'attachment' === $query->get('post_type') && 'list' !== $mode ) ) {
 			return;
 		}
 
