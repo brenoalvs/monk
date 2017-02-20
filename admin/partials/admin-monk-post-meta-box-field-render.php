@@ -15,6 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 ?>
 <input type="hidden" name="monk_id" value="<?php echo esc_attr( $monk_id ); ?>" />
+<input type="hidden" class="current-post-id" value="<?php echo esc_attr( $post->ID ); ?>">
 	<?php if ( 'add' === $current_screen->action || '' === $post_default_language ) : ?>
 	<div>
 		<strong><?php esc_html_e( 'Post language', 'monk' ); ?></strong>
@@ -76,10 +77,10 @@ if ( ! defined( 'WPINC' ) ) {
 	</div>
 	<div class="monk-post-meta-add-translation">
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
-			<select name="monk_post_translation_id">
+			<select name="monk_post_translation_id" class='monk-lang'>
 				<?php
 				$post_type = get_post_type( $post->ID );
-				if ( 'post' !== $post_type ) :
+				if ( 'post' !== $post_type && 'attachment' !== $post_type ) :
 					foreach ( $active_languages as $lang_code ) :
 						$language_url = add_query_arg( array(
 							'post_type' => $post_type,
@@ -91,6 +92,19 @@ if ( ! defined( 'WPINC' ) ) {
 							$lang_name = $monk_languages[ $lang_code ]['name'];
 					?>
 							<option value="<?php echo esc_url( $language_url ); ?>"/>
+								<?php echo esc_html( $lang_name ); ?>
+							</option>
+					<?php
+						endif;
+					endforeach;
+				elseif ( 'attachment' === $post_type ) :
+					$monk_translation_url = admin_url( 'media-new.php' );
+					foreach ( $active_languages as $lang_code ) :
+						$lang_id = sanitize_title( $lang_code );
+						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
+							$lang_name = $monk_languages[ $lang_code ]['name'];
+					?>
+							<option value="<?php echo esc_attr( $lang_code ); ?>"/>
 								<?php echo esc_html( $lang_name ); ?>
 							</option>
 					<?php
@@ -115,7 +129,18 @@ if ( ! defined( 'WPINC' ) ) {
 				endif;
 				?>
 			</select>
-			<button class="monk-submit-translation button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+			<?php
+			$attach = ( 'attachment' === $post_type ) ? 'monk-attach' : '';
+			if ( $attach ) :
+				?>
+				<input type="hidden" name="monk_id" class="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
+				<input type="hidden" class="current-post-id" value="<?php echo esc_attr( $post->ID ); ?>">
+				<button class="button <?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+				<?php
+			else :
+			?>
+				<button class="monk-submit-translation button" id="<?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+			<?php endif; ?>
 			<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
 		<?php endif; ?>
 	</div>

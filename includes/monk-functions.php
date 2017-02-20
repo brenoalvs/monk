@@ -59,3 +59,23 @@ function monk_get_locale_by_slug( $slug ) {
 
 	return $slug;
 }
+
+/**
+ * Returns an URL parameter.
+ *
+ * @since  0.1.0
+ * @param  string $arg The desired parameter.
+ *
+ * @return array The URL parameter.
+ */
+function monk_get_url_args( $arg ) {
+	$url    = $_SERVER['HTTP_REFERER'];
+	$return = array_key_exists( 'query',  parse_url( $url ) ) ? parse_url( $url )['query'] : '';
+	$return = parse_str( $return, $name );
+
+	if ( isset( $name[ $arg ] ) ) {
+		return $name[ $arg ];
+	} else {
+		return;
+	}
+}
