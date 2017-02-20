@@ -910,8 +910,8 @@ class Monk_Admin {
 		$post_type           = get_post_type( $post_id );
 		$available_languages = false;
 
-		foreach ( $active_languages as $language ) {
-			if ( ( $post_translations && ! array_key_exists( $language, $post_translations ) ) ) {
+		foreach ( $active_languages as $lang ) {
+			if ( ( $post_translations && ! array_key_exists( $lang, $post_translations ) ) ) {
 				$available_languages = true;
 			}
 		}
