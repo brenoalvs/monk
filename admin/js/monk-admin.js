@@ -104,6 +104,7 @@
 			$.extend( wp.Uploader.prototype, {
 				success : function( file_attachment ){
 					var attachment_id = file_attachment.attributes.id;
+					$( '.attachments li[data-id="' + attachment_id + '"] .attachment-preview' ).click();
 					$( '[name="attachments[' + attachment_id + '][language]"]' ).change();
 				}
 			});
