@@ -443,16 +443,18 @@ class Monk_Admin {
 				);
 			}
 
-			$meta_query = array(
-				'relation' => 'OR', // Optional, defaults to "AND".
-				$relation,
-				array(
-					'key'     => '_monk_term_language',
-					'compare' => 'NOT EXISTS',
-				),
-			);
+			if ( isset( $relation ) ) {
+				$meta_query = array(
+					'relation' => 'OR', // Optional, defaults to "AND".
+					$relation,
+					array(
+						'key'     => '_monk_term_language',
+						'compare' => 'NOT EXISTS',
+					),
+				);
 
-			$args['meta_query'] = $meta_query;
+				$args['meta_query'] = $meta_query;
+			}
 		}
 
 		return $args;
