@@ -197,6 +197,7 @@ class Monk {
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
 		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
+		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
@@ -204,10 +205,20 @@ class Monk {
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter' );
 		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
+		$this->loader->add_filter( 'manage_media_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
+		$this->loader->add_action( 'manage_media_custom_column', $plugin_admin, 'monk_language_column_content', 10, 2 );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'monk_widget_message' );
 		$this->loader->add_action( 'wp_loaded', $this, 'add_term_hooks' );
+		$this->loader->add_action( 'edit_attachment', $plugin_admin, 'monk_save_post_meta_box' );
+		$this->loader->add_action( 'wp_ajax_monk_add_attachment_translation', $plugin_admin, 'monk_add_attachment_translation' );
+		$this->loader->add_filter( 'attachment_fields_to_save', $plugin_admin, 'monk_fields_to_save', 10, 2 );
+		$this->loader->add_filter( 'attachment_fields_to_edit', $plugin_admin, 'monk_attachment_meta_box', 10, 2 );
+		$this->loader->add_filter( 'wp_delete_file', $plugin_admin, 'monk_delete_attachment_file' );
+		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_attachment' );
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'define_view_mode' );
+		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'medias_modal_filter' );
 	}
 
 	/**
