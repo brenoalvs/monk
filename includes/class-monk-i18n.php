@@ -36,33 +36,42 @@ class Monk_i18n {
 	}
 
 	/**
-	 * Change locale accordingly Language Switcher.
+	 * Changes locale accordingly requested URL.
 	 *
 	 * @since  0.1.0
+	 * 
 	 * @param  string $locale Language of locale.
 	 * @return string $locale New language of locale.
 	 */
 	public function monk_define_locale( $locale ) {
-		global $monk_languages;
-		$active_languages = get_option( 'monk_active_languages', false );
 		if ( is_admin() ) {
 			return $locale;
 		}
 
-		// We use this function because after integration with the rewrite rules,
-		// we can no longer access the lang parameter of the url in a way other than that.
-		$language = preg_split( '/(\/)/', $_SERVER['REQUEST_URI'], 0, PREG_SPLIT_NO_EMPTY );
-		$language = $language[0];
+		global $monk_languages;
 
-		if ( ! empty( $language ) ) {
-			$lang = $language;
-			foreach ( $active_languages as $lang_code ) {
-				if ( $lang === $monk_languages[ $lang_code ]['slug'] ) {
-					$locale = $lang_code;
-				}
+		/**
+		 * As locale is defined before WordPress parse the request.
+		 * We need get language directly from URL.
+		 */
+		$path     = $_SERVER['REQUEST_URI'];
+		$has_args = strpos( $path, '?' );
+
+		if ( false !== $has_args ) {
+			$path_parts = str_split( $path, $has_args );
+			$path       = $path_parts[0];
+		}
+
+		$matches = preg_split( '/(\/)/', $path, 0, PREG_SPLIT_NO_EMPTY );	
+
+		if ( ! empty( $matches ) ) {
+			$slug             = $matches[0];
+			$locale           = monk_get_locale_by_slug( $slug );
+			$active_languages = get_option( 'monk_active_languages', false );
+
+			if ( ! in_array( $locale, $active_languages, true ) ) {
+				$locale = get_option( 'monk_default_language', false );
 			}
-		} else {
-			$locale = get_option( 'monk_default_language', false );
 		}
 
 		return $locale;
