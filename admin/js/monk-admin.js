@@ -45,6 +45,27 @@
 			e.preventDefault();
 		});
 
+		$( document ).on( 'click', '.monk-attach', function( event ) {
+			event.preventDefault();
+			var form_data = {
+				action           : 'monk_add_attachment_translation',
+				monk_id          : $( this ).siblings( '.monk-id' ).val(),
+				current_post_id  : $( this ).siblings( '.current-post-id' ).val(),
+				lang             : $( this ).siblings( '.monk-lang' ).val(),
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: monk.ajax_url,
+				data: form_data,
+				success: function( response ) {
+					window.location.replace( response.data );
+				}
+			});
+
+			return false;
+		});
+
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
 			$( '.monk-change-current-language' ).slideUp( 150 );
@@ -69,6 +90,23 @@
 		if ( 'edit-tags.php' === path[ path.length - 1 ] && monk_id ) {
 			$( document ).ajaxComplete( function() {
 				$( location ).attr( 'href', url[0] );
+			});
+		};
+
+		/**
+		 * Insert language for new attachments added through media modal.
+		 *
+		 * Hook into uploader success callback getting the uploaded attachment ID and trigger
+		 * a change event on its language hidden field to dispatch an AJAX request provided by core
+		 * to update attachment language.
+		 */
+		if ( typeof wp.Uploader !== 'undefined' ) {
+			$.extend( wp.Uploader.prototype, {
+				success : function( file_attachment ){
+					var attachment_id = file_attachment.attributes.id;
+					$( '.attachments li[data-id="' + attachment_id + '"] .attachment-preview' ).click();
+					$( '[name="attachments[' + attachment_id + '][language]"]' ).change();
+				}
 			});
 		}
 	});

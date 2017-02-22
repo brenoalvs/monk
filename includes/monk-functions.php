@@ -33,7 +33,49 @@ function monk_is_language_code( $language_code ) {
  */
 function monk_get_current_url() {
 	global $wp;
-	$current_url = add_query_arg( $_SERVER['QUERY_STRING'], '', home_url( $wp->request ) );
+
+	$query_arg   = http_build_query( $_GET );
+	$current_url = add_query_arg( $query_arg, '', home_url( $wp->request ) );
 
 	return $current_url;
+}
+
+/**
+ * Returns the locale code of a given language.
+ *
+ * @since 0.2.0
+ *
+ * @param     string $slug A slug to search for.
+ * @return    mixed        The related locale or false if $slug is invalid.
+ */
+function monk_get_locale_by_slug( $slug ) {
+	global $monk_languages;
+
+	foreach ( $monk_languages as $locale => $data ) {
+		if ( $data['slug'] === $slug ) {
+			return $locale;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Returns an URL parameter.
+ *
+ * @since  0.2.0
+ * @param  string $arg The desired parameter.
+ *
+ * @return array The URL parameter.
+ */
+function monk_get_url_args( $arg ) {
+	$url    = $_SERVER['HTTP_REFERER'];
+	$return = array_key_exists( 'query',  parse_url( $url ) ) ? parse_url( $url )['query'] : '';
+	$return = parse_str( $return, $name );
+
+	if ( isset( $name[ $arg ] ) ) {
+		return $name[ $arg ];
+	} else {
+		return;
+	}
 }

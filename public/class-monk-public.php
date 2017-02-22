@@ -78,48 +78,39 @@ class Monk_Public {
 	 * @return void
 	 */
 	public function monk_public_posts_filter( $query ) {
-		if ( is_admin() || $query->is_main_query() && ! ( is_front_page() || is_post_type_archive() || is_date() || is_author() || is_search() ) ) {
+		// Whether we must filter main query.
+		$filter_main_query = false;
+		
+		if ( is_home() || is_front_page() || is_archive() || is_search() ) {
+			$filter_main_query = true;
+		}
+
+		if ( is_admin() || ( $query->is_main_query() && ! $filter_main_query ) ) {
 			return;
 		}
+
 		global $monk_languages;
 
 		$query_args       = array();
 		$default_language = get_option( 'monk_default_language', false );
-		$current_language = get_query_var( 'lang', false );
-		$active_languages = get_option( 'monk_active_languages' );
-		$current_url      = monk_get_current_url();
+		$default_slug     = $monk_languages[ $default_language ]['slug'];
+		$current_language = get_query_var( 'lang', $default_slug );
 
-		foreach ( $active_languages as $lang_code ) {
-			$active_slug[ $lang_code ] = $monk_languages[ $lang_code ]['slug'];
+		if ( is_singular() ) {
+			$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
+		} elseif ( is_tax() || is_category() || is_tag() ) {
+			$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
+		} else {
+			$current_language = monk_get_locale_by_slug( $current_language );
 		}
 
-		if ( $current_language && ! in_array( $current_language, $active_slug ) ) {
-			$current_url = add_query_arg( 'lang', esc_attr( $monk_languages[ $default_language ]['slug'], 'monk' ), $current_url );
-			wp_safe_redirect( $current_url );
-			exit;
-		}
-
-		if ( ! $current_language ) {
-			if ( is_singular() ) {
-				$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
-			} elseif ( is_archive() && ( is_category() || is_tag() ) ) {
-				$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
-			} else {
-				$current_language = $default_language;
-			}
-		}
-
-		if ( 'pt-br' === $current_language ) {
-			$current_language = substr( $current_language, 0, 2 );
-		}
-
-		if ( ! $current_language || substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
+		if ( $default_language === $current_language ) {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
 					'key'     => '_monk_post_language',
 					'value'   => $default_language,
-					'compare' => 'LIKE',
+					'compare' => '=',
 				),
 				array(
 					'key'     => '_monk_post_language',
@@ -130,11 +121,11 @@ class Monk_Public {
 			$query_args[] = array(
 				'key'     => '_monk_post_language',
 				'value'   => $current_language,
-				'compare' => 'LIKE',
+				'compare' => '=',
 			);
 		}
 
-		$query->set( 'meta_query', $query_args );
+		$query->set( 'meta_query', array( $query_args ) );
 	}
 
 	/**
@@ -150,30 +141,29 @@ class Monk_Public {
 			return $args;
 		}
 
+		global $monk_languages;
+
 		$default_language = get_option( 'monk_default_language', false );
-		$current_language = get_query_var( 'lang', false );
+		$default_slug     = $monk_languages[ $default_language ]['slug'];
+		$current_language = get_query_var( 'lang', $default_slug );
 
-		if ( ! $current_language ) {
-			if ( is_singular() ) {
-				$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
-			} elseif ( is_archive() && ( is_category() || is_tag() ) ) {
-				$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
-			} else {
-				$current_language = $default_language;
-			}
+		if ( is_singular() ) {
+			$current_language = get_post_meta( get_queried_object_id(), '_monk_post_language', true );
+		} elseif ( is_tax() || is_category() || is_tag() ) {
+			$current_language = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
+		} else {
+			$current_language = monk_get_locale_by_slug( $current_language );
 		}
 
-		if ( 'pt-br' === $current_language ) {
-			$current_language = substr( $current_language, 0, 2 );
-		}
+		$current_language = monk_get_locale_by_slug( $current_language );
 
-		if ( ! $current_language || substr( $default_language, 0, 2 ) === substr( $current_language, 0, 2 ) ) {
+		if ( $default_language === $current_language ) {
 			$args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
 					'key'     => '_monk_term_language',
 					'value'   => $default_language,
-					'compare' => 'LIKE',
+					'compare' => '=',
 				),
 				array(
 					'key'     => '_monk_term_language',
@@ -185,10 +175,11 @@ class Monk_Public {
 				array(
 					'key'     => '_monk_term_language',
 					'value'   => $current_language,
-					'compare' => 'LIKE',
+					'compare' => '=',
 				),
 			);
 		}
+
 		return $args;
 	}
 }
