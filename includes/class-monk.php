@@ -301,9 +301,9 @@ class Monk {
 			add_action( 'manage_' . $taxonomy . '_custom_column', array( $plugin_admin, 'monk_taxonomy_language_column_content' ), 10, 3 );
 		}
 
-		add_action( 'created_term', array( $plugin_admin, 'monk_create_term_meta' ) );
-		add_action( 'edited_terms', array( $plugin_admin, 'monk_update_term_meta' ) );
-		add_action( 'pre_delete_term', array( $plugin_admin, 'monk_delete_term_meta' ) );
+		add_action( 'created_term', array( $plugin_admin, 'monk_create_term_meta' ), 10, 3 );
+		add_action( 'edited_terms', array( $plugin_admin, 'monk_update_term_meta' ), 10, 2 );
+		add_action( 'pre_delete_term', array( $plugin_admin, 'monk_delete_term_meta' ), 10, 2 );
 	}
 
 	/**
