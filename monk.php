@@ -3,7 +3,7 @@
  * Plugin Name:       Monk
  * Plugin URI:        https://github.com/brenoalvs/monk
  * Description:       Monk is an elegant and lightweight solution to make your content reach the world.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Author:            Breno Alves
  * Author URI:        https://github.com/brenoalvs
  * License:           GPL-2.0 or later

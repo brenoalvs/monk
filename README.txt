@@ -2,8 +2,8 @@
 Contributors: breno-alves, ale-correa, leonofre
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
-Tested up to: 4.7.1
-Stable tag: 0.1.0
+Tested up to: 4.7.2
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Monk is an elegant and lightweight solution to make your content reach the world
 
 == Description ==
 
-Monk is a free translation plugin that allows you to create translations for your posts, pages, tags, categories or any content you need.
+Monk is a free translation plugin that allows you to create translations for your posts, pages, medias, tags, categories or any content you need.
 
 = Highly user focused =
 
@@ -27,12 +27,12 @@ Activate the language switcher to allow visitors comfortably navigate in your we
 
 = Will this plugin work with any theme? =
 
-Yeah! Well, that's what we expect, right? :)
+Yeah! That's what we expect, right? :)
 But if you find anything buggy or weird get in touch or open a ticket.
 
 = Where can I find a documentation? =
 
-Try in our [GitHub Wiki](https://github.com/brenoalvs/monk/wiki) or open a new ticket so we can help you.
+Try in our [GitHub Wiki](https://github.com/brenoalvs/monk/wiki) or [open a new forum topic](https://wordpress.org/support/plugin/monk) so we can help you.
 
 = Can I contribute or report bugs to Monk? =
 
@@ -43,7 +43,11 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 = 0.1.0 =
 * Initial release.
 
+= 0.2.0 =
+* Added medias translation support.
+* Added language in permalinks.
+
 == Credits ==
 
-Special thanks to Lipis for the [beautiful SVG icons](https://github.com/lipis/flag-icon-css).
+Special thanks to Lipis for our [beautiful SVG icons](https://github.com/lipis/flag-icon-css).
 
