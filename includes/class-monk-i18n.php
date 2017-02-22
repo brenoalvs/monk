@@ -48,9 +48,11 @@ class Monk_i18n {
 		if ( is_admin() ) {
 			return $locale;
 		}
+		$language = preg_split( '/(\/)/', $_SERVER['REQUEST_URI'], 0, PREG_SPLIT_NO_EMPTY );
+		$language = $language[0];
 
-		if ( isset( $_GET['lang'] ) ) {
-			$lang = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
+		if ( ! empty( $language ) ) {
+			$lang = $language;
 			foreach ( $active_languages as $lang_code ) {
 				if ( $lang === $monk_languages[ $lang_code ]['slug'] ) {
 					$locale = $lang_code;
