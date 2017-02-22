@@ -43,27 +43,27 @@ function monk_get_current_url() {
 /**
  * Returns the locale code of a given language.
  *
- * @since 0.1.0
+ * @since 0.2.0
  *
- * @param     string $slug the slug for the rewuired language locale.
- * @return    string Current URL
+ * @param     string $slug A slug to search for.
+ * @return    mixed        The related locale or false if $slug is invalid.
  */
 function monk_get_locale_by_slug( $slug ) {
 	global $monk_languages;
 
 	foreach ( $monk_languages as $locale => $data ) {
 		if ( $data['slug'] === $slug ) {
-			$slug = $locale;
+			return $locale;
 		}
 	}
 
-	return $slug;
+	return false;
 }
 
 /**
  * Returns an URL parameter.
  *
- * @since  0.1.0
+ * @since  0.2.0
  * @param  string $arg The desired parameter.
  *
  * @return array The URL parameter.
