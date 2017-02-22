@@ -67,7 +67,7 @@ class Monk {
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '0.1.0';
+		$this->version = '0.2.0';
 
 		$this->load_dependencies();
 		$this->set_locale();

@@ -23,7 +23,7 @@ But if you find anything buggy [open a new issue](https://github.com/brenoalvs/m
 
 > Where can I find a documentation?
 
-Try in our [Wiki](https://github.com/brenoalvs/monk/wiki) or open a new issue so we can help you.
+Try in our [Wiki](https://github.com/brenoalvs/monk/wiki) or [open a new issue](https://github.com/brenoalvs/monk/issues/new) so we can help you.
 
 > Can I contribute or report bugs to Monk?
 
@@ -33,6 +33,9 @@ You must! We'll post some contribution guidelines soon.
 
 - **0.1.0**
     - Initial release.
+- **0.2.0**
+    - Added medias translation support.
+    - Added language in permalinks.
 
 ## License
 This plugin is licensed under [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html).
