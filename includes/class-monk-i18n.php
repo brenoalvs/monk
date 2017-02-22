@@ -48,6 +48,9 @@ class Monk_i18n {
 		if ( is_admin() ) {
 			return $locale;
 		}
+
+		// We use this function because after integration with the rewrite rules,
+		// we can no longer access the lang parameter of the url in a way other than that.
 		$language = preg_split( '/(\/)/', $_SERVER['REQUEST_URI'], 0, PREG_SPLIT_NO_EMPTY );
 		$language = $language[0];
 
