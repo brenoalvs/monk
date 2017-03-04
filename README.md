@@ -31,11 +31,13 @@ You must! We'll post some contribution guidelines soon.
 
 ## Changelog
 
+- **0.2.0**
+    + Improved queries filters by language for posts and terms on admin and front-end.
+    + Added medias translation support.
+    + Added language in permalinks.
+
 - **0.1.0**
     - Initial release.
-- **0.2.0**
-    - Added medias translation support.
-    - Added language in permalinks.
 
 ## License
 This plugin is licensed under [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html).
