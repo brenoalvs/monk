@@ -17,7 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 <label for="appreciate-monk">
 	<input type="checkbox" name="appreciate_monk" id="appreciate-monk" value="true" <?php checked( $appreciation ); ?> >
 	<?php
-		esc_html_e( 'Show the world how much you like us by displaying a beatifull message under your language switcher', 'monk' );
+		esc_html_e( 'Show the world how much you like us by displaying a beautiful message under your language switcher', 'monk' );
 	?>
 </label>
 </fieldset>
