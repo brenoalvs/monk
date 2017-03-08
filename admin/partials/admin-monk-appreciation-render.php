@@ -1,6 +1,6 @@
 <?php
 /**
- * Provide the view for the monk_active_languages_render function
+ * Provide the view for the monk_appreciation_render function
  *
  * @since      0.1.0
  *
