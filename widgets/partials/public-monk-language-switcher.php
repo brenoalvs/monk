@@ -48,5 +48,10 @@ echo $args['before_widget'];
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</ul>
+		<?php if ( get_option( 'appreciate_monk', null ) ) : ?>
+			<div class="monk-love">
+				Made with <span class="dashicons dashicons-heart monk-heart"></span> by <a href="https://github.com/brenoalvs/monk">Monk</a>
+			</div>
+		<?php endif; ?>
 	</div>
 <?php echo $args['after_widget']; ?>
