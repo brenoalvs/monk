@@ -143,6 +143,15 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_general_settings'
 		);
+
+		register_setting( 'monk_settings', 'appreciate_monk' );
+		add_settings_field(
+			'appreciate_monk',
+			__( 'Show your appreciation', 'monk' ),
+			array( $this, 'monk_appreciation_render' ),
+			'monk_settings',
+			'monk_general_settings'
+		);
 	}
 
 	/**
