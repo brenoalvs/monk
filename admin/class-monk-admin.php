@@ -191,6 +191,17 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Function to render a checkbox and the option description, callback for the appreciate_monk menu element
+	 *
+	 * @since    0.3.0
+	 * @return  void
+	 */
+	public function monk_appreciation_render() {
+		$appreciation = get_option( 'appreciate_monk', null ) ? true : false;
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-appreciation-render.php';
+	}
+
+	/**
 	 * Function to render the admin settings page for the plugin
 	 *
 	 * @since    0.1.0
