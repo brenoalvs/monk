@@ -540,16 +540,16 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @global array $monk_languages.
-	 * @global bool  $is_IIS.
-	 *
 	 * @return void
 	 */
 	public function monk_canonical_redirection() {
-		global $monk_languages, $is_IIS;
+		global $monk_languages;
 
-		// We do not want to redirect in these cases.
-		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
+		/**
+		 * We do not want to redirect in these cases.
+		 * TODO: Provide IIS Support using $is_IIS && ! iis7_supports_permalinks().
+		 */
+		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() ) {
 			return;
 		}
 
