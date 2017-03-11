@@ -731,8 +731,8 @@ class Monk_Admin {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param  int  $term_id  Term ID.
-	 * @param  int  $taxonomy Taxonomy slug.
+	 * @param  int $term_id  Term ID.
+	 * @param  int $taxonomy Taxonomy slug.
 	 * @return void
 	 */
 	public function monk_delete_term_meta( $term_id, $taxonomy ) {
