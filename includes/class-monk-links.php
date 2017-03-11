@@ -540,7 +540,8 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @global bool $is_IIS.
+	 * @global array $monk_languages.
+	 * @global bool  $is_IIS.
 	 *
 	 * @return void
 	 */

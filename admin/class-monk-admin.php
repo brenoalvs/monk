@@ -372,7 +372,7 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || ( 'attachment' === $query->get('post_type') && 'list' !== $mode ) ) {
+		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) ) {
 			return;
 		}
 
@@ -652,14 +652,16 @@ class Monk_Admin {
 	 * Save term language
 	 *
 	 * @since  0.1.0
-	 * @param int $term_id  Id of the term.
-	 * @return  void
+	 * @param  int $term_id  Term ID.
+	 * @param  int $tt_id    Term taxonomy ID.
+	 * @param  int $taxonomy Taxonomy slug.
+	 * @return void
 	 */
 	public function monk_create_term_meta( $term_id, $tt_id, $taxonomy ) {
 		if ( 'nav_menu' === $taxonomy ) {
 			return;
 		}
-		
+
 		if ( isset( $_REQUEST['monk_language'] ) && ! empty( $_REQUEST['monk_language'] ) ) {
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
@@ -692,7 +694,8 @@ class Monk_Admin {
 	 * Update term language
 	 *
 	 * @since  0.1.0
-	 * @param int $term_id Id of the term.
+	 * @param int $term_id  Term ID.
+	 * @param int $taxonomy Taxonomy slug.
 	 * @return  void
 	 */
 	public function monk_update_term_meta( $term_id, $taxonomy ) {
@@ -726,10 +729,11 @@ class Monk_Admin {
 	/**
 	 * Function that erases the data stored by the plugin when term is deleted.
 	 *
-	 * @param int $term_id ID of the Term object.
-	 * @return  void
-	 *
 	 * @since 0.1.0
+	 *
+	 * @param  int  $term_id  Term ID.
+	 * @param  int  $taxonomy Taxonomy slug.
+	 * @return void
 	 */
 	public function monk_delete_term_meta( $term_id, $taxonomy ) {
 		if ( 'nav_menu' === $taxonomy ) {

@@ -80,7 +80,7 @@ class Monk_Public {
 	public function monk_public_posts_filter( $query ) {
 		// Whether we must filter main query.
 		$filter_main_query = false;
-		
+
 		if ( is_home() || is_front_page() || is_archive() || is_search() ) {
 			$filter_main_query = true;
 		}
