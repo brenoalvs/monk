@@ -11,17 +11,19 @@ branches:
     - develop
 
 php:
-  - 5.3
+  - 5.4
   - 5.6
+  - 7.0
+  - 7.1
+  - hhvm
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
   - WP_VERSION=4.6 WP_MULTISITE=0
-  - WP_VERSION=4.7.2 WP_MULTISITE=0
 
 matrix:
   include:
-    - php: 5.3
+    - php: 5.4
       env: WP_VERSION=latest WP_MULTISITE=1
 
 before_script:
