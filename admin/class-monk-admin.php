@@ -1164,4 +1164,23 @@ class Monk_Admin {
 			}
 		}
 	}
+
+	/**
+	 * Adds new menu components to allow their translation
+	 *
+	 * There are no hooks to use in the menu edit page, so we create the
+	 * components using the admin_footer action and move them to the right location
+	 *
+	 * @since    0.3.0
+	 *
+	 * @return void
+	 */
+	public function monk_add_menu_translation_fields() {
+		$active_languages = get_option( 'monk_active_languages', false );
+
+		if ( 'nav-menus' !== get_current_screen() -> base ) {
+			return;
+		}
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-menu-translation-fields-render.php';
+	}
 }
