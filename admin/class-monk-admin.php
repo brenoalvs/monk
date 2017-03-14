@@ -1139,8 +1139,10 @@ class Monk_Admin {
 			$language = get_post_meta( $post_id, '_monk_post_language', true );
 
 			if ( empty( $language ) ) {
-				if ( ! empty( monk_get_url_args( 'lang' ) ) ) {
-					$language = monk_get_url_args( 'lang' );
+				$lang_from_url = monk_get_url_args( 'lang' );
+
+				if ( ! empty( $lang_from_url ) ) {
+					$language = $lang_from_url;
 				} else {
 					$language = $default_language;
 				}
