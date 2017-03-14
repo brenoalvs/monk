@@ -25,9 +25,6 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
  * Manually loads a fresh install of Monk.
  */
 function _manually_activate_plugin() {
-	// Uninstall existing installation.
-	require dirname( dirname( __FILE__ ) ) . '/uninstall.php';
-
 	// Initialize plugin.
 	activate_monk();
 }
