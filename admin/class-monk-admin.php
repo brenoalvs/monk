@@ -659,35 +659,34 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_create_term_meta( $term_id, $tt_id, $taxonomy ) {
-		if ( 'nav_menu' === $taxonomy ) {
-			return;
-		}
 
 		if ( null !== filter_input( INPUT_POST, 'monk_language' ) && ! empty( filter_input( INPUT_POST, 'monk_language' ) ) ) {
+
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
 			$term_translations = array( $language => $term_id );
+			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
 
 			if ( null !== filter_input( INPUT_GET, 'monk_id' ) ) {
 				$monk_id           = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'monk_id' ) ) );
-				$term_translations = get_option( 'monk_term_translations_' . $monk_id, false );
+				$term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_id, false );
 
 				if ( in_array( $language , $active_languages, true ) && ! array_key_exists( $language , $term_translations ) ) {
-					add_term_meta( $term_id, '_monk_term_language', $language, true );
+					add_term_meta( $term_id, '_monk_' . $is_menu . '_language', $language, true );
 
 					if ( false !== $term_translations ) {
-						add_term_meta( $term_id, '_monk_term_translations_id', $monk_id, true );
+						add_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', $monk_id, true );
 						$term_translations[ $language ] = $term_id;
-						update_option( 'monk_term_translations_' . $monk_id, $term_translations );
+						update_option( 'monk_' . $is_menu . '_translations_' . $monk_id, $term_translations );
 					} else {
-						add_term_meta( $term_id, '_monk_term_translations_id', $term_id, true );
-						update_option( 'monk_term_translations_' . $term_id, $term_translations );
+						add_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', $term_id, true );
+						update_option( 'monk_' . $is_menu . '_translations_' . $term_id, $term_translations );
 					}
 				}
 			} else {
-				add_term_meta( $term_id, '_monk_term_language', $language, true );
-				add_term_meta( $term_id, '_monk_term_translations_id', $term_id, true );
-				update_option( 'monk_term_translations_' . $term_id, $term_translations );
+				add_term_meta( $term_id, '_monk_' . $is_menu . '_language', $language, true );
+				add_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', $term_id, true );
+				update_option( 'monk_' . $is_menu . '_translations_' . $term_id, $term_translations );
 			}
 		}
 	}
