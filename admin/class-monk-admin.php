@@ -1190,13 +1190,14 @@ class Monk_Admin {
 		}
 
 		$active_languages    = get_option( 'monk_active_languages', false );
-		$new_translation_url = admin_url( 'nav-menus.php?action=edit&menu=0&monk_id=' . $monk_id );
 
 		if ( '0' === filter_input( INPUT_GET, 'menu' ) ) {
 			$monk_id = filter_input( INPUT_GET, 'monk_id' );
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-new-menu-fields-render.php';
 		} else {
 			$monk_id = get_term_meta( filter_input( INPUT_GET, 'menu' ), '_monk_menu_translations_id', true );
+			$new_translation_url = admin_url( 'nav-menus.php?action=edit&menu=0&monk_id=' . $monk_id );
+
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-menu-translation-fields-render.php';
 		}
 	}
