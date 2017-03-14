@@ -18,6 +18,12 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/monk.php';
+
+	// Uninstall existing installation.
+	require dirname( dirname( __FILE__ ) ) . '/uninstall.php';
+
+	// Initialize plugin.
+	activate_monk();
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
