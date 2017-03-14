@@ -18,14 +18,20 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/monk.php';
+}
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
+/**
+ * Manually loads a fresh install of Monk.
+ */
+function _manually_activate_plugin() {
 	// Uninstall existing installation.
 	require dirname( dirname( __FILE__ ) ) . '/uninstall.php';
 
 	// Initialize plugin.
 	activate_monk();
 }
-tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+tests_add_filter( 'setup_theme', '_manually_activate_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
