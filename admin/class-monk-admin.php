@@ -418,7 +418,25 @@ class Monk_Admin {
 	 * @return  array $args.
 	 */
 	public function monk_admin_terms_filter( $args ) {
-		if ( ! is_admin() || is_customize_preview() ) {
+		if ( ! is_admin() ) {
+			return $args;
+		}
+
+		if ( is_customize_preview() ) {
+			$language = get_option( 'monk_default_language', false );
+
+			$meta_query = array(
+				'relation' => 'OR', // Optional, defaults to "AND".
+				array(
+					'key'   => '_monk_term_language',
+					'value' => $language,
+				),
+				array(
+					'key'     => '_monk_term_language',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+			$args['meta_query'] = $meta_query;
 			return $args;
 		}
 
@@ -649,7 +667,7 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Save term language
+	 * Save term language.
 	 *
 	 * @since  0.1.0
 	 * @param int $term_id  Id of the term.
@@ -659,7 +677,7 @@ class Monk_Admin {
 		if ( 'nav_menu' === $taxonomy ) {
 			return;
 		}
-		
+
 		if ( isset( $_REQUEST['monk_language'] ) && ! empty( $_REQUEST['monk_language'] ) ) {
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
@@ -1045,7 +1063,7 @@ class Monk_Admin {
 		}
 
 		if ( 'attachment' === $post_type && $is_modal ) {
-		    $form_fields['language'] = array(
+			$form_fields['language'] = array(
 				'input' => 'html',
 				'html'  => $language,
 				'label' => __( 'Language', 'monk' ),
