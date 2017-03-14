@@ -38,6 +38,18 @@ Try in our [GitHub Wiki](https://github.com/brenoalvs/monk/wiki) or [open a new 
 
 You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) :)
 
+== Screenshots ==
+
+1. Pages table with language column.
+2. Language filter in action.
+3. Fully-customizable language switcher.
+4. Language switcher widget.
+5. The Settings page (All languages coming soon!)
+6. Post edition screen
+7. Localized URLs
+8. Medias translation support.
+9. Terms edition.
+
 == Changelog ==
 
 = 0.2.0 =

@@ -372,7 +372,7 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || ( 'attachment' === $query->get('post_type') && 'list' !== $mode ) ) {
+		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) ) {
 			return;
 		}
 
@@ -418,7 +418,25 @@ class Monk_Admin {
 	 * @return  array $args.
 	 */
 	public function monk_admin_terms_filter( $args ) {
-		if ( ! is_admin() || is_customize_preview() ) {
+		if ( ! is_admin() ) {
+			return $args;
+		}
+
+		if ( is_customize_preview() ) {
+			$language = get_option( 'monk_default_language', false );
+
+			$meta_query = array(
+				'relation' => 'OR', // Optional, defaults to "AND".
+				array(
+					'key'   => '_monk_term_language',
+					'value' => $language,
+				),
+				array(
+					'key'     => '_monk_term_language',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+			$args['meta_query'] = $meta_query;
 			return $args;
 		}
 
@@ -649,17 +667,19 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Save term language
+	 * Save term language.
 	 *
 	 * @since  0.1.0
-	 * @param int $term_id  Id of the term.
-	 * @return  void
+	 * @param  int $term_id  Term ID.
+	 * @param  int $tt_id    Term taxonomy ID.
+	 * @param  int $taxonomy Taxonomy slug.
+	 * @return void
 	 */
 	public function monk_create_term_meta( $term_id, $tt_id, $taxonomy ) {
 		if ( 'nav_menu' === $taxonomy ) {
 			return;
 		}
-		
+
 		if ( isset( $_REQUEST['monk_language'] ) && ! empty( $_REQUEST['monk_language'] ) ) {
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
@@ -692,7 +712,8 @@ class Monk_Admin {
 	 * Update term language
 	 *
 	 * @since  0.1.0
-	 * @param int $term_id Id of the term.
+	 * @param int $term_id  Term ID.
+	 * @param int $taxonomy Taxonomy slug.
 	 * @return  void
 	 */
 	public function monk_update_term_meta( $term_id, $taxonomy ) {
@@ -726,10 +747,11 @@ class Monk_Admin {
 	/**
 	 * Function that erases the data stored by the plugin when term is deleted.
 	 *
-	 * @param int $term_id ID of the Term object.
-	 * @return  void
-	 *
 	 * @since 0.1.0
+	 *
+	 * @param  int $term_id  Term ID.
+	 * @param  int $taxonomy Taxonomy slug.
+	 * @return void
 	 */
 	public function monk_delete_term_meta( $term_id, $taxonomy ) {
 		if ( 'nav_menu' === $taxonomy ) {
@@ -1045,7 +1067,7 @@ class Monk_Admin {
 		}
 
 		if ( 'attachment' === $post_type && $is_modal ) {
-		    $form_fields['language'] = array(
+			$form_fields['language'] = array(
 				'input' => 'html',
 				'html'  => $language,
 				'label' => __( 'Language', 'monk' ),
@@ -1135,8 +1157,10 @@ class Monk_Admin {
 			$language = get_post_meta( $post_id, '_monk_post_language', true );
 
 			if ( empty( $language ) ) {
-				if ( ! empty( monk_get_url_args( 'lang' ) ) ) {
-					$language = monk_get_url_args( 'lang' );
+				$lang_from_url = monk_get_url_args( 'lang' );
+
+				if ( ! empty( $lang_from_url ) ) {
+					$language = $lang_from_url;
 				} else {
 					$language = $default_language;
 				}
