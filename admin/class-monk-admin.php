@@ -372,14 +372,20 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || ( 'attachment' === $query->get('post_type') && 'list' !== $mode ) ) {
+		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) ) {
 			return;
 		}
 
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
-		$language         = filter_input( INPUT_GET , 'lang' );
+
+		if ( 'nav-menus' === get_current_screen() -> base ) {
+			$language = get_term_meta( filter_input( INPUT_GET , 'menu' ), '_monk_menu_language', true );
+			$language = empty( $language ) ? $default_language : $language;
+		} else {
+			$language = filter_input( INPUT_GET , 'lang' );
+		}
 
 		if ( $query->is_search() ) {
 			if ( empty( $filter ) ) {
