@@ -71,7 +71,7 @@ function monk_get_locale_by_slug( $slug ) {
 function monk_get_url_args( $arg ) {
 	$url    = $_SERVER['HTTP_REFERER'];
 	$query  = parse_url( $url );
-	$query  = array_key_exists( 'query',  $query ) ) ? $query['query'] : '';
+	$query  = array_key_exists( 'query',  $query ) ? $query['query'] : '';
 	$query  = parse_str( $query, $name );
 
 	if ( isset( $name[ $arg ] ) ) {
