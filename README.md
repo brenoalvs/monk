@@ -1,4 +1,4 @@
-# Monk
+# Monk [![Build Status](https://travis-ci.org/brenoalvs/monk.svg?branch=master)](https://travis-ci.org/brenoalvs/monk)
 
 Monk is an elegant and lightweight WordPress plugin to make your content reach the world.
 
