@@ -707,7 +707,7 @@ class Monk_Admin {
 	 */
 	public function monk_update_term_meta( $term_id, $taxonomy ) {
 
-		$new_language              = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
+		$new_language              = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
 		$is_menu                   = 'nav_menu' === $taxonomy ? 'menu' : 'term';
 		$current_language          = get_term_meta( $term_id, '_monk_' . $is_menu . '_language', true );
 		$monk_term_translations_id = get_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', true );
