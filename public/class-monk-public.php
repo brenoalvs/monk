@@ -183,7 +183,15 @@ class Monk_Public {
 		return $args;
 	}
 
-	public function monk_show_menu_translation( $args ) {
+	/**
+	 * Function to filter menus when in the front-end
+	 *
+	 * @since    0.3.0
+	 *
+	 * @param  array $args Array of arguments.
+	 * @return array $args Array of arguments.
+	 */
+	public function monk_filter_nav_menus( $args ) {
 		$location         = $args['theme_location'];
 		$menus            = get_nav_menu_locations();
 		$language         = get_query_var( 'lang' );
