@@ -378,8 +378,8 @@ class Monk_Admin {
 
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
-		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
-		$language         = filter_input( INPUT_GET , 'lang' );
+		$filter           = filter_input( INPUT_GET , 'monk_language_filter', FILTER_SANITIZE_STRING );
+		$language         = filter_input( INPUT_GET , 'lang', FILTER_SANITIZE_STRING );
 
 		if ( $query->is_search() ) {
 			if ( empty( $filter ) ) {
@@ -428,7 +428,7 @@ class Monk_Admin {
 			$post_id              = get_the_id();
 			$default_language     = get_option( 'monk_default_language', false );
 			$active_languages     = get_option( 'monk_active_languages', false );
-			$language             = filter_input( INPUT_GET, 'lang' );
+			$language             = filter_input( INPUT_GET, 'lang', FILTER_SANITIZE_STRING );
 			$post_language        = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
 
 			if ( isset( $language ) && in_array( $language, $active_languages, true ) ) {

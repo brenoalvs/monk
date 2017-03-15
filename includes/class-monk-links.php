@@ -554,7 +554,7 @@ class Monk_Links {
 		}
 
 		// The customizer functionality uses the admin link, do not filter either.
-		if ( filter_input( INPUT_GET, 'wp_customize' ) || filter_input( INPUT_GET, 'customized' ) ) {
+		if ( filter_input( INPUT_GET, 'wp_customize', FILTER_SANITIZE_STRING ) || filter_input( INPUT_GET, 'customized', FILTER_SANITIZE_STRING ) ) {
 			return;
 		}
 
