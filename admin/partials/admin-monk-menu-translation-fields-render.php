@@ -43,26 +43,26 @@ global $monk_languages;
 <!-- A list with the selected menu translations -->
 <div class="menu-translations">
 	<h3>Menu Translations</h3>
+	<?php if ( 1 === count( $menu_translations ) ) : ?>
+	<p>
+		<?php esc_html_e( 'This menu does not have translations. ', 'monk' ); ?>
+		<a href="<?php echo esc_attr( $new_translation_url ); ?>">
+			<?php esc_html_e( 'You can add one here. ', 'monk' ); ?>
+		</a>
+	</p>
+	<?php else : ?>
 	<ul class="current-menu-translations">
-		<?php if ( 1 === count( $menu_translations ) ) : ?>
-			<p>
-				<?php esc_html_e( 'This menu does not have translations. ', 'monk' ); ?>
-				<a href="<?php echo esc_attr( $new_translation_url ); ?>">
-					<?php esc_html_e( 'You can add one here. ', 'monk' ); ?>
-				</a>
-			</p>
-		<?php else : ?>
-			<?php foreach ( $menu_translations as $locale => $id ) : ?>
-				<?php if ( $locale !== $menu_language ) : ?>
-					<li>
-						<a href="<?php echo esc_attr( admin_url( 'nav-menus.php?action=edit&menu=' . $id ) ); ?>">
-							<?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?>
-						</a>
-					</li>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		<?php endif; ?>
+		<?php foreach ( $menu_translations as $locale => $id ) : ?>
+			<?php if ( $locale !== $menu_language ) : ?>
+				<li>
+					<a href="<?php echo esc_attr( admin_url( 'nav-menus.php?action=edit&menu=' . $id ) ); ?>">
+						<?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?>
+					</a>
+				</li>
+			<?php endif; ?>
+		<?php endforeach; ?>
 	</ul>
+	<?php endif; ?>
 </div>
 <!-- Necessary hidden fields -->
 <input type="hidden" id="new-menu-link" value="<?php echo esc_attr( $new_translation_url ); ?>">
