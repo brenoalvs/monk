@@ -85,7 +85,7 @@ class Monk_Public {
 			$filter_main_query = true;
 		}
 
-		if ( is_admin() || ( $query->is_main_query() && ! $filter_main_query ) ) {
+		if ( is_admin() || ( $query->is_main_query() && ! $filter_main_query ) || 'nav_menu_item' === $query->get('post_type') ) {
 			return;
 		}
 
