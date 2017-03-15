@@ -579,7 +579,7 @@ class Monk_Admin {
 	 * @return array $title
 	 */
 	public function monk_language_column_head( $title ) {
-		$title['languages'] = __( 'Languages', 'monk' );
+		$title['languages'] = __( 'Language', 'monk' );
 		return $title;
 	}
 
