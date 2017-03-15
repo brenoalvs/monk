@@ -117,10 +117,15 @@ div.monk-language-field {
 
 .menu-flag {
 	font-size: 15px;
-    margin-right: 5px;
+	margin-right: 5px;
 }
 
 .menu-translations {
 	border-top: 1px solid #eee;
-    margin-top: 2em;
+	margin-top: 2em;
+}
+
+div.menu-translations ul.current-menu-translations li {
+	float: left;
+	margin-right: 10px;
 }
