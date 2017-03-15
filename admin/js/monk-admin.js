@@ -104,7 +104,13 @@
 			$.extend( wp.Uploader.prototype, {
 				success : function( file_attachment ){
 					var attachment_id = file_attachment.attributes.id;
-					$( '.attachments li[data-id="' + attachment_id + '"] .attachment-preview' ).click();
+					var item          = $( '.attachments li.save-ready' ).not( '.uploading, .saved-language, [data-id]' );
+					
+					if ( typeof undefined === typeof item.attr( 'data-id' ) ) {
+						item.find( '.attachment-preview' ).click();
+						item.addClass( 'saved-language' );
+					}
+
 					$( '[name="attachments[' + attachment_id + '][language]"]' ).change();
 				}
 			});

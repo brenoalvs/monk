@@ -701,7 +701,8 @@ class Monk_Admin {
 	 * Update term language
 	 *
 	 * @since  0.1.0
-	 * @param int $term_id Id of the term.
+	 * @param int $term_id  Term ID.
+	 * @param int $taxonomy Taxonomy slug.
 	 * @return  void
 	 */
 	public function monk_update_term_meta( $term_id, $taxonomy ) {
@@ -735,10 +736,11 @@ class Monk_Admin {
 	/**
 	 * Function that erases the data stored by the plugin when term is deleted.
 	 *
-	 * @param int $term_id ID of the Term object.
-	 * @return  void
-	 *
 	 * @since 0.1.0
+	 *
+	 * @param  int $term_id  Term ID.
+	 * @param  int $taxonomy Taxonomy slug.
+	 * @return void
 	 */
 	public function monk_delete_term_meta( $term_id, $taxonomy ) {
 		if ( 'nav_menu' === $taxonomy ) {
@@ -1144,8 +1146,10 @@ class Monk_Admin {
 			$language = get_post_meta( $post_id, '_monk_post_language', true );
 
 			if ( empty( $language ) ) {
-				if ( ! empty( monk_get_url_args( 'lang' ) ) ) {
-					$language = monk_get_url_args( 'lang' );
+				$lang_from_url = monk_get_url_args( 'lang' );
+
+				if ( ! empty( $lang_from_url ) ) {
+					$language = $lang_from_url;
 				} else {
 					$language = $default_language;
 				}
