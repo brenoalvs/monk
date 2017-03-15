@@ -741,13 +741,11 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_delete_term_meta( $term_id, $taxonomy ) {
-		if ( 'nav_menu' === $taxonomy ) {
-			return;
-		}
 
-		$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
-		$term_language             = get_term_meta( $term_id, '_monk_term_language', true );
-		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
+		$is_menu                   = 'nav_menu' === $taxonomy ? 'menu' : 'term';
+		$term_language             = get_term_meta( $term_id, '_monk_' . $is_menu . '_language', true );
+		$monk_term_translations_id = get_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', true );
+		$option_name               = 'monk_' . $is_menu . '_translations_' . $monk_term_translations_id;
 		$monk_term_translations    = get_option( $option_name, false );
 
 		if ( isset( $monk_term_translations ) && $monk_term_translations ) {
