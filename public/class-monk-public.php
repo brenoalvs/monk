@@ -182,4 +182,26 @@ class Monk_Public {
 
 		return $args;
 	}
+
+	public function monk_show_menu_translation( $args ) {
+		
+		$location  = $args['theme_location'];
+		$menus     = get_nav_menu_locations();
+		$language  = get_query_var( 'lang' );
+
+		$language  = monk_get_locale_by_slug( $language );
+
+		if ( array_key_exists( $location, $menus ) ) {
+			$menu_id           = $menus[ $location ];
+			$monk_id           = get_term_meta( $menu_id, '_monk_term_translations_id', true );
+			$monk_translations = get_option( 'monk_term_translations_' . $monk_id, false );
+
+			if ( array_key_exists( $language, $monk_translations ) ) {
+				$menus[ $location ] = $monk_translations[ $language ];
+				set_theme_mod( 'nav_menu_locations', $menus );
+			}
+		}
+
+		return $args;
+	}
 }
