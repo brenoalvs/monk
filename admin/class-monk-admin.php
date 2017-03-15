@@ -381,12 +381,10 @@ class Monk_Admin {
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter', FILTER_SANITIZE_STRING );
 		$language         = filter_input( INPUT_GET , 'lang', FILTER_SANITIZE_STRING );
 
-		if ( $query->is_search() ) {
-			if ( empty( $filter ) ) {
-				return;
-			} else {
-				$language = $filter;
-			}
+		if ( empty( $filter ) ) {
+			return;
+		} else {
+			$language = $filter;
 		}
 
 		if ( $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
