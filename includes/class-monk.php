@@ -238,7 +238,7 @@ class Monk {
 
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
-		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_show_menu_translation' );
+		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
 	}
 
 	/**
