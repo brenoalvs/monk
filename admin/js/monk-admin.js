@@ -109,5 +109,27 @@
 				}
 			});
 		}
+
+		/**
+		 * Replace components from the admin footer to the major-publishing-actions div, in the menu page
+		 *
+		 *
+		*/
+		if ( /\bnav-menus.php?\b/.test( window.location.pathname ) ) {
+			if ( $( '.add-menu-translation' ).length ) {
+				$( 'div#nav-menu-header .major-publishing-actions' ).append( $( '.add-menu-translation' ) );
+			} else {
+				$( 'div#nav-menu-header .major-publishing-actions' ).append( $( '.new-menu-language' ) );
+			}
+
+			$( '#post-body #post-body-content div.menu-settings' ).append( $( 'fieldset.menu-language' ) );
+			$( 'div.menu-settings h3' ).after( $( 'fieldset.menu-language' ) );
+
+			$( document ).on( 'click', 'input#add-menu-translation', function( e ) {
+				e.preventDefault();
+				var new_menu_url = $( '#new-menu-link' ).val();
+				window.location.replace( new_menu_url );
+			});
+		}
 	});
 })( jQuery );
