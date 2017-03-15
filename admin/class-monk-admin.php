@@ -675,9 +675,9 @@ class Monk_Admin {
 
 			if ( null !== filter_input( INPUT_GET, 'monk_id' ) ) {
 				$monk_id           = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'monk_id' ) ) );
-				$term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_id, false );
+				$term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_id, array() );
 
-				if ( in_array( $language , $active_languages, true ) && ! array_key_exists( $language , $term_translations ) ) {
+				if ( in_array( $language , $active_languages, true ) && ( ! array_key_exists( $language , $term_translations ) || empty( $term_translations ) ) ) {
 					add_term_meta( $term_id, '_monk_' . $is_menu . '_language', $language, true );
 
 					if ( false !== $term_translations ) {
