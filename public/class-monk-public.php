@@ -85,7 +85,7 @@ class Monk_Public {
 			$filter_main_query = true;
 		}
 
-		if ( is_admin() || ( $query->is_main_query() && ! $filter_main_query ) ) {
+		if ( is_admin() || ( $query->is_main_query() && ! $filter_main_query ) || 'nav_menu_item' === $query->get('post_type') ) {
 			return;
 		}
 
@@ -184,10 +184,10 @@ class Monk_Public {
 	}
 
 	public function monk_show_menu_translation( $args ) {
-		
-		$location  = $args['theme_location'];
-		$menus     = get_nav_menu_locations();
-		$language  = get_query_var( 'lang' );
+		$location         = $args['theme_location'];
+		$menus            = get_nav_menu_locations();
+		$language         = get_query_var( 'lang' );
+		$default_language = get_option( 'monk_default_language', false );
 
 		$language  = monk_get_locale_by_slug( $language );
 
@@ -196,10 +196,16 @@ class Monk_Public {
 			$monk_id           = get_term_meta( $menu_id, '_monk_term_translations_id', true );
 			$monk_translations = get_option( 'monk_term_translations_' . $monk_id, false );
 
-			if ( array_key_exists( $language, $monk_translations ) ) {
+			if ( $language !== $default_language && ( is_array( $monk_translations ) && array_key_exists( $language, $monk_translations ) ) ) {
 				$menus[ $location ] = $monk_translations[ $language ];
-				set_theme_mod( 'nav_menu_locations', $menus );
+			} elseif ( is_array( $monk_translations ) && array_key_exists( $default_language, $monk_translations ) ) {
+				$menus[ $location ] = $monk_translations[ $default_language ];
+			} else {
+				$menu_id_fallback = array_shift( $monk_translations );
+				$menus[ $location ] = $menu_id_fallback;
 			}
+
+			set_theme_mod( 'nav_menu_locations', $menus );
 		}
 
 		return $args;
