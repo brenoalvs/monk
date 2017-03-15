@@ -430,12 +430,19 @@ class Monk_Admin {
 
 		$screen = get_current_screen();
 
-		if ( 'edit' === $screen->parent_base && 'post' === $screen->base ) {
-			$post_id              = get_the_id();
-			$default_language     = get_option( 'monk_default_language', false );
-			$active_languages     = get_option( 'monk_active_languages', false );
-			$language             = filter_input( INPUT_GET, 'lang' );
-			$post_language        = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
+		if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
+			$active_languages = get_option( 'monk_active_languages', array() );
+			$default_language = get_option( 'monk_default_language', false );
+
+			if ( 'nav-menus' === $screen->base ) {
+				$language = get_term_meta( filter_input( INPUT_GET , 'menu' ), '_monk_menu_language', true );
+				$language = empty( $language ) ? $default_language : $language;
+			} else {
+				$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
+				$language      = filter_input( INPUT_GET, 'lang' );
+				$post_id       = get_the_id();
+				$language      = filter_input( INPUT_GET , 'lang' );
+			}
 
 			if ( isset( $language ) && in_array( $language, $active_languages, true ) ) {
 				$relation = array(
@@ -1185,7 +1192,7 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_add_menu_translation_fields() {
-		if ( 'nav-menus' !== get_current_screen() -> base ) {
+		if ( 'nav-menus' !== get_current_screen() -> base || 'locations' === filter_input( INPUT_GET, 'action' ) ) {
 			return;
 		}
 
@@ -1196,10 +1203,11 @@ class Monk_Admin {
 			$monk_id = filter_input( INPUT_GET, 'monk_id' );
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-new-menu-fields-render.php';
 		} else {
-			$monk_id             = get_term_meta( filter_input( INPUT_GET, 'menu' ), '_monk_menu_translations_id', true );
-			$monk_id             = empty( $monk_id ) ? filter_input( INPUT_GET, 'menu' ) : $monk_id;
-			$menu_language       = get_term_meta( filter_input( INPUT_GET, 'menu' ), '_monk_menu_language', true );
-			$menu_translations   = get_option( 'monk_menu_translations_' . $monk_id, false );
+			$menu_id = empty( filter_input( INPUT_GET, 'menu' ) ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
+			$monk_id             = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+			$monk_id             = empty( $monk_id ) ? $menu_id : $monk_id;
+			$menu_language       = get_term_meta( $menu_id, '_monk_menu_language', true );
+			$menu_translations   = get_option( 'monk_menu_translations_' . $monk_id, array() );
 			$new_translation_url = admin_url( 'nav-menus.php?action=edit&menu=0&monk_id=' . $monk_id );
 
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-menu-translation-fields-render.php';
