@@ -435,7 +435,8 @@ class Monk_Admin {
 			$default_language = get_option( 'monk_default_language', false );
 
 			if ( 'nav-menus' === $screen->base ) {
-				$language = get_term_meta( filter_input( INPUT_GET , 'menu' ), '_monk_menu_language', true );
+				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
 				$language = empty( $language ) ? $default_language : $language;
 			} else {
 				$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
@@ -469,6 +470,7 @@ class Monk_Admin {
 				$args['meta_query'] = $meta_query;
 			}
 		}
+
 
 		return $args;
 	}
