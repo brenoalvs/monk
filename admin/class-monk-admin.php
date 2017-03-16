@@ -381,7 +381,8 @@ class Monk_Admin {
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 
 		if ( 'nav-menus' === get_current_screen() -> base ) {
-			$language = get_term_meta( filter_input( INPUT_GET , 'menu' ), '_monk_menu_language', true );
+			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
 			$language = empty( $language ) ? $default_language : $language;
 		} else {
 			$language = filter_input( INPUT_GET , 'lang' );
