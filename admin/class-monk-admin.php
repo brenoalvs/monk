@@ -471,7 +471,6 @@ class Monk_Admin {
 			}
 		}
 
-
 		return $args;
 	}
 
