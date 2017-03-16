@@ -1047,7 +1047,7 @@ class Monk_Admin {
 			$language = $monk_languages[ $default_language ]['name'];
 		}
 
-		if ( 'upload.php' !== substr( strrchr( parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
+		if ( 'upload.php' !== substr( strrchr( wp_parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
 			$is_translatable = false;
 		}
 
