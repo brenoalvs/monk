@@ -104,3 +104,28 @@ div.monk-language-field {
 .monk-language-name {
 	margin-right: 10px;
 }
+
+.add-menu-translation {
+	text-align: right;
+	float: right;
+	margin-right: 10px;
+}
+
+.add-menu-translation .button {
+	height: 30px;
+}
+
+.menu-flag {
+	font-size: 15px;
+	margin-right: 5px;
+}
+
+.menu-translations {
+	border-top: 1px solid #eee;
+	margin-top: 2em;
+}
+
+div.menu-translations ul.current-menu-translations li {
+	float: left;
+	margin-right: 10px;
+}
