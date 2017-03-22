@@ -440,9 +440,9 @@ class Monk_Admin {
 				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
 				$language = empty( $language ) ? $default_language : $language;
 			} else {
+				$post_id       = get_the_id();
 				$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
 				$language      = filter_input( INPUT_GET, 'lang' );
-				$post_id       = get_the_id();
 				$language      = filter_input( INPUT_GET , 'lang' );
 			}
 
@@ -1205,7 +1205,7 @@ class Monk_Admin {
 			$monk_id = filter_input( INPUT_GET, 'monk_id' );
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-new-menu-fields-render.php';
 		} else {
-			$menu_id             = empty( filter_input( INPUT_GET, 'menu' ) ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
+			$menu_id             = empty( filter_input( INPUT_GET, 'menu' ) ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
 			$monk_id             = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
 			$monk_id             = empty( $monk_id ) ? $menu_id : $monk_id;
 			$menu_language       = get_term_meta( $menu_id, '_monk_menu_language', true );
