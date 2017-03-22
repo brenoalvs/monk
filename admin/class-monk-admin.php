@@ -417,12 +417,12 @@ class Monk_Admin {
 	 * @since    0.1.0
 	 * @return  array $args.
 	 */
-	public function monk_admin_terms_filter( $args ) {
+	public function monk_admin_terms_filter( $args, $taxonomies ) {
 		if ( ! is_admin() ) {
 			return $args;
 		}
 
-		if ( is_customize_preview() ) {
+		if ( is_customize_preview() && in_array( 'nav_menu', $taxonomies ) ) {
 			$language = get_option( 'monk_default_language', false );
 
 			$meta_query = array(
