@@ -204,9 +204,9 @@ class Monk_Public {
 			$monk_id           = get_term_meta( $menu_id, '_monk_term_translations_id', true );
 			$monk_translations = get_option( 'monk_term_translations_' . $monk_id, array() );
 
-			if ( $language !== $default_language && ( is_array( $monk_translations ) && array_key_exists( $language, $monk_translations ) ) ) {
+			if ( $language !== $default_language && array_key_exists( $language, $monk_translations ) ) {
 				$menus[ $location ] = $monk_translations[ $language ];
-			} elseif ( is_array( $monk_translations ) && array_key_exists( $default_language, $monk_translations ) ) {
+			} elseif ( array_key_exists( $default_language, $monk_translations ) ) {
 				$menus[ $location ] = $monk_translations[ $default_language ];
 			} else {
 				$menu_id_fallback = array_shift( $monk_translations );
