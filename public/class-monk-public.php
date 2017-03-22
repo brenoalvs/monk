@@ -197,12 +197,12 @@ class Monk_Public {
 		$language         = get_query_var( 'lang' );
 		$default_language = get_option( 'monk_default_language', false );
 
-		$language  = monk_get_locale_by_slug( $language );
+		$language         = monk_get_locale_by_slug( $language );
 
 		if ( array_key_exists( $location, $menus ) ) {
 			$menu_id           = $menus[ $location ];
 			$monk_id           = get_term_meta( $menu_id, '_monk_term_translations_id', true );
-			$monk_translations = get_option( 'monk_term_translations_' . $monk_id, false );
+			$monk_translations = get_option( 'monk_term_translations_' . $monk_id, array() );
 
 			if ( $language !== $default_language && ( is_array( $monk_translations ) && array_key_exists( $language, $monk_translations ) ) ) {
 				$menus[ $location ] = $monk_translations[ $language ];
