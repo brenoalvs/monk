@@ -201,8 +201,8 @@ class Monk_Public {
 
 		if ( array_key_exists( $location, $menus ) ) {
 			$menu_id           = $menus[ $location ];
-			$monk_id           = get_term_meta( $menu_id, '_monk_term_translations_id', true );
-			$monk_translations = get_option( 'monk_term_translations_' . $monk_id, array() );
+			$monk_id           = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+			$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
 
 			if ( $language !== $default_language && array_key_exists( $language, $monk_translations ) ) {
 				$menus[ $location ] = $monk_translations[ $language ];
