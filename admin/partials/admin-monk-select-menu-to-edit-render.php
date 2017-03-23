@@ -21,6 +21,9 @@ foreach ( $monk_ids as $monk_id ) : ?>
 	<?php
 	$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
 	$monk_id_obj       = get_term( $monk_id );
+	if ( array_key_exists( $default_language, $monk_translations ) ) {
+		$monk_id_obj = get_term( $monk_translations[ $default_language ] );
+	}
 	?>
 	<optgroup label="<?php echo esc_attr( sprintf( __( 'Translations of %s', 'monk' ), $monk_id_obj->name ) ); ?>">
 		<?php foreach ( $monk_translations as $nav_menu_id ) : ?>
@@ -52,7 +55,10 @@ foreach ( $monk_ids as $monk_id ) : ?>
 		</select>
 	<?php endif; ?>
 <?php endforeach; ?>
-<input type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
+
+<?php if ( 'locations' === filter_input( INPUT_GET, 'action' ) ) : ?>
+	<input type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
+<?php endif; ?>
 
 <?php
 $current_menu_id           = empty( filter_input( INPUT_GET, 'menu' ) ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
@@ -60,6 +66,11 @@ $current_menu_language     = get_term_meta( $current_menu_id, '_monk_menu_langua
 $current_monk_id           = get_term_meta( $current_menu_id, '_monk_menu_translations_id', true );
 $current_menu_translations = get_option( 'monk_menu_translations_' . $current_monk_id, array() );
 $current_monk_id           = get_term( $current_monk_id );
+
+if ( array_key_exists( $default_language, $current_menu_translations ) ) {
+	$current_monk_id = get_term( $current_menu_translations[ $default_language ] );
+}
+
 $current_monk_id_name      = $current_monk_id->name;
 ?>
 <?php if ( array_key_exists( $default_language, $current_menu_translations ) && $current_menu_language !== $default_language ) : ?>
