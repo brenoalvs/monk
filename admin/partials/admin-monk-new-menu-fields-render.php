@@ -18,7 +18,9 @@ global $monk_languages;
 <!-- The select with the available languages to choose from -->
 <select name="monk_language" class="new-menu-language">
 	<?php foreach ( $active_languages as $locale ) : ?>
-		<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?></option>
+		<?php if ( ! array_key_exists( $locale, $menu_translations ) ) : ?>
+			<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?></option>
+		<?php endif; ?>
 	<?php endforeach; ?>
 </select>
 
