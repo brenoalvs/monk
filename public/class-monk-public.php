@@ -155,8 +155,6 @@ class Monk_Public {
 			$current_language = monk_get_locale_by_slug( $current_language );
 		}
 
-		$current_language = monk_get_locale_by_slug( $current_language );
-
 		if ( $default_language === $current_language ) {
 			$args['meta_query'] = array(
 				'relation' => 'OR',
