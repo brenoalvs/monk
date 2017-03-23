@@ -419,7 +419,8 @@ class Monk_Admin {
 	/**
 	 * Function to filter the query inside the category meta box using the languages
 	 *
-	 * @param   array $args Array of arguments.
+	 * @param   array $args       Array of arguments.
+	 * @param   array $taxonomies Array of taxonomies.
 	 *
 	 * @since    0.1.0
 	 * @return  array $args.
