@@ -494,10 +494,8 @@ class Monk_Admin {
 
 					$args['meta_query'] = $meta_query;
 				}
-			}
-			// End if().
-		}
-		// End if().
+			} // End if().
+		} // End if().
 
 		return $args;
 	}
@@ -672,7 +670,7 @@ class Monk_Admin {
 			}
 
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
-		}
+		} // End if().
 	}
 
 	/**
@@ -1213,8 +1211,7 @@ class Monk_Admin {
 					$query->set( 'meta_query', $meta_query_args );
 				}
 			}
-		}
-		// End if().
+		} // End if().
 	}
 
 	/**
