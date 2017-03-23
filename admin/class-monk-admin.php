@@ -143,6 +143,15 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_general_settings'
 		);
+
+		register_setting( 'monk_settings', 'appreciate_monk' );
+		add_settings_field(
+			'appreciate_monk',
+			__( 'Show your appreciation', 'monk' ),
+			array( $this, 'monk_appreciation_render' ),
+			'monk_settings',
+			'monk_general_settings'
+		);
 	}
 
 	/**
@@ -179,6 +188,17 @@ class Monk_Admin {
 	 */
 	public function monk_active_languages_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-active-languages-render.php';
+	}
+
+	/**
+	 * Function to render a checkbox and the option description, callback for the appreciate_monk menu element
+	 *
+	 * @since    0.3.0
+	 * @return  void
+	 */
+	public function monk_appreciation_render() {
+		$appreciation = get_option( 'appreciate_monk', false ) ? true : false;
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-appreciation-render.php';
 	}
 
 	/**
