@@ -197,7 +197,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_appreciation_render() {
-		$appreciation = get_option( 'appreciate_monk', null ) ? true : false;
+		$appreciation = get_option( 'appreciate_monk', false ) ? true : false;
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-appreciation-render.php';
 	}
 

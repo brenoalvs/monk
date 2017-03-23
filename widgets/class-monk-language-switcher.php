@@ -162,7 +162,18 @@ class Monk_Language_Switcher extends WP_Widget {
 			}
 		}
 
+		foreach ( $monk_languages as $lang_code => $list ) {
+			if ( $list['slug'] === $current_language ) {
+				$current_language = $lang_code;
+				$current_slug = $list['slug'];
+			}
+			$monk_languages_reverted[ $list['slug'] ] = $list;
+		}
+
+		echo $args['before_widget'];
+		echo $args['before_title'] . esc_html( $title ) . $args['after_title'];
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
+		echo $args['after_widget'];
 	}
 
 	/**
