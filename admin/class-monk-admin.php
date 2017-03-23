@@ -388,10 +388,12 @@ class Monk_Admin {
 			$language = filter_input( INPUT_GET , 'lang' );
 		}
 
-		if ( empty( $filter ) ) {
-			return;
-		} else {
-			$language = $filter;
+		if ( $query->is_search() ) {
+			if ( empty( $filter ) ) {
+				return;
+			} else {
+				$language = $filter;
+			}
 		}
 
 		if ( $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
@@ -1249,6 +1251,12 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_change_nav_menu_fields() {
+		$screen   = get_current_screen()->base;
+
+		if ( 'nav-menus' !== $screen ) {
+			return;
+		}
+
 		$args             = array(
 			'hide_empty' => false,
 		);
