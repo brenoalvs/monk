@@ -596,8 +596,8 @@ class Monk_Links {
 			 * Is used twice to correct a bug in which the port is incorrect at the first try
 			 * and returns correct in the second try.
 			 */
-			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
-			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url: $redirect_url;
+			$_redirect_url = ( ! redirect_canonical( $requested_url, false ) ) ? $requested_url : redirect_canonical( $requested_url, false );
+			$redirect_url  = ( ! redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url : redirect_canonical( $_redirect_url, false );
 
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $slug );
 		}
