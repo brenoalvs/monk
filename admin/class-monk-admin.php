@@ -1223,8 +1223,10 @@ class Monk_Admin {
 		$default_language = get_option( 'monk_default_language', false );
 
 		if ( '0' === filter_input( INPUT_GET, 'menu' ) ) {
-			$monk_id             = filter_input( INPUT_GET, 'monk_id' );
-			$menu_translations   = get_option( 'monk_menu_translations_' . $monk_id, array() );
+			if ( filter_input( INPUT_GET, 'monk_id' ) ) {
+				$monk_id           = filter_input( INPUT_GET, 'monk_id' );
+				$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
+			}
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-new-menu-fields-render.php';
 		} else {
 			$menu_id             = empty( filter_input( INPUT_GET, 'menu' ) ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
