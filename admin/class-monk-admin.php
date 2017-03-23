@@ -294,8 +294,10 @@ class Monk_Admin {
 			$current_language = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
 		}
 
-		$post_translations = array( $current_language => $post_id );
 		$language          = '';
+		$post_translations = array(
+			$current_language => $post_id,
+		);
 
 		if ( isset( $_REQUEST['monk_post_language'] ) && ! empty( $_REQUEST['monk_post_language'] ) ) {
 			$language = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
@@ -316,7 +318,7 @@ class Monk_Admin {
 
 		if ( ! empty( $post_translations ) ) {
 			if ( array_key_exists( $current_language, $post_translations ) ) {
-				if (  $post_id === $post_translations[ $current_language ] && $language ) {
+				if ( $post_id === $post_translations[ $current_language ] && $language ) {
 					unset( $post_translations[ $current_language ] );
 					$post_translations[ $language ] = $post_id;
 				}
@@ -325,7 +327,9 @@ class Monk_Admin {
 			}
 		} else {
 			$monk_id           = $post_id;
-			$post_translations = array( $current_language => $post_id );
+			$post_translations = array(
+				$current_language => $post_id,
+			);
 		}
 
 		foreach ( $post_translations as $lang_code => $id ) {
@@ -491,7 +495,9 @@ class Monk_Admin {
 					$args['meta_query'] = $meta_query;
 				}
 			}
+			// End if().
 		}
+		// End if().
 
 		return $args;
 	}
@@ -700,7 +706,9 @@ class Monk_Admin {
 
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
-			$term_translations = array( $language => $term_id );
+			$term_translations = array(
+				$language => $term_id,
+			);
 			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
 
 			if ( null !== filter_input( INPUT_GET, 'monk_id' ) ) {
@@ -1018,14 +1026,18 @@ class Monk_Admin {
 				if ( is_array( $active_languages ) ) {
 					if ( in_array( $attachment['language'], $active_languages ) ) {
 						update_post_meta( $post['ID'], '_monk_post_language', $attachment['language'] );
-						update_option( 'monk_post_translations_' . $post['ID'], array( $attachment['language'] => $post['ID'] ) );
+						update_option( 'monk_post_translations_' . $post['ID'], array(
+							$attachment['language'] => $post['ID'],
+						) );
 						update_post_meta( $post['ID'], '_monk_post_translations_id', $post['ID'] );
 						$attachment['language'] = get_post_meta( $post['ID'], '_monk_post_language', true );
 					}
 				} else {
 					if ( $attachment['language'] === $active_languages ) {
 						update_post_meta( $post['ID'], '_monk_post_language', $attachment['language'] );
-						update_option( 'monk_post_translations_' . $post['ID'], array( $attachment['language'] => $post['ID'] ) );
+						update_option( 'monk_post_translations_' . $post['ID'], array(
+							$attachment['language'] => $post['ID'],
+						) );
 						update_post_meta( $post['ID'], '_monk_post_translations_id', $post['ID'] );
 						$attachment['language'] = get_post_meta( $post['ID'], '_monk_post_language', true );
 					}
@@ -1202,6 +1214,7 @@ class Monk_Admin {
 				}
 			}
 		}
+		// End if().
 	}
 
 	/**
