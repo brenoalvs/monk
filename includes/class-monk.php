@@ -147,7 +147,7 @@ class Monk {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Monk_i18n class in order to set the domain and to register the hook
+	 * Uses the Monk_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    0.1.0
@@ -156,7 +156,7 @@ class Monk {
 	 */
 	private function set_locale() {
 
-		$monk_i18n = new Monk_i18n();
+		$monk_i18n = new Monk_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $monk_i18n, 'load_plugin_textdomain' );
 		$this->loader->add_filter( 'locale', $monk_i18n, 'monk_define_locale' );

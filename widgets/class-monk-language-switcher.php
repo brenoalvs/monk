@@ -120,7 +120,7 @@ class Monk_Language_Switcher extends WP_Widget {
 					}
 				}
 			}
-		}
+		} // End if().
 
 		if ( is_archive() && ( is_category() || is_tag() ) ) {
 			$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
@@ -160,7 +160,7 @@ class Monk_Language_Switcher extends WP_Widget {
 					}
 				}
 			}
-		}
+		} // End if().
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
