@@ -388,12 +388,10 @@ class Monk_Admin {
 			$language = filter_input( INPUT_GET , 'lang' );
 		}
 
-		if ( $query->is_search() ) {
-			if ( empty( $filter ) ) {
-				return;
-			} else {
-				$language = $filter;
-			}
+		if ( empty( $filter ) ) {
+			return;
+		} else {
+			$language = $filter;
 		}
 
 		if ( $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
@@ -615,7 +613,7 @@ class Monk_Admin {
 	 * @return array $title
 	 */
 	public function monk_language_column_head( $title ) {
-		$title['languages'] = __( 'Languages', 'monk' );
+		$title['languages'] = __( 'Language', 'monk' );
 		return $title;
 	}
 
