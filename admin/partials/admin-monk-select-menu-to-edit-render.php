@@ -14,6 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 $response = '';
+
 ?>
 <div id="monk-select-menu-to-edit-groups">
 <?php
@@ -34,29 +35,28 @@ foreach ( $monk_ids as $monk_id ) : ?>
 <?php endforeach; ?>
 </div>
 
-<?php foreach ( $current_menus as $location => $current_location_id ) : ?>
-	<?php if ( array_key_exists( $location, $registered_menus ) ) : ?>
-		<?php $response = $response . 'locations-' . $location . '/'; ?>
-		<select id="<?php echo esc_attr( sprintf( 'monk-locations-%s', $location ) ); ?>">
-			<option value="0" <?php selected( 0, $menus[ $location ] ); ?>><?php esc_html_e( '— Select a Menu —' ); ?></option>
-			<?php foreach ( $monk_ids as $monk_id ) : ?>
-				<?php
-				$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
-				?>
-				<?php foreach ( $monk_translations as $nav_menu_language => $nav_menu_id ) : ?>
-					<?php if ( $nav_menu_language === $default_language ) : ?>
-						<?php
-						$nav_menu = get_term( $nav_menu_id );
-						?>
-						<option value="<?php echo esc_attr( $nav_menu_id ); ?>" <?php selected( $nav_menu_id, $menus[ $location ] ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
-					<?php endif; ?>
-				<?php endforeach; ?>
-			<?php endforeach; ?>
-		</select>
-	<?php endif; ?>
-<?php endforeach; ?>
-
 <?php if ( 'locations' === filter_input( INPUT_GET, 'action' ) ) : ?>
+	<?php foreach ( $current_menus as $location => $current_location_id ) : ?>
+		<?php if ( array_key_exists( $location, $registered_menus ) ) : ?>
+			<?php $response = $response . 'locations-' . $location . '/'; ?>
+			<select id="<?php echo esc_attr( sprintf( 'monk-locations-%s', $location ) ); ?>">
+				<option value="0" <?php selected( 0, $menus[ $location ] ); ?>><?php esc_html_e( '— Select a Menu —' ); ?></option>
+				<?php foreach ( $monk_ids as $monk_id ) : ?>
+					<?php
+					$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
+					?>
+					<?php foreach ( $monk_translations as $nav_menu_language => $nav_menu_id ) : ?>
+						<?php if ( $nav_menu_language === $default_language ) : ?>
+							<?php
+							$nav_menu = get_term( $nav_menu_id );
+							?>
+							<option value="<?php echo esc_attr( $nav_menu_id ); ?>" <?php selected( $nav_menu_id, $menus[ $location ] ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php endforeach; ?>
+			</select>
+		<?php endif; ?>
+	<?php endforeach; ?>
 	<input type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
 <?php endif; ?>
 
@@ -74,6 +74,6 @@ if ( array_key_exists( $default_language, $current_menu_translations ) ) {
 $current_monk_id_name      = $current_monk_id->name;
 ?>
 <?php if ( array_key_exists( $default_language, $current_menu_translations ) && $current_menu_language !== $default_language ) : ?>
-	<div id="monk-menu-translation-message"><?php echo esc_html( sprintf( __( 'This is a translation of %s!', 'monk' ), $current_monk_id_name ) ); ?></div>
+	<div id="monk-menu-translation-message"><?php echo esc_html( sprintf( __( 'This is a translation of "%s"!', 'monk' ), $current_monk_id_name ) ); ?></div>
 <?php
 endif;
