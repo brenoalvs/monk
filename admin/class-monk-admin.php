@@ -372,7 +372,7 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
+		if ( ! is_admin() || is_customize_preview() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
 			return;
 		}
 
@@ -380,7 +380,7 @@ class Monk_Admin {
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 
-		if ( 'nav-menus' === get_current_screen() -> base ) {
+		if ( 'nav-menus' === get_current_screen()->base ) {
 			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
 			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
 			$language = empty( $language ) ? $default_language : $language;
@@ -435,11 +435,11 @@ class Monk_Admin {
 			$meta_query = array(
 				'relation' => 'OR', // Optional, defaults to "AND".
 				array(
-					'key'   => '_monk_term_language',
+					'key'   => '_monk_menu_language',
 					'value' => $language,
 				),
 				array(
-					'key'     => '_monk_term_language',
+					'key'     => '_monk_menu_language',
 					'compare' => 'NOT EXISTS',
 				),
 			);
@@ -447,46 +447,48 @@ class Monk_Admin {
 			return $args;
 		}
 
-		$screen = get_current_screen();
+		if ( ! is_customize_preview() ) {
+			$screen = get_current_screen();
 
-		if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
-			$active_languages = get_option( 'monk_active_languages', array() );
-			$default_language = get_option( 'monk_default_language', false );
+			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
+				$active_languages = get_option( 'monk_active_languages', array() );
+				$default_language = get_option( 'monk_default_language', false );
 
-			if ( 'nav-menus' === $screen->base ) {
-				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
-				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
-				$language = empty( $language ) ? $default_language : $language;
-			} else {
-				$post_id       = get_the_id();
-				$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
-				$language      = filter_input( INPUT_GET, 'lang' );
-				$language      = filter_input( INPUT_GET , 'lang' );
-			}
+				if ( 'nav-menus' === $screen->base ) {
+					$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+					$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+					$language = empty( $language ) ? $default_language : $language;
+				} else {
+					$post_id       = get_the_id();
+					$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
+					$language      = filter_input( INPUT_GET, 'lang' );
+					$language      = filter_input( INPUT_GET , 'lang' );
+				}
 
-			if ( isset( $language ) && in_array( $language, $active_languages, true ) ) {
-				$relation = array(
-					'key'   => '_monk_term_language',
-					'value' => $language,
-				);
-			} elseif ( $post_language ) {
-				$relation = array(
-					'key'   => '_monk_term_language',
-					'value' => $post_language,
-				);
-			}
+				if ( isset( $language ) && in_array( $language, $active_languages, true ) ) {
+					$relation = array(
+						'key'   => '_monk_term_language',
+						'value' => $language,
+					);
+				} elseif ( $post_language ) {
+					$relation = array(
+						'key'   => '_monk_term_language',
+						'value' => $post_language,
+					);
+				}
 
-			if ( isset( $relation ) ) {
-				$meta_query = array(
-					'relation' => 'OR', // Optional, defaults to "AND".
-					$relation,
-					array(
-						'key'     => '_monk_term_language',
-						'compare' => 'NOT EXISTS',
-					),
-				);
+				if ( isset( $relation ) ) {
+					$meta_query = array(
+						'relation' => 'OR', // Optional, defaults to "AND".
+						$relation,
+						array(
+							'key'     => '_monk_term_language',
+							'compare' => 'NOT EXISTS',
+						),
+					);
 
-				$args['meta_query'] = $meta_query;
+					$args['meta_query'] = $meta_query;
+				}
 			}
 		}
 
@@ -1232,5 +1234,38 @@ class Monk_Admin {
 
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-menu-translation-fields-render.php';
 		}
+	}
+
+	/**
+	 * Change nav_menu page components to improve the user experience
+	 *
+	 * There are no hooks to use in the menu edit page, so we create the
+	 * components using the admin_footer action and move them to the right location
+	 *
+	 * @since    0.3.0
+	 *
+	 * @return void
+	 */
+	public function monk_change_nav_menu_fields() {
+		$args             = array(
+			'hide_empty' => false,
+		);
+		$nav_menus        = get_terms( 'nav_menu', $args );
+		$monk_ids         = array();
+		$current_id       = empty( filter_input( INPUT_GET, 'menu' ) ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
+		$registered_menus = get_registered_nav_menus();
+		$menus            = get_nav_menu_locations();
+		$current_menus    = get_theme_mod( 'nav_menu_locations' );
+		$default_language = get_option( 'monk_default_language', false );
+
+		foreach ( $nav_menus as $nav_menu ) {
+			$menu_id = $nav_menu->term_id;
+			$monk_id = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+
+			if ( ! in_array( $monk_id, $monk_ids ) ) {
+				$monk_ids[] = $monk_id;
+			}
+		}
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-menu-to-edit-render.php';
 	}
 }
