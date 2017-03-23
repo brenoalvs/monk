@@ -145,9 +145,10 @@
 				var test = $( '#monk-menu-locations' ).val().split( '/' );
 
 				for ( var i = 0; i < test.length - 1; i++) {
-					$( '#' + test[ i ] ).children().remove();
-					$( '#' + test[ i ] ).append( $( '#monk-' + test[ i ] ).children() );
-					$( '#monk-' + test[ i ] ).remove();
+					$( '#monk-' + test[ i ] ).insertBefore( '#' + test[ i ] );
+					$( '#monk-' + test[ i ] ).attr( 'name', $( '#' + test[ i ] ).attr( 'name' ) );
+					$( '#' + test[ i ] ).remove();
+					$( '#monk-' + test[ i ] ).attr( 'id', test[ i ] );
 				}
 
 				$( '#monk-menu-locations' ).remove();
