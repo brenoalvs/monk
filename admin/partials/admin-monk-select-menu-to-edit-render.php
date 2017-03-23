@@ -26,7 +26,8 @@ foreach ( $monk_ids as $monk_id ) : ?>
 		$monk_id_obj = get_term( $monk_translations[ $default_language ] );
 	}
 	?>
-	<optgroup label="<?php printf( esc_attr__( 'Translations of %s', 'monk' ), $monk_id_obj->name ); ?>">
+	<?php /* translators: This is a label to display the translations group */ ?>
+	<optgroup label="<?php echo esc_attr( sprintf( __( 'Translations of %s', 'monk' ), $monk_id_obj->name ) ); ?>">
 		<?php foreach ( $monk_translations as $nav_menu_id ) : ?>
 			<?php $nav_menu = get_term( $nav_menu_id ); ?>
 			<option value="<?php echo esc_attr( $nav_menu_id ); ?>" <?php selected( $current_id, $nav_menu_id ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
@@ -74,6 +75,7 @@ if ( array_key_exists( $default_language, $current_menu_translations ) ) {
 $current_monk_id_name      = $current_monk_id->name;
 ?>
 <?php if ( array_key_exists( $default_language, $current_menu_translations ) && $current_menu_language !== $default_language ) : ?>
-	<div id="monk-menu-translation-message"><?php printf( esc_html__( 'This is a translation of "%s"!', 'monk' ), $current_monk_id_name ); ?></div>
+	<?php /* translators: This is a message to display these are translations of the menu beiing edited */ ?>
+	<div id="monk-menu-translation-message"><?php echo esc_html( sprintf( __( 'This is a translation of "%s"!', 'monk' ), $current_monk_id_name ) ); ?></div>
 <?php
 endif;
