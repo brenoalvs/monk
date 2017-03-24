@@ -1240,7 +1240,8 @@ class Monk_Admin {
 			}
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-new-menu-fields-render.php';
 		} else {
-			$menu_id             = empty( filter_input( INPUT_GET, 'menu' ) ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
+			$menu                = filter_input( INPUT_GET, 'menu' );
+			$menu_id             = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
 			$monk_id             = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
 			$monk_id             = empty( $monk_id ) ? $menu_id : $monk_id;
 			$menu_language       = get_term_meta( $menu_id, '_monk_menu_language', true );
@@ -1273,7 +1274,8 @@ class Monk_Admin {
 		);
 		$nav_menus        = get_terms( 'nav_menu', $args );
 		$monk_ids         = array();
-		$current_id       = empty( filter_input( INPUT_GET, 'menu' ) ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
+		$menu             = filter_input( INPUT_GET, 'menu' );
+		$current_id       = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
 		$registered_menus = get_registered_nav_menus();
 		$menus            = get_nav_menu_locations();
 		$current_menus    = get_theme_mod( 'nav_menu_locations' );

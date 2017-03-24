@@ -62,7 +62,8 @@ foreach ( $monk_ids as $monk_id ) : ?>
 <?php endif; ?>
 
 <?php
-$current_menu_id           = empty( filter_input( INPUT_GET, 'menu' ) ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
+$menu                      = filter_input( INPUT_GET, 'menu' );
+$current_menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
 $current_menu_language     = get_term_meta( $current_menu_id, '_monk_menu_language', true );
 $current_monk_id           = get_term_meta( $current_menu_id, '_monk_menu_translations_id', true );
 $current_menu_translations = get_option( 'monk_menu_translations_' . $current_monk_id, array() );
