@@ -699,8 +699,9 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_create_term_meta( $term_id, $tt_id, $taxonomy ) {
+		$monk_language = filter_input( INPUT_POST, 'monk_language' );
 
-		if ( null !== filter_input( INPUT_POST, 'monk_language' ) && ! empty( filter_input( INPUT_POST, 'monk_language' ) ) ) {
+		if ( ! empty( $monk_language ) ) {
 
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
