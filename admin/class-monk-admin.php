@@ -1281,6 +1281,25 @@ class Monk_Admin {
 		$current_menus    = get_theme_mod( 'nav_menu_locations' );
 		$default_language = get_option( 'monk_default_language', false );
 
+		foreach ( $registered_menus as $location => $location_name ) {
+			$menu_id = ! empty( $menus[ $location ] ) ? $menus[ $location ] : 0;
+			if ( 0 !== $menu_id ) {
+				$current_menu_monk_id      = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+				$current_menu_translations = get_option( 'monk_menu_translations_' . $current_menu_monk_id, array() );
+
+				if ( array_key_exists( $default_language, $current_menu_translations ) ) {
+					$current_menus[ $location ] = $current_menu_translations[ $default_language ];
+				} else {
+					$menu_id_fallback = array_shift( $current_menu_translations );
+					$current_menus[ $location ] = $menu_id_fallback;
+				}
+			} else {
+				$current_menus[ $location ] = 0;
+			}
+			set_theme_mod( 'nav_menu_locations', $current_menus );
+		}
+		$menus = get_nav_menu_locations();
+
 		foreach ( $nav_menus as $nav_menu ) {
 			$menu_id = $nav_menu->term_id;
 			$monk_id = get_term_meta( $menu_id, '_monk_menu_translations_id', true );

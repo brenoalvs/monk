@@ -78,5 +78,25 @@ $current_monk_id_name      = $current_monk_id->name;
 <?php if ( array_key_exists( $default_language, $current_menu_translations ) && $current_menu_language !== $default_language ) : ?>
 	<?php /* translators: This is a message to display these are translations of the menu beiing edited */ ?>
 	<div id="monk-menu-translation-message"><?php echo esc_html( sprintf( __( 'This is a translation of "%s"!', 'monk' ), $current_monk_id_name ) ); ?></div>
-<?php
-endif;
+<?php else : ?>
+	<div id="monk-checkbox-wrapper">
+	<?php
+	foreach ( $registered_menus as $location => $name ) {
+		$current_monk_id = get_term_meta( $current_id, '_monk_menu_translations_id', true );
+		$menu_term       = get_term( $menus[ $location ] );
+		$response = $response . 'locations-' . $location . '/';
+		?>
+		<div class="menu-settings-input checkbox-input">
+			<input type="checkbox" name="<?php printf( esc_attr( 'menu-locations[%s]' ), $location ); ?>" id="<?php printf( esc_attr( 'monk-locations-%s' ), $location ); ?>" <?php checked( $current_monk_id, $menus[ $location ] ); ?>>
+			<label for="<?php printf( esc_attr( 'monk-locations-%s' ), $location ); ?>"><?php echo esc_html( $name ); ?></label>
+
+			<?php if ( ( int ) $current_monk_id !== $menus[ $location ] && ! empty( $menus[ $location ] ) ) : ?>
+				<span class="theme-location-set"><?php printf( esc_html( '(Currently set to: %s)', 'monk' ), $menu_term->name ); ?></span>
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+	?>
+	<input type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
+	</div>
+<?php endif; ?>
