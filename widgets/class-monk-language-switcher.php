@@ -48,6 +48,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$active_languages_slug   = array();
 		$title                   = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
 		$flag                    = ! empty( $instance['flag'] ) ? true : false;
+		$monk_love               = ! empty( $instance['appretiation'] ) ? true : false;
 		$active_languages        = get_option( 'monk_active_languages' );
 		$current_language        = '';
 		$monk_languages_reverted = array();
@@ -185,9 +186,10 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @return array $instance
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                = $old_instance;
-		$instance['title']       = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['flag']        = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance                 = $old_instance;
+		$instance['title']        = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['flag']         = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance['appretiation'] = ! empty( $new_instance['appretiation'] ) ? true : false;
 
 		return $instance;
 	}

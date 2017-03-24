@@ -116,3 +116,20 @@ div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name spa
 	margin-left: 10px;
 	width: 16px;
 }
+
+div#monk-language-switcher div.monk-love {
+	box-sizing: border-box;
+	margin-top: 5px;
+	padding: 0;
+}
+
+div#monk-language-switcher div.monk-love {
+	font-size: 12px;
+}
+
+div#monk-language-switcher div.monk-love span.monk-heart {
+	padding: 0;
+	font-size: 12px;
+	color: #de1414;
+	margin-top: 0.3em;
+}

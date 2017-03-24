@@ -174,7 +174,7 @@ class Monk_Admin {
 	/**
 	 * Function to render the checkbox field, callback for the monk_active_languages element
 	 *
-	 * @since    0.1.0
+	 * @since   0.1.0
 	 * @return  void
 	 */
 	public function monk_active_languages_render() {

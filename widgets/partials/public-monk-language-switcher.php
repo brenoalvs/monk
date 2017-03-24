@@ -48,5 +48,16 @@ echo $args['before_widget'];
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</ul>
+		<?php if ( $monk_love ) : ?>
+		<div class="monk-love">
+			<?php
+				printf(
+					__( 'Made with %1$s by %2$s', 'monk' ),
+					'<span class="dashicons dashicons-heart monk-heart" aria-hidden="true"></span>',
+					'<a href="https://github.com/brenoalvs/monk" title="Monk">Monk</a>'
+				);
+			?>
+		</div>
+	<?php endif; ?>
 	</div>
 <?php echo $args['after_widget']; ?>
