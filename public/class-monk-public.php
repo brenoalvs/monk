@@ -202,16 +202,18 @@ class Monk_Public {
 			$monk_id           = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
 			$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
 
-			if ( $language !== $default_language && array_key_exists( $language, $monk_translations ) ) {
-				$menus[ $location ] = $monk_translations[ $language ];
-			} elseif ( array_key_exists( $default_language, $monk_translations ) ) {
-				$menus[ $location ] = $monk_translations[ $default_language ];
-			} else {
-				$menu_id_fallback = array_shift( $monk_translations );
-				$menus[ $location ] = $menu_id_fallback;
-			}
+			if ( ! empty( $monk_translations ) ) {
+				if ( $language !== $default_language && array_key_exists( $language, $monk_translations ) ) {
+					$menus[ $location ] = $monk_translations[ $language ];
+				} elseif ( array_key_exists( $default_language, $monk_translations ) ) {
+					$menus[ $location ] = $monk_translations[ $default_language ];
+				} else {
+					$menu_id_fallback = array_shift( $monk_translations );
+					$menus[ $location ] = $menu_id_fallback;
+				}
 
-			set_theme_mod( 'nav_menu_locations', $menus );
+				set_theme_mod( 'nav_menu_locations', $menus );
+			}
 		}
 
 		return $args;
