@@ -756,7 +756,7 @@ class Monk_Admin {
 			$monk_term_translations_id = $term_id;
 		}
 
-		$monk_term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_term_translations_id, false );
+		$monk_term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_term_translations_id, array() );
 
 		if ( ! array_key_exists( $new_language , $monk_term_translations ) ) {
 			if ( ! empty( $monk_term_translations ) ) {
