@@ -49,15 +49,20 @@ foreach ( $monk_ids as $monk_id ) : ?>
 				<?php foreach ( $monk_ids as $monk_id ) : ?>
 					<?php
 					$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
+					if ( ! empty( $monk_translations ) ) :
 					?>
-					<?php foreach ( $monk_translations as $nav_menu_language => $nav_menu_id ) : ?>
-						<?php if ( $nav_menu_language === $default_language ) : ?>
-							<?php
-							$nav_menu = get_term( $nav_menu_id );
-							?>
-							<option value="<?php echo esc_attr( $nav_menu_id ); ?>" <?php selected( $nav_menu_id, $menus[ $location ] ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
-						<?php endif; ?>
-					<?php endforeach; ?>
+						<?php foreach ( $monk_translations as $nav_menu_language => $nav_menu_id ) : ?>
+							<?php if ( $nav_menu_language === $default_language ) : ?>
+								<?php
+								$nav_menu = get_term( $nav_menu_id );
+								?>
+								<option value="<?php echo esc_attr( $nav_menu_id ); ?>" <?php selected( $nav_menu_id, $menus[ $location ] ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					<?php else : ?>
+						<?php $nav_menu = get_term( $monk_id ); ?>
+						<option value="<?php echo esc_attr( $monk_id ); ?>" <?php selected( $monk_id, $menus[ $location ] ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
+					<?php endif; ?>
 				<?php endforeach; ?>
 			</select>
 		<?php endif; ?>
