@@ -14,7 +14,6 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 $response = '';
-
 ?>
 <div id="monk-select-menu-to-edit-groups">
 <?php
@@ -25,13 +24,18 @@ foreach ( $monk_ids as $monk_id ) : ?>
 	if ( array_key_exists( $default_language, $monk_translations ) ) {
 		$monk_id_obj = get_term( $monk_translations[ $default_language ] );
 	}
+	$has_language = ! empty( get_term_meta( $monk_id_obj->term_id, '_monk_menu_language', true ) ) ? true : false;
 	?>
 	<?php /* translators: This is a label to display the translations group */ ?>
 	<optgroup label="<?php echo esc_attr( sprintf( __( 'Translations of %s', 'monk' ), $monk_id_obj->name ) ); ?>">
-		<?php foreach ( $monk_translations as $nav_menu_id ) : ?>
-			<?php $nav_menu = get_term( $nav_menu_id ); ?>
-			<option value="<?php echo esc_attr( $nav_menu_id ); ?>" <?php selected( $current_id, $nav_menu_id ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
-		<?php endforeach; ?>
+		<?php if ( $has_language ) : ?>
+			<?php foreach ( $monk_translations as $nav_menu_id ) : ?>
+				<?php $nav_menu = get_term( $nav_menu_id ); ?>
+				<option value="<?php echo esc_attr( $nav_menu_id ); ?>" <?php selected( $current_id, $nav_menu_id ); ?>><?php echo esc_html( $nav_menu->name ); ?></option>
+			<?php endforeach; ?>
+		<?php else : ?>
+			<option value="<?php echo esc_attr( $monk_id_obj->term_id ); ?>" <?php selected( $monk_id_obj->term_id, get_user_option( 'nav_menu_recently_edited' ) ); ?>><?php echo esc_html( $monk_id_obj->name ); ?></option>
+		<?php endif; ?>
 	</optgroup>
 <?php endforeach; ?>
 </div>
@@ -71,6 +75,8 @@ $current_monk_id           = get_term( $current_monk_id );
 
 if ( array_key_exists( $default_language, $current_menu_translations ) ) {
 	$current_monk_id = get_term( $current_menu_translations[ $default_language ] );
+} else {
+	$current_monk_id = get_term( $current_id );
 }
 
 $current_monk_id_name      = $current_monk_id->name;
@@ -81,22 +87,19 @@ $current_monk_id_name      = $current_monk_id->name;
 <?php else : ?>
 	<div id="monk-checkbox-wrapper">
 	<?php
-	foreach ( $registered_menus as $location => $name ) {
-		$current_monk_id = get_term_meta( $current_id, '_monk_menu_translations_id', true );
+	foreach ( $registered_menus as $location => $name ) :
+		$current_monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id;
 		$menu_term       = get_term( $menus[ $location ] );
-		$response = $response . 'locations-' . $location . '/';
+		$response        = $response . 'locations-' . $location . '/';
 		?>
 		<div class="menu-settings-input checkbox-input">
 			<input type="checkbox" name="<?php printf( esc_attr( 'menu-locations[%s]' ), $location ); ?>" id="<?php printf( esc_attr( 'monk-locations-%s' ), $location ); ?>" <?php checked( $current_monk_id, $menus[ $location ] ); ?>>
 			<label for="<?php printf( esc_attr( 'monk-locations-%s' ), $location ); ?>"><?php echo esc_html( $name ); ?></label>
-
-			<?php if ( (int) $current_monk_id !== $menus[ $location ] && ! empty( $menus[ $location ] ) ) : ?>
+			<?php if ( (int) $current_monk_id !== (int) $menus[ $location ] && ! empty( $menus[ $location ] ) ) : ?>
 				<span class="theme-location-set"><?php printf( esc_html( '(Currently set to: %s)', 'monk' ), $menu_term->name ); ?></span>
 			<?php endif; ?>
 		</div>
-		<?php
-	}
-	?>
+		<?php endforeach; ?>
 	<input type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
 	</div>
 <?php endif; ?>
