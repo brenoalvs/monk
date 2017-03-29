@@ -81,7 +81,8 @@ $current_monk_id           = get_term( $current_monk_id );
 if ( array_key_exists( $default_language, $current_menu_translations ) ) {
 	$current_monk_id = get_term( $current_menu_translations[ $default_language ] );
 } else {
-	$current_monk_id = get_term( $current_id );
+	$current_monk_id = get_term( $current_menu_id );
+	wp_die( $current_monk_id );
 }
 
 $current_monk_id_name      = $current_monk_id->name;
@@ -93,7 +94,11 @@ $current_monk_id_name      = $current_monk_id->name;
 	<div id="monk-checkbox-wrapper">
 	<?php
 	foreach ( $registered_menus as $location => $name ) :
-		$current_monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id;
+		if ( array_key_exists( $default_language, $current_menu_translations ) ) {
+			$current_monk_id = $current_menu_translations[ $default_language ];
+		} else {
+			$current_monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id;
+		}
 		$menu_term       = get_term( $menus[ $location ] );
 		$response        = $response . 'locations-' . $location . '/';
 		?>
