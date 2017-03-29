@@ -245,7 +245,13 @@ class Monk_Links {
 	 * @return void
 	 */
 	public function monk_flush_on_update() {
-		flush_rewrite_rules();
+		$is_monk_settings_page = filter_input( INPUT_GET, 'page' );
+
+		if ( 'monk' === $is_monk_settings_page ) {
+			global $wp_rewrite;
+			flush_rewrite_rules();
+			$wp_rewrite->flush_rules();
+		}
 	}
 
 	/**
