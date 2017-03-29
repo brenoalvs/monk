@@ -472,7 +472,6 @@ class Monk_Admin {
 					$post_id       = get_the_id();
 					$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
 					$language      = filter_input( INPUT_GET, 'lang' );
-					$language      = filter_input( INPUT_GET , 'lang' );
 					$relation = array(
 						'key'   => '_monk_term_language',
 						'value' => $post_language,
