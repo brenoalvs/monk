@@ -17,7 +17,15 @@ global $monk_languages;
 ?>
 <!-- The button to create a new translation -->
 <span class="add-menu-translation">
-	<input type="submit" class="button" id="add-menu-translation" value="Add translation +">
+	<?php if ( $menu_language ) : ?>
+		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
+			<input type="submit" class="button" id="add-menu-translation" value="Add translation +">
+		<?php else : ?>
+			<?php esc_html_e( 'No more languages available.', 'monk' ) ?>
+		<?php endif; ?>
+	<?php else : ?>
+		<?php esc_html_e( 'This menu has no language, save it to set a language.', 'monk' ) ?>
+	<?php endif; ?>
 </span>
 <!-- The select element with the available languages to choose from -->
 <fieldset class="menu-settings-group menu-language">
@@ -50,6 +58,8 @@ global $monk_languages;
 			<?php esc_html_e( 'You can add one here. ', 'monk' ); ?>
 		</a>
 	</p>
+	<?php elseif ( 0 === count( $menu_translations ) ) : ?>
+		<?php esc_html_e( 'This menu has no language, save it to set a language.', 'monk' ) ?>
 	<?php else : ?>
 	<ul class="current-menu-translations">
 		<?php foreach ( $menu_translations as $locale => $id ) : ?>
