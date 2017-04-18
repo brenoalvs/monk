@@ -19,7 +19,7 @@ global $monk_languages;
 <span class="hide-if-no-js add-menu-translation">
 	<?php if ( $menu_language ) : ?>
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
-			<input type="submit" class="button" id="add-menu-translation" value="Add translation +">
+			<a href="<?php echo esc_url( $new_translation_url ); ?>" class="button"><?php esc_html_e( 'Add translation +', 'monk' ); ?></a>
 		<?php else : ?>
 			<?php esc_html_e( 'No more languages available.', 'monk' ) ?>
 		<?php endif; ?>
@@ -54,7 +54,7 @@ global $monk_languages;
 	<?php if ( 1 === count( $menu_translations ) ) : ?>
 	<p>
 		<?php esc_html_e( 'This menu does not have translations. ', 'monk' ); ?>
-		<a href="<?php echo esc_attr( $new_translation_url ); ?>">
+		<a href="<?php echo esc_url( $new_translation_url ); ?>">
 			<?php esc_html_e( 'You can add one here. ', 'monk' ); ?>
 		</a>
 	</p>
@@ -65,7 +65,7 @@ global $monk_languages;
 		<?php foreach ( $menu_translations as $locale => $id ) : ?>
 			<?php if ( $locale !== $menu_language ) : ?>
 				<li>
-					<a href="<?php echo esc_attr( admin_url( 'nav-menus.php?action=edit&menu=' . $id ) ); ?>">
+					<a href="<?php echo esc_url( admin_url( 'nav-menus.php?action=edit&menu=' . $id ) ); ?>">
 						<?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?>
 					</a>
 				</li>
@@ -74,6 +74,4 @@ global $monk_languages;
 	</ul>
 	<?php endif; ?>
 </div>
-<!-- Necessary hidden fields -->
-<input class="hide-if-no-js" type="hidden" id="new-menu-link" value="<?php echo esc_attr( $new_translation_url ); ?>">
 <?php
