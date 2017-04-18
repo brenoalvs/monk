@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 $response = '';
 ?>
-<div id="monk-select-menu-to-edit-groups">
+<div class="hide-if-no-js" id="monk-select-menu-to-edit-groups">
 <?php
 foreach ( $monk_ids as $monk_id ) : ?>
 	<?php
@@ -39,12 +39,12 @@ foreach ( $monk_ids as $monk_id ) : ?>
 	</optgroup>
 <?php endforeach; ?>
 </div>
-
-<?php if ( 'locations' === filter_input( INPUT_GET, 'action' ) ) : ?>
+<?php $locations_tab = 'locations' === filter_input( INPUT_GET, 'action' ) ? true : false; ?>
+<?php if ( $locations_tab ) : ?>
 	<?php foreach ( $current_menus as $location => $current_location_id ) : ?>
 		<?php if ( array_key_exists( $location, $registered_menus ) ) : ?>
 			<?php $response = $response . 'locations-' . $location . '/'; ?>
-			<select id="<?php echo esc_attr( sprintf( 'monk-locations-%s', $location ) ); ?>">
+			<select class="hide-if-no-js" id="<?php echo esc_attr( sprintf( 'monk-locations-%s', $location ) ); ?>">
 				<option value="0" <?php selected( 0, $menus[ $location ] ); ?>><?php esc_html_e( '— Select a Menu —' ); ?></option>
 				<?php foreach ( $monk_ids as $monk_id ) : ?>
 					<?php
@@ -67,7 +67,7 @@ foreach ( $monk_ids as $monk_id ) : ?>
 			</select>
 		<?php endif; ?>
 	<?php endforeach; ?>
-	<input type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
+	<input class="hide-if-no-js" type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
 <?php endif; ?>
 
 <?php
@@ -86,20 +86,22 @@ if ( array_key_exists( $default_language, $menu_translations ) ) {
 $monk_id_name      = $monk_id->name;
 ?>
 <?php if ( array_key_exists( $default_language, $menu_translations ) && $menu_language !== $default_language ) : ?>
-	<?php
-	if ( array_key_exists( $default_language, $menu_translations ) ) {
-		$monk_id = $menu_translations[ $default_language ];
-	} else {
-		$monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id;
-	}
-?><div id="monk-menu-translation-message">
-<?php $array = array_keys( $menus, $monk_id ); ?>
-<?php if ( $array ) : ?>
-	<?php foreach ( $array as $location ) : ?>
-		<div><?php echo esc_html( $registered_menus[ $location ] ); ?></div>
-	<?php endforeach; ?>
-<?php else : ?>
-	<div><?php esc_html_e( 'None', 'monk' ); ?></div>
-<?php endif; ?>
-</div>
+	<?php if ( array_key_exists( $default_language, $menu_translations ) ) : ?>
+		<?php $monk_id = $menu_translations[ $default_language ]; ?>
+	<?php else : ?>
+		<?php $monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id; ?>
+	<?php endif; ?>
+
+	<?php if ( ! $locations_tab ) : ?>
+		<div class="hide-if-no-js" id="monk-menu-translation-message">
+		<?php $locations = array_keys( $menus, $monk_id ); ?>
+		<?php if ( $locations ) : ?>
+			<?php foreach ( $locations as $location ) : ?>
+				<div><?php echo esc_html( $registered_menus[ $location ] ); ?></div>
+			<?php endforeach; ?>
+		<?php else : ?>
+			<div><?php esc_html_e( 'None', 'monk' ); ?></div>
+		<?php endif; ?>
+		</div>
+	<?php endif; ?>
 <?php endif; ?>

@@ -16,7 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 global $monk_languages;
 ?>
 <!-- The button to create a new translation -->
-<span class="add-menu-translation">
+<span class="hide-if-no-js add-menu-translation">
 	<?php if ( $menu_language ) : ?>
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 			<input type="submit" class="button" id="add-menu-translation" value="Add translation +">
@@ -28,7 +28,7 @@ global $monk_languages;
 	<?php endif; ?>
 </span>
 <!-- The select element with the available languages to choose from -->
-<fieldset class="menu-settings-group menu-language">
+<fieldset class="hide-if-no-js menu-settings-group menu-language">
 	<legend class="menu-settings-group-name howto">Language</legend>
 	<div class="menu-settings-input">
 		<?php if ( empty( $menu_language ) ) : ?>
@@ -49,7 +49,7 @@ global $monk_languages;
 	</div>
 </fieldset>
 <!-- A list with the selected menu translations -->
-<div class="menu-translations">
+<div class="hide-if-no-js menu-translations">
 	<h3>Menu Translations</h3>
 	<?php if ( 1 === count( $menu_translations ) ) : ?>
 	<p>
@@ -75,5 +75,5 @@ global $monk_languages;
 	<?php endif; ?>
 </div>
 <!-- Necessary hidden fields -->
-<input type="hidden" id="new-menu-link" value="<?php echo esc_attr( $new_translation_url ); ?>">
+<input class="hide-if-no-js" type="hidden" id="new-menu-link" value="<?php echo esc_attr( $new_translation_url ); ?>">
 <?php
