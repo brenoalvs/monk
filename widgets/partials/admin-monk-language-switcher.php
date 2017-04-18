@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 $title     = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
 $flag      = isset( $instance['flag'] ) ? (bool) $instance['flag'] : false;
-$monk_love = isset( $instance['appretiation'] ) ? (bool) $instance['appretiation'] : false;
+$monk_love = isset( $instance['monk_love'] ) ? (bool) $instance['monk_love'] : false;
 ?>
 <p class="monk-widgets-form">
 	<label for="monk-title"><?php esc_html_e( 'Title: ', 'monk' ); ?></label> 
@@ -24,8 +24,8 @@ $monk_love = isset( $instance['appretiation'] ) ? (bool) $instance['appretiation
 		<input class="monk-input-checkbox" type="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'flag' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'flag' ) ); ?>"<?php checked( $flag ); ?> />
 		<?php esc_html_e( 'Hide Flags', 'monk' ); ?>
 	</label>
-	<label class="monk-label-block" for="<?php echo esc_attr( $this->get_field_id( 'appretiation' ) ); ?>">
-		<input class="monk-input-checkbox" type="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'appretiation' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'appretiation' ) ); ?>"<?php checked( $monk_love ); ?> />
-		<?php esc_html_e( 'Appretiate Monk', 'monk' ); ?>
+	<label class="monk-label-block" for="<?php echo esc_attr( $this->get_field_id( 'monk_love' ) ); ?>">
+		<input class="monk-input-checkbox" type="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'monk_love' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'monk_love' ) ); ?>"<?php checked( $monk_love ); ?> />
+		<?php esc_html_e( 'Monk Love', 'monk' ); ?>
 	</label>
 </p>
