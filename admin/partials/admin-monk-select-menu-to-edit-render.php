@@ -71,44 +71,35 @@ foreach ( $monk_ids as $monk_id ) : ?>
 <?php endif; ?>
 
 <?php
-$menu                      = filter_input( INPUT_GET, 'menu' );
-$current_menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
-$current_menu_language     = get_term_meta( $current_menu_id, '_monk_menu_language', true );
-$current_monk_id           = get_term_meta( $current_menu_id, '_monk_menu_translations_id', true );
-$current_menu_translations = get_option( 'monk_menu_translations_' . $current_monk_id, array() );
-$current_monk_id           = get_term( $current_monk_id );
+$menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
+$menu_language     = get_term_meta( $menu_id, '_monk_menu_language', true );
+$monk_id           = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
+$monk_id           = get_term( $monk_id );
 
-if ( array_key_exists( $default_language, $current_menu_translations ) ) {
-	$current_monk_id = get_term( $current_menu_translations[ $default_language ] );
+if ( array_key_exists( $default_language, $menu_translations ) ) {
+	$monk_id = get_term( $menu_translations[ $default_language ] );
 } else {
-	$current_monk_id = get_term( $current_menu_id );
+	$monk_id = get_term( $menu_id );
 }
 
-$current_monk_id_name      = $current_monk_id->name;
+$monk_id_name      = $monk_id->name;
 ?>
-<?php if ( array_key_exists( $default_language, $current_menu_translations ) && $current_menu_language !== $default_language ) : ?>
-	<?php /* translators: This is a message to display these are translations of the menu beiing edited */ ?>
-	<div id="monk-menu-translation-message"><?php echo esc_html( sprintf( __( 'This is a translation of "%s"!', 'monk' ), $current_monk_id_name ) ); ?></div>
-<?php else : ?>
-	<div id="monk-checkbox-wrapper">
+<?php if ( array_key_exists( $default_language, $menu_translations ) && $menu_language !== $default_language ) : ?>
 	<?php
-	foreach ( $registered_menus as $location => $name ) :
-		if ( array_key_exists( $default_language, $current_menu_translations ) ) {
-			$current_monk_id = $current_menu_translations[ $default_language ];
-		} else {
-			$current_monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id;
-		}
-		$menu_term       = get_term( $menus[ $location ] );
-		$response        = $response . 'locations-' . $location . '/';
-		?>
-		<div class="menu-settings-input checkbox-input">
-			<input type="checkbox" name="<?php printf( esc_attr( 'menu-locations[%s]' ), $location ); ?>" id="<?php printf( esc_attr( 'monk-locations-%s' ), $location ); ?>" <?php checked( $current_monk_id, $menus[ $location ] ); ?>>
-			<label for="<?php printf( esc_attr( 'monk-locations-%s' ), $location ); ?>"><?php echo esc_html( $name ); ?></label>
-			<?php if ( (int) $current_monk_id !== (int) $menus[ $location ] && ! empty( $menus[ $location ] ) ) : ?>
-				<span class="theme-location-set"><?php printf( esc_html( '(Currently set to: %s)', 'monk' ), $menu_term->name ); ?></span>
-			<?php endif; ?>
-		</div>
-		<?php endforeach; ?>
-	<input type="hidden" id="monk-menu-locations" value="<?php echo esc_attr( $response ); ?>">
-	</div>
+	if ( array_key_exists( $default_language, $menu_translations ) ) {
+		$monk_id = $menu_translations[ $default_language ];
+	} else {
+		$monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id;
+	}
+?><div id="monk-menu-translation-message">
+<?php $array = array_keys( $menus, $monk_id ); ?>
+<?php if ( $array ) : ?>
+	<?php foreach ( $array as $location ) : ?>
+		<div><?php echo esc_html( $registered_menus[ $location ] ); ?></div>
+	<?php endforeach; ?>
+<?php else : ?>
+	<div><?php esc_html_e( 'None', 'monk' ); ?></div>
+<?php endif; ?>
+</div>
 <?php endif; ?>
