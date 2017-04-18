@@ -82,7 +82,6 @@ if ( array_key_exists( $default_language, $current_menu_translations ) ) {
 	$current_monk_id = get_term( $current_menu_translations[ $default_language ] );
 } else {
 	$current_monk_id = get_term( $current_menu_id );
-	wp_die( $current_monk_id );
 }
 
 $current_monk_id_name      = $current_monk_id->name;
