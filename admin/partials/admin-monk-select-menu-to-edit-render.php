@@ -72,36 +72,38 @@ foreach ( $monk_ids as $monk_id ) : ?>
 
 <?php
 $menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
-$menu_language     = get_term_meta( $menu_id, '_monk_menu_language', true );
-$monk_id           = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
-$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
-$monk_id           = get_term( $monk_id );
 
-if ( array_key_exists( $default_language, $menu_translations ) ) {
-	$monk_id = get_term( $menu_translations[ $default_language ] );
-} else {
-	$monk_id = get_term( $menu_id );
-}
+if ( $menu_id ) :
+	$menu_language     = get_term_meta( $menu_id, '_monk_menu_language', true );
+	$monk_id           = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+	$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
 
-$monk_id_name      = $monk_id->name;
-?>
-<?php if ( array_key_exists( $default_language, $menu_translations ) && $menu_language !== $default_language ) : ?>
-	<?php if ( array_key_exists( $default_language, $menu_translations ) ) : ?>
-		<?php $monk_id = $menu_translations[ $default_language ]; ?>
-	<?php else : ?>
-		<?php $monk_id = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id; ?>
-	<?php endif; ?>
+	if ( array_key_exists( $default_language, $menu_translations ) ) {
+		$menu = get_term( $menu_translations[ $default_language ] );
+	} else {
+		$menu = get_term( $menu_id );
+	}
 
-	<?php if ( ! $locations_tab ) : ?>
-		<div class="hide-if-no-js" id="monk-menu-translation-message">
-		<?php $locations = array_keys( $menus, $monk_id ); ?>
-		<?php if ( $locations ) : ?>
-			<?php foreach ( $locations as $location ) : ?>
-				<div><?php echo esc_html( $registered_menus[ $location ] ); ?></div>
-			<?php endforeach; ?>
+	$menu_name      = $menu->name;
+	?>
+	<?php if ( array_key_exists( $default_language, $menu_translations ) && $menu_language !== $default_language ) : ?>
+		<?php if ( array_key_exists( $default_language, $menu_translations ) ) : ?>
+			<?php $menu = $menu_translations[ $default_language ]; ?>
 		<?php else : ?>
-			<div><?php esc_html_e( 'None', 'monk' ); ?></div>
+			<?php $menu = ! empty( get_term_meta( $current_id, '_monk_menu_translations_id', true ) ) ? get_term_meta( $current_id, '_monk_menu_translations_id', true ) : $current_id; ?>
 		<?php endif; ?>
-		</div>
+
+		<?php if ( ! $locations_tab ) : ?>
+			<div class="hide-if-no-js" id="monk-menu-translation-message">
+			<?php $locations = array_keys( $menus, $menu ); ?>
+			<?php if ( $locations ) : ?>
+				<?php foreach ( $locations as $location ) : ?>
+					<div><?php echo esc_html( $registered_menus[ $location ] ); ?></div>
+				<?php endforeach; ?>
+			<?php else : ?>
+				<div><?php esc_html_e( 'None', 'monk' ); ?></div>
+			<?php endif; ?>
+			</div>
+		<?php endif; ?>
 	<?php endif; ?>
 <?php endif; ?>
