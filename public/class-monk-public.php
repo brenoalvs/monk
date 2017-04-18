@@ -204,15 +204,13 @@ class Monk_Public {
 
 			if ( ! empty( $monk_translations ) ) {
 				if ( $language !== $default_language && array_key_exists( $language, $monk_translations ) ) {
-					$menus[ $location ] = $monk_translations[ $language ];
+					$args['menu'] = $monk_translations[ $language ];
 				} elseif ( array_key_exists( $default_language, $monk_translations ) ) {
-					$menus[ $location ] = $monk_translations[ $default_language ];
+					$args['menu'] = $monk_translations[ $default_language ];
 				} else {
 					$menu_id_fallback = array_shift( $monk_translations );
-					$menus[ $location ] = $menu_id_fallback;
+					$args['menu'] = $menu_id_fallback;
 				}
-
-				set_theme_mod( 'nav_menu_locations', $menus );
 			}
 		}
 
