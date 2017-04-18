@@ -162,12 +162,6 @@
 
 				$( '#monk-menu-locations' ).remove();
 			}
-
-			$( document ).on( 'click', 'input#add-menu-translation', function( e ) {
-				e.preventDefault();
-				var new_menu_url = $( '#new-menu-link' ).val();
-				window.location.replace( new_menu_url );
-			});
 		}
 	});
 })( jQuery );
