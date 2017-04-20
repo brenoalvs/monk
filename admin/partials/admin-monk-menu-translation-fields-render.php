@@ -24,9 +24,18 @@ global $monk_languages;
 			<?php esc_html_e( 'No more languages available.', 'monk' ) ?>
 		<?php endif; ?>
 	<?php else : ?>
-		<?php esc_html_e( 'This menu has no language, save it to set a language.', 'monk' ) ?>
+		<select name="monk_language" id="menu-language">
+			<?php foreach ( $active_languages as $locale ) : ?>
+				<?php if ( ! array_key_exists( $locale, $menu_translations ) ) : ?>
+				<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?></option>
+			<?php
+				endif;
+				endforeach;
+			?>
+		</select>
 	<?php endif; ?>
 </span>
+<?php if ( 0 !== count( $menu_translations ) ) : ?>
 <!-- The select element with the available languages to choose from -->
 <fieldset class="hide-if-no-js menu-settings-group menu-language">
 	<legend class="menu-settings-group-name howto">Language</legend>
@@ -58,8 +67,6 @@ global $monk_languages;
 			<?php esc_html_e( 'You can add one here. ', 'monk' ); ?>
 		</a>
 	</p>
-	<?php elseif ( 0 === count( $menu_translations ) ) : ?>
-		<?php esc_html_e( 'This menu has no language, save it to set a language.', 'monk' ) ?>
 	<?php else : ?>
 	<ul class="current-menu-translations">
 		<?php foreach ( $menu_translations as $locale => $id ) : ?>
@@ -74,4 +81,5 @@ global $monk_languages;
 	</ul>
 	<?php endif; ?>
 </div>
+<?php endif; ?>
 <?php
