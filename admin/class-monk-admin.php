@@ -705,9 +705,8 @@ class Monk_Admin {
 				$language => $term_id,
 			);
 			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
-
-			if ( null !== filter_input( INPUT_GET, 'monk_id' ) ) {
-				$monk_id           = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'monk_id' ) ) );
+			if ( isset( $_REQUEST['monk_id'] ) ) {
+				$monk_id           = sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
 				$term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_id, array() );
 
 				if ( in_array( $language , $active_languages, true ) && ( ! array_key_exists( $language , $term_translations ) || empty( $term_translations ) ) ) {
