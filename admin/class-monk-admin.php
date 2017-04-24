@@ -143,6 +143,26 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_general_settings'
 		);
+
+		register_setting( 'monk_settings', 'monk_default_language_url' );
+		add_settings_field(
+			'monk_default_language_url',
+			__( 'Show default language in URL', 'monk' ),
+			array( $this, 'monk_default_language_url_render' ),
+			'monk_settings',
+			'monk_general_settings'
+		);
+	}
+
+	/**
+	 *  This is the callback for the monk_default_language_url element
+	 *
+	 * @since  0.4.0
+	 *
+	 * @return  void
+	 */
+	public function monk_default_language_url_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-url-render.php';
 	}
 
 	/**
@@ -706,8 +726,8 @@ class Monk_Admin {
 			);
 			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
 
-			if ( null !== filter_input( INPUT_GET, 'monk_id' ) ) {
-				$monk_id           = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'monk_id' ) ) );
+			if ( isset( $_REQUEST['monk_id'] ) ) {
+				$monk_id           = sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
 				$term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_id, array() );
 
 				if ( in_array( $language , $active_languages, true ) && ( ! array_key_exists( $language , $term_translations ) || empty( $term_translations ) ) ) {
