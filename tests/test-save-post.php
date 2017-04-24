@@ -20,7 +20,18 @@ class Save_Post_Test extends WP_UnitTestCase {
 	} // end testClassInitialization
 
 	function testSavePost() {
+		$post = array(
+			'ID' => 1,
+		);
 
+		// set_element_language( $type, $id, $language )
+		$this->monk->set_element_language( 'post', 1, 'English' );
+
+		// get_element_language( $type, $id )
+		$language = $this->monk->get_element_language( 'post', 1 );
+
+		$this->assertEquals( 'English', $language['name'] );
+		$this->assertEquals( 'en', $language['slug'] );
 	}
 
 } // end class
