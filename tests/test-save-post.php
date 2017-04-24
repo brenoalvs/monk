@@ -1,12 +1,12 @@
 <?php
 require_once( '../../admin/class-monk-admin.php' );
- 
-class Post_Translation_Tests extends WP_UnitTestCase {
+
+class Save_Post_Test extends WP_UnitTestCase {
 
 	private $monk;
 
 	function setUp() {
- 
+
 		parent::setUp();
 		$this->monk = new Monk_Admin( 'monk', '0.3.0' );
 
@@ -18,5 +18,9 @@ class Post_Translation_Tests extends WP_UnitTestCase {
 		$this->assertTrue( $running );
 
 	} // end testClassInitialization
+
+	function testSavePost() {
+
+	}
 
 } // end class
