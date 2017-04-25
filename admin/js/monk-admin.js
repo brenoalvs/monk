@@ -66,6 +66,34 @@
 			return false;
 		});
 
+		$( document ).on( 'submit', '#monk-form-settings', function( event ) {
+			event.preventDefault();
+			var form_data = $( this ).serializeArray();
+
+			form_data[1] = {
+				name : 'action',
+				value : 'monk_save_language_packages',
+			};
+			$( '#monk-spinner' ).addClass( 'is-active' );
+			$.ajax({
+				type: 'POST',
+				url: monk.ajax_url,
+				data: form_data,
+				success: function( response ) {
+					$( '#monk-notice' ).addClass( 'monk-show-notice' );
+					$( '#monk-notice' ).append( '<p>' + response.data + '</p>' );
+					$( '#monk-spinner' ).removeClass( 'is-active' );
+				}
+			});
+
+			return false;
+		});
+
+		$( document ).on( 'click', function() {
+			$( '#monk-notice' ).removeClass( 'monk-show-notice' );
+			$( '#monk-notice > p' ).remove();
+		});
+
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
 			$( '.monk-change-current-language' ).slideUp( 150 );
