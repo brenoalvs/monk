@@ -129,3 +129,19 @@ div.menu-translations ul.current-menu-translations li {
 	float: left;
 	margin-right: 10px;
 }
+
+#monk-form-settings p.submit {
+	display: inline-block;
+}
+
+#monk-form-settings .monk-spinner {
+	float: none;
+}
+
+.monk-notice {
+	display: none;
+}
+
+.monk-show-notice {
+	display: block;
+}
