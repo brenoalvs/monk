@@ -25,10 +25,10 @@ class Save_Post_Test extends WP_UnitTestCase {
 		);
 
 		// set_element_language( $type, $id, $language )
-		$this->monk->set_element_language( 'post', 1, 'English' );
+		$this->monk->monk_set_element_language( 'post', 1, 'English' );
 
 		// get_element_language( $type, $id )
-		$language = $this->monk->get_element_language( 'post', 1 );
+		$language = $this->monk->monk_get_element_language( 'post', 1 );
 
 		$this->assertEquals( 'English', $language['name'] );
 		$this->assertEquals( 'en', $language['slug'] );
