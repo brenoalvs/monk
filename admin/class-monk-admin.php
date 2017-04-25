@@ -1314,4 +1314,37 @@ class Monk_Admin {
 		}
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-menu-to-edit-render.php';
 	}
+
+	/**
+	 * Download language packages according to active languages
+	 *
+	 * Update active and default languages.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
+	public function monk_save_language_packages() {
+		$active_languages  = $_POST[ 'monk_active_languages' ];
+		$default_languages = $_POST[ 'monk_default_languages' ];
+
+		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+
+		foreach ( $active_languages as $language ) {
+			if ( 'en_US' !== $language ) {
+				$response[] = wp_download_language_pack( $language );
+			}
+		}
+
+		if ( ! in_array( false, $response ) ) {
+			$response = esc_html__( 'All languages updated', 'monk' );
+		} else {
+			$response = esc_html__( 'Error', 'monk' );
+		}
+
+		update_option( 'monk_active_languages', $active_languages );
+		update_option( 'monk_default_languages', $default_languages );
+
+		wp_send_json_success( $response );
+	}
 }
