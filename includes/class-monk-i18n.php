@@ -16,7 +16,7 @@
  * @package    Monk
  * @subpackage Monk/Includes
  */
-class Monk_i18n {
+class Monk_I18n {
 
 
 	/**

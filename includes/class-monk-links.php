@@ -245,7 +245,13 @@ class Monk_Links {
 	 * @return void
 	 */
 	public function monk_flush_on_update() {
-		flush_rewrite_rules();
+		$is_monk_settings_page = filter_input( INPUT_GET, 'page' );
+
+		if ( 'monk' === $is_monk_settings_page ) {
+			global $wp_rewrite;
+			flush_rewrite_rules();
+			$wp_rewrite->flush_rules();
+		}
 	}
 
 	/**
@@ -437,12 +443,7 @@ class Monk_Links {
 		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$language      = ( empty( $term_language ) ) ? $this->site_language : $monk_languages[ $term_language ]['slug'];
 
-		if ( $this->monk_using_permalinks() ) {
-			$path = wp_make_link_relative( $link );
-			$link  = trailingslashit( $wp_rewrite->root ) . $language . $path;
-		} else {
-			$link = add_query_arg( 'lang', $language, $link );
-		}
+		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
@@ -596,8 +597,8 @@ class Monk_Links {
 			 * Is used twice to correct a bug in which the port is incorrect at the first try
 			 * and returns correct in the second try.
 			 */
-			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
-			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url: $redirect_url;
+			$_redirect_url = ( ! redirect_canonical( $requested_url, false ) ) ? $requested_url : redirect_canonical( $requested_url, false );
+			$redirect_url  = ( ! redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url : redirect_canonical( $_redirect_url, false );
 
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $slug );
 		}

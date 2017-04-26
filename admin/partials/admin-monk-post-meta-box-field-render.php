@@ -51,7 +51,8 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php else : ?>
 					<?php $title = get_the_title( reset( $monk_translations ) ); ?>
 				<?php endif; ?>
-				<p><?php echo esc_html( sprintf( __( 'Translating %s.', 'monk' ), $title ) ); ?></p>
+				<?php /* translators: This is a message to display the post being translated */ ?>
+				<p><?php echo esc_html( sprintf( __( 'Translating "%s".', 'monk' ), $title ) ); ?></p>
 			<?php endif; ?>
 		</div>
 	<?php else :

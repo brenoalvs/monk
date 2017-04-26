@@ -174,7 +174,7 @@ class Monk_Admin {
 	/**
 	 * Function to render the checkbox field, callback for the monk_active_languages element
 	 *
-	 * @since    0.1.0
+	 * @since   0.1.0
 	 * @return  void
 	 */
 	public function monk_active_languages_render() {
@@ -294,8 +294,10 @@ class Monk_Admin {
 			$current_language = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
 		}
 
-		$post_translations = array( $current_language => $post_id );
 		$language          = '';
+		$post_translations = array(
+			$current_language => $post_id,
+		);
 
 		if ( isset( $_REQUEST['monk_post_language'] ) && ! empty( $_REQUEST['monk_post_language'] ) ) {
 			$language = sanitize_text_field( wp_unslash( $_REQUEST['monk_post_language'] ) );
@@ -316,7 +318,7 @@ class Monk_Admin {
 
 		if ( ! empty( $post_translations ) ) {
 			if ( array_key_exists( $current_language, $post_translations ) ) {
-				if (  $post_id === $post_translations[ $current_language ] && $language ) {
+				if ( $post_id === $post_translations[ $current_language ] && $language ) {
 					unset( $post_translations[ $current_language ] );
 					$post_translations[ $language ] = $post_id;
 				}
@@ -325,7 +327,9 @@ class Monk_Admin {
 			}
 		} else {
 			$monk_id           = $post_id;
-			$post_translations = array( $current_language => $post_id );
+			$post_translations = array(
+				$current_language => $post_id,
+			);
 		}
 
 		foreach ( $post_translations as $lang_code => $id ) {
@@ -372,19 +376,28 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) ) {
+		if ( ! is_admin() || is_customize_preview() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
 			return;
 		}
 
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
-		$filter           = filter_input( INPUT_GET , 'monk_language_filter', FILTER_SANITIZE_STRING );
-		$language         = filter_input( INPUT_GET , 'lang', FILTER_SANITIZE_STRING );
+		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 
-		if ( empty( $filter ) ) {
-			return;
+		if ( 'nav-menus' === get_current_screen()->base ) {
+			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+			$language = empty( $language ) ? $default_language : $language;
 		} else {
-			$language = $filter;
+			$language = filter_input( INPUT_GET , 'lang' );
+		}
+
+		if ( $query->is_search() ) {
+			if ( empty( $filter ) ) {
+				return;
+			} else {
+				$language = $filter;
+			}
 		}
 
 		if ( $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
@@ -410,50 +423,75 @@ class Monk_Admin {
 	/**
 	 * Function to filter the query inside the category meta box using the languages
 	 *
-	 * @param   array $args Array of arguments.
+	 * @param   array $args       Array of arguments.
+	 * @param   array $taxonomies Array of taxonomies.
 	 *
 	 * @since    0.1.0
 	 * @return  array $args.
 	 */
-	public function monk_admin_terms_filter( $args ) {
-		if ( ! is_admin() || is_customize_preview() ) {
+	public function monk_admin_terms_filter( $args, $taxonomies ) {
+		if ( ! is_admin() ) {
 			return $args;
 		}
 
-		$screen = get_current_screen();
+		if ( is_customize_preview() && in_array( 'nav_menu', $taxonomies ) ) {
+			$language = get_option( 'monk_default_language', false );
 
-		if ( 'edit' === $screen->parent_base && 'post' === $screen->base ) {
-			$post_id              = get_the_id();
-			$default_language     = get_option( 'monk_default_language', false );
-			$active_languages     = get_option( 'monk_active_languages', false );
-			$language             = filter_input( INPUT_GET, 'lang', FILTER_SANITIZE_STRING );
-			$post_language        = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
-
-			if ( isset( $language ) && in_array( $language, $active_languages, true ) ) {
-				$relation = array(
-					'key'   => '_monk_term_language',
+			$meta_query = array(
+				'relation' => 'OR', // Optional, defaults to "AND".
+				array(
+					'key'   => '_monk_menu_language',
 					'value' => $language,
-				);
-			} elseif ( $post_language ) {
-				$relation = array(
-					'key'   => '_monk_term_language',
-					'value' => $post_language,
-				);
-			}
-
-			if ( isset( $relation ) ) {
-				$meta_query = array(
-					'relation' => 'OR', // Optional, defaults to "AND".
-					$relation,
-					array(
-						'key'     => '_monk_term_language',
-						'compare' => 'NOT EXISTS',
-					),
-				);
-
-				$args['meta_query'] = $meta_query;
-			}
+				),
+				array(
+					'key'     => '_monk_menu_language',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+			$args['meta_query'] = $meta_query;
+			return $args;
 		}
+
+		if ( ! is_customize_preview() ) {
+			$screen = get_current_screen();
+
+			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
+				$active_languages = get_option( 'monk_active_languages', array() );
+				$default_language = get_option( 'monk_default_language', false );
+
+				if ( 'nav-menus' === $screen->base ) {
+					$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+					$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+					$language = empty( $language ) ? $default_language : $language;
+
+					$relation = array(
+						'key'   => '_monk_term_language',
+						'value' => $language,
+					);
+				} else {
+					$post_id       = get_the_id();
+					$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
+					$language      = filter_input( INPUT_GET, 'lang' );
+					$relation = array(
+						'key'   => '_monk_term_language',
+						'value' => $post_language,
+					);
+				}
+
+				if ( isset( $relation ) ) {
+					$meta_query = array(
+						'relation' => 'OR', // Optional, defaults to "AND".
+						$relation,
+						array(
+							'key'     => '_monk_term_language',
+							'compare' => 'NOT EXISTS',
+						),
+					);
+
+					$args['meta_query'] = $meta_query;
+				}
+			} // End if().
+		} // End if().
 
 		return $args;
 	}
@@ -628,7 +666,7 @@ class Monk_Admin {
 			}
 
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
-		}
+		} // End if().
 	}
 
 	/**
@@ -647,43 +685,47 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Save term language
+	 * Saves the term language on a new term creation
 	 *
 	 * @since  0.1.0
-	 * @param  int $term_id  Term ID.
-	 * @param  int $tt_id    Term taxonomy ID.
-	 * @param  int $taxonomy Taxonomy slug.
-	 * @return void
+	 *
+	 * @param   int    $term_id Id of the term.
+	 * @param   int    $tt_id Term taxonomy ID.
+	 * @param   string $taxonomy Taxonomy slug.
+	 * @return  void
 	 */
 	public function monk_create_term_meta( $term_id, $tt_id, $taxonomy ) {
-		if ( 'nav_menu' === $taxonomy ) {
-			return;
-		}
+		$monk_language = filter_input( INPUT_POST, 'monk_language' );
 
-		if ( isset( $_REQUEST['monk_language'] ) && ! empty( $_REQUEST['monk_language'] ) ) {
+		if ( ! empty( $monk_language ) ) {
+
 			$active_languages  = get_option( 'monk_active_languages', false );
-			$language          = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
-			$term_translations = array( $language => $term_id );
+			$language          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
+			$term_translations = array(
+				$language => $term_id,
+			);
+			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
 
-			if ( in_array( $language , $active_languages ) && ! array_key_exists( $language , $monk_term_translations ) ) {
-				add_term_meta( $term_id, '_monk_term_language', $language, true );
+			if ( null !== filter_input( INPUT_GET, 'monk_id' ) ) {
+				$monk_id           = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'monk_id' ) ) );
+				$term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_id, array() );
 
-				if ( isset( $_REQUEST['monk_id'] ) ) {
-					$monk_id           = sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
-					$term_translations = get_option( 'monk_term_translations_' . $monk_id );
+				if ( in_array( $language , $active_languages, true ) && ( ! array_key_exists( $language , $term_translations ) || empty( $term_translations ) ) ) {
+					add_term_meta( $term_id, '_monk_' . $is_menu . '_language', $language, true );
 
 					if ( false !== $term_translations ) {
-						add_term_meta( $term_id, '_monk_term_translations_id', $monk_id, true );
+						add_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', $monk_id, true );
 						$term_translations[ $language ] = $term_id;
-						update_option( 'monk_term_translations_' . $monk_id, $term_translations );
+						update_option( 'monk_' . $is_menu . '_translations_' . $monk_id, $term_translations );
 					} else {
-						add_term_meta( $term_id, '_monk_term_translations_id', $term_id, true );
-						update_option( 'monk_term_translations_' . $term_id, $term_translations );
+						add_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', $term_id, true );
+						update_option( 'monk_' . $is_menu . '_translations_' . $term_id, $term_translations );
 					}
-				} else {
-					add_term_meta( $term_id, '_monk_term_translations_id', $term_id, true );
-					update_option( 'monk_term_translations_' . $term_id, $term_translations );
 				}
+			} else {
+				add_term_meta( $term_id, '_monk_' . $is_menu . '_language', $language, true );
+				add_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', $term_id, true );
+				update_option( 'monk_' . $is_menu . '_translations_' . $term_id, $term_translations );
 			}
 		}
 	}
@@ -697,22 +739,20 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_update_term_meta( $term_id, $taxonomy ) {
-		if ( 'nav_menu' === $taxonomy ) {
-			return;
-		}
 
-		$new_language              = sanitize_text_field( wp_unslash( $_REQUEST['monk_language'] ) );
-		$current_language          = get_term_meta( $term_id, '_monk_term_language', true );
-		$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
+		$new_language              = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
+		$is_menu                   = 'nav_menu' === $taxonomy ? 'menu' : 'term';
+		$current_language          = get_term_meta( $term_id, '_monk_' . $is_menu . '_language', true );
+		$monk_term_translations_id = get_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', true );
 
-		update_term_meta( $term_id, '_monk_term_language', $new_language );
+		update_term_meta( $term_id, '_monk_' . $is_menu . '_language', $new_language );
 
 		if ( ! $monk_term_translations_id ) {
-			update_term_meta( $term_id, '_monk_term_translations_id', $term_id );
+			update_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', $term_id );
 			$monk_term_translations_id = $term_id;
 		}
 
-		$monk_term_translations = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+		$monk_term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_term_translations_id, array() );
 
 		if ( ! array_key_exists( $new_language , $monk_term_translations ) ) {
 			if ( ! empty( $monk_term_translations ) ) {
@@ -720,7 +760,7 @@ class Monk_Admin {
 			}
 
 			$monk_term_translations[ $new_language ] = $term_id;
-			update_option( 'monk_term_translations_' . $monk_term_translations_id, $monk_term_translations );
+			update_option( 'monk_' . $is_menu . '_translations_' . $monk_term_translations_id, $monk_term_translations );
 		}
 	}
 
@@ -734,14 +774,12 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_delete_term_meta( $term_id, $taxonomy ) {
-		if ( 'nav_menu' === $taxonomy ) {
-			return;
-		}
 
-		$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
-		$term_language             = get_term_meta( $term_id, '_monk_term_language', true );
-		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
-		$monk_term_translations    = get_option( $option_name, false );
+		$is_menu                   = 'nav_menu' === $taxonomy ? 'menu' : 'term';
+		$term_language             = get_term_meta( $term_id, '_monk_' . $is_menu . '_language', true );
+		$monk_term_translations_id = get_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', true );
+		$option_name               = 'monk_' . $is_menu . '_translations_' . $monk_term_translations_id;
+		$monk_term_translations    = get_option( $option_name, array() );
 
 		if ( isset( $monk_term_translations ) && $monk_term_translations ) {
 			unset( $monk_term_translations[ $term_language ] );
@@ -768,7 +806,7 @@ class Monk_Admin {
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
 		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
 		$languages                 = get_option( 'monk_active_languages', false );
-		$monk_term_translations    = get_option( $option_name, false );
+		$monk_term_translations    = get_option( $option_name, array() );
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-language-update-term.php';
 	}
@@ -789,14 +827,10 @@ class Monk_Admin {
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
 			$languages                 = get_option( 'monk_active_languages', false );
-			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, array() );
 			$default_language          = get_option( 'monk_default_language', false );
 			$available_languages       = false;
 			$post_type                 = 'none';
-
-			if ( ! is_array( $monk_term_translations ) ) {
-				$monk_term_translations = array( $monk_term_translations );
-			}
 
 			foreach ( $languages as $language ) {
 				if ( ! $monk_language || ( $monk_term_translations && ! array_key_exists( $language, $monk_term_translations ) ) ) {
@@ -832,7 +866,7 @@ class Monk_Admin {
 		$languages                 = get_option( 'monk_active_languages', false );
 		$taxonomies                = get_taxonomies();
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
-		$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
+		$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, array() );
 		$available_languages       = false;
 
 		foreach ( $taxonomies as $taxonomy ) {
@@ -983,14 +1017,18 @@ class Monk_Admin {
 				if ( is_array( $active_languages ) ) {
 					if ( in_array( $attachment['language'], $active_languages ) ) {
 						update_post_meta( $post['ID'], '_monk_post_language', $attachment['language'] );
-						update_option( 'monk_post_translations_' . $post['ID'], array( $attachment['language'] => $post['ID'] ) );
+						update_option( 'monk_post_translations_' . $post['ID'], array(
+							$attachment['language'] => $post['ID'],
+						) );
 						update_post_meta( $post['ID'], '_monk_post_translations_id', $post['ID'] );
 						$attachment['language'] = get_post_meta( $post['ID'], '_monk_post_language', true );
 					}
 				} else {
 					if ( $attachment['language'] === $active_languages ) {
 						update_post_meta( $post['ID'], '_monk_post_language', $attachment['language'] );
-						update_option( 'monk_post_translations_' . $post['ID'], array( $attachment['language'] => $post['ID'] ) );
+						update_option( 'monk_post_translations_' . $post['ID'], array(
+							$attachment['language'] => $post['ID'],
+						) );
 						update_post_meta( $post['ID'], '_monk_post_translations_id', $post['ID'] );
 						$attachment['language'] = get_post_meta( $post['ID'], '_monk_post_language', true );
 					}
@@ -1034,7 +1072,7 @@ class Monk_Admin {
 			$language = $monk_languages[ $default_language ]['name'];
 		}
 
-		if ( 'upload.php' !== substr( strrchr( parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
+		if ( 'upload.php' !== substr( strrchr( wp_parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
 			$is_translatable = false;
 		}
 
@@ -1047,7 +1085,7 @@ class Monk_Admin {
 		}
 
 		if ( 'attachment' === $post_type && $is_modal ) {
-		    $form_fields['language'] = array(
+			$form_fields['language'] = array(
 				'input' => 'html',
 				'html'  => $language,
 				'label' => __( 'Language', 'monk' ),
@@ -1166,6 +1204,94 @@ class Monk_Admin {
 					$query->set( 'meta_query', $meta_query_args );
 				}
 			}
+		} // End if().
+	}
+
+	/**
+	 * Adds new menu components to allow their translation
+	 *
+	 * There are no hooks to use in the menu edit page, so we create the
+	 * components using the admin_footer action and move them to the right location
+	 *
+	 * @since    0.3.0
+	 *
+	 * @return void
+	 */
+	public function monk_add_menu_translation_fields() {
+		if ( 'nav-menus' !== get_current_screen() -> base || 'locations' === filter_input( INPUT_GET, 'action' ) ) {
+			return;
 		}
+
+		$active_languages = get_option( 'monk_active_languages', false );
+		$default_language = get_option( 'monk_default_language', false );
+
+		if ( '0' === filter_input( INPUT_GET, 'menu' ) ) {
+			$monk_id = filter_input( INPUT_GET, 'monk_id' );
+			if ( $monk_id ) {
+				$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
+			}
+			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-new-menu-fields-render.php';
+		} else {
+			$menu                = filter_input( INPUT_GET, 'menu' );
+			$menu_id             = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
+			$monk_id             = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+			$monk_id             = empty( $monk_id ) ? $menu_id : $monk_id;
+			$menu_language       = get_term_meta( $menu_id, '_monk_menu_language', true );
+			$menu_translations   = get_option( 'monk_menu_translations_' . $monk_id, array() );
+			$new_translation_url = admin_url( 'nav-menus.php?action=edit&menu=0&monk_id=' . $monk_id );
+			$translation_counter = 0;
+
+			foreach ( $active_languages as $code ) {
+				if ( $menu_translations && array_key_exists( $code , $menu_translations ) ) {
+					$translation_counter = $translation_counter + 1;
+				}
+			}
+
+			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-menu-translation-fields-render.php';
+		}
+	}
+
+	/**
+	 * Change nav_menu page components to improve the user experience
+	 *
+	 * There are no hooks to use in the menu edit page, so we create the
+	 * components using the admin_footer action and move them to the right location
+	 *
+	 * @since    0.3.0
+	 *
+	 * @return void
+	 */
+	public function monk_change_nav_menu_fields() {
+		$screen   = get_current_screen()->base;
+
+		if ( 'nav-menus' !== $screen ) {
+			return;
+		}
+
+		$args             = array(
+			'hide_empty' => false,
+		);
+		$nav_menus        = get_terms( 'nav_menu', $args );
+		$monk_ids         = array();
+		$menu             = filter_input( INPUT_GET, 'menu' );
+		$current_id       = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : filter_input( INPUT_GET, 'menu' );
+		$registered_menus = get_registered_nav_menus();
+		$menus            = get_nav_menu_locations();
+		$current_menus    = get_theme_mod( 'nav_menu_locations' );
+		$default_language = get_option( 'monk_default_language', false );
+
+		foreach ( $nav_menus as $nav_menu ) {
+			$menu_id = $nav_menu->term_id;
+			$monk_id = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
+
+			if ( ! in_array( $monk_id, $monk_ids ) ) {
+				if ( ! empty( $monk_id ) ) {
+					$monk_ids[] = (int) $monk_id;
+				} else {
+					$monk_ids[] = $menu_id;
+				}
+			}
+		}
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-menu-to-edit-render.php';
 	}
 }

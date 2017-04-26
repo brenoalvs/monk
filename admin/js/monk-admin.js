@@ -115,5 +115,53 @@
 				}
 			});
 		}
+
+		/**
+		 * Replace components from the admin footer to the major-publishing-actions div, in the menu page
+		 *
+		 *
+		*/
+		if ( /\bnav-menus.php?\b/.test( window.location.pathname ) ) {
+			if ( $( '.add-menu-translation' ).length ) {
+				$( 'div#nav-menu-header .major-publishing-actions' ).append( $( '.add-menu-translation' ) );
+				$( $( 'fieldset.menu-language' ) ).insertBefore( 'fieldset.auto-add-pages' );
+				$( $( '.menu-translations' ) ).insertAfter( '.menu-settings' );
+
+				if ( $( '#monk-menu-translation-message' ).length ) {
+					$( '.menu-theme-locations' ).append( $( '#monk-menu-translation-message' ) );
+					$( '.menu-theme-locations  > div.checkbox-input' ).remove();
+				}
+				if ( $( '#monk-checkbox-wrapper' ).length ) {
+					var locations = $( '#monk-menu-locations' ).val().split( '/' );
+
+					for ( var i = 0; i < locations.length - 1; i++) {
+						$( '#monk-' + locations[ i ] ).val( $( '#' + locations[ i ] ).val() );
+					}
+					$( '.menu-theme-locations' ).append( $( '#monk-checkbox-wrapper' ) );
+					$( '.menu-theme-locations  > div.checkbox-input' ).remove();
+				}
+			} else {
+				$( 'div#nav-menu-header .major-publishing-actions' ).append( $( '.new-menu-language' ) );
+			}
+
+			if ( $( '#monk-select-menu-to-edit-groups' ).length ) {
+				$( '#select-menu-to-edit' ).children().remove();
+				$( '#select-menu-to-edit' ).append( $( '#monk-select-menu-to-edit-groups' ).children() );
+				$( '#monk-select-menu-to-edit-groups' ).remove();
+			}
+
+			if ( $( '#monk-menu-locations' ).length ) {
+				var locations = $( '#monk-menu-locations' ).val().split( '/' );
+
+				for ( var i = 0; i < locations.length - 1; i++) {
+					$( '#monk-' + locations[ i ] ).insertBefore( '#' + locations[ i ] );
+					$( '#monk-' + locations[ i ] ).attr( 'name', $( '#' + locations[ i ] ).attr( 'name' ) );
+					$( '#' + locations[ i ] ).remove();
+					$( '#monk-' + locations[ i ] ).attr( 'id', locations[ i ] );
+				}
+
+				$( '#monk-menu-locations' ).remove();
+			}
+		}
 	});
 })( jQuery );

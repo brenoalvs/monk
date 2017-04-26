@@ -147,7 +147,7 @@ class Monk {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Monk_i18n class in order to set the domain and to register the hook
+	 * Uses the Monk_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    0.1.0
@@ -156,7 +156,7 @@ class Monk {
 	 */
 	private function set_locale() {
 
-		$monk_i18n = new Monk_i18n();
+		$monk_i18n = new Monk_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $monk_i18n, 'load_plugin_textdomain' );
 		$this->loader->add_filter( 'locale', $monk_i18n, 'monk_define_locale' );
@@ -193,6 +193,7 @@ class Monk {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'monk_add_menu_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_options_init' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'monk_activation_redirect' );
+		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_add_menu_translation_fields' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
 		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
@@ -202,7 +203,7 @@ class Monk {
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_posts_filter' );
-		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter' );
+		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter', 10, 2 );
 		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_media_columns', $plugin_admin, 'monk_language_column_head' );
@@ -219,6 +220,7 @@ class Monk {
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_attachment' );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'define_view_mode' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'medias_modal_filter' );
+		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_change_nav_menu_fields' );
 	}
 
 	/**
@@ -238,6 +240,7 @@ class Monk {
 
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
+		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
 	}
 
 	/**
@@ -266,7 +269,7 @@ class Monk {
 		$this->loader->add_action( 'get_search_form', $plugin_links, 'monk_change_search_form', 50 );
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_canonical_redirection', 5 );
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions', 10, 1 );
-		$this->loader->add_filter( 'update_option_monk_active_languages', $plugin_links, 'monk_flush_on_update' );
+		$this->loader->add_action( 'admin_init', $plugin_links, 'monk_flush_on_update' );
 	}
 
 	/**
