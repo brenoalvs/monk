@@ -541,7 +541,7 @@ class Monk_Links {
 
 			// Replace the closing form tag with the hidden field.
 			if ( $this->monk_using_permalinks() ) {
-				$form = $default_language_url || $language !== $default_slug ? $form : str_replace( home_url() . '/' . $default_slug . '/', home_url() . '/', $form);
+				$form = $default_language_url || $language !== $default_slug ? $form : str_replace( home_url() . '/' . $default_slug . '/', home_url() . '/', $form );
 				return $form;
 			} else {
 				$form = str_replace( '</form>', '<input type="hidden" name="lang" value="' . esc_attr( $language ) . '" /></form>', $form );
