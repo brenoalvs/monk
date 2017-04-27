@@ -67,26 +67,26 @@
 		});
 
 		$( document ).on( 'submit', '#monk-form-settings', function() {
-
+			$( '#monk-spinner' ).addClass( 'is-active' );
 			var form_data = $( '#monk-form-settings' ).serializeArray();
 
 			form_data[1] = {
 				name : 'action',
 				value : 'monk_save_language_packages',
 			};
-			$( '#monk-spinner' ).addClass( 'is-active' );
 			$.ajax({
 				type: 'POST',
 				url: monk.ajax_url,
 				data: form_data,
 				success: function( response ) {
 					$( '#monk-notice' ).append( response.data );
+					$( '#monk-spinner' ).removeClass( 'is-active' );
 				},
 				error: function( response ) {
 					$( '#monk-notice' ).append( response.data );
+					$( '#monk-spinner' ).removeClass( 'is-active' );
 				}
 			});
-			$( '#monk-spinner' ).removeClass( 'is-active' );
 
 			return false;
 		});
