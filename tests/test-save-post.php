@@ -17,8 +17,9 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 	function testSavePost() {
 
-		// Use the factory to create a new post
+		// Use the factory to create a new post and then test it
 		$post_id = $this->factory->post->create();
+		$this->assertNotEmpty( $post_id );
 
 		// simulates the language from a form
 		$_POST['monk_post_language'] = 'en';
@@ -26,11 +27,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 		// monk_set_post_language( $id, $language )
 		$this->monk->monk_set_post_language( $post_id, $_POST['monk_post_language'] );
 
-		// monk_get_post_language( $id )
-		$language = $this->monk->monk_get_element_language( $post_id );
-
 		$this->assertEquals( 'en', $language );
-		$this->assertNotEmpty( $post_id );
 
 	} // end testSavePost
 
