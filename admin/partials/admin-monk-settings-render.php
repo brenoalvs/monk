@@ -13,9 +13,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 ?>
-	<div class="notice notice-success is-dismissible monk-notice" id="monk-notice"></div>
 	<div class="wrap">
 		<h2>Monk</h2>
+		<div id="monk-notice"></div>
 		<?php
 			update_option( 'monk_settings_notice', false );
 			settings_errors();
