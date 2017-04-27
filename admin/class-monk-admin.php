@@ -1325,26 +1325,48 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_save_language_packages() {
-		$active_languages  = $_POST[ 'monk_active_languages' ];
-		$default_languages = $_POST[ 'monk_default_languages' ];
+		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
+			global $monk_languages;
+			$active_languages  = $_POST[ 'monk_active_languages' ];
+			$default_languages = $_POST[ 'monk_default_languages' ];
 
-		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
-		foreach ( $active_languages as $language ) {
-			if ( 'en_US' !== $language ) {
-				$response[] = wp_download_language_pack( $language );
+			$success      = __( '<strong>This packages have been downloaded:</strong>', 'monk' ) . '<br />';
+			$have_success = false;
+			$error        = __( '<strong>This packages have not been downloaded:</strong>', 'monk' ) . '<br />';
+			$have_error   = false;
+
+			foreach ( $active_languages as $language ) {
+				if ( 'en_US' !== $language ) {
+					$download_pack = wp_download_language_pack( $language );
+					if ( $download_pack ) {
+						$success      .= $monk_languages[ $download_pack ]['name'] . '<br />';
+						$have_success = true;
+					} else {
+						$error      .= $monk_languages[ $language ]['name'] . '<br />';
+						$have_error = true;
+					}
+				}
 			}
-		}
 
-		if ( ! in_array( false, $response ) ) {
-			$response = esc_html__( 'All languages updated', 'monk' );
+			$response = '';
+			if ( $have_success ) {
+				$response .= '<div class="notice notice-success is-dismissible"><p>' . $success
+				. '</p></div>';
+			}
+
+			if ( $have_error ) {
+				$response .= '<div class="notice notice-error is-dismissible"><p>' . $error . '</p></div>';
+			}
+
+			update_option( 'monk_active_languages', $active_languages );
+			update_option( 'monk_default_languages', $default_languages );
+
+			wp_send_json_success( $response );
 		} else {
-			$response = esc_html__( 'Error', 'monk' );
+			$error = '<div class="notice notice-error is-dismissible"><p>Invalid nonce field</p></div>';
+			wp_send_json_error( $error );
 		}
-
-		update_option( 'monk_active_languages', $active_languages );
-		update_option( 'monk_default_languages', $default_languages );
-
-		wp_send_json_success( $response );
 	}
 }
