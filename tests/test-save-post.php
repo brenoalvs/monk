@@ -27,6 +27,8 @@ class Save_Post_Test extends WP_UnitTestCase {
 		// monk_set_post_language( $id, $language )
 		$this->monk->monk_set_post_language( $post_id, $_POST['monk_post_language'] );
 
+		// test if the language was set correctly
+		$language = $this->monk->monk_get_post_language( $post_id, '_monk_post_language' );
 		$this->assertEquals( 'en', $language );
 
 	} // end testSavePost
