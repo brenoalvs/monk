@@ -12,14 +12,8 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 	} // end setup
 
-	function testClassInitialization() {
-
-		$running = method_exists( $this->monk, '__construct' );
-		$this->assertTrue( $running );
-
-	} // end testClassInitialization
-
 	function testSavePost() {
+
 		$post = array(
 			'ID' => 1,
 		);
@@ -34,6 +28,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 		$this->assertEquals( 'English', $language['name'] );
 		$this->assertEquals( 'en', $language['slug'] );
-	}
+
+	} // end testSavePost
 
 } // end class
