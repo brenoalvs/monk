@@ -22,7 +22,7 @@ if ( ! defined( 'WPINC' ) ) {
 		?>
 		<form action="options.php" method="POST" id="monk-form-settings">
 			<?php
-				settings_fields( 'monk_settings' );
+				wp_nonce_field( '_monk_nonce' );
 				do_settings_sections( 'monk_settings' );
 				submit_button( '', 'primary', 'submit', 'true', array( 'id' => 'monk-submit-settings' ) );
 			?>
