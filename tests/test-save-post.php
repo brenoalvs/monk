@@ -24,7 +24,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 		// Simulates the language from a form
 		$_POST['monk_post_language'] = 'en_US';
 
-		// monk_set_post_language( $id, $language )
+		// Set a language for this post
 		$this->monk->monk_set_post_language( $post_id, $_POST['monk_post_language'] );
 
 		// get and test if the language was set correctly
