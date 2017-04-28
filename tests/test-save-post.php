@@ -22,14 +22,14 @@ class Save_Post_Test extends WP_UnitTestCase {
 		$this->assertNotEmpty( $post_id );
 
 		// simulates the language from a form
-		$_POST['monk_post_language'] = 'en';
+		$_POST['monk_post_language'] = 'en_US';
 
 		// monk_set_post_language( $id, $language )
 		$this->monk->monk_set_post_language( $post_id, $_POST['monk_post_language'] );
 
 		// test if the language was set correctly
 		$language = $this->monk->monk_get_post_language( $post_id, '_monk_post_language' );
-		$this->assertEquals( 'en', $language );
+		$this->assertEquals( 'en_US', $language );
 
 	} // end testSavePost
 
