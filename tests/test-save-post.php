@@ -15,7 +15,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 	} // end setup
 
-	function testSavePost() {
+	function test_add_language_to_post() {
 
 		// Use the factory to create a new post and then test it
 		$post_id = $this->factory->post->create();
