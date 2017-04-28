@@ -264,6 +264,10 @@ class Monk_Admin {
 		add_post_meta( $post_id, '_monk_post_language', $language, true );
 	}
 
+	public function monk_get_post_language( $post_id ) {
+		return get_post_meta( $post_id, '_monk_post_language', true );
+	}
+
 	/**
 	 * Function to save data from the monk post meta box
 	 *
