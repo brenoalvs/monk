@@ -47,4 +47,8 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 	} // end testSavePost
 
+	function test_post_translation() {
+		
+	}
+
 } // end class
