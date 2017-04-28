@@ -260,6 +260,10 @@ class Monk_Admin {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
 	}
 
+	public function monk_set_post_language( $post_id, $language ) {
+		add_post_meta( $post_id, '_monk_post_language', $language, true );
+	}
+
 	/**
 	 * Function to save data from the monk post meta box
 	 *
