@@ -268,6 +268,15 @@ class Monk_Admin {
 		return get_post_meta( $post_id, '_monk_post_language', true );
 	}
 
+	public function monk_get_post_translations_id( $post_id ) {
+		$id = get_post_meta( $post_id, '_monk_post_translations_id', true );
+
+		if ( empty( $id ) ) {
+			$id = $post_id;
+		}
+		return $id;
+	}
+
 	/**
 	 * Function to save data from the monk post meta box
 	 *
