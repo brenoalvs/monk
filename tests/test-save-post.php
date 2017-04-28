@@ -48,7 +48,11 @@ class Save_Post_Test extends WP_UnitTestCase {
 	} // end testSavePost
 
 	function test_post_translation() {
-		
+		// Create the original post 
+		$post_id = $this->factory->post->create();
+		$this->monk->monk_set_post_language( $post_id, 'en_US' );
+		$this->monk->monk_set_post_translations_id( $post_id );
+		$this->monk->monk_save_post_translations_option( $post_id, 'en_US' );
 	}
 
 } // end class
