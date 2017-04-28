@@ -31,6 +31,13 @@ class Save_Post_Test extends WP_UnitTestCase {
 		$language = $this->monk->monk_get_post_language( $post_id );
 		$this->assertEquals( 'en_US', $language );
 
+		// inserts the monk_id into the post
+		$this->monk->monk_set_post_translations_id( $post_id );
+
+		// tests if the monk_id is the post_id, in this case
+		$monk_id = $this->monk->monk_get_post_translations_id( $post_id );
+		$this->assertEquals( $post_id, $monk_id );
+
 	} // end testSavePost
 
 } // end class
