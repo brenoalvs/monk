@@ -13,7 +13,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 		$this->monk    = new Monk_Admin( 'monk', '0.3.0' );
 		$this->factory = new WP_UnitTest_Factory;
 
-	} // end setup
+	} // end setUp
 
 	function test_add_language_to_post() {
 
@@ -46,7 +46,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 		$this->assertArrayHasKey( $language, $option );
 		$this->assertContains( $monk_id, $option );
 
-	} // end testSavePost
+	} // end test_add_language_to_post
 
 	function test_post_translation() {
 		// Creates the original post 
@@ -87,6 +87,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 		$this->assertArrayHasKey( $language, $option );
 		$this->assertContains( $monk_id, $option );
-	}
+
+	} // end test_post_translation
 
 } // end class
