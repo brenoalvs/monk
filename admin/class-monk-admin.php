@@ -1307,7 +1307,7 @@ class Monk_Admin {
 		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
 			global $monk_languages;
 			$active_languages  = $_POST[ 'monk_active_languages' ];
-			$default_languages = $_POST[ 'monk_default_languages' ];
+			$default_language  = $_POST[ 'monk_default_language' ];
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
@@ -1340,7 +1340,7 @@ class Monk_Admin {
 			}
 
 			update_option( 'monk_active_languages', $active_languages );
-			update_option( 'monk_default_languages', $default_languages );
+			update_option( 'monk_default_language', $default_language );
 
 			wp_send_json_success( $response );
 		} else {
