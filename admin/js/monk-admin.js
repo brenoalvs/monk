@@ -70,10 +70,10 @@
 			$( '#monk-spinner' ).addClass( 'is-active' );
 			var form_data = $( '#monk-form-settings' ).serializeArray();
 
-			form_data[1] = {
+			form_data.push({
 				name : 'action',
 				value : 'monk_save_language_packages',
-			};
+			});
 			$.ajax({
 				type: 'POST',
 				url: monk.ajax_url,
