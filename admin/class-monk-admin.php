@@ -277,10 +277,11 @@ class Monk_Admin {
 		return $id;
 	}
 
-	public function monk_set_post_translations_id( $post_id ) {
-		$monk_id = filter_input( INPUT_GET, 'monk_id' );
+	public function monk_set_post_translations_id( $post_id, $monk_id ) {
 
 		if ( empty( $monk_id ) ) {
+			$monk_id = filter_input( INPUT_GET, 'monk_id' );
+		} elseif ( empty( $monk_id ) ) {
 			$monk_id = $this->monk_get_post_translations_id( $post_id );
 		}
 
@@ -288,7 +289,9 @@ class Monk_Admin {
 	}
 
 	public function monk_get_post_translations_option( $monk_id ) {
-		return get_option( 'monk_post_translations_' . $monk_id, false );
+		$translations_option = get_option( 'monk_post_translations_' . $monk_id, false );
+
+		return $translations_option;
 	}
 
 	public function monk_save_post_translations_option( $post_id, $language ) {
