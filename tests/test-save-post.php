@@ -32,7 +32,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'en_US', $language );
 
 		// inserts the monk_id into the post
-		$this->monk->monk_set_post_translations_id( $post_id );
+		$this->monk->monk_set_post_translations_id( $post_id, '' );
 
 		// tests if the monk_id is the post_id, in this case
 		$monk_id = $this->monk->monk_get_post_translations_id( $post_id );
@@ -52,7 +52,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 		// Creates the original post 
 		$original_post_id = $this->factory->post->create();
 		$this->monk->monk_set_post_language( $original_post_id, 'en_US' );
-		$this->monk->monk_set_post_translations_id( $original_post_id );
+		$this->monk->monk_set_post_translations_id( $original_post_id, '' );
 		$this->monk->monk_save_post_translations_option( $original_post_id, 'en_US' );
 
 		// tests the translations option before adding a new post
@@ -73,10 +73,9 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 		// Simulates the monk_id in the url
 		$original_monk_id = $this->monk->monk_get_post_translations_id( $original_post_id );
-		$this->go_to( 'http://example.com/?monk_id=' . $original_monk_id );
 
 		// Adds the meta_value to the new post
-		$this->monk->monk_set_post_translations_id( $new_post_id );
+		$this->monk->monk_set_post_translations_id( $new_post_id, $original_monk_id );
 
 		// Tests if the new meta is equals to the $original_post_id meta
 		$monk_id = $this->monk->monk_get_post_translations_id( $new_post_id );
@@ -84,7 +83,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 		// Adds the new entry in the option
 		$this->monk->monk_save_post_translations_option( $new_post_id, $language );
-		$option = $this->monk->monk_get_post_translations_option( $new_post_id );
+		$option = $this->monk->monk_get_post_translations_option( $monk_id );
 
 		$this->assertArrayHasKey( $language, $option );
 		$this->assertContains( $monk_id, $option );
