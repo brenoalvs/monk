@@ -37,7 +37,7 @@ class Save_Post_Test extends WP_UnitTestCase {
 		// tests if the monk_id is the post_id, in this case.
 		$monk_id = $this->monk->monk_get_post_translations_id( $post_id );
 		$this->assertEquals( $post_id, $monk_id );
-		
+
 		// saves the translations option.
 		$this->monk->monk_save_post_translations_option( $post_id, $language );
 
