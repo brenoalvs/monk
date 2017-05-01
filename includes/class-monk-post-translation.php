@@ -67,4 +67,16 @@ class Monk_Post_Translation {
 	public function monk_set_post_language( $post_id, $language ) {
 		add_post_meta( $post_id, '_monk_post_language', $language, true );
 	}
+
+	/**
+	 * Gets the post language.
+	 *
+	 * @since    0.4.0
+	 * @param    integer $post_id    The post object id.
+	 * @return   string $language    The language from the meta data.
+	 */
+	public function monk_get_post_language( $post_id ) {
+		$language = get_post_meta( $post_id, '_monk_post_language', true );
+		return $language;
+	}
 }
