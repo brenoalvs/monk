@@ -223,7 +223,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_set_elements_language_render() {
-		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-set-elemeents-language-render.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-set-elements-language-render.php';
 	}
 
 	/**
