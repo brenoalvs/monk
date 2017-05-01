@@ -221,6 +221,7 @@ class Monk {
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'define_view_mode' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'medias_modal_filter' );
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_change_nav_menu_fields' );
+		$this->loader->add_action( 'wp_ajax_monk_set_language_to_elements', $plugin_admin, 'monk_set_language_to_elements' );
 	}
 
 	/**
