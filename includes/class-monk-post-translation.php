@@ -63,7 +63,7 @@ class Monk_Post_Translation {
 	 * @since    0.4.0
 	 *
 	 * @param    integer $post_id    The post object id.
-	 * @param    string $language    The language defined fot the post.
+	 * @param    string  $language    The language defined fot the post.
 	 * @return void
 	 */
 	public function monk_set_post_language( $post_id, $language ) {
@@ -106,7 +106,8 @@ class Monk_Post_Translation {
 	 * @since    0.4.0
 	 *
 	 * @param    integer $post_id    The post object id.
-	 * @return integer $monk_id    The reference to the option holding the post translations.
+	 * @param    integer $monk_id    The reference to the option holding the post translations.
+	 * @return void
 	 */
 	public function monk_set_post_translations_id( $post_id, $monk_id ) {
 
@@ -124,8 +125,8 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    integer $post_id    The post object id.
-	 * @return array $translations The reference to the option holding the post translations.
+	 * @param    integer $monk_id    The post object id.
+	 * @return array $translations The option holding the post translations.
 	 */
 	public function monk_get_post_translations_option( $monk_id ) {
 		$translations = get_option( 'monk_post_translations_' . $monk_id, false );
@@ -147,7 +148,9 @@ class Monk_Post_Translation {
 		$post_translations = $this->monk_get_post_translations_option( $monk_id );
 
 		if ( empty( $post_translations ) ) {
-			$data = array( $language => $post_id );
+			$data = array(
+				$language => $post_id
+			);
 		} else {
 			$post_translations[ $language ] = $post_id;
 			$data                           = $post_translations;
