@@ -126,4 +126,26 @@ class Monk_Post_Translation {
 
 		return $translations;
 	}
+
+	/**
+	 * Saves the new post entry in the correct translations option.
+	 *
+	 * @since    0.4.0
+	 * @param    integer $post_id    The post object id.
+	 * @param    string  $language   The post language.
+	 * @return void
+	 */
+	public function monk_save_post_translations_option( $post_id, $language ) {
+		$monk_id           = $this->monk_get_post_translations_id( $post_id );
+		$post_translations = $this->monk_get_post_translations_option( $monk_id );
+
+		if ( empty( $post_translations ) ) {
+			$data = array( $language => $post_id );
+		} else {
+			$post_translations[ $language ] = $post_id;
+			$data                           = $post_translations;
+		}
+
+		update_option( 'monk_post_translations_' . $monk_id, $data );
+	}
 }

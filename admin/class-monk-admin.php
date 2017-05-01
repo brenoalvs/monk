@@ -260,20 +260,6 @@ class Monk_Admin {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
 	}
 
-	public function monk_save_post_translations_option( $post_id, $language ) {
-		$monk_id           = $this->monk_get_post_translations_id( $post_id );
-		$post_translations = $this->monk_get_post_translations_option( $monk_id );
-
-		if ( empty( $post_translations ) ) {
-			$data = array( $language => $post_id );
-		} else {
-			$post_translations[ $language ] = $post_id;
-			$data                           = $post_translations;
-		}
-
-		update_option( 'monk_post_translations_' . $monk_id, $data );
-	}
-
 	/**
 	 * Function to save data from the monk post meta box
 	 *
