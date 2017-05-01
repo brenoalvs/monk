@@ -21,9 +21,17 @@ if ( ! defined( 'WPINC' ) ) {
 		?>
 		<form action="options.php" method="POST">
 			<?php
-				settings_fields( 'monk_settings' );
-				do_settings_sections( 'monk_settings' );
+			settings_fields( 'monk_settings' );
+			do_settings_sections( 'monk_settings' );
+			if ( 'monk_general' === $action || '' === $action ) {
 				submit_button();
+			} elseif ( 'monk_tools' === $action ) {
+				$btn_args = array(
+					'id' => 'btn-monk-tools',
+				);
+				submit_button( '', 'primary', 'submit', 'true', $btn_args );
+				?><span class="spinner monk-spinner" id="monk-spinner"></span><?php
+			}
 			?>
 		</form>
 	</div>
