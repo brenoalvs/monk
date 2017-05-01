@@ -79,4 +79,20 @@ class Monk_Post_Translation {
 		$language = get_post_meta( $post_id, '_monk_post_language', true );
 		return $language;
 	}
+
+	/**
+	 * Gets the post translations option id.
+	 *
+	 * @since    0.4.0
+	 * @param    integer $post_id    The post object id.
+	 * @return   integer $id         The id to reference the option holding the post translations.
+	 */
+	public function monk_get_post_translations_id( $post_id ) {
+		$id = get_post_meta( $post_id, '_monk_post_translations_id', true );
+
+		if ( empty( $id ) ) {
+			$id = $post_id;
+		}
+		return $id;
+	}
 }

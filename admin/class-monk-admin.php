@@ -260,15 +260,6 @@ class Monk_Admin {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
 	}
 
-	public function monk_get_post_translations_id( $post_id ) {
-		$id = get_post_meta( $post_id, '_monk_post_translations_id', true );
-
-		if ( empty( $id ) ) {
-			$id = $post_id;
-		}
-		return $id;
-	}
-
 	public function monk_set_post_translations_id( $post_id, $monk_id ) {
 
 		if ( empty( $monk_id ) ) {
