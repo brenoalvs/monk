@@ -45,6 +45,7 @@ class Monk_Post_Translation {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.4.0
+	 *
 	 * @param    string $monk       The name of this plugin.
 	 * @param    string $version    The version of this plugin.
 	 * @return void
@@ -60,6 +61,7 @@ class Monk_Post_Translation {
 	 * Defines the post language.
 	 *
 	 * @since    0.4.0
+	 *
 	 * @param    integer $post_id    The post object id.
 	 * @param    string $language    The language defined fot the post.
 	 * @return void
@@ -72,6 +74,7 @@ class Monk_Post_Translation {
 	 * Gets the post language.
 	 *
 	 * @since    0.4.0
+	 *
 	 * @param    integer $post_id    The post object id.
 	 * @return string $language    The language from the meta data.
 	 */
@@ -84,6 +87,7 @@ class Monk_Post_Translation {
 	 * Gets the post translations option id.
 	 *
 	 * @since    0.4.0
+	 *
 	 * @param    integer $post_id    The post object id.
 	 * @return integer $id         The id to reference the option holding the post translations.
 	 */
@@ -100,6 +104,7 @@ class Monk_Post_Translation {
 	 * Sets the post translations option id.
 	 *
 	 * @since    0.4.0
+	 *
 	 * @param    integer $post_id    The post object id.
 	 * @return integer $monk_id    The reference to the option holding the post translations.
 	 */
@@ -118,6 +123,7 @@ class Monk_Post_Translation {
 	 * Retrieves the post translations option.
 	 *
 	 * @since    0.4.0
+	 *
 	 * @param    integer $post_id    The post object id.
 	 * @return array $translations The reference to the option holding the post translations.
 	 */
@@ -131,6 +137,7 @@ class Monk_Post_Translation {
 	 * Saves the new post entry in the correct translations option.
 	 *
 	 * @since    0.4.0
+	 *
 	 * @param    integer $post_id    The post object id.
 	 * @param    string  $language   The post language.
 	 * @return void
