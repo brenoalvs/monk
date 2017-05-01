@@ -119,12 +119,23 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_options_init() {
-		add_settings_section(
-			'monk_general_settings',
-			__( 'General Settings', 'monk' ),
-			array( $this, 'monk_general_settings_render' ),
-			'monk_settings'
-		);
+		$action    = ! empty( filter_input( INPUT_GET, 'action' ) ) ? filter_input( INPUT_GET, 'action' ) : '';
+
+		if ( 'monk_general' === $action || '' === $action ) {
+			add_settings_section(
+				'monk_general_settings',
+				__( 'General Settings', 'monk' ),
+				array( $this, 'monk_general_settings_render' ),
+				'monk_settings'
+			);
+		} elseif ( 'monk_tools' === $action ) {
+			add_settings_section(
+				'monk_tools',
+				__( 'Tools', 'monk' ),
+				array( $this, 'monk_tools_description' ),
+				'monk_settings'
+			);
+		}
 
 		register_setting( 'monk_settings', 'monk_default_language' );
 		add_settings_field(
@@ -143,6 +154,15 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_general_settings'
 		);
+
+		register_setting( 'monk_settings', 'monk_set_language_to_elements' );
+		add_settings_field(
+			'monk_set_language_to_elements',
+			__( 'Set default language to all posts and terms', 'monk' ),
+			array( $this, 'monk_set_elements_language_render' ),
+			'monk_settings',
+			'monk_tools'
+		);
 	}
 
 	/**
@@ -158,6 +178,52 @@ class Monk_Admin {
 		<p><?php esc_html_e( 'Here you can configure your language preferences.', 'monk' ); ?><br />
 		<?php esc_html_e( 'Select a default language for your site and check the languages you will translate.', 'monk' ); ?></p>
 		<?php
+	}
+
+	/**
+	 * This function show tabs in Monk page
+	 *
+	 * @since    0.4.0
+	 * @return  void
+	 */
+	public function monk_settings_tabs() {
+		$url       = home_url() . $_SERVER['REQUEST_URI'];
+		$action    = ! empty( filter_input( INPUT_GET, 'action' ) ) ? filter_input( INPUT_GET, 'action' ) : '';
+
+		if ( 'monk_general' === $action || '' === $action ) {
+			$general = 'nav-tab-active';
+		} elseif ( 'monk_tools' === $action ) {
+			$tools = 'nav-tab-active';
+		}
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-tabs-render.php';
+	}
+
+	/**
+	 * This is the callback for the monk_tools section
+	 *
+	 * Prints a description in the section
+	 *
+	 * @since    0.4.0
+	 * @return  void
+	 */
+	public function monk_tools_description() {
+		?>
+		<p><?php esc_html_e( 'Here you can option to set default language to all posts and terms without language.', 'monk' ); ?><br />
+		<?php esc_html_e( 'Check the checkbox to confirm.', 'monk' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Function to render checkbox field to set default language to all posts and terms
+	 *
+	 * Callback for the monk_set_language_to_elements element
+	 *
+	 * @since    0.4.0
+	 * @return  void
+	 */
+	public function monk_set_elements_language_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-set-elemeents-language-render.php';
 	}
 
 	/**
@@ -188,6 +254,9 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_settings_render() {
+		$this->monk_settings_tabs();
+		$action    = ! empty( filter_input( INPUT_GET, 'action' ) ) ? filter_input( INPUT_GET, 'action' ) : '';
+
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
 	}
 
@@ -1292,5 +1361,23 @@ class Monk_Admin {
 			}
 		}
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-select-menu-to-edit-render.php';
+	}
+
+	/**
+	 * Function to set default language to all posts and term without language
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
+	public function monk_set_language_to_elements() {
+		$monk_set_language_to_elements = $_POST['monk_set_language_to_elements'];
+
+		if ( 'true' === $monk_set_language_to_elements ) {
+			global $wpdb;
+
+			$teste = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE post_type = 'post'", ARRAY_A );
+		}
+		wp_send_json_success( $teste );
 	}
 }
