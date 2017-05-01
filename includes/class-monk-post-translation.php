@@ -47,7 +47,7 @@ class Monk_Post_Translation {
 	 * @since    0.4.0
 	 * @param    string $monk       The name of this plugin.
 	 * @param    string $version    The version of this plugin.
-	 * @return  void
+	 * @return void
 	 */
 	public function __construct( $monk, $version ) {
 
@@ -62,7 +62,7 @@ class Monk_Post_Translation {
 	 * @since    0.4.0
 	 * @param    integer $post_id    The post object id.
 	 * @param    string $language    The language defined fot the post.
-	 * @return   void
+	 * @return void
 	 */
 	public function monk_set_post_language( $post_id, $language ) {
 		add_post_meta( $post_id, '_monk_post_language', $language, true );
@@ -73,7 +73,7 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 * @param    integer $post_id    The post object id.
-	 * @return   string $language    The language from the meta data.
+	 * @return string $language    The language from the meta data.
 	 */
 	public function monk_get_post_language( $post_id ) {
 		$language = get_post_meta( $post_id, '_monk_post_language', true );
@@ -85,7 +85,7 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 * @param    integer $post_id    The post object id.
-	 * @return   integer $id         The id to reference the option holding the post translations.
+	 * @return integer $id         The id to reference the option holding the post translations.
 	 */
 	public function monk_get_post_translations_id( $post_id ) {
 		$id = get_post_meta( $post_id, '_monk_post_translations_id', true );
@@ -101,7 +101,7 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 * @param    integer $post_id    The post object id.
-	 * @return   integer $monk_id    The reference to the option holding the post translations.
+	 * @return integer $monk_id    The reference to the option holding the post translations.
 	 */
 	public function monk_set_post_translations_id( $post_id, $monk_id ) {
 
@@ -112,5 +112,18 @@ class Monk_Post_Translation {
 		}
 
 		add_post_meta( $post_id, '_monk_post_translations_id', $monk_id, true );
+	}
+
+	/**
+	 * Retrieves the post translations option.
+	 *
+	 * @since    0.4.0
+	 * @param    integer $post_id    The post object id.
+	 * @return array $translations The reference to the option holding the post translations.
+	 */
+	public function monk_get_post_translations_option( $monk_id ) {
+		$translations = get_option( 'monk_post_translations_' . $monk_id, false );
+
+		return $translations;
 	}
 }

@@ -260,12 +260,6 @@ class Monk_Admin {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-post-meta-box-field-render.php';
 	}
 
-	public function monk_get_post_translations_option( $monk_id ) {
-		$translations_option = get_option( 'monk_post_translations_' . $monk_id, false );
-
-		return $translations_option;
-	}
-
 	public function monk_save_post_translations_option( $post_id, $language ) {
 		$monk_id           = $this->monk_get_post_translations_id( $post_id );
 		$post_translations = $this->monk_get_post_translations_option( $monk_id );
