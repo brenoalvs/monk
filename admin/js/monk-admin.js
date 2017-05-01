@@ -66,6 +66,25 @@
 			return false;
 		});
 
+		$( document ).on( 'click', '#btn-monk-tools', function( event ) {
+			event.preventDefault();
+			$( '#monk-spinner' ).addClass( 'is-active' );
+			var form_data = {
+				action                        : 'monk_set_language_to_elements',
+				monk_set_language_to_elements : $( '#monk_set_language_to_elements' ).prop( 'checked' ),
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: monk.ajax_url,
+				data: form_data,
+				success: function( response ) {
+					console.log( response.data );
+					$( '#monk-spinner' ).removeClass( 'is-active' );
+				}
+			});
+		})
+
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
 			$( '.monk-change-current-language' ).slideUp( 150 );
