@@ -55,4 +55,16 @@ class Monk_Post_Translation {
 		$this->version = $version;
 
 	}
+
+	/**
+	 * Defines the post language.
+	 *
+	 * @since    0.4.0
+	 * @param    integer $post_id    The post object id.
+	 * @param    string $language    The language defined fot the post.
+	 * @return   void
+	 */
+	public function monk_set_post_language( $post_id, $language ) {
+		add_post_meta( $post_id, '_monk_post_language', $language, true );
+	}
 }
