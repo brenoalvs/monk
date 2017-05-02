@@ -1396,9 +1396,46 @@ class Monk_Admin {
 
 		if ( 'true' === $monk_set_language_to_elements ) {
 			global $wpdb;
+			$default_language = get_option( 'monk_default_language', false );
+			$post_types       = get_post_types( array(
+				'public'   => true,
+				'_builtin' => false,
+			), 'names', 'OR');
 
-			$teste = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE post_type = 'post'", ARRAY_A );
+			$i = 0;
+			foreach ( $post_types as $post_type ) {
+				if ( $i === 0 ) {
+					$where = '(post_type = "' . $post_type . '"';
+					$i++;
+				} else {
+					$where .= ' OR post_type = "' . $post_type . '"';
+				}
+			}
+			$where .= ')';
+
+			$post_ids = $wpdb->get_results( "SELECT ID FROM $wpdb->posts 
+				WHERE $where 
+				AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta 
+				WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id 
+				AND $wpdb->postmeta.meta_key = '_monk_post_language' )", ARRAY_A );
+
+			if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
+				foreach ( $post_ids as $post_id ) {
+					$meta = $wpdb->insert( 'wp_postmeta', array(
+						'post_id'    => $post_id['ID'],
+						'meta_key'   => '_monk_post_language',
+						'meta_value' => $default_language,
+					));
+					if ( $meta ) {
+						$response = true;
+					} else {
+						$response = false;
+					}
+				}
+			} else {
+				$response = __( 'Not exists more posts or terms without language', 'monk' );
+			}
 		}
-		wp_send_json_success( $teste );
+		wp_send_json_success( $response );
 	}
 }
