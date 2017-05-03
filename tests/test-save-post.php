@@ -4,7 +4,24 @@ require_once( 'wptests/lib/factory.php' );
 
 class Save_Post_Test extends WP_UnitTestCase {
 
-	private $monk;
+	/**
+	 * The post translation object.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @access   private
+	 * @var      class    $post_translation    A reference for the Monk_Post_Translation class.
+	 */
+	private $post_translation;
+
+	/**
+	 * The WordPress test factory object.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @access   private
+	 * @var      class    $factory    A reference for the WP_UnitTest_Factory class.
+	 */
 	private $factory;
 
 	/**
