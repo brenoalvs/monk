@@ -1,7 +1,20 @@
 <?php
-require_once( '../../includes/class-monk-post-translation.php' );
-require_once( 'wptests/lib/factory.php' );
+/**
+ * The test class for the translate post processes
+ *
+ * @package    Monk
+ * @subpackage Monk/Post Translation Tests
+ * @since      0.4.0
+ */
 
+/**
+ * Tests the methods related to the post creation and translation
+ *
+ * @since      0.4.0
+ *
+ * @package    Monk
+ * @subpackage Monk/Post Translation Tests
+ */
 class Save_Post_Test extends WP_UnitTestCase {
 
 	/**
@@ -32,6 +45,8 @@ class Save_Post_Test extends WP_UnitTestCase {
 	 * @return void
 	 */
 	function setUp() {
+		require_once( '../../includes/class-monk-post-translation.php' );
+		require_once( 'wptests/lib/factory.php' );
 
 		parent::setUp();
 		$this->factory             = new WP_UnitTest_Factory;
