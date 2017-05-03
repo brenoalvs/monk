@@ -149,7 +149,7 @@ class Monk_Post_Translation {
 
 		if ( empty( $post_translations ) ) {
 			$data = array(
-				$language => $post_id
+				$language => $post_id,
 			);
 		} else {
 			$post_translations[ $language ] = $post_id;
