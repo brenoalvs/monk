@@ -15,7 +15,7 @@
  * @package    Monk
  * @subpackage Monk/Post Translation Tests
  */
-class Save_Post_Test extends WP_UnitTestCase {
+class Test_Translate_Post extends WP_UnitTestCase {
 
 	/**
 	 * The post translation object.
