@@ -7,6 +7,13 @@ class Save_Post_Test extends WP_UnitTestCase {
 	private $monk;
 	private $factory;
 
+	/**
+	 * Initializes the test and handles the class instances.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
 	function setUp() {
 
 		parent::setUp();
@@ -15,6 +22,13 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 	} // end setUp
 
+	/**
+	 * Tests the creation process of a post with its language.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
 	function test_add_language_to_post() {
 
 		// Use the factory to create a new post and then test it.
@@ -48,6 +62,13 @@ class Save_Post_Test extends WP_UnitTestCase {
 
 	} // end test_add_language_to_post.
 
+	/**
+	 * Tests the single post translation process.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
 	function test_post_translation() {
 		// Creates the original post.
 		$original_post_id = $this->factory->post->create();
