@@ -11,7 +11,7 @@
  * Processes the methods related to the post translation
  *
  * The user defines a language for every post and from this point
- * the posts have all of the internationalization
+ * the posts have all the internationalization
  * features provided by Monk
  *
  * @since      0.4.0
@@ -66,7 +66,7 @@ class Monk_Post_Translation {
 	 * @param    string  $language    The language defined fot the post.
 	 * @return void
 	 */
-	public function monk_set_post_language( $post_id, $language ) {
+	public function set_language( $post_id, $language ) {
 		add_post_meta( $post_id, '_monk_post_language', $language, true );
 	}
 
@@ -78,7 +78,7 @@ class Monk_Post_Translation {
 	 * @param    integer $post_id    The post object id.
 	 * @return string $language    The language from the meta data.
 	 */
-	public function monk_get_post_language( $post_id ) {
+	public function get_language( $post_id ) {
 		$language = get_post_meta( $post_id, '_monk_post_language', true );
 		return $language;
 	}
@@ -91,7 +91,7 @@ class Monk_Post_Translation {
 	 * @param    integer $post_id    The post object id.
 	 * @return integer $id         The id to reference the option holding the post translations.
 	 */
-	public function monk_get_post_translations_id( $post_id ) {
+	public function get_translation_group_id( $post_id ) {
 		$id = get_post_meta( $post_id, '_monk_post_translations_id', true );
 
 		if ( empty( $id ) ) {
@@ -109,12 +109,12 @@ class Monk_Post_Translation {
 	 * @param    integer $monk_id    The reference to the option holding the post translations.
 	 * @return void
 	 */
-	public function monk_set_post_translations_id( $post_id, $monk_id ) {
+	public function set_translation_group_id( $post_id, $monk_id ) {
 
 		if ( empty( $monk_id ) ) {
 			$monk_id = filter_input( INPUT_GET, 'monk_id' );
 		} elseif ( empty( $monk_id ) ) {
-			$monk_id = $this->monk_get_post_translations_id( $post_id );
+			$monk_id = $this->get_translation_group_id( $post_id );
 		}
 
 		add_post_meta( $post_id, '_monk_post_translations_id', $monk_id, true );
@@ -128,7 +128,7 @@ class Monk_Post_Translation {
 	 * @param    integer $monk_id    The post object id.
 	 * @return array $translations The option holding the post translations.
 	 */
-	public function monk_get_post_translations_option( $monk_id ) {
+	public function get_translation_group( $monk_id ) {
 		$translations = get_option( 'monk_post_translations_' . $monk_id, false );
 
 		return $translations;
@@ -143,9 +143,9 @@ class Monk_Post_Translation {
 	 * @param    string  $language   The post language.
 	 * @return void
 	 */
-	public function monk_save_post_translations_option( $post_id, $language ) {
-		$monk_id           = $this->monk_get_post_translations_id( $post_id );
-		$post_translations = $this->monk_get_post_translations_option( $monk_id );
+	public function save_translation_group( $post_id, $language ) {
+		$monk_id           = $this->get_translation_group_id( $post_id );
+		$post_translations = $this->get_translation_group( $monk_id );
 
 		if ( empty( $post_translations ) ) {
 			$data = array(
