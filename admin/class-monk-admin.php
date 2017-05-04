@@ -1405,35 +1405,56 @@ class Monk_Admin {
 			$i = 0;
 			foreach ( $post_types as $post_type ) {
 				if ( $i === 0 ) {
-					$where = '(post_type = "' . $post_type . '"';
+					$posts_where = '(post_type = "' . $post_type . '"';
 					$i++;
 				} else {
-					$where .= ' OR post_type = "' . $post_type . '"';
+					$posts_where .= ' OR post_type = "' . $post_type . '"';
 				}
 			}
-			$where .= ')';
+			$posts_where .= ')';
 
 			$post_ids = $wpdb->get_results( "SELECT ID FROM $wpdb->posts 
-				WHERE $where 
+				WHERE $posts_where 
 				AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta 
 				WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id 
 				AND $wpdb->postmeta.meta_key = '_monk_post_language' )", ARRAY_A );
 
+			$term_ids = $wpdb->get_results( "SELECT term_id FROM $wpdb->terms 
+				WHERE NOT EXISTS ( SELECT term_id FROM $wpdb->termmeta 
+				WHERE $wpdb->terms.term_id=$wpdb->termmeta.term_id 
+				AND $wpdb->termmeta.meta_key = '_monk_term_language' )", ARRAY_A );
+
 			if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 				foreach ( $post_ids as $post_id ) {
-					$meta = $wpdb->insert( 'wp_postmeta', array(
+					$post_meta = $wpdb->insert( 'wp_postmeta', array(
 						'post_id'    => $post_id['ID'],
 						'meta_key'   => '_monk_post_language',
 						'meta_value' => $default_language,
 					));
-					if ( $meta ) {
-						$response = true;
-					} else {
-						$response = false;
-					}
 				}
+
+				$post_response = $post_meta ? true : false;
 			} else {
-				$response = __( 'Not exists more posts or terms without language', 'monk' );
+				$post_response = true;
+			}
+
+			if ( is_array( $term_ids ) && ! empty( $term_ids ) ) {
+				foreach ( $term_ids as $term_id ) {
+					$term_meta = $wpdb->insert( 'wp_termmeta', array(
+						'term_id'    => $term_id['term_id'],
+						'meta_key'   => '_monk_term_language',
+						'meta_value' => $default_language,
+					));
+				}
+				$term_response = $term_meta ? true : false;
+			} else {
+				$term_response = true;
+			}
+
+			if ( $post_response && $term_response ) {
+				$response = __( 'All posts and terms are translated to default language', 'monk' );
+			} else {
+				$response = __( 'An error has occurred. Please, try again.', 'monk' );
 			}
 		}
 		wp_send_json_success( $response );
