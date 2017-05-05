@@ -32,6 +32,16 @@ class Monk_Post_Translation {
 	private $post_id;
 
 	/**
+	 * The defined post language.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @access   private
+	 * @var      string    $language    The post language.
+	 */
+	private $language;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.4.0
