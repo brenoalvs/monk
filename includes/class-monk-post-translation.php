@@ -47,6 +47,17 @@ class Monk_Post_Translation {
 	}
 
 	/**
+	 * Returns the post id.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return integer $post_id    The post object id.
+	 */
+	public function get_the_post_id() {
+		return $this->post_id;
+	}
+
+	/**
 	 * Defines the post language.
 	 *
 	 * @since    0.4.0
