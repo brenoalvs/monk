@@ -188,7 +188,7 @@ class Monk_Admin {
 	 */
 	public function monk_settings_tabs() {
 		$url       = home_url() . $_SERVER['REQUEST_URI'];
-		$action    = ! empty( filter_input( INPUT_GET, 'action' ) ) ? filter_input( INPUT_GET, 'action' ) : '';
+		$action    = filter_input( INPUT_GET, 'action' );
 
 		if ( 'monk_general' === $action || '' === $action ) {
 			$general = 'nav-tab-active';
@@ -255,7 +255,7 @@ class Monk_Admin {
 	 */
 	public function monk_settings_render() {
 		$this->monk_settings_tabs();
-		$action    = ! empty( filter_input( INPUT_GET, 'action' ) ) ? filter_input( INPUT_GET, 'action' ) : '';
+		$action    = filter_input( INPUT_GET, 'action' );
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
 	}
@@ -1447,6 +1447,6 @@ class Monk_Admin {
 
 			$response = $post_response && $term_response ? __( 'All posts and terms are translated to default language', 'monk' ) : __( 'An error has occurred. Please, try again.', 'monk' );
 		} // End if().
-		wp_send_json_success( $post_ids );
+		wp_send_json_success( $response );
 	}
 }
