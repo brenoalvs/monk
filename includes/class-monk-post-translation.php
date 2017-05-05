@@ -75,7 +75,12 @@ class Monk_Post_Translation {
 	 * @return void
 	 */
 	public function set_language( $language ) {
-		add_post_meta( $this->post_id, '_monk_post_language', $language, true );
+		if ( $language === $this->language ) {
+			return false;
+		} else {
+			add_post_meta( $this->post_id, '_monk_post_language', $language, true );
+			$this->language = $language;
+		}
 	}
 
 	/**
