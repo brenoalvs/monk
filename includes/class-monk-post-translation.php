@@ -61,7 +61,7 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    string  $language    The language defined fot the post.
+	 * @param    string $language    The language defined fot the post.
 	 * @return void
 	 */
 	public function set_language( $language ) {
@@ -134,7 +134,7 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    string  $language   The post language.
+	 * @param    string $language   The post language.
 	 * @return void
 	 */
 	public function save_translation_group( $language ) {
