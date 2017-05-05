@@ -119,7 +119,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_options_init() {
-		$action    = ! empty( filter_input( INPUT_GET, 'action' ) ) ? filter_input( INPUT_GET, 'action' ) : '';
+		$action = filter_input( INPUT_GET, 'action' );
 
 		if ( 'monk_general' === $action || '' === $action ) {
 			add_settings_section(
