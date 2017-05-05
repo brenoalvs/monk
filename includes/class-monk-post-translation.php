@@ -36,8 +36,7 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    string $monk       The name of this plugin.
-	 * @param    string $version    The version of this plugin.
+	 * @param    integer $post_id    The id to be used across the class.
 	 * @return void
 	 */
 	public function __construct( $post_id ) {
@@ -62,7 +61,6 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    integer $post_id    The post object id.
 	 * @param    string  $language    The language defined fot the post.
 	 * @return void
 	 */
@@ -75,7 +73,6 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    integer $post_id    The post object id.
 	 * @return string $language    The language from the meta data.
 	 */
 	public function get_language() {
@@ -88,7 +85,6 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    integer $post_id    The post object id.
 	 * @return integer $id The id to reference the option holding the post translations.
 	 */
 	public function get_translation_group_id() {
@@ -105,7 +101,6 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    integer $post_id    The post object id.
 	 * @param    integer $monk_id    The reference to the option holding the post translations.
 	 * @return void
 	 */
@@ -139,7 +134,6 @@ class Monk_Post_Translation {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @param    integer $post_id    The post object id.
 	 * @param    string  $language   The post language.
 	 * @return void
 	 */
