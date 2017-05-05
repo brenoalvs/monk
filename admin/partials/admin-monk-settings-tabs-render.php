@@ -14,6 +14,6 @@ if ( ! defined( 'WPINC' ) ) {
 }
 ?>
 	<h2 class="nav-tab-wrapper">
-	    <a href="<?php echo esc_url( $url . '&action=monk_general' ); ?>" class="nav-tab <?php echo esc_attr( $general ); ?>">General</a>
-	    <a href="<?php echo esc_url( $url . '&action=monk_tools' ); ?>" class="nav-tab <?php echo esc_attr( $tools ); ?>">Tools</a>
+		<a href="<?php echo esc_url( $url . '&action=monk_general' ); ?>" class="nav-tab <?php echo esc_attr( $general ); ?>">General</a>
+		<a href="<?php echo esc_url( $url . '&action=monk_tools' ); ?>" class="nav-tab <?php echo esc_attr( $tools ); ?>">Tools</a>
 	</h2>
