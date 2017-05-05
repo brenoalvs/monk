@@ -1380,6 +1380,8 @@ class Monk_Admin {
 				'public'   => true,
 				'_builtin' => false,
 			), 'names', 'OR');
+			$post_response    = true;
+			$term_response    = true;
 
 			$i = 0;
 			foreach ( $post_types as $post_type ) {
@@ -1413,8 +1415,6 @@ class Monk_Admin {
 				}
 
 				$post_response = $post_meta ? true : false;
-			} else {
-				$post_response = true;
 			}
 
 			if ( is_array( $term_ids ) && ! empty( $term_ids ) ) {
@@ -1426,15 +1426,9 @@ class Monk_Admin {
 					));
 				}
 				$term_response = $term_meta ? true : false;
-			} else {
-				$term_response = true;
 			}
 
-			if ( $post_response && $term_response ) {
-				$response = __( 'All posts and terms are translated to default language', 'monk' );
-			} else {
-				$response = __( 'An error has occurred. Please, try again.', 'monk' );
-			}
+			$response = $post_response && $term_response ? __( 'All posts and terms are translated to default language', 'monk' ) : __( 'An error has occurred. Please, try again.', 'monk' );
 		}
 		wp_send_json_success( $response );
 	}
