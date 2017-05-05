@@ -72,7 +72,7 @@ class Monk_Post_Translation {
 	 * @since    0.4.0
 	 *
 	 * @param    string $language    The language defined fot the post.
-	 * @return void
+	 * @return bool
 	 */
 	public function set_language( $language ) {
 		if ( $language === $this->language ) {
