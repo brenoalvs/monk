@@ -1406,7 +1406,7 @@ class Monk_Admin {
 
 			$i = 0;
 			foreach ( $post_types as $post_type ) {
-				if ( $i === 0 ) {
+				if ( 0 === $i ) {
 					$posts_where = '(post_type = "' . $post_type . '"';
 					$i++;
 				} else {
@@ -1415,15 +1415,12 @@ class Monk_Admin {
 			}
 			$posts_where .= ')';
 
-			$post_ids = $wpdb->get_results( "SELECT ID FROM $wpdb->posts 
-				WHERE $posts_where 
-				AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta 
-				WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id 
-				AND $wpdb->postmeta.meta_key = '_monk_post_language' )", ARRAY_A );
+			$query       = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE %s AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_monk_post_language' )", $posts_where );
+			$post_ids    = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE {$posts_where} AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_monk_post_language' )" ), ARRAY_A );
 
-			$term_ids = $wpdb->get_results( "SELECT term_id FROM $wpdb->terms 
-				WHERE NOT EXISTS ( SELECT term_id FROM $wpdb->termmeta 
-				WHERE $wpdb->terms.term_id=$wpdb->termmeta.term_id 
+			$term_ids = $wpdb->get_results( "SELECT term_id FROM $wpdb->terms
+				WHERE NOT EXISTS ( SELECT term_id FROM $wpdb->termmeta
+				WHERE $wpdb->terms.term_id=$wpdb->termmeta.term_id
 				AND $wpdb->termmeta.meta_key = '_monk_term_language' )", ARRAY_A );
 
 			if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
@@ -1450,7 +1447,7 @@ class Monk_Admin {
 			}
 
 			$response = $post_response && $term_response ? __( 'All posts and terms are translated to default language', 'monk' ) : __( 'An error has occurred. Please, try again.', 'monk' );
-		}
-		wp_send_json_success( $response );
+		} // End if().
+		wp_send_json_success( $post_ids );
 	}
 }
