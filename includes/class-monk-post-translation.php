@@ -42,6 +42,16 @@ class Monk_Post_Translation {
 	private $version;
 
 	/**
+	 * The post id to be used inside the class.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @access   private
+	 * @var      string    $post_id    The post id.
+	 */
+	private $post_id
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.4.0
