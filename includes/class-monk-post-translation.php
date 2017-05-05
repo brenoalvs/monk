@@ -91,8 +91,11 @@ class Monk_Post_Translation {
 	 * @return string $language    The language from the meta data.
 	 */
 	public function get_language() {
-		$language = get_post_meta( $this->post_id, '_monk_post_language', true );
-		return $language;
+		if ( isset( $this->language ) ) {
+			return $this->language;
+		} else {
+			return false;
+		}
 	}
 
 	/**
