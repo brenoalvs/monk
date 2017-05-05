@@ -1386,16 +1386,15 @@ class Monk_Admin {
 			$i = 0;
 			foreach ( $post_types as $post_type ) {
 				if ( 0 === $i ) {
-					$posts_where = '(post_type = "' . $post_type . '"';
+					$posts_where = "( post_type = '$post_type'";
 					$i++;
 				} else {
-					$posts_where .= ' OR post_type = "' . $post_type . '"';
+					$posts_where .= " OR post_type = '$post_type'";
 				}
 			}
 			$posts_where .= ')';
 
-			$query       = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE %s AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_monk_post_language' )", $posts_where );
-			$post_ids    = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE {$posts_where} AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_monk_post_language' )" ), ARRAY_A );
+			$post_ids    = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE $posts_where AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_monk_post_language' )", ARRAY_A ); // WPCS: unprepared SQL OK.
 
 			$term_ids = $wpdb->get_results( "SELECT term_id FROM $wpdb->terms
 				WHERE NOT EXISTS ( SELECT term_id FROM $wpdb->termmeta
