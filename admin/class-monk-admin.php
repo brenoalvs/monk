@@ -188,9 +188,11 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_settings_tabs() {
-		$url    = home_url() . $_SERVER['REQUEST_URI'];
-		$action = filter_input( INPUT_GET, 'action' );
-		$action = ! empty( $action ) ? $action : '';
+		$url     = home_url() . $_SERVER['REQUEST_URI'];
+		$action  = filter_input( INPUT_GET, 'action' );
+		$action  = ! empty( $action ) ? $action : '';
+		$general = '';
+		$tools   = '';
 
 		if ( 'monk_general' === $action || '' === $action ) {
 			$general = 'nav-tab-active';
