@@ -120,6 +120,7 @@ class Monk_Admin {
 	 */
 	public function monk_options_init() {
 		$action = filter_input( INPUT_GET, 'action' );
+		$action = ! empty( $action ) ? $action : '';
 
 		if ( 'monk_general' === $action || '' === $action ) {
 			add_settings_section(
@@ -187,8 +188,9 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_settings_tabs() {
-		$url       = home_url() . $_SERVER['REQUEST_URI'];
-		$action    = filter_input( INPUT_GET, 'action' );
+		$url    = home_url() . $_SERVER['REQUEST_URI'];
+		$action = filter_input( INPUT_GET, 'action' );
+		$action = ! empty( $action ) ? $action : '';
 
 		if ( 'monk_general' === $action || '' === $action ) {
 			$general = 'nav-tab-active';
@@ -255,7 +257,8 @@ class Monk_Admin {
 	 */
 	public function monk_settings_render() {
 		$this->monk_settings_tabs();
-		$action    = filter_input( INPUT_GET, 'action' );
+		$action = filter_input( INPUT_GET, 'action' );
+		$action = ! empty( $action ) ? $action : '';
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
 	}
