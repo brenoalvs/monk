@@ -106,6 +106,21 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Creates the post that will be the translation.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
+	function test_translation_object() {
+
+		// Creates the new post.
+		$this->translation_id     = $this->factory->post->create()
+		$this->translation_object = new Monk_Post_Translation( $this->translation_id );
+		$this->assertNotEmpty( $this->translation_object );
+	}
+
+	/**
 	 * Tests the single post translation process.
 	 *
 	 * @since    0.4.0
@@ -113,10 +128,6 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 * @return void
 	 */
 	function test_post_translation_language() {
-
-		$this->translation_id     = $this->factory->post->create()
-		$this->translation_object = new Monk_Post_Translation( $this->translation_id );
-		$this->assertNotEmpty( $this->translation_object );
 
 		$this->translation_object->set_language( 'pt_BR' );
 
