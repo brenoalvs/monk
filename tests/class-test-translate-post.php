@@ -79,8 +79,10 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		require_once( 'wptests/lib/factory.php' );
 
 		parent::setUp();
-		$this->factory     = new WP_UnitTest_Factory;
-		$this->post_id     = $this->factory->post->create();
+		$this->factory              = new WP_UnitTest_Factory;
+		$this->post_id              = $this->factory->post->create();
+		$this->translation_id       = $this->factory->post->create();
+		$this->translation_object   = new Monk_Post_Translation( $this->translation_id );
 		$this->original_post_object = new Monk_Post_Translation( $this->post_id );
 
 	} // end setUp
@@ -114,10 +116,9 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 */
 	function test_translation_object() {
 
-		// Creates the new post.
-		$this->translation_id     = $this->factory->post->create()
-		$this->translation_object = new Monk_Post_Translation( $this->translation_id );
+		// Tests the object.
 		$this->assertNotEmpty( $this->translation_object );
+
 	}
 
 	/**
@@ -150,10 +151,10 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		$original_monk_id = $this->original_post_object->get_translation_group_id();
 
 		// Adds the meta_value to the new post.
-		$new_post_id->set_translation_group_id( $original_monk_id );
+		$this->translation_object->set_translation_group_id( $original_monk_id );
 
 		// Tests if the new meta is equals to the $original_post_object meta.
-		$monk_id = $new_post_id->get_translation_group_id();
+		$monk_id = $this->translation_object->get_translation_group_id();
 		$this->assertEquals( $monk_id, $original_monk_id );
 
 	}
@@ -167,9 +168,12 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 */
 	function test_post_translation_group() {
 
+		$new_monk_id  = $this->translation_object->get_translation_group_id();
+		$language = $this->translation_object->get_language();
+
 		// Adds the new entry in the option.
-		$new_post_id->save_translation_group( $language );
-		$option = $new_post_id->get_translation_group( $monk_id );
+		$this->translation_object->save_translation_group( $language );
+		$option = $this->translation_object->get_translation_group( $new_monk_id );
 
 		$this->assertArrayHasKey( $language, $option );
 		$this->assertContains( $new_post_id->get_the_post_id(), $option );
