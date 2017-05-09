@@ -155,7 +155,7 @@ class Monk_Post_Translation {
 	 * @return array $translations The option holding the post translations.
 	 */
 	public function get_translation_group( $monk_id ) {
-		$translations = get_option( 'monk_post_translations_' . $monk_id, false );
+		$translations = get_option( 'monk_post_translations_' . $monk_id, array() );
 
 		return $translations;
 	}
@@ -169,8 +169,11 @@ class Monk_Post_Translation {
 	 * @return void
 	 */
 	public function save_translation_group( $language ) {
-		$monk_id           = $this->get_translation_group_id( $this->post_id );
-		$post_translations = $this->get_translation_group( $monk_id );
+		$post_translations = $this->get_translation_group( $this->group_id );
+
+		if ( array_key_exists( $language, $post_translations ) ) {
+			return false;
+		}
 
 		if ( empty( $post_translations ) ) {
 			$data = array(
@@ -181,6 +184,6 @@ class Monk_Post_Translation {
 			$data                           = $post_translations;
 		}
 
-		update_option( 'monk_post_translations_' . $monk_id, $data );
+		update_option( 'monk_post_translations_' . $this->group_id, $data );
 	}
 }
