@@ -15,9 +15,9 @@ if ( ! defined( 'WPINC' ) ) {
 ?>
 	<div class="wrap">
 		<h2>Monk</h2>
-	    <div class="notice monk-hide" id="monk-settings-notice">
-	        <p></p>
-	    </div>
+		<div class="notice monk-hide" id="monk-settings-notice">
+			<p></p>
+		</div>
 		<?php
 			update_option( 'monk_settings_notice', false );
 			settings_errors();
