@@ -42,6 +42,16 @@ class Monk_Post_Translation {
 	private $language;
 
 	/**
+	 * The post translation group id.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @access   private
+	 * @var      string    $group_id    The id to reference the post translation group.
+	 */
+	private $group_id;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.4.0
