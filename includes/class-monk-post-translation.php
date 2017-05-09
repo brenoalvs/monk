@@ -135,9 +135,11 @@ class Monk_Post_Translation {
 	public function set_translation_group_id( $monk_id ) {
 
 		if ( empty( $monk_id ) ) {
-			$monk_id = filter_input( INPUT_GET, 'monk_id' );
-		} elseif ( empty( $monk_id ) ) {
-			$monk_id = $this->get_translation_group_id( $this->post_id );
+			if ( empty( filter_input( INPUT_GET, 'monk_id' ) ) ) {
+				$monk_id = $this->get_translation_group_id( $this->post_id );
+			} else {
+				$monk_id = filter_input( INPUT_GET, 'monk_id' );
+			}
 		}
 
 		add_post_meta( $this->post_id, '_monk_post_translations_id', $monk_id, true );
