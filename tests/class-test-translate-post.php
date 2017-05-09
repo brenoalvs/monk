@@ -169,13 +169,12 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	function test_post_translation_group() {
 
 		$new_monk_id  = $this->translation_object->get_translation_group_id();
-		$language = $this->translation_object->get_language();
 
 		// Adds the new entry in the option.
-		$this->translation_object->save_translation_group( $language );
+		$this->translation_object->save_translation_group( 'pt_BR' );
 		$option = $this->translation_object->get_translation_group( $new_monk_id );
 
-		$this->assertArrayHasKey( $language, $option );
+		$this->assertArrayHasKey( 'pt_BR', $option );
 		$this->assertContains( $new_post_id->get_the_post_id(), $option );
 
 	}
