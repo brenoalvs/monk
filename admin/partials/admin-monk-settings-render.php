@@ -30,6 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
 		}
 		?>
 		<form action="options.php" method="POST" class="monk-form-settings" id="<?php echo esc_attr( $form_id ); ?>">
+			<input type="hidden" name="action" value="monk_set_language_to_elements" />
 			<?php
 			if ( ! $is_tools ) {
 				settings_fields( 'monk_settings' );
