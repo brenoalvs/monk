@@ -126,4 +126,22 @@ class Test_Translate_Post extends WP_UnitTestCase {
 
 	}
 
+	/**
+	 * Tests the new post translation group.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
+	function test_post_translation_group() {
+
+		// Adds the new entry in the option.
+		$new_post_id->save_translation_group( $language );
+		$option = $new_post_id->get_translation_group( $monk_id );
+
+		$this->assertArrayHasKey( $language, $option );
+		$this->assertContains( $new_post_id->get_the_post_id(), $option );
+
+	}
+
 } // end class.
