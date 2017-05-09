@@ -92,7 +92,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
-	function build_original_post() {
+	function test_original_post() {
 
 		// Creates the original post.
 		$this->original_post_object->set_language( 'en_US' );
@@ -114,13 +114,14 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 */
 	function test_post_translation_language() {
 
-		$new_post_id = new Monk_Post_Translation( $this->factory->post->create() );
-		$this->assertNotEmpty( $new_post_id );
+		$this->translation_id     = $this->factory->post->create()
+		$this->translation_object = new Monk_Post_Translation( $this->translation_id );
+		$this->assertNotEmpty( $this->translation_object );
 
-		$new_post_id->set_language( 'pt_BR' );
+		$this->translation_object->set_language( 'pt_BR' );
 
 		// Test the new post language.
-		$language = $new_post_id->get_language();
+		$language = $this->translation_object->get_language();
 		$this->assertEquals( 'pt_BR', $language );
 
 	} // end test_post_translation.
