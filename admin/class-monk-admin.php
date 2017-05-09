@@ -212,10 +212,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_tools_description() {
-		?>
-		<p><?php esc_html_e( 'Here you can option to set default language to all posts and terms without language.', 'monk' ); ?><br />
-		<?php esc_html_e( 'Check the checkbox to confirm.', 'monk' ); ?></p>
-		<?php
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-tools-description.php';
 	}
 
 	/**
