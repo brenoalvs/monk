@@ -172,7 +172,7 @@ class Monk_Post_Translation {
 		$post_translations = $this->get_translation_group( $this->group_id );
 
 		if ( array_key_exists( $language, $post_translations ) ) {
-			return false;
+			return;
 		}
 
 		if ( empty( $post_translations ) ) {
