@@ -66,20 +66,28 @@
 			return false;
 		});
 
-		$( document ).on( 'click', '#btn-monk-tools', function( event ) {
+		$( document ).on( 'submit', '#monk-tools-form', function( event ) {
 			event.preventDefault();
 			$( '#monk-spinner' ).addClass( 'is-active' );
-			var form_data = {
-				action                        : 'monk_set_language_to_elements',
-				monk_set_language_to_elements : $( '#monk_set_language_to_elements' ).prop( 'checked' ),
-			};
+			var form_data = $( '#monk-tools-form' ).serializeArray();
+
+			form_data.push({
+				name : 'action',
+				value : 'monk_set_language_to_elements',
+			});
 
 			$.ajax({
 				type: 'POST',
 				url: monk.ajax_url,
 				data: form_data,
 				success: function( response ) {
-					console.log( response.data );
+					if ( response.success ) {
+						$( '#monk-settings-notice' ).addClass( 'notice-success' );
+					} else {
+						$( '#monk-settings-notice' ).addClass( 'notice-error' );
+					}
+					$( '#monk-settings-notice' ).removeClass( 'monk-hide' );
+					$( '#monk-settings-notice p' ).append( response.data );
 					$( '#monk-spinner' ).removeClass( 'is-active' );
 				}
 			});
