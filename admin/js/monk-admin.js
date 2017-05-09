@@ -93,6 +93,11 @@
 			});
 		})
 
+		$( document ).on( 'click', function() {
+			$( '#monk-settings-notice' ).addClass( 'monk-hide' );
+			$( '#monk-settings-notice p' ).html( '' );
+		});
+
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
 			$( '.monk-change-current-language' ).slideUp( 150 );
