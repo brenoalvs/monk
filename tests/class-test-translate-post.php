@@ -66,15 +66,15 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	} // end setUp
 
 	/**
-	 * Tests the single post translation process.
+	 * Creates the post that will be translated.
 	 *
 	 * @since    0.4.0
 	 *
 	 * @return void
 	 */
-	function test_post_translation() {
+	function build_original_post() {
+
 		// Creates the original post.
-		$this->original_post_object = new Monk_Post_Translation( $this->factory->post->create() );
 		$this->original_post_object->set_language( 'en_US' );
 		$this->original_post_object->set_translation_group_id( '' );
 		$this->original_post_object->save_translation_group( 'en_US' );
@@ -82,6 +82,17 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		// tests the translations option before adding a new post.
 		$option = $this->original_post_object->get_translation_group( $this->original_post_object->get_the_post_id() );
 		$this->assertArrayHasKey( 'en_US', $option );
+
+	}
+
+	/**
+	 * Tests the single post translation process.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
+	function test_post_translation() {
 
 		$new_post_id = new Monk_Post_Translation( $this->factory->post->create() );
 		$this->assertNotEmpty( $new_post_id );
