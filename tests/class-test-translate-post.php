@@ -92,7 +92,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
-	function test_post_translation() {
+	function test_post_translation_language() {
 
 		$new_post_id = new Monk_Post_Translation( $this->factory->post->create() );
 		$this->assertNotEmpty( $new_post_id );
@@ -102,6 +102,17 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		// Test the new post language.
 		$language = $new_post_id->get_language();
 		$this->assertEquals( 'pt_BR', $language );
+
+	} // end test_post_translation.
+
+	/**
+	 * Tests the new post group id.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
+	function test_post_translation_group_id() {
 
 		// Gets the translation group id from the original post.
 		$original_monk_id = $this->original_post_object->get_translation_group_id();
@@ -113,13 +124,6 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		$monk_id = $new_post_id->get_translation_group_id();
 		$this->assertEquals( $monk_id, $original_monk_id );
 
-		// Adds the new entry in the option.
-		$new_post_id->save_translation_group( $language );
-		$option = $new_post_id->get_translation_group( $monk_id );
-
-		$this->assertArrayHasKey( $language, $option );
-		$this->assertContains( $new_post_id->get_the_post_id(), $option );
-
-	} // end test_post_translation.
+	}
 
 } // end class.
