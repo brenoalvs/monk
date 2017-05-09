@@ -116,7 +116,7 @@ class Monk_Post_Translation {
 	 * @return integer $id The id to reference the option holding the post translations.
 	 */
 	public function get_translation_group_id() {
-		$id = get_post_meta( $this->post_id, '_monk_post_translations_id', true );
+		$id = $this->group_id;
 
 		if ( empty( $id ) ) {
 			$id = $this->post_id;
@@ -143,6 +143,7 @@ class Monk_Post_Translation {
 		}
 
 		add_post_meta( $this->post_id, '_monk_post_translations_id', $monk_id, true );
+		$this->group_id = $monk_id;
 	}
 
 	/**
