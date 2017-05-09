@@ -71,11 +71,6 @@
 			$( '#monk-spinner' ).addClass( 'is-active' );
 			var form_data = $( '#monk-tools-form' ).serializeArray();
 
-			form_data.push({
-				name : 'action',
-				value : 'monk_set_language_to_elements',
-			});
-
 			$.ajax({
 				type: 'POST',
 				url: monk.ajax_url,
