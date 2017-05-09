@@ -61,7 +61,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		parent::setUp();
 		$this->factory     = new WP_UnitTest_Factory;
 		$this->post_id     = $this->factory->post->create();
-		$this->original_post_id = new Monk_Post_Translation( $this->post_id );
+		$this->original_post_object = new Monk_Post_Translation( $this->post_id );
 
 	} // end setUp
 
@@ -74,13 +74,13 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 */
 	function test_post_translation() {
 		// Creates the original post.
-		$original_post_id = new Monk_Post_Translation( $this->factory->post->create() );
-		$original_post_id->set_language( 'en_US' );
-		$original_post_id->set_translation_group_id( '' );
-		$original_post_id->save_translation_group( 'en_US' );
+		$this->original_post_object = new Monk_Post_Translation( $this->factory->post->create() );
+		$this->original_post_object->set_language( 'en_US' );
+		$this->original_post_object->set_translation_group_id( '' );
+		$this->original_post_object->save_translation_group( 'en_US' );
 
 		// tests the translations option before adding a new post.
-		$option = $original_post_id->get_translation_group( $original_post_id->get_the_post_id() );
+		$option = $this->original_post_object->get_translation_group( $this->original_post_object->get_the_post_id() );
 		$this->assertArrayHasKey( 'en_US', $option );
 
 		$new_post_id = new Monk_Post_Translation( $this->factory->post->create() );
@@ -93,12 +93,12 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		$this->assertEquals( 'pt_BR', $language );
 
 		// Gets the translation group id from the original post.
-		$original_monk_id = $original_post_id->get_translation_group_id();
+		$original_monk_id = $this->original_post_object->get_translation_group_id();
 
 		// Adds the meta_value to the new post.
 		$new_post_id->set_translation_group_id( $original_monk_id );
 
-		// Tests if the new meta is equals to the $original_post_id meta.
+		// Tests if the new meta is equals to the $original_post_object meta.
 		$monk_id = $new_post_id->get_translation_group_id();
 		$this->assertEquals( $monk_id, $original_monk_id );
 
