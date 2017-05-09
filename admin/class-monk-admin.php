@@ -1432,11 +1432,11 @@ class Monk_Admin {
 
 				$response = $post_response && $term_response ? __( 'All posts and terms are translated to default language', 'monk' ) : __( 'An error has occurred. Please, try again.', 'monk' );
 			} else {
-				$response = __( 'Option not selected' );
+				$response = __( 'Option not selected', 'monk' );
 			} // End if().
 			wp_send_json_success( $response );
 		} else {
-			$error = 'Invalid nonce field';
+			$error = __( 'Invalid nonce field', 'monk' );
 			wp_send_json_error( $error );
 		} // End if().
 	}
