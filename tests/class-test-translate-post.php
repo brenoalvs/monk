@@ -56,11 +56,8 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		$post_object = new Monk_Post_Translation( $this->factory->post->create() );
 		$this->assertNotEmpty( $post_object );
 
-		// Simulates the language from a form.
-		$_POST['monk_post_language'] = 'en_US';
-
 		// Set a language for this post.
-		$post_object->set_language( $_POST['monk_post_language'] );
+		$post_object->set_language( 'en_US' );
 
 		// get and test if the language was set correctly.
 		$language = $post_object->get_language();
@@ -104,10 +101,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		$new_post_id = new Monk_Post_Translation( $this->factory->post->create() );
 		$this->assertNotEmpty( $new_post_id );
 
-		// The language comes from the POST variable.
-		$_POST['monk_post_language'] = 'pt_BR';
-
-		$new_post_id->set_language( $_POST['monk_post_language'] );
+		$new_post_id->set_language( 'pt_BR' );
 
 		// Test the new post language.
 		$language = $new_post_id->get_language();
@@ -128,7 +122,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		$option = $new_post_id->get_translation_group( $monk_id );
 
 		$this->assertArrayHasKey( $language, $option );
-		$this->assertContains( $monk_id, $option );
+		$this->assertContains( $new_post_id->get_the_post_id(), $option );
 
 	} // end test_post_translation.
 
