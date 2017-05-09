@@ -28,6 +28,26 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	private $factory;
 
 	/**
+	 * The Monk_Post_Translation object.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @access   private
+	 * @var      class    $post_object    A reference for the Monk_Post_Translation class.
+	 */
+	private $post_object;
+
+	/**
+	 * The post to use during the tests.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @access   private
+	 * @var      class    $post_id    The id to use across the class.
+	 */
+	private $post_id;
+
+	/**
 	 * Initializes the test and handles the class instances.
 	 *
 	 * @since    0.4.0
@@ -39,7 +59,9 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		require_once( 'wptests/lib/factory.php' );
 
 		parent::setUp();
-		$this->factory = new WP_UnitTest_Factory;
+		$this->factory     = new WP_UnitTest_Factory;
+		$this->post_id     = $this->factory->post->create();
+		$this->original_post_id = new Monk_Post_Translation( $this->post_id );
 
 	} // end setUp
 
