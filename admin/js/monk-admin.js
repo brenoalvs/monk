@@ -76,13 +76,18 @@
 				url: monk.ajax_url,
 				data: form_data,
 				success: function( response ) {
-					if ( response.success ) {
-						$( '#monk-settings-notice' ).addClass( 'notice-success' );
+					if ( response.hasOwnProperty( 'success' ) ) {
+						if ( response.success ) {
+							$( '#monk-settings-notice' ).addClass( 'notice-success' );
+						} else {
+							$( '#monk-settings-notice' ).addClass( 'notice-error' );
+						}
+						$( '#monk-settings-notice p' ).append( response.data );
 					} else {
 						$( '#monk-settings-notice' ).addClass( 'notice-error' );
+						$( '#monk-settings-notice p' ).append( $( '#monk-error-message' ).val() );
 					}
 					$( '#monk-settings-notice' ).removeClass( 'monk-hide' );
-					$( '#monk-settings-notice p' ).append( response.data );
 					$( '#monk-spinner' ).removeClass( 'is-active' );
 				}
 			});
