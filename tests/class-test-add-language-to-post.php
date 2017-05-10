@@ -79,6 +79,13 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 
 	} // end test_object_instance.
 
+	/**
+	 * Tests the post language.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
 	public function test_post_language() {
 
 		// Sets a language for this post.
@@ -90,6 +97,13 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 
 	} // end test_post_language
 
+	/**
+	 * Tests the post group id.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
 	public function test_translation_group_id() {
 
 		// inserts the monk_id into the post.
@@ -101,6 +115,13 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 
 	} // end test_translation_group_id
 
+	/**
+	 * Tests the post translation group.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
 	public function test_translation_group() {
 
 		// saves the translations group.
