@@ -50,7 +50,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @return void
+	 * @return Monk_Post_Translation $original_post_object
 	 */
 	function test_original_post() {
 
@@ -80,7 +80,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @return void
+	 * @return Monk_Post_Translation $translation_object
 	 */
 	function test_translation_post() {
 
@@ -101,7 +101,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 * @since    0.4.0
 	 *
 	 * @depends test_translation_post
-	 * @return void
+	 * @return Monk_Post_Translation $translation_object
 	 */
 	function test_post_translation_language( $translation_object ) {
 
@@ -122,7 +122,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @depends test_post_translation_language
 	 * @depends test_original_post
-	 * @return void
+	 * @return Monk_Post_Translation $translation_object
 	 */
 	function test_post_translation_group_id( $original_post_object, $translation_object ) {
 
