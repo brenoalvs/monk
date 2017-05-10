@@ -78,4 +78,15 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 		$this->assertNotEmpty( $this->post_object );
 
 	} // end test_object_instance.
+
+	public function test_post_language() {
+
+		// Sets a language for this post.
+		$this->post_object->set_language( 'en_US' );
+
+		// gets and test if the language was set correctly.
+		$language = $this->post_object->get_language();
+		$this->assertEquals( 'en_US', $language );
+
+	} // end test_post_language
 }
