@@ -96,7 +96,10 @@ class Test_Translate_Post extends WP_UnitTestCase {
 
 		// Creates the original post.
 		$post_id              = $this->factory->post->create();
-		$original_post_object = new Monk_Post_Translation( $post_id );
+		$original_post_object = new Monk_Post_Translation( $original_post_id );
+
+		// Verifies the new instance
+		$this->assertInstanceOf( 'Monk_Post_Translation', $post_object );
 
 		// Sets the object properties
 		$original_post_object->set_language( 'en_US' );
