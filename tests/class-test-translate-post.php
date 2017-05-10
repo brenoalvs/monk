@@ -80,10 +80,8 @@ class Test_Translate_Post extends WP_UnitTestCase {
 
 		parent::setUp();
 		$this->factory              = new WP_UnitTest_Factory;
-		$this->post_id              = $this->factory->post->create();
 		$this->translation_id       = $this->factory->post->create();
 		$this->translation_object   = new Monk_Post_Translation( $this->translation_id );
-		$this->original_post_object = new Monk_Post_Translation( $this->post_id );
 
 	} // end setUp
 
@@ -97,15 +95,22 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	function test_original_post() {
 
 		// Creates the original post.
-		$this->original_post_object->set_language( 'en_US' );
-		$this->original_post_object->set_translation_group_id( '' );
-		$this->original_post_object->save_translation_group( 'en_US' );
+		$post_id              = $this->factory->post->create();
+		$original_post_object = new Monk_Post_Translation( $post_id );
 
-		// tests the translations option before adding a new post.
-		$option = $this->original_post_object->get_translation_group( $this->original_post_object->get_the_post_id() );
+		// Sets the object properties
+		$original_post_object->set_language( 'en_US' );
+		$original_post_object->set_translation_group_id( '' );
+		$original_post_object->save_translation_group( 'en_US' );
+
+		// Tests the translations option before adding a new post.
+		$option = $original_post_object->get_translation_group( $original_post_object->get_the_post_id() );
 		$this->assertArrayHasKey( 'en_US', $option );
+		$this->assertContains( $original_post_object->get_the_post_id(), $option );
 
-	}
+		return $original_post_object;
+
+	} // end test_original_post
 
 	/**
 	 * Creates the post that will be the translation.
