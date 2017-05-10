@@ -56,7 +56,7 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 		$post_object = new Monk_Post_Translation( $post_id );
 
 		// Tests if this object is an instance of .
-		$this->assertNotEmpty( $post_object );
+		$this->assertInstanceOf( 'Monk_Post_Translation', $post_object );
 
 		return $post_object;
 
