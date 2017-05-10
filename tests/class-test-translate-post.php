@@ -122,7 +122,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
-	function test_translation_object() {
+	function test_translation_post() {
 
 		// Creates the post to be the translation
 		$translation_id       = $this->factory->post->create();
