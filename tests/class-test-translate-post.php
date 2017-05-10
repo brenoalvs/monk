@@ -160,19 +160,23 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @depends test_post_translation_language
+	 * @depends test_original_post
 	 * @return void
 	 */
-	function test_post_translation_group_id() {
+	function test_post_translation_group_id( $original_post_object, $translation_object ) {
 
 		// Gets the translation group id from the original post.
-		$original_monk_id = $this->original_post_object->get_translation_group_id();
+		$original_monk_id = $original_post_object->get_translation_group_id();
 
 		// Adds the meta_value to the new post.
-		$this->translation_object->set_translation_group_id( $original_monk_id );
+		$translation_object->set_translation_group_id( $original_monk_id );
 
 		// Tests if the new meta is equals to the $original_post_object meta.
-		$monk_id = $this->translation_object->get_translation_group_id();
+		$monk_id = $translation_object->get_translation_group_id();
 		$this->assertEquals( $monk_id, $original_monk_id );
+
+		return $translation_object;
 
 	}
 
