@@ -48,7 +48,7 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
-	 * @return void
+	 * @return Monk_Post_Translation $post_object
 	 */
 	public function test_object_instance() {
 
@@ -67,8 +67,9 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @param    object $post_object    The Monk_Post_Translation object.
 	 * @depends test_object_instance
-	 * @return void
+	 * @return Monk_Post_Translation $post_object
 	 */
 	public function test_post_language( $post_object ) {
 
@@ -88,8 +89,9 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @param    object $post_object    The Monk_Post_Translation object.
 	 * @depends test_post_language
-	 * @return void
+	 * @return Monk_Post_Translation $post_object
 	 */
 	public function test_translation_group_id( $post_object ) {
 
@@ -109,6 +111,7 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @param    object $post_object    The Monk_Post_Translation object.
 	 * @depends test_translation_group_id
 	 * @return void
 	 */
