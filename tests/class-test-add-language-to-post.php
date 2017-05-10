@@ -28,26 +28,6 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 	private $factory;
 
 	/**
-	 * The Monk_Post_Translation object.
-	 *
-	 * @since    0.4.0
-	 *
-	 * @access   private
-	 * @var      class    $post_object    A reference for the Monk_Post_Translation class.
-	 */
-	private $post_object;
-
-	/**
-	 * The post to use during the tests.
-	 *
-	 * @since    0.4.0
-	 *
-	 * @access   private
-	 * @var      class    $post_id    The id to use across the class.
-	 */
-	private $post_id;
-
-	/**
 	 * Initializes the test and handles the class instances.
 	 *
 	 * @since    0.4.0
@@ -144,7 +124,6 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 		$option  = $post_object->get_translation_group( $monk_id );
 		$this->assertArrayHasKey( $language, $option );
 		$this->assertContains( $post_object->get_the_post_id(), $option );
-		var_dump( $post_object );
 
 	} // end test_translation_group
 }
