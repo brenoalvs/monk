@@ -60,8 +60,6 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 
 		parent::setUp();
 		$this->factory     = new WP_UnitTest_Factory;
-		$this->post_id     = $this->factory->post->create();
-		$this->post_object = new Monk_Post_Translation( $this->post_id );
 
 	} // end setUp
 
@@ -74,8 +72,13 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 	 */
 	public function test_object_instance() {
 
+		$post_id     = $this->factory->post->create();
+		$post_object = new Monk_Post_Translation( $post_id );
+
 		// Tests if this object is an instance of .
-		$this->assertNotEmpty( $this->post_object );
+		$this->assertNotEmpty( $post_object );
+
+		return $post_object;
 
 	} // end test_object_instance.
 
