@@ -100,4 +100,17 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 		$this->assertEquals( $this->post_id, $monk_id );
 
 	} // end test_translation_group_id
+
+	public function test_translation_group() {
+
+		// saves the translations group.
+		$this->post_object->save_translation_group( 'en_US' );
+
+		// tests the translations group.
+		$monk_id = $this->post_object->get_translation_group_id();
+		$option  = $this->post_object->get_translation_group( $monk_id );
+		$this->assertArrayHasKey( 'en_US', $option );
+		$this->assertContains( $this->post_id, $option );
+
+	} // end test_translation_group
 }
