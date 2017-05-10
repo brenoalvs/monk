@@ -58,10 +58,10 @@ class Test_Translate_Post extends WP_UnitTestCase {
 		$original_post_id     = $this->factory->post->create();
 		$original_post_object = new Monk_Post_Translation( $original_post_id );
 
-		// Verifies the new instance
+		// Verifies the new instance.
 		$this->assertInstanceOf( 'Monk_Post_Translation', $original_post_object );
 
-		// Sets the object properties
+		// Sets the object properties.
 		$original_post_object->set_language( 'en_US' );
 		$original_post_object->set_translation_group_id( '' );
 		$original_post_object->save_translation_group( 'en_US' );
@@ -84,7 +84,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 */
 	function test_translation_post() {
 
-		// Creates the post to be the translation
+		// Creates the post to be the translation.
 		$translation_id       = $this->factory->post->create();
 		$translation_object   = new Monk_Post_Translation( $translation_id );
 
