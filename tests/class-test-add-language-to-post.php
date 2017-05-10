@@ -99,6 +99,8 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 		$language = $post_object->get_language();
 		$this->assertEquals( 'en_US', $language );
 
+		return $post_object;
+
 	} // end test_post_language
 
 	/**
@@ -106,16 +108,19 @@ class Test_Add_Language_To_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @depends test_post_language
 	 * @return void
 	 */
-	public function test_translation_group_id() {
+	public function test_translation_group_id( $post_object ) {
 
 		// inserts the monk_id into the post.
-		$this->post_object->set_translation_group_id( '' );
+		$post_object->set_translation_group_id( '' );
 
 		// tests if the monk_id is the object post_id, in this case.
-		$monk_id = $this->post_object->get_translation_group_id();
-		$this->assertEquals( $this->post_id, $monk_id );
+		$monk_id = $post_object->get_translation_group_id();
+		$this->assertEquals( $post_object->get_the_post_id(), $monk_id );
+
+		return $post_object;
 
 	} // end test_translation_group_id
 
