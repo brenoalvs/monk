@@ -14,6 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 ?>
 	<div class="wrap">
+		<input type="hidden" id="monk-error-message" value="<?php esc_attr_e( 'Error sending form', 'monk' ); ?>">
 		<h2>Monk</h2>
 		<div class="notice monk-hide" id="monk-settings-notice">
 			<p></p>
