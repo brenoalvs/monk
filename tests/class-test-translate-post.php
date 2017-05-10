@@ -140,15 +140,18 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @depends test_translation_post
 	 * @return void
 	 */
-	function test_post_translation_language() {
+	function test_post_translation_language( $translation_object ) {
 
-		$this->translation_object->set_language( 'pt_BR' );
+		$translation_object->set_language( 'pt_BR' );
 
 		// Test the new post language.
-		$language = $this->translation_object->get_language();
+		$language = $translation_object->get_language();
 		$this->assertEquals( 'pt_BR', $language );
+
+		return $translation_object;
 
 	} // end test_post_translation.
 
