@@ -100,6 +100,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @param    object $translation_object    The Monk_Post_Translation object.
 	 * @depends test_translation_post
 	 * @return Monk_Post_Translation $translation_object
 	 */
@@ -120,6 +121,8 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @param    object $original_post_object    The Monk_Post_Translation object.
+	 * @param    object $translation_object      The Monk_Post_Translation object.
 	 * @depends test_post_translation_language
 	 * @depends test_original_post
 	 * @return Monk_Post_Translation $translation_object
@@ -145,6 +148,7 @@ class Test_Translate_Post extends WP_UnitTestCase {
 	 *
 	 * @since    0.4.0
 	 *
+	 * @param    object $translation_object    The Monk_Post_Translation object.
 	 * @depends test_post_translation_group_id
 	 * @return void
 	 */
