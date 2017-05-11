@@ -99,7 +99,7 @@ class Monk_Links {
 	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
-		global $monk_languages;
+		$monk_languages = get_transient( 'monk_languages' );
 
 		$this->plugin_name   = $monk;
 		$this->version	     = $version;
@@ -127,7 +127,7 @@ class Monk_Links {
 	 * @return array The active languages.
 	 */
 	public function monk_get_active_languages() {
-		global $monk_languages;
+		$monk_languages = get_transient( 'monk_languages' );
 
 		$active_languages = array();
 		$languages        = get_option( 'monk_active_languages', false );
@@ -308,7 +308,7 @@ class Monk_Links {
 	 * @return $url The changed link.
 	 */
 	public function monk_change_language_url( $url, $lang ) {
-		global $monk_languages;
+		$monk_languages = get_transient( 'monk_languages' );
 
 		$active_languages = $this->monk_get_active_languages();
 
@@ -542,7 +542,7 @@ class Monk_Links {
 	 * @return void
 	 */
 	public function monk_canonical_redirection() {
-		global $monk_languages;
+		$monk_languages = get_transient( 'monk_languages' );
 
 		/**
 		 * We do not want to redirect in these cases.
