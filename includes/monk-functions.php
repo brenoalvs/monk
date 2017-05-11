@@ -81,6 +81,13 @@ function monk_get_url_args( $arg ) {
 	}
 }
 
+/**
+ * This function makes the array of available languages
+ *
+ * @since  0.4.0]
+ *
+ * @return array The available languages array.
+ */
 function get_monk_languages() {
 	require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 	$wp_get_available_translations = wp_get_available_translations();
@@ -102,7 +109,7 @@ function get_monk_languages() {
 				$slug = array_shift( $lang_content['iso'] ) . '-az';
 				break;
 			case 'de_CH_informal':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug . '-in'; // corrigir
+				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug . '-in';
 				break;
 			case 'de_DE_formal':
 				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
@@ -170,14 +177,14 @@ function get_monk_languages() {
 			default:
 				$slug = array_shift( $lang_content['iso'] );
 				break;
-		}
+		} // End switch().
 
 		$wp_languages[ $locale ] = array(
 			'native_name' => $lang_content['native_name'],
 			'english_name' => $lang_content['english_name'],
 			'slug' => $slug,
 		);
-	}
+	} // End foreach().
 
 	$monk_languages = array_merge( $monk_languages, $wp_languages );
 
