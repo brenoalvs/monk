@@ -48,7 +48,7 @@ class Monk_I18n {
 			return $locale;
 		}
 
-		global $monk_languages;
+		$monk_languages = get_transient( 'monk_languages' );
 
 		/**
 		 * As locale is defined before WordPress parse the request.
