@@ -3,6 +3,7 @@
   background-position: 50%;
   background-repeat: no-repeat;
 }
+
 .flag-icon {
   background-size: contain;
   background-position: 50%;
@@ -12,11 +13,24 @@
   width: 1.33333333em;
   line-height: 1em;
 }
+
 .flag-icon:before {
   content: "\00a0";
 }
+
 .flag-icon.flag-icon-squared {
   width: 1em;
+}
+
+.flag-icon-ca,
+.flag-icon-ceb,
+.flag-icon-cs,
+.flag-icon-eo,
+.flag-icon-oc,
+.flag-icon-sah,
+.flag-icon-szl,
+.flag-icon-eo {
+  background-image: url(../images/flags/no-flag.svg);
 }
 
 .flag-icon-da {
@@ -31,7 +45,8 @@
   background-image: url(../images/flags/fr.svg);
 }
 
-.flag-icon-de, .flag-icon-de-de {
+.flag-icon-de,
+.flag-icon-de-de {
   background-image: url(../images/flags/de.svg);
 }
 
@@ -63,7 +78,8 @@
   background-image: url(../images/flags/ae.svg);
 }
 
-.flag-icon-af, .flag-icon-haz {
+.flag-icon-af,
+.flag-icon-haz {
   background-image: url(../images/flags/af.svg);
 }
 
@@ -75,7 +91,7 @@
   background-image: url(../images/flags/ai.svg);
 }
 
-.flag-icon-al {
+.flag-icon-sq {
   background-image: url(../images/flags/al.svg);
 }
 
@@ -131,11 +147,12 @@
   background-image: url(../images/flags/bb.svg);
 }
 
-.flag-icon-bd {
+.flag-icon-rhg {
   background-image: url(../images/flags/bd.svg);
 }
 
-.flag-icon-fr-be {
+.flag-icon-fr-be, 
+.flag-icon-nl-be {
   background-image: url(../images/flags/be.svg);
 }
 
@@ -207,7 +224,8 @@
   background-image: url(../images/flags/bz.svg);
 }
 
-.flag-icon-en-ca, .flag-icon-fr-ca {
+.flag-icon-en-ca,
+.flag-icon-fr-ca {
   background-image: url(../images/flags/ca.svg);
 }
 
@@ -227,7 +245,8 @@
   background-image: url(../images/flags/cg.svg);
 }
 
-.flag-icon-de-ch, .flag-icon-de-ch-in {
+.flag-icon-de-ch,
+.flag-icon-de-ch-in {
   background-image: url(../images/flags/ch.svg);
 }
 
@@ -247,7 +266,7 @@
   background-image: url(../images/flags/cm.svg);
 }
 
-.flag-icon-cn {
+.flag-icon-zh {
   background-image: url(../images/flags/cn.svg);
 }
 
@@ -419,7 +438,7 @@
   background-image: url(../images/flags/gy.svg);
 }
 
-.flag-icon-hk {
+.flag-icon-zh-hk {
   background-image: url(../images/flags/hk.svg);
 }
 
@@ -459,7 +478,9 @@
   background-image: url(../images/flags/im.svg);
 }
 
-.flag-icon-hi {
+.flag-icon-hi,
+.flag-icon-ta,
+.flag-icon-te {
   background-image: url(../images/flags/in.svg);
 }
 
@@ -471,7 +492,8 @@
   background-image: url(../images/flags/iq.svg);
 }
 
-.flag-icon-ir, .flag-icon-fa {
+.flag-icon-ir,
+.flag-icon-fa {
   background-image: url(../images/flags/ir.svg);
 }
 
@@ -519,7 +541,7 @@
   background-image: url(../images/flags/kp.svg);
 }
 
-.flag-icon-kr {
+.flag-icon-ko {
   background-image: url(../images/flags/kr.svg);
 }
 
@@ -535,7 +557,7 @@
   background-image: url(../images/flags/kz.svg);
 }
 
-.flag-icon-la {
+.flag-icon-lo {
   background-image: url(../images/flags/la.svg);
 }
 
@@ -695,11 +717,13 @@
   background-image: url(../images/flags/ni.svg);
 }
 
-.flag-icon-nl {
+.flag-icon-nl,
+.flag-icon-nl-nl {
   background-image: url(../images/flags/nl.svg);
 }
 
-.flag-icon-no {
+.flag-icon-nb,
+.flag-icon-nn {
   background-image: url(../images/flags/no.svg);
 }
 
@@ -731,7 +755,7 @@
   background-image: url(../images/flags/pe.svg);
 }
 
-.flag-icon-pf {
+.flag-icon-ty {
   background-image: url(../images/flags/pf.svg);
 }
 
@@ -743,7 +767,7 @@
   background-image: url(../images/flags/ph.svg);
 }
 
-.flag-icon-pk {
+.flag-icon-ur {
   background-image: url(../images/flags/pk.svg);
 }
 
@@ -851,7 +875,7 @@
   background-image: url(../images/flags/sn.svg);
 }
 
-.flag-icon-so {
+.flag-icon-kab {
   background-image: url(../images/flags/so.svg);
 }
 
@@ -927,7 +951,8 @@
   background-image: url(../images/flags/to.svg);
 }
 
-.flag-icon-tr {
+.flag-icon-tr,
+.flag-icon-ku {
   background-image: url(../images/flags/tr.svg);
 }
 
@@ -939,7 +964,7 @@
   background-image: url(../images/flags/tv.svg);
 }
 
-.flag-icon-tw {
+.flag-icon-zh-tw {
   background-image: url(../images/flags/tw.svg);
 }
 
@@ -947,7 +972,7 @@
   background-image: url(../images/flags/tz.svg);
 }
 
-.flag-icon-ua {
+.flag-icon-uk {
   background-image: url(../images/flags/ua.svg);
 }
 
