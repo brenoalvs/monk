@@ -138,10 +138,6 @@ div.menu-translations ul.current-menu-translations li {
 	float: none;
 }
 
-.monk-notice {
+.monk-hide {
 	display: none;
-}
-
-.monk-show-notice {
-	display: block;
 }
