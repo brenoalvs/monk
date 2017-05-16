@@ -66,33 +66,47 @@
 			return false;
 		});
 
-		$( document ).on( 'submit', '#monk-form-settings', function() {
-			$( '#monk-spinner' ).addClass( 'is-active' );
-			var form_data = $( '#monk-form-settings' ).serializeArray();
+		var not_submit = true;
+		$( document ).on( 'submit', '#monk-form-settings', function( event ) {
+			if ( not_submit ) {
+				event.preventDefault();
+				not_submit = false;
+				$( '#monk-spinner' ).addClass( 'is-active' );
+				var form_data = $( '#monk-form-settings' ).serializeArray();
 
-			form_data.push({
-				name : 'action',
-				value : 'monk_save_language_packages',
-			});
-			$.ajax({
-				type: 'POST',
-				url: monk.ajax_url,
-				data: form_data,
-				success: function( response ) {
-					$( '#monk-notice' ).append( response.data );
-					$( '#monk-spinner' ).removeClass( 'is-active' );
-				},
-				error: function( response ) {
-					$( '#monk-notice' ).append( response.data );
-					$( '#monk-spinner' ).removeClass( 'is-active' );
-				}
-			});
-
-			return false;
-		});
-
-		$( document ).on( 'click', function() {
-			$( '#monk-notice > div' ).remove();
+				form_data.push({
+					name : 'action',
+					value : 'monk_save_language_packages',
+				});
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						if ( response.hasOwnProperty( 'success' ) ) {
+							if ( response.success ) {
+								if ( response.data['success'] ) {
+									for ( var i = 0; i < response.data['success'].length; i++ ) {
+										$( '#monk-settings-notice-success div' ).append( '<p>' + response.data['success'][i] + '</p>' );
+									}
+									$( '#monk-settings-notice-success' ).removeClass( 'monk-hide' );
+								} 
+								if ( response.data['error'] ) {
+									for ( var i = 0; i < response.data['error'].length; i++ ) {
+										$( '#monk-settings-notice-error div' ).append( '<p>' + response.data['error'][i] + '</p>' );
+									}
+									$( '#monk-settings-notice-error' ).removeClass( 'monk-hide' );
+									$( '#monk-settings-notice-error p' ).removeClass( 'monk-hide' );
+								}
+							} else {
+								$( '#monk-settings-notice-error div' ).append( '<p>' + $( '#monk-error-message' ).val() + '</p>' );
+								$( '#monk-settings-notice-error' ).removeClass( 'monk-hide' );
+							}
+						} 
+						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
+					}
+				});
+			}
 		});
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
