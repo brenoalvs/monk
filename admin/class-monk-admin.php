@@ -376,7 +376,7 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || is_customize_preview() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
+		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
 			return;
 		}
 
@@ -384,12 +384,14 @@ class Monk_Admin {
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 
-		if ( 'nav-menus' === get_current_screen()->base ) {
-			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
-			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
-			$language = empty( $language ) ? $default_language : $language;
-		} else {
-			$language = filter_input( INPUT_GET , 'lang' );
+		if ( ! is_customize_preview() ) {
+			if ( 'nav-menus' === get_current_screen()->base ) {
+				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+				$language = empty( $language ) ? $default_language : $language;
+			} else {
+				$language = filter_input( INPUT_GET , 'lang' );
+			}
 		}
 
 		if ( $query->is_search() ) {
@@ -400,7 +402,7 @@ class Monk_Admin {
 			}
 		}
 
-		if ( $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
+		if ( is_customize_preview() || $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
 			$meta_query = array(
 				'relation' => 'OR', // Optional, defaults to "AND".
 				array(
@@ -434,22 +436,34 @@ class Monk_Admin {
 			return $args;
 		}
 
-		if ( is_customize_preview() && in_array( 'nav_menu', $taxonomies ) ) {
+		if ( is_customize_preview() ) {
 			$language = get_option( 'monk_default_language', false );
 
 			$meta_query = array(
-				'relation' => 'OR', // Optional, defaults to "AND".
 				array(
-					'key'   => '_monk_menu_language',
-					'value' => $language,
+					'relation' => 'OR', // Optional, defaults to "AND".
+					array(
+						'key'   => '_monk_menu_language',
+						'value' => $language,
+					),
+					array(
+						'key'     => '_monk_menu_language',
+						'compare' => 'NOT EXISTS',
+					),
 				),
 				array(
-					'key'     => '_monk_menu_language',
-					'compare' => 'NOT EXISTS',
+					'relation' => 'OR', // Optional, defaults to "AND".
+					array(
+						'key'   => '_monk_term_language',
+						'value' => $language,
+					),
+					array(
+						'key'     => '_monk_term_language',
+						'compare' => 'NOT EXISTS',
+					),
 				),
 			);
 			$args['meta_query'] = $meta_query;
-			return $args;
 		}
 
 		if ( ! is_customize_preview() ) {
