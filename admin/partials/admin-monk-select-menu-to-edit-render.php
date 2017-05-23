@@ -21,10 +21,12 @@ foreach ( $monk_ids as $monk_id ) : ?>
 	<?php
 	$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
 	$monk_id_obj       = get_term( $monk_id );
-	if ( array_key_exists( $default_language, $monk_translations ) ) {
-		$monk_id_obj = get_term( $monk_translations[ $default_language ] );
-	} else {
-		$monk_id_obj = get_term( reset( $monk_translations ) );
+	if ( empty( $monk_id_obj ) ) {
+		if ( array_key_exists( $default_language, $monk_translations ) ) {
+			$monk_id_obj = get_term( $monk_translations[ $default_language ] );
+		} else {
+			$monk_id_obj = get_term( reset( $monk_translations ) );
+		}
 	}
 	$has_language = ! empty( get_term_meta( $monk_id_obj->term_id, '_monk_menu_language', true ) ) ? true : false;
 	?>
