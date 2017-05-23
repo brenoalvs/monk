@@ -59,7 +59,7 @@ global $monk_languages;
 </fieldset>
 <!-- A list with the selected menu translations -->
 <div class="hide-if-no-js menu-translations">
-	<h3>Menu Translations</h3>
+	<h3><?php esc_html_e( 'Menu Translations', 'monk' ); ?></h3>
 	<?php if ( 1 === count( $menu_translations ) ) : ?>
 	<p>
 		<?php esc_html_e( 'This menu does not have translations. ', 'monk' ); ?>
