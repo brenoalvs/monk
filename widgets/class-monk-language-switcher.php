@@ -186,9 +186,9 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @return array $instance
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                 = $old_instance;
-		$instance['title']        = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['flag']         = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance              = $old_instance;
+		$instance['title']     = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['flag']      = ! empty( $new_instance['flag'] ) ? true : false;
 		$instance['monk_love'] = ! empty( $new_instance['monk_love'] ) ? true : false;
 
 		return $instance;
