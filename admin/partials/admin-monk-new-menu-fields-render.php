@@ -2,10 +2,10 @@
 /**
  * Provide the view for the monk_add_menu_translation_fields function
  *
- * @since      0.1.0
+ * @since      0.3.0
  *
  * @package    Monk
- * @subpackage Monk/Includes
+ * @subpackage Monk/Admin/Partials
  */
 
 // If this file is called directly, abort.
