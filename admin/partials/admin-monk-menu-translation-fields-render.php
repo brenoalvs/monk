@@ -5,7 +5,7 @@
  * @since      0.3.0
  *
  * @package    Monk
- * @subpackage Monk/Includes
+ * @subpackage Monk/Admin/Partials
  */
 
 // If this file is called directly, abort.
