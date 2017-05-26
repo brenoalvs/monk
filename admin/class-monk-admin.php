@@ -395,7 +395,7 @@ class Monk_Admin {
 			}
 		}
 
-		if ( $query->is_search() || 'page' === $post_type ) {
+		if ( $query->is_search() ) {
 			if ( empty( $filter ) ) {
 				return;
 			} else {
