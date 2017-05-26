@@ -102,7 +102,9 @@ if ( $menu_id ) :
 			<?php $locations = array_keys( $menus, $menu ); ?>
 			<?php if ( $locations ) : ?>
 				<?php foreach ( $locations as $location ) : ?>
-					<div><?php echo esc_html( $registered_menus[ $location ] ); ?></div>
+					<?php if ( array_key_exists( $location, $registered_menus ) ) : ?>
+						<div><?php echo esc_html( $registered_menus[ $location ] ); ?></div>
+					<?php endif; ?>
 				<?php endforeach; ?>
 			<?php else : ?>
 				<div><?php esc_html_e( 'None', 'monk' ); ?></div>
