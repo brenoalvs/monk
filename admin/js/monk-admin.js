@@ -118,8 +118,6 @@
 
 		/**
 		 * Replace components from the admin footer to the major-publishing-actions div, in the menu page
-		 *
-		 *
 		*/
 		if ( /\bnav-menus.php?\b/.test( window.location.pathname ) ) {
 			if ( $( '.add-menu-translation' ).length ) {
