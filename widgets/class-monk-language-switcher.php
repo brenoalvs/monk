@@ -48,6 +48,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$active_languages_slug   = array();
 		$title                   = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
 		$flag                    = ! empty( $instance['flag'] ) ? true : false;
+		$monk_love               = ! empty( $instance['monk_love'] ) ? true : false;
 		$active_languages        = get_option( 'monk_active_languages' );
 		$current_language        = '';
 		$monk_languages_reverted = array();
@@ -120,7 +121,7 @@ class Monk_Language_Switcher extends WP_Widget {
 					}
 				}
 			}
-		}
+		} // End if().
 
 		if ( is_archive() && ( is_category() || is_tag() ) ) {
 			$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
@@ -160,7 +161,7 @@ class Monk_Language_Switcher extends WP_Widget {
 					}
 				}
 			}
-		}
+		} // End if().
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
@@ -185,9 +186,10 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @return array $instance
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                = $old_instance;
-		$instance['title']       = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['flag']        = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance              = $old_instance;
+		$instance['title']     = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['flag']      = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance['monk_love'] = ! empty( $new_instance['monk_love'] ) ? true : false;
 
 		return $instance;
 	}

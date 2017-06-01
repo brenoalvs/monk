@@ -16,7 +16,7 @@
  * @package    Monk
  * @subpackage Monk/Includes
  */
-class Monk_i18n {
+class Monk_I18n {
 
 
 	/**
@@ -39,7 +39,7 @@ class Monk_i18n {
 	 * Changes locale accordingly requested URL.
 	 *
 	 * @since  0.1.0
-	 * 
+	 *
 	 * @param  string $locale Language of locale.
 	 * @return string $locale New language of locale.
 	 */
@@ -62,7 +62,7 @@ class Monk_i18n {
 			$path       = $path_parts[0];
 		}
 
-		$matches = preg_split( '/(\/)/', $path, 0, PREG_SPLIT_NO_EMPTY );	
+		$matches = preg_split( '/(\/)/', $path, 0, PREG_SPLIT_NO_EMPTY );
 
 		if ( ! empty( $matches ) ) {
 			$slug             = $matches[0];

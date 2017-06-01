@@ -245,7 +245,11 @@ class Monk_Links {
 	 * @return void
 	 */
 	public function monk_flush_on_update() {
-		flush_rewrite_rules();
+		$is_monk_settings_page = filter_input( INPUT_GET, 'page' );
+
+		if ( 'monk' === $is_monk_settings_page ) {
+			flush_rewrite_rules();
+		}
 	}
 
 	/**
@@ -437,12 +441,7 @@ class Monk_Links {
 		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$language      = ( empty( $term_language ) ) ? $this->site_language : $monk_languages[ $term_language ]['slug'];
 
-		if ( $this->monk_using_permalinks() ) {
-			$path = wp_make_link_relative( $link );
-			$link  = trailingslashit( $wp_rewrite->root ) . $language . $path;
-		} else {
-			$link = add_query_arg( 'lang', $language, $link );
-		}
+		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
@@ -540,20 +539,21 @@ class Monk_Links {
 	 *
 	 * @since    0.2.0
 	 *
-	 * @global bool $is_IIS.
-	 *
 	 * @return void
 	 */
 	public function monk_canonical_redirection() {
-		global $monk_languages, $is_IIS;
+		global $monk_languages;
 
-		// We do not want to redirect in these cases.
-		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
+		/**
+		 * We do not want to redirect in these cases.
+		 * TODO: Provide IIS Support using $is_IIS && ! iis7_supports_permalinks().
+		 */
+		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() ) {
 			return;
 		}
 
 		// The customizer functionality uses the admin link, do not filter either.
-		if ( filter_input( INPUT_GET, 'wp_customize' ) || filter_input( INPUT_GET, 'customized' ) ) {
+		if ( filter_input( INPUT_GET, 'wp_customize', FILTER_SANITIZE_STRING ) || filter_input( INPUT_GET, 'customized', FILTER_SANITIZE_STRING ) ) {
 			return;
 		}
 
@@ -595,8 +595,8 @@ class Monk_Links {
 			 * Is used twice to correct a bug in which the port is incorrect at the first try
 			 * and returns correct in the second try.
 			 */
-			$_redirect_url = ( ! $_redirect_url = redirect_canonical( $requested_url, false ) ) ? $requested_url: $_redirect_url;
-			$redirect_url  = ( ! $redirect_url = redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url: $redirect_url;
+			$_redirect_url = ( ! redirect_canonical( $requested_url, false ) ) ? $requested_url : redirect_canonical( $requested_url, false );
+			$redirect_url  = ( ! redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url : redirect_canonical( $_redirect_url, false );
 
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $slug );
 		}
