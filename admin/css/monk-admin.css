@@ -135,7 +135,12 @@ div.menu-translations ul.current-menu-translations li {
 }
 
 #monk-form-settings .monk-spinner {
+	margin-top: 0;
 	float: none;
+}
+
+.monk-message {
+	display: inline-block;
 }
 
 .monk-hide {
