@@ -14,11 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 ?>
 	<div class="wrap">
-		<input type="hidden" id="monk-error-message" value="<?php esc_attr_e( 'Error sending form', 'monk' ); ?>">
 		<h2>Monk</h2>
-		<div class="notice monk-hide" id="monk-settings-notice">
-			<p></p>
-		</div>
 		<?php
 			update_option( 'monk_settings_notice', false );
 			settings_errors();
@@ -31,17 +27,23 @@ if ( ! defined( 'WPINC' ) ) {
 		}
 		?>
 		<form action="options.php" method="POST" class="monk-form-settings" id="<?php echo esc_attr( $form_id ); ?>">
-			<input type="hidden" name="action" value="monk_set_language_to_elements" />
 			<?php
 			if ( ! $is_tools ) {
 				settings_fields( 'monk_settings' );
 			} else {
+				?><input type="hidden" name="action" value="monk_set_language_to_elements" /><?php
 				wp_nonce_field( '_monk_nonce' );
 			}
 			do_settings_sections( 'monk_settings' );
 			submit_button();
-			?><span class="spinner monk-spinner" id="monk-spinner"></span><?php
 			?>
+			<span class="spinner monk-spinner" id="monk-spinner"></span>
+			<?php if ( $is_tools ) : ?>
+				<p class="monk-message monk-hide" id="monk-checkbox-not-selected-message"><?php esc_html_e( 'Select the checkbox.', 'monk' ); ?></p>
+				<p class="monk-message monk-hide" id="monk-bulk-action"><?php esc_html_e( 'Defining language for posts and terms...', 'monk' ); ?></p>
+				<p class="monk-message monk-hide" id="monk-bulk-action-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
+				<p class="monk-message monk-hide" id="monk-bulk-action-error"><?php esc_html_e( 'Error. Try again.', 'monk' ); ?></p>
+			<?php endif; ?>
 		</form>
 	</div>
 <?php
