@@ -1310,28 +1310,15 @@ class Monk_Admin {
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
-			$have_success = false;
-			$have_error   = false;
-
 			foreach ( $active_languages as $language ) {
 				if ( 'en_US' !== $language ) {
 					$download_pack = wp_download_language_pack( $language );
 					if ( $download_pack ) {
-						$success[]    = $monk_languages[ $download_pack ]['name'];
-						$have_success = true;
+						$response[] = true;
 					} else {
-						$error[]    = $monk_languages[ $language ]['name'];
-						$have_error = true;
+						$response[] = false;
 					}
 				}
-			}
-
-			if ( $have_success ) {
-				$response['success'] = $success;
-			}
-
-			if ( $have_error ) {
-				$response['error'] = $error;
 			}
 
 			wp_send_json_success( $response );
