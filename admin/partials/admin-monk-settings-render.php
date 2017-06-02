@@ -14,20 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 ?>
 	<div class="wrap">
-		<input type="hidden" id="monk-error-message" value="<?php esc_attr_e( 'Error sending form', 'monk' ); ?>">
 		<h2>Monk</h2>
-		<div class="notice notice-success monk-hide" id="monk-settings-notice-success">
-			<p>
-				<strong><?php esc_html_e( 'This packages have been downloaded:', 'monk' ); ?></strong>
-			</p>
-			<div></div>
-		</div>
-		<div class="notice notice-error monk-hide" id="monk-settings-notice-error">
-			<p class="monk-hide">
-				<strong><?php esc_html_e( 'This packages have not been downloaded:', 'monk' ); ?></strong><br />
-			</p>
-			<div></div>
-		</div>
 		<?php
 			update_option( 'monk_settings_notice', false );
 			settings_errors();
@@ -43,6 +30,9 @@ if ( ! defined( 'WPINC' ) ) {
 				submit_button( '', 'primary', 'submit', 'true', $btn_args );
 			?>
 			<span class="spinner monk-spinner" id="monk-spinner"></span>
+			<p class="monk-message monk-hide" id="monk-downloading"><?php esc_html_e( 'Downloading packages...', 'monk' ); ?></p>
+			<p class="monk-message monk-hide" id="monk-download-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
+			<p class="monk-message monk-hide" id="monk-download-error"><?php esc_html_e( 'Error! Try again.', 'monk' ); ?></p>
 		</form>
 	</div>
 <?php
