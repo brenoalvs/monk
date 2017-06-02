@@ -68,35 +68,40 @@
 
 		$( document ).on( 'submit', '#monk-tools-form', function( event ) {
 			event.preventDefault();
-			$( '#monk-spinner' ).addClass( 'is-active' );
-			var form_data = $( '#monk-tools-form' ).serializeArray();
+			if ( $( '#monk-set-language-to-elements' ).prop( 'checked' ) ) {
+				$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-bulk-action' ).removeClass( 'monk-hide' );
+				var form_data = $( '#monk-tools-form' ).serializeArray();
 
-			$.ajax({
-				type: 'POST',
-				url: monk.ajax_url,
-				data: form_data,
-				success: function( response ) {
-					if ( response.hasOwnProperty( 'success' ) ) {
-						if ( response.success ) {
-							$( '#monk-settings-notice' ).addClass( 'notice-success' );
-						} else {
-							$( '#monk-settings-notice' ).addClass( 'notice-error' );
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						console.log( response );
+						if ( response.hasOwnProperty( 'success' ) ) {
+							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
+							if ( response.success ) {		
+								$( '#monk-bulk-action-done' ).removeClass( 'monk-hide' );
+							} else {
+								$( '#monk-bulk-action-error' ).removeClass( 'monk-hide' );
+							}
 						}
-						$( '#monk-settings-notice p' ).append( response.data );
-					} else {
-						$( '#monk-settings-notice' ).addClass( 'notice-error' );
-						$( '#monk-settings-notice p' ).append( $( '#monk-error-message' ).val() );
-					}
-					$( '#monk-settings-notice' ).removeClass( 'monk-hide' );
-					$( '#monk-spinner' ).removeClass( 'is-active' );
-				}
-			});
-		})
 
-		$( document ).on( 'click', function() {
-			$( '#monk-settings-notice' ).addClass( 'monk-hide' );
-			$( '#monk-settings-notice p' ).html( '' );
-		});
+						setTimeout( function() {
+							$( '#monk-bulk-action-error' ).addClass( 'monk-hide' );
+							$( '#monk-bulk-action-done' ).addClass( 'monk-hide' );
+							$( '#monk-spinner' ).removeClass( 'is-active' );
+						}, 2000 );
+					}
+				});
+			} else {
+				$( '#monk-checkbox-not-selected-message' ).removeClass( 'monk-hide' );
+				setTimeout( function() {
+					$( '#monk-checkbox-not-selected-message' ).addClass( 'monk-hide' );
+				}, 2000 );
+			}
+		})
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
