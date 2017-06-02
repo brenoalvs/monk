@@ -1344,8 +1344,7 @@ class Monk_Admin {
 
 			wp_send_json_success( $response );
 		} else {
-			$error = __( 'Invalid nonce field', 'monk' );
-			wp_send_json_error( $error );
+			wp_send_json_error();
 		} // End if().
 	}
 }
