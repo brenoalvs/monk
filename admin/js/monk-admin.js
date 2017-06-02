@@ -72,6 +72,7 @@
 				event.preventDefault();
 				not_submit = false;
 				$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-downloading' ).removeClass( 'monk-hide' );
 				var form_data = $( '#monk-form-settings' ).serializeArray();
 
 				form_data.push({
@@ -85,22 +86,16 @@
 					success: function( response ) {
 						if ( response.hasOwnProperty( 'success' ) ) {
 							if ( response.success ) {
-								if ( response.data['success'] ) {
-									for ( var i = 0; i < response.data['success'].length; i++ ) {
-										$( '#monk-settings-notice-success div' ).append( '<p>' + response.data['success'][i] + '</p>' );
+								if ( response.data ) {
+									$( '#monk-downloading' ).addClass( 'monk-hide' );	
+									if ( -1 < $.inArray( false, response.data ) ) {		
+										$( '#monk-download-error' ).removeClass( 'monk-hide' );
+									} else {		
+										$( '#monk-download-done' ).removeClass( 'monk-hide' );
 									}
-									$( '#monk-settings-notice-success' ).removeClass( 'monk-hide' );
-								} 
-								if ( response.data['error'] ) {
-									for ( var i = 0; i < response.data['error'].length; i++ ) {
-										$( '#monk-settings-notice-error div' ).append( '<p>' + response.data['error'][i] + '</p>' );
-									}
-									$( '#monk-settings-notice-error' ).removeClass( 'monk-hide' );
-									$( '#monk-settings-notice-error p' ).removeClass( 'monk-hide' );
 								}
 							} else {
-								$( '#monk-settings-notice-error div' ).append( '<p>' + $( '#monk-error-message' ).val() + '</p>' );
-								$( '#monk-settings-notice-error' ).removeClass( 'monk-hide' );
+								$( '#monk-download-error' ).removeClass( 'monk-hide' );
 							}
 						} 
 						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
