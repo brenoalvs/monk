@@ -130,14 +130,23 @@ div.menu-translations ul.current-menu-translations li {
 	margin-right: 10px;
 }
 
+.monk-message {
+	display: inline-block;
+}
+
 .monk-hide {
 	display: none;
 }
 
-.monk-form-settings p.submit {
+.monk-form-settings .submit {
 	display: inline-block;
 }
 
 .monk-form-settings .monk-spinner {
 	float: none;
+	margin-top: 0;
+}
+
+#monk-checkbox-not-selected-message {
+	color: #ff0000;
 }
