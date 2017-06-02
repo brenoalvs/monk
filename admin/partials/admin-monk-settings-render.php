@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
 			<span class="spinner monk-spinner" id="monk-spinner"></span>
 			<p class="monk-message monk-hide" id="monk-downloading"><?php esc_html_e( 'Downloading packages...', 'monk' ); ?></p>
 			<p class="monk-message monk-hide" id="monk-download-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
-			<p class="monk-message monk-hide" id="monk-download-error"><?php esc_html_e( 'Error! Try again.', 'monk' ); ?></p>
+			<p class="monk-message monk-hide" id="monk-download-error"><?php esc_html_e( 'Error. Try again.', 'monk' ); ?></p>
 		</form>
 	</div>
 <?php
