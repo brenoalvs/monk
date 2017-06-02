@@ -13,4 +13,4 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 ?>
-<input type="checkbox" name="monk_set_language_to_elements" id="monk_set_language_to_elements">
+<input type="checkbox" name="monk_set_language_to_elements" id="monk-set-language-to-elements">
