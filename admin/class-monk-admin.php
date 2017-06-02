@@ -1397,65 +1397,82 @@ class Monk_Admin {
 		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
 			$monk_set_language_to_elements = $_POST['monk_set_language_to_elements'];
 
-			if ( $monk_set_language_to_elements ) {
-				global $wpdb;
-				$default_language = get_option( 'monk_default_language', false );
-				$post_types       = get_post_types( array(
-					'public'   => true,
-					'_builtin' => false,
-				), 'names', 'OR');
-				$post_response    = true;
-				$term_response    = true;
+			global $wpdb;
+			$default_language = get_option( 'monk_default_language', false );
+			$post_types       = get_post_types( array(
+				'public'   => true,
+				'_builtin' => false,
+			), 'names', 'OR');
 
-				$i = 0;
-				foreach ( $post_types as $post_type ) {
-					if ( 0 === $i ) {
-						$posts_where = "( post_type = '$post_type'";
-						$i++;
-					} else {
-						$posts_where .= " OR post_type = '$post_type'";
-					}
+			$i = 0;
+			foreach ( $post_types as $post_type ) {
+				if ( 0 === $i ) {
+					$posts_where = "( post_type = '$post_type'";
+					$i++;
+				} else {
+					$posts_where .= " OR post_type = '$post_type'";
 				}
-				$posts_where .= ')';
+			}
+			$posts_where .= ')';
 
-				$post_ids    = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE $posts_where AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_monk_post_language' )", ARRAY_A ); // WPCS: unprepared SQL OK.
+			$post_ids    = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE $posts_where AND NOT EXISTS ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->posts.ID=$wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '_monk_post_language' )", ARRAY_A ); // WPCS: unprepared SQL OK.
 
-				$term_ids = $wpdb->get_results( "SELECT term_id FROM $wpdb->terms
-					WHERE NOT EXISTS ( SELECT term_id FROM $wpdb->termmeta
-					WHERE $wpdb->terms.term_id=$wpdb->termmeta.term_id
-					AND $wpdb->termmeta.meta_key = '_monk_term_language' )", ARRAY_A );
+			$term_ids = $wpdb->get_results( "SELECT term_id FROM $wpdb->terms
+				WHERE NOT EXISTS ( SELECT term_id FROM $wpdb->termmeta
+				WHERE $wpdb->terms.term_id=$wpdb->termmeta.term_id
+				AND $wpdb->termmeta.meta_key = '_monk_term_language' )", ARRAY_A );
 
-				if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
-					foreach ( $post_ids as $post_id ) {
-						$post_meta = $wpdb->insert( 'wp_postmeta', array(
-							'post_id'    => $post_id['ID'],
-							'meta_key'   => '_monk_post_language',
-							'meta_value' => $default_language,
-						));
-					}
-
-					$post_response = $post_meta ? true : false;
-				}
-
-				if ( is_array( $term_ids ) && ! empty( $term_ids ) ) {
-					foreach ( $term_ids as $term_id ) {
-						$term_meta = $wpdb->insert( 'wp_termmeta', array(
-							'term_id'    => $term_id['term_id'],
-							'meta_key'   => '_monk_term_language',
-							'meta_value' => $default_language,
-						));
-					}
-					$term_response = $term_meta ? true : false;
+			if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
+				foreach ( $post_ids as $post_id ) {
+					$set_language           = $wpdb->insert( 'wp_postmeta', array(
+						'post_id'    => $post_id['ID'],
+						'meta_key'   => '_monk_post_language',
+						'meta_value' => $default_language,
+					));
+					$set_monk_id            = $wpdb->insert( 'wp_postmeta', array(
+						'post_id'    => $post_id['ID'],
+						'meta_key'   => '_monk_post_translations_id',
+						'meta_value' => $post_id['ID'],
+					));
+					$value = array(
+						$default_language => $post_id['ID'],
+					);
+					$set_translation_array  = $wpdb->insert( 'wp_options', array(
+						'option_name'  => 'monk_post_translations_' . $post_id['ID'],
+						'option_value' => maybe_serialize( $value ),
+						'autoload'     => 'yes',
+					));
 				}
 
-				$response = $post_response && $term_response ? __( 'All posts and terms are translated to default language', 'monk' ) : __( 'An error has occurred. Please, try again.', 'monk' );
-			} else {
-				$response = __( 'Option not selected', 'monk' );
-			} // End if().
-			wp_send_json_success( $response );
+				$response[] = $set_monk_id && $set_language ? true : false;
+			}
+
+			if ( is_array( $term_ids ) && ! empty( $term_ids ) ) {
+				foreach ( $term_ids as $term_id ) {
+					$set_language = $wpdb->insert( 'wp_termmeta', array(
+						'term_id'    => $term_id['term_id'],
+						'meta_key'   => '_monk_term_language',
+						'meta_value' => $default_language,
+					));
+					$set_monk_id  = $wpdb->insert( 'wp_termmeta', array(
+						'term_id'    => $term_id['term_id'],
+						'meta_key'   => '_monk_term_translations_id',
+						'meta_value' => $term_id['term_id'],
+					));
+					$value = array(
+						$default_language => $term_id['term_id'],
+					);
+					$set_translation_array  = $wpdb->insert( 'wp_options', array(
+						'option_name'  => 'monk_term_translations_' . $term_id['term_id'],
+						'option_value' => maybe_serialize( $value ),
+						'autoload'     => 'yes',
+					));
+				}
+				$response[] = $set_monk_id && $set_language ? true : false;
+			}
+			wp_send_json_success( $set_translation_array );
 		} else {
-			$error = __( 'Invalid nonce field', 'monk' );
-			wp_send_json_error( $error );
+			wp_send_json_error();
 		} // End if().
 	}
 }
