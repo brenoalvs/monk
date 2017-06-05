@@ -18,7 +18,7 @@
  * @return boolean 					Language code validation.
  */
 function monk_is_language_code( $language_code ) {
-	$monk_languages = get_transient( 'monk_languages' );
+	$monk_languages = monk_get_available_languages();
 	$languages_codes = array_keys( $monk_languages );
 
 	return in_array( $language_code , $language_codes );
@@ -49,7 +49,7 @@ function monk_get_current_url() {
  * @return    mixed        The related locale or false if $slug is invalid.
  */
 function monk_get_locale_by_slug( $slug ) {
-	$monk_languages = get_transient( 'monk_languages' );
+	$monk_languages = monk_get_available_languages();
 
 	foreach ( $monk_languages as $locale => $data ) {
 		if ( $data['slug'] === $slug ) {
@@ -88,106 +88,69 @@ function monk_get_url_args( $arg ) {
  *
  * @return array The available languages array.
  */
-function get_monk_languages() {
-	require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
-	$wp_get_available_translations = wp_get_available_translations();
-	$monk_languages['en_US']       = array(
-		'native_name'  => 'English (United States)',
-		'english_name' => __( 'English (United States)', 'monk' ),
-		'slug'         => 'en',
-	);
-
-	foreach ( $wp_get_available_translations as $locale => $lang_content ) {
-		$slug_pos = strpos( $locale, '_' );
-		$slug     = strtolower( substr( $locale, $slug_pos + 1, 2 ) );
-
-		switch ( $locale ) {
-			case 'ary':
-				$slug = array_shift( $lang_content['iso'] ) . '-ma';
-				break;
-			case 'azb':
-				$slug = array_shift( $lang_content['iso'] ) . '-az';
-				break;
-			case 'de_CH_informal':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug . '-in';
-				break;
-			case 'de_DE_formal':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'de_CH':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'en_AU':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'en_CA':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'en_NZ':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'en_ZA':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'en_GB':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'es_CO':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'es_GT':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'es_MX':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'es_VE':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'es_PE':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'es_CL':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'es_AR':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'fr_CA':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'fr_BE':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'nl_NL_formal':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'nl_BE':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'pt_BR':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'zh_TW':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			case 'zh_HK':
-				$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
-				break;
-			default:
-				$slug = array_shift( $lang_content['iso'] );
-				break;
-		} // End switch().
-
-		$wp_languages[ $locale ] = array(
-			'native_name' => $lang_content['native_name'],
-			'english_name' => $lang_content['english_name'],
-			'slug' => $slug,
+function monk_get_available_languages() {
+	if ( false === ( $monk_languages = get_transient( 'monk_languages' ) ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+		$wp_get_available_translations = wp_get_available_translations();
+		$monk_languages['en_US']       = array(
+			'native_name'  => 'English (United States)',
+			'english_name' => __( 'English (United States)', 'monk' ),
+			'slug'         => 'en',
 		);
-	} // End foreach().
 
-	$monk_languages = array_merge( $monk_languages, $wp_languages );
+		foreach ( $wp_get_available_translations as $locale => $lang_content ) {
+			$slug_pos = strpos( $locale, '_' );
+			$slug     = strtolower( substr( $locale, $slug_pos + 1, 2 ) );
 
-	set_transient( 'monk_languages', $monk_languages, YEAR_IN_SECONDS );
+			switch ( $locale ) {
+				case 'ary':
+					$slug = array_shift( $lang_content['iso'] ) . '-ma';
+					break;
+				case 'azb':
+					$slug = array_shift( $lang_content['iso'] ) . '-az';
+					break;
+				case 'de_CH_informal':
+					$slug = array_shift( $lang_content['iso'] ) . '-' . $slug . '-in';
+					break;
+				case 'de_DE_formal':
+				case 'de_CH':
+				case 'en_AU':
+				case 'en_CA':
+				case 'en_NZ':
+				case 'en_ZA':
+				case 'en_GB':
+				case 'es_CO':
+				case 'es_GT':
+				case 'es_MX':
+				case 'es_VE':
+				case 'es_PE':
+				case 'es_CL':
+				case 'es_AR':
+				case 'fr_CA':
+				case 'fr_BE':
+				case 'nl_NL_formal':
+				case 'nl_BE':
+				case 'pt_BR':
+				case 'zh_TW':
+				case 'zh_HK':
+					$slug = array_shift( $lang_content['iso'] ) . '-' . $slug;
+					break;
+				default:
+					$slug = array_shift( $lang_content['iso'] );
+					break;
+			} // End switch().
+
+			$wp_languages[ $locale ] = array(
+				'native_name' => $lang_content['native_name'],
+				'english_name' => $lang_content['english_name'],
+				'slug' => $slug,
+			);
+		} // End foreach().
+
+		$monk_languages = array_merge( $monk_languages, $wp_languages );
+
+		set_transient( 'monk_languages', $monk_languages, YEAR_IN_SECONDS );
+	}
+
 	return $monk_languages;
 }
