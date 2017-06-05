@@ -89,7 +89,9 @@ function monk_get_url_args( $arg ) {
  * @return array The available languages array.
  */
 function monk_get_available_languages() {
-	if ( false === ( $monk_languages = get_transient( 'monk_languages' ) ) ) {
+	$monk_languages = get_transient( 'monk_languages' );
+
+	if ( ! $monk_languages ) {
 		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 		$wp_get_available_translations = wp_get_available_translations();
 		$monk_languages['en_US']       = array(
@@ -150,7 +152,7 @@ function monk_get_available_languages() {
 		$monk_languages = array_merge( $monk_languages, $wp_languages );
 
 		set_transient( 'monk_languages', $monk_languages, YEAR_IN_SECONDS );
-	}
+	} // End if().
 
 	return $monk_languages;
 }
