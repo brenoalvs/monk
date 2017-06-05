@@ -84,7 +84,7 @@ function monk_get_url_args( $arg ) {
 /**
  * This function makes the array of available languages
  *
- * @since  0.4.0]
+ * @since  0.4.0
  *
  * @return array The available languages array.
  */
