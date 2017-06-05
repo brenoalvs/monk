@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$monk_languages = get_transient( 'monk_languages' );
+$monk_languages = monk_get_available_languages();
 ?>
 <!-- The select with the available languages to choose from -->
 <select name="monk_language" class="new-menu-language">

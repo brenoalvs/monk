@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$monk_languages = get_transient( 'monk_languages' );
+$monk_languages = monk_get_available_languages();
 $languages = get_option( 'monk_active_languages' );
 ?>
 <select name="monk_language_filter" id="monk-language-filter">

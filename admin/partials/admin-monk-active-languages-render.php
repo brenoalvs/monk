@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$monk_languages = get_transient( 'monk_languages' );
+$monk_languages = monk_get_available_languages();
 
 $active_languages = get_option( 'monk_active_languages', false );
 $default_language = get_option( 'monk_default_language', false );

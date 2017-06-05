@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$monk_languages = get_transient( 'monk_languages' );
+$monk_languages = monk_get_available_languages();
 ?>
 <!-- The button to create a new translation -->
 <span class="hide-if-no-js add-menu-translation">
