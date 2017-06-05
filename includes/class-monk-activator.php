@@ -28,7 +28,7 @@ class Monk_Activator {
 	 * @return  void
 	 */
 	public static function activate() {
-		$monk_languages = get_monk_languages();
+		$monk_languages = monk_get_available_languages();
 
 		$locale = get_locale();
 		if ( array_key_exists( $locale, $monk_languages ) ) {
