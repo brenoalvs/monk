@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 $languages = get_available_languages();
 $args = array(
-	'id'        => 'monk_default_language',
+	'id'        => 'monk-default-language',
 	'name'      => 'monk_default_language',
 	'selected'  => $default_language,
 	'languages' => $languages,
