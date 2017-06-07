@@ -20,6 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 			settings_errors();
 		?>
 		<form action="options.php" method="POST" id="monk-form-settings">
+			<input type="hidden" name="action" value="monk_save_language_packages">
 			<?php
 				$btn_args = array(
 					'id' => 'monk-submit-settings',
