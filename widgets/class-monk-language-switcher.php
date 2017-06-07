@@ -53,6 +53,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$current_language        = '';
 		$monk_languages_reverted = array();
 		$default_language        = get_option( 'monk_default_language', false );
+		$default_slug            = $monk_languages[ $default_language ]['slug'];
 
 		if ( get_query_var( 'lang' ) ) {
 			$current_language = sanitize_text_field( get_query_var( 'lang' ) );
@@ -69,6 +70,7 @@ class Monk_Language_Switcher extends WP_Widget {
 
 			foreach ( $active_languages_slug as $lang_code ) {
 				$current_url = monk_get_current_url();
+
 				if ( $lang_code !== $current_language ) {
 					if ( get_option( 'permalink_structure', false ) ) {
 						if ( get_query_var( 'lang' ) ) {
@@ -76,7 +78,7 @@ class Monk_Language_Switcher extends WP_Widget {
 							$current_url = remove_query_arg( 'lang', $current_url );
 							$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
 							$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
-							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
+							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url; 
 							$switchable_languages[ $lang_code ] = $current_url;
 						}
 					} else {
