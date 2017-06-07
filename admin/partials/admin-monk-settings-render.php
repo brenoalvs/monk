@@ -27,17 +27,20 @@ if ( ! defined( 'WPINC' ) ) {
 		}
 		?>
 		<form action="options.php" method="POST" class="monk-form-settings" id="<?php echo esc_attr( $form_id ); ?>">
+			<?php $btn_args = array(); ?>
+			<?php if ( ! $is_tools ) : ?>
+				<input type="hidden" name="action" value="monk_save_language_packages">
 			<?php
-			$btn_args = array();
-			if ( ! $is_tools ) :
-				?><input type="hidden" name="action" value="monk_save_language_packages"><?php
-				$btn_args = array( 'id' => 'monk-submit-settings' );
+				$btn_args = array(
+					'id' => 'monk-submit-settings',
+				);
 				wp_nonce_field( '_monk_nonce', '_monk_nonce' );
 				settings_fields( 'monk_settings' );
-			else :
-				?><input type="hidden" name="action" value="monk_set_language_to_elements" /><?php
-				wp_nonce_field( '_monk_nonce' );
-			endif;
+			?>
+			<?php else : ?>
+				<input type="hidden" name="action" value="monk_set_language_to_elements" />
+			<?php wp_nonce_field( '_monk_nonce' ); ?>
+			<?php endif;
 				do_settings_sections( 'monk_settings' );
 				submit_button( '', 'primary', 'submit', 'true', $btn_args );
 			?>
