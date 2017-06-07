@@ -75,19 +75,17 @@ class Monk_Language_Switcher extends WP_Widget {
 					if ( get_option( 'permalink_structure', false ) ) {
 						if ( get_query_var( 'lang' ) ) {
 							$has_default_language_url = get_option( 'monk_default_language_url', false );
+							$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
+							$current_url = remove_query_arg( 'lang', $current_url );
+							$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
+
 							if ( empty( $has_default_language_url ) && $lang_code === $default_slug ) {
-								$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
-								$current_url = remove_query_arg( 'lang', $current_url );
-								$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
 								$current_url = preg_replace( $pattern, '/', $current_url );
-								$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
 							} else {
-								$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
-								$current_url = remove_query_arg( 'lang', $current_url );
-								$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
 								$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
-								$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
 							}
+
+							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
 						} else {
 							$current_url .= '/' . $lang_code;
 						}
