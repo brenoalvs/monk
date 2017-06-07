@@ -150,3 +150,11 @@ div.menu-translations ul.current-menu-translations li {
 #monk-checkbox-not-selected-message {
 	color: #ff0000;
 }
+
+.monk-label {
+	overflow: hidden;
+	padding-bottom: 5px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 200px;
+}

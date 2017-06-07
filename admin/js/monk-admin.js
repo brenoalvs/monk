@@ -21,6 +21,8 @@
 			});
 		});
 
+		$( '#monk-default-language option[value=""]' ).val( 'en_US' );
+
 		$( document ).on( 'click', 'span.monk-add-translation', function() {
 			$( '.monk-post-meta-add-translation' ).slideToggle( 150 );
 		});

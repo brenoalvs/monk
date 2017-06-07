@@ -89,7 +89,7 @@ class Monk_Public {
 			return;
 		}
 
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$query_args       = array();
 		$default_language = get_option( 'monk_default_language', false );
@@ -141,7 +141,7 @@ class Monk_Public {
 			return $args;
 		}
 
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$default_language = get_option( 'monk_default_language', false );
 		$default_slug     = $monk_languages[ $default_language ]['slug'];

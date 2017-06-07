@@ -163,6 +163,26 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_tools'
 		);
+
+		register_setting( 'monk_settings', 'monk_default_language_url' );
+		add_settings_field(
+			'monk_default_language_url',
+			__( 'Show default language in URL', 'monk' ),
+			array( $this, 'monk_default_language_url_render' ),
+			'monk_settings',
+			'monk_general_settings'
+		);
+	}
+
+	/**
+	 *  This is the callback for the monk_default_language_url element
+	 *
+	 * @since  0.4.0
+	 *
+	 * @return  void
+	 */
+	public function monk_default_language_url_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-url-render.php';
 	}
 
 	/**
@@ -288,7 +308,7 @@ class Monk_Admin {
 	 */
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$monk_id                = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language  = get_post_meta( $post->ID, '_monk_post_language', true );
 		$site_default_language  = get_option( 'monk_default_language', false );
@@ -321,7 +341,7 @@ class Monk_Admin {
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 
 		if ( '' === $post_default_language ) {
-			$selected = $monk_languages[ $site_default_language ]['name'];
+			$selected = $monk_languages[ $site_default_language ]['english_name'];
 		} else {
 			$selected = $post_default_language;
 		}
@@ -354,7 +374,7 @@ class Monk_Admin {
 			return;
 		}
 
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$active_languages  = get_option( 'monk_active_languages' );
 		$current_language  = get_post_meta( $post_id, '_monk_post_language', true );
@@ -719,7 +739,7 @@ class Monk_Admin {
 	 */
 	public function monk_language_column_content( $column_name, $post_id ) {
 		if ( 'languages' === $column_name ) {
-			global $monk_languages;
+			$monk_languages = monk_get_available_languages();
 
 			$monk_language        = get_post_meta( $post_id, '_monk_post_language', true );
 			$monk_translations_id = get_post_meta( $post_id, '_monk_post_translations_id', true );
@@ -766,7 +786,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_custom_taxonomy_field() {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$languages        = get_option( 'monk_active_languages', false );
 		$taxonomies       = get_taxonomies();
 		$default_language = get_option( 'monk_default_language', false );
@@ -795,6 +815,7 @@ class Monk_Admin {
 				$language => $term_id,
 			);
 			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
+
 			if ( isset( $_REQUEST['monk_id'] ) ) {
 				$monk_id           = sanitize_text_field( wp_unslash( $_REQUEST['monk_id'] ) );
 				$term_translations = get_option( 'monk_' . $is_menu . '_translations_' . $monk_id, array() );
@@ -890,7 +911,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_edit_custom_taxonomy_field( $term ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
 		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
@@ -911,7 +932,7 @@ class Monk_Admin {
 	 */
 	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
-			global $monk_languages;
+			$monk_languages = monk_get_available_languages();
 			$taxonomies                = get_taxonomies();
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
@@ -950,7 +971,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_term_translation_meta_field( $term ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$languages                 = get_option( 'monk_active_languages', false );
 		$taxonomies                = get_taxonomies();
@@ -1056,7 +1077,7 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 */
 	public function monk_language_selector_render( $post_id, $language_code = false ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$language            = get_post_meta( $post_id, '_monk_post_language', true );
@@ -1136,7 +1157,7 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 */
 	public function monk_attachment_meta_box( $form_fields, $post ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$post_id           = $post->ID;
 		$language          = get_post_meta( $post_id, '_monk_post_language', true );
