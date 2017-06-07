@@ -2,10 +2,10 @@
 /**
  * Provide the view for the monk_add_menu_translation_fields function
  *
- * @since      0.1.0
+ * @since      0.3.0
  *
  * @package    Monk
- * @subpackage Monk/Includes
+ * @subpackage Monk/Admin/Partials
  */
 
 // If this file is called directly, abort.
@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-global $monk_languages;
+$monk_languages = monk_get_available_languages();
 ?>
 <!-- The button to create a new translation -->
 <span class="hide-if-no-js add-menu-translation">
@@ -27,7 +27,7 @@ global $monk_languages;
 		<select name="monk_language" id="menu-language">
 			<?php foreach ( $active_languages as $locale ) : ?>
 				<?php if ( ! array_key_exists( $locale, $menu_translations ) ) : ?>
-				<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?></option>
+				<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['english_name'] ); ?></option>
 			<?php
 				endif;
 				endforeach;
@@ -44,7 +44,7 @@ global $monk_languages;
 			<select name="monk_language" id="menu-language">
 			<?php foreach ( $active_languages as $locale ) : ?>
 				<?php if ( ! array_key_exists( $locale, $menu_translations ) ) : ?>
-				<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?></option>
+				<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['english_name'] ); ?></option>
 			<?php
 				endif;
 				endforeach;
@@ -52,14 +52,14 @@ global $monk_languages;
 			</select>
 		<?php else : ?>
 			<span class="menu-flag flag-icon flag-icon-<?php echo esc_attr( $monk_languages[ $menu_language ]['slug'] ); ?>"></span>
-			<span><?php echo esc_html( $monk_languages[ $menu_language ]['name'] ) ?></span>
+			<span><?php echo esc_html( $monk_languages[ $menu_language ]['english_name'] ) ?></span>
 			<input type="hidden" name="monk_language" value="<?php echo esc_attr( $menu_language ); ?>">
 		<?php endif; ?>
 	</div>
 </fieldset>
 <!-- A list with the selected menu translations -->
 <div class="hide-if-no-js menu-translations">
-	<h3>Menu Translations</h3>
+	<h3><?php esc_html_e( 'Menu Translations', 'monk' ); ?></h3>
 	<?php if ( 1 === count( $menu_translations ) ) : ?>
 	<p>
 		<?php esc_html_e( 'This menu does not have translations. ', 'monk' ); ?>
@@ -73,7 +73,7 @@ global $monk_languages;
 			<?php if ( $locale !== $menu_language ) : ?>
 				<li>
 					<a href="<?php echo esc_url( admin_url( 'nav-menus.php?action=edit&menu=' . $id ) ); ?>">
-						<?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?>
+						<?php echo esc_html( $monk_languages[ $locale ]['english_name'] ); ?>
 					</a>
 				</li>
 			<?php endif; ?>

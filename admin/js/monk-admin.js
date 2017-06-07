@@ -21,6 +21,8 @@
 			});
 		});
 
+		$( '#monk-default-language option[value=""]' ).val( 'en_US' );
+
 		$( document ).on( 'click', 'span.monk-add-translation', function() {
 			$( '.monk-post-meta-add-translation' ).slideToggle( 150 );
 		});
@@ -118,8 +120,6 @@
 
 		/**
 		 * Replace components from the admin footer to the major-publishing-actions div, in the menu page
-		 *
-		 *
 		*/
 		if ( /\bnav-menus.php?\b/.test( window.location.pathname ) ) {
 			if ( $( '.add-menu-translation' ).length ) {

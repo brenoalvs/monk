@@ -42,7 +42,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance The widget options.
 	 */
 	public function widget( $args, $instance ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$switchable_languages    = array();
 		$active_languages_slug   = array();
@@ -76,10 +76,9 @@ class Monk_Language_Switcher extends WP_Widget {
 						if ( get_query_var( 'lang' ) ) {
 							$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
 							$current_url = remove_query_arg( 'lang', $current_url );
-							$current_url = $lang_code !== $default_slug ? preg_replace( $pattern, '/' . $lang_code, $current_url ) : preg_replace( $pattern, '/', $current_url );
-							$switchable_languages[ $lang_code ] = $current_url;
-						} else {
-							$current_url = $lang_code !== $default_slug ? str_replace( home_url(), home_url() . '/' . $lang_code, $current_url ) : $current_url;
+							$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
+							$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
+							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url; 
 							$switchable_languages[ $lang_code ] = $current_url;
 						}
 					} else {
@@ -191,9 +190,9 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @return array $instance
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                 = $old_instance;
-		$instance['title']        = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['flag']         = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance              = $old_instance;
+		$instance['title']     = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['flag']      = ! empty( $new_instance['flag'] ) ? true : false;
 		$instance['monk_love'] = ! empty( $new_instance['monk_love'] ) ? true : false;
 
 		return $instance;

@@ -3,20 +3,39 @@ Contributors: breno-alves, ale-correa, leonofre
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
 Tested up to: 4.7.2
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Monk is an elegant and lightweight solution to make your content reach the world. 
+Monk is a lightweight translation plugin to make your content reach the world.
 
 == Description ==
 
 Monk is a free translation plugin that allows you to create translations for your posts, pages, medias, tags, categories or any content you need.
 
-= Highly user focused =
+All this bundled in a sweet WordPress-like interface, so that you can translate all your content easily.
 
-Don't get a confusing and buggy administration screen. We use consistent WordPress-like interface elements.
-Activate the language switcher to allow visitors comfortably navigate in your website in their languages.
+Currently supporting 9 of the most popular languages, fully-responsive and tested in various themes from WordPress.org, Monk brings all the reliability you need from a translation plugin.
+
+== Translate your Posts Types ==
+
+Do you want to be heard everywhere? Monk helps your content reach the world.
+
+== Translate Your Taxonomies ==
+
+How about categorizing your content in different languages ​​to make it easier to search and navigate? With Monk you can translate all your categories, tags or any other terms.
+
+== Translate your Attachments ==
+
+"A picture is worth a thousand words" no one doubts that. But for search engines this is not the rule. How about improving your SEO by adding translations to all your medias?
+
+== Easy to use ==
+
+Facilitate navigation through translations to your users using a fully-customizable language switcher.
+
+== Open Source ==
+
+Are you a developer and want to help improve Monk? Join us on [GitHub](https://github.com/brenoalvs/monk).
 
 == Installation ==
 
@@ -28,7 +47,7 @@ Activate the language switcher to allow visitors comfortably navigate in your we
 = Will this plugin work with any theme? =
 
 Yeah! That's what we expect, right? :)
-But if you find anything buggy or weird get in touch or open a ticket.
+But if you find anything buggy or weird get in touch by opening a new [forum topic](https://wordpress.org/support/plugin/monk).
 
 = Where can I find a documentation? =
 
@@ -44,13 +63,18 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 2. Language filter in action.
 3. Fully-customizable language switcher.
 4. Language switcher widget.
-5. The Settings page (All languages coming soon!)
-6. Post edition screen
-7. Localized URLs
+5. The Settings page (All languages coming soon!).
+6. Post edition screen.
+7. Localized URLs.
 8. Medias translation support.
 9. Terms edition.
+10. Menus edition.
 
 == Changelog ==
+
+= 0.3.0 =
+* Added menus translation support.
+* Support us using Monk Love message.
 
 = 0.2.0 =
 * Improved queries filters by language for posts and terms on admin and front-end.
@@ -62,5 +86,5 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 
 == Credits ==
 
-Special thanks to Lipis for our [beautiful SVG icons](https://github.com/lipis/flag-icon-css).
+Special thanks to Lipis by [SVG country flags](https://github.com/lipis/flag-icon-css).
 

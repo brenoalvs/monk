@@ -99,7 +99,7 @@ class Monk_Links {
 	 * @param    string $version    The plugin version.
 	 */
 	public function __construct( $monk, $version ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$this->plugin_name   = $monk;
 		$this->version	     = $version;
@@ -127,7 +127,7 @@ class Monk_Links {
 	 * @return array The active languages.
 	 */
 	public function monk_get_active_languages() {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$active_languages = array();
 		$languages        = get_option( 'monk_active_languages', false );
@@ -248,9 +248,7 @@ class Monk_Links {
 		$is_monk_settings_page = filter_input( INPUT_GET, 'page' );
 
 		if ( 'monk' === $is_monk_settings_page ) {
-			global $wp_rewrite;
 			flush_rewrite_rules();
-			$wp_rewrite->flush_rules();
 		}
 	}
 
@@ -311,7 +309,7 @@ class Monk_Links {
 	 * @return $url The changed link.
 	 */
 	public function monk_change_language_url( $url, $lang ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$default_language     = get_option( 'monk_default_language', false );
 		$default_language_url = get_option( 'monk_default_language_url', false );
@@ -561,7 +559,7 @@ class Monk_Links {
 	 * @return void
 	 */
 	public function monk_canonical_redirection() {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		/**
 		 * We do not want to redirect in these cases.
@@ -625,5 +623,38 @@ class Monk_Links {
 			wp_safe_redirect( $redirect_url, 301 );
 			exit();
 		}
+	}
+
+	/**
+	 * Modify the previous and the next post link query
+	 *
+	 * This function return a Join clause to get the posts with same language
+	 * that the current post
+	 *
+	 * @param  string  $join           The JOIN clause in the SQL.
+	 * @param  bool    $in_same_term   Whether post should be in a same taxonomy term.
+	 * @param  array   $excluded_terms Array of excluded term IDs.
+	 * @param  string  $taxonomy       Taxonomy. Used to identify the term used when `$in_same_term` is true.
+	 * @param  WP_Post $post           WP_Post object.
+	 *
+	 * @since  0.4.0
+	 *
+	 * @return string  $join
+	 */
+	public function monk_previous_and_next_posts( $join, $in_same_term, $excluded_terms, $taxonomy, $post ) {
+		global $wpdb;
+		$post_id          = $post->ID;
+		$post_language    = get_post_meta( $post_id, '_monk_post_language', true );
+		$language         = get_option( 'monk_default_language', false );
+
+		if ( $post_language ) {
+			$language = $post_language;
+		} else {
+			$language = '';
+		}
+
+		$join .= 'JOIN ' . $wpdb->postmeta . ' ON ' . $wpdb->postmeta . '.post_id = p.ID AND ' . $wpdb->postmeta . '.meta_key = "_monk_post_language" AND ' . $wpdb->postmeta . '.meta_value = "' . $language . '"';
+
+		return $join;
 	}
 }

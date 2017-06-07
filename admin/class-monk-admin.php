@@ -239,7 +239,7 @@ class Monk_Admin {
 	 */
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$monk_id                = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language  = get_post_meta( $post->ID, '_monk_post_language', true );
 		$site_default_language  = get_option( 'monk_default_language', false );
@@ -272,7 +272,7 @@ class Monk_Admin {
 		wp_nonce_field( basename( __FILE__ ), 'monk_post_meta_box_nonce' );
 
 		if ( '' === $post_default_language ) {
-			$selected = $monk_languages[ $site_default_language ]['name'];
+			$selected = $monk_languages[ $site_default_language ]['english_name'];
 		} else {
 			$selected = $post_default_language;
 		}
@@ -305,7 +305,7 @@ class Monk_Admin {
 			return;
 		}
 
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$active_languages  = get_option( 'monk_active_languages' );
 		$current_language  = get_post_meta( $post_id, '_monk_post_language', true );
@@ -396,20 +396,23 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || is_customize_preview() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
+		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
 			return;
 		}
 
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
+		$post_type        = filter_input( INPUT_GET , 'post_type' );
 
-		if ( 'nav-menus' === get_current_screen()->base ) {
-			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
-			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
-			$language = empty( $language ) ? $default_language : $language;
-		} else {
-			$language = filter_input( INPUT_GET , 'lang' );
+		if ( ! is_customize_preview() && function_exists( 'get_current_screen' ) ) {
+			if ( 'nav-menus' === get_current_screen()->base ) {
+				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+				$language = empty( $language ) ? $default_language : $language;
+			} else {
+				$language = $filter;
+			}
 		}
 
 		if ( $query->is_search() ) {
@@ -420,7 +423,7 @@ class Monk_Admin {
 			}
 		}
 
-		if ( $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
+		if ( is_customize_preview() || $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
 			$meta_query = array(
 				'relation' => 'OR', // Optional, defaults to "AND".
 				array(
@@ -435,8 +438,14 @@ class Monk_Admin {
 
 			$query->set( 'meta_query', $meta_query );
 		} else {
-			$query->set( 'meta_key', '_monk_post_language' );
-			$query->set( 'meta_value', $language );
+			$meta_query = array(
+				array(
+					'key'     => '_monk_post_language',
+					'value'   => $language,
+				),
+			);
+
+			$query->set( 'meta_query', $meta_query );
 		}
 	}
 
@@ -454,22 +463,34 @@ class Monk_Admin {
 			return $args;
 		}
 
-		if ( is_customize_preview() && in_array( 'nav_menu', $taxonomies ) ) {
+		if ( is_customize_preview() ) {
 			$language = get_option( 'monk_default_language', false );
 
 			$meta_query = array(
-				'relation' => 'OR', // Optional, defaults to "AND".
 				array(
-					'key'   => '_monk_menu_language',
-					'value' => $language,
+					'relation' => 'OR', // Optional, defaults to "AND".
+					array(
+						'key'   => '_monk_menu_language',
+						'value' => $language,
+					),
+					array(
+						'key'     => '_monk_menu_language',
+						'compare' => 'NOT EXISTS',
+					),
 				),
 				array(
-					'key'     => '_monk_menu_language',
-					'compare' => 'NOT EXISTS',
+					'relation' => 'OR', // Optional, defaults to "AND".
+					array(
+						'key'   => '_monk_term_language',
+						'value' => $language,
+					),
+					array(
+						'key'     => '_monk_term_language',
+						'compare' => 'NOT EXISTS',
+					),
 				),
 			);
 			$args['meta_query'] = $meta_query;
-			return $args;
 		}
 
 		if ( ! is_customize_preview() ) {
@@ -649,7 +670,7 @@ class Monk_Admin {
 	 */
 	public function monk_language_column_content( $column_name, $post_id ) {
 		if ( 'languages' === $column_name ) {
-			global $monk_languages;
+			$monk_languages = monk_get_available_languages();
 
 			$monk_language        = get_post_meta( $post_id, '_monk_post_language', true );
 			$monk_translations_id = get_post_meta( $post_id, '_monk_post_translations_id', true );
@@ -696,7 +717,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_custom_taxonomy_field() {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$languages        = get_option( 'monk_active_languages', false );
 		$taxonomies       = get_taxonomies();
 		$default_language = get_option( 'monk_default_language', false );
@@ -821,7 +842,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_edit_custom_taxonomy_field( $term ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
 		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
@@ -842,7 +863,7 @@ class Monk_Admin {
 	 */
 	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
-			global $monk_languages;
+			$monk_languages = monk_get_available_languages();
 			$taxonomies                = get_taxonomies();
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
@@ -881,7 +902,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_term_translation_meta_field( $term ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$languages                 = get_option( 'monk_active_languages', false );
 		$taxonomies                = get_taxonomies();
@@ -987,7 +1008,7 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 */
 	public function monk_language_selector_render( $post_id, $language_code = false ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$language            = get_post_meta( $post_id, '_monk_post_language', true );
@@ -1067,7 +1088,7 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 */
 	public function monk_attachment_meta_box( $form_fields, $post ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		$post_id           = $post->ID;
 		$language          = get_post_meta( $post_id, '_monk_post_language', true );
