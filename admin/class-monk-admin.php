@@ -275,7 +275,6 @@ class Monk_Admin {
 	public function monk_settings_render() {
 		$this->monk_settings_tabs();
 		$action = filter_input( INPUT_GET, 'action' );
-		$action = ! empty( $action ) ? $action : '';
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
 	}

@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 		<?php
 			update_option( 'monk_settings_notice', false );
 			settings_errors();
-		if ( 'monk_general' === $action || '' === $action ) {
+		if ( 'monk_general' === $action || null === $action ) {
 			$form_id = 'monk-general-form';
 			$is_tools = false;
 		} elseif ( 'monk_tools' === $action ) {
