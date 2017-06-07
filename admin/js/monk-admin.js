@@ -69,7 +69,7 @@
 		});
 
 		var not_submit = true;
-		$( document ).on( 'submit', '#monk-form-settings', function( event ) {
+		$( document ).on( 'submit', '#monk-general-form', function( event ) {
 			if ( not_submit ) {
 				event.preventDefault();
 				not_submit = false;
@@ -87,18 +87,55 @@
 								if ( response.data ) {
 									$( '#monk-downloading' ).addClass( 'monk-hide' );	
 									if ( -1 < $.inArray( false, response.data ) ) {		
-										$( '#monk-download-error' ).removeClass( 'monk-hide' );
+										$( '#monk-error' ).removeClass( 'monk-hide' );
 									} else {		
-										$( '#monk-download-done' ).removeClass( 'monk-hide' );
+										$( '#monk-done' ).removeClass( 'monk-hide' );
 									}
 								}
 							} else {
-								$( '#monk-download-error' ).removeClass( 'monk-hide' );
+								$( '#monk-error' ).removeClass( 'monk-hide' );
 							}
 						} 
 						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
 					}
 				});
+			}
+		});
+
+		$( document ).on( 'submit', '#monk-tools-form', function( event ) {
+			event.preventDefault();
+			if ( $( '#monk-set-language-to-elements' ).prop( 'checked' ) ) {
+				$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-bulk-action' ).removeClass( 'monk-hide' );
+				var form_data = $( '#monk-tools-form' ).serializeArray();
+
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						console.log( response );
+						if ( response.hasOwnProperty( 'success' ) ) {
+							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
+							if ( response.success ) {		
+								$( '#monk-done' ).removeClass( 'monk-hide' );
+							} else {
+								$( '#monk-error' ).removeClass( 'monk-hide' );
+							}
+						}
+
+						setTimeout( function() {
+							$( '#monk-error' ).addClass( 'monk-hide' );
+							$( '#monk-done' ).addClass( 'monk-hide' );
+							$( '#monk-spinner' ).removeClass( 'is-active' );
+						}, 2000 );
+					}
+				});
+			} else {
+				$( '#monk-checkbox-not-selected-message' ).removeClass( 'monk-hide' );
+				setTimeout( function() {
+					$( '#monk-checkbox-not-selected-message' ).addClass( 'monk-hide' );
+				}, 2000 );
 			}
 		});
 

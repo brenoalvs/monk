@@ -147,6 +147,19 @@ div.menu-translations ul.current-menu-translations li {
 	display: none;
 }
 
+.monk-form-settings .submit {
+	display: inline-block;
+}
+
+.monk-form-settings .monk-spinner {
+	float: none;
+	margin-top: 0;
+}
+
+#monk-checkbox-not-selected-message {
+	color: #ff0000;
+}
+
 .monk-label {
 	overflow: hidden;
 	padding-bottom: 5px;

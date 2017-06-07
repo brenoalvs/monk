@@ -74,19 +74,28 @@ class Monk_Language_Switcher extends WP_Widget {
 				if ( $lang_code !== $current_language ) {
 					if ( get_option( 'permalink_structure', false ) ) {
 						if ( get_query_var( 'lang' ) ) {
+							$has_default_language_url = get_option( 'monk_default_language_url', false );
 							$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
 							$current_url = remove_query_arg( 'lang', $current_url );
 							$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
-							$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
+
+							if ( empty( $has_default_language_url ) && $lang_code === $default_slug ) {
+								$current_url = preg_replace( $pattern, '/', $current_url );
+							} else {
+								$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
+							}
+
 							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
-							$switchable_languages[ $lang_code ] = $current_url;
+						} else {
+							$current_url .= '/' . $lang_code;
 						}
+						$switchable_languages[ $lang_code ] = $current_url;
 					} else {
 						$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url );
 					}
 				}
 			}
-		}
+		} // End if().
 
 		if ( is_singular() ) {
 			$monk_post_translations_id = get_post_meta( get_the_id(), '_monk_post_translations_id', true );
