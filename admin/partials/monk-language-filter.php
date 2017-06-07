@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$monk_languages = monk_get_available_languages();
+global $monk_languages;
 $languages = get_option( 'monk_active_languages' );
 ?>
 <select name="monk_language_filter" id="monk-language-filter">
@@ -29,7 +29,7 @@ $languages = get_option( 'monk_active_languages' );
 			}
 			?>>
 			<?php
-			echo esc_html( $monk_languages[ $language ]['english_name'] );
+			echo esc_html( $monk_languages[ $language ]['name'] );
 			?>
 		</option>
 	<?php endforeach; ?>

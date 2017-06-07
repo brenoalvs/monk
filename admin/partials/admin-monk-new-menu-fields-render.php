@@ -13,13 +13,13 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$monk_languages = monk_get_available_languages();
+global $monk_languages;
 ?>
 <!-- The select with the available languages to choose from -->
 <select name="monk_language" class="new-menu-language">
 	<?php foreach ( $active_languages as $locale ) : ?>
 		<?php if ( ! array_key_exists( $locale, $menu_translations ) ) : ?>
-			<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['english_name'] ); ?></option>
+			<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['name'] ); ?></option>
 		<?php endif; ?>
 	<?php endforeach; ?>
 </select>

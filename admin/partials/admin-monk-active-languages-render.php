@@ -13,13 +13,14 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$monk_languages = monk_get_available_languages();
+global $monk_languages;
 
 $active_languages = get_option( 'monk_active_languages', false );
 $default_language = get_option( 'monk_default_language', false );
 ?>
 <fieldset>
 <?php
+
 foreach ( $monk_languages as $lang_code => $lang_names ) :
 	$id = sanitize_title( $lang_code );
 
@@ -30,11 +31,11 @@ foreach ( $monk_languages as $lang_code => $lang_names ) :
 	}
 
 	$is_default = $default_language === $lang_code ? true : false;
-	$disabled   = $is_default ? 'option-disabled': '';
 ?>
-<label for="<?php echo esc_attr( 'monk-' . $id ); ?>" class="monk-label <?php echo esc_attr( $disabled ); ?>">
+<label for="<?php echo esc_attr( 'monk-' . $id ); ?>" <?php if ( $is_default ) : ?> class="option-disabled" <?php endif; ?>>
 	<input type="checkbox" <?php if ( $is_checked ) : ?> class="monk-saved-language" <?php endif; ?> name="monk_active_languages[]" id="<?php echo esc_attr( 'monk-' . $id ); ?>" value="<?php echo esc_attr( $lang_code ); ?>" <?php checked( $is_checked ); ?> />
-	<?php echo esc_html( $lang_names['native_name'] ); ?>
+	<?php echo esc_html( $lang_names['name'] ); ?>
 </label>
+<br />
 <?php endforeach; ?>
 </fieldset>
