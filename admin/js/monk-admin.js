@@ -101,7 +101,7 @@
 					$( '#monk-checkbox-not-selected-message' ).addClass( 'monk-hide' );
 				}, 2000 );
 			}
-		})
+		});
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
