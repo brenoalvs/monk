@@ -270,6 +270,8 @@ class Monk {
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_canonical_redirection', 5 );
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions', 10, 1 );
 		$this->loader->add_action( 'admin_init', $plugin_links, 'monk_flush_on_update' );
+		$this->loader->add_action( 'get_previous_post_join', $plugin_links, 'monk_previous_and_next_posts', 10, 5 );
+		$this->loader->add_action( 'get_next_post_join', $plugin_links, 'monk_previous_and_next_posts', 10, 5 );
 	}
 
 	/**
