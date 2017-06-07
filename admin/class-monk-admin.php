@@ -120,9 +120,8 @@ class Monk_Admin {
 	 */
 	public function monk_options_init() {
 		$action = filter_input( INPUT_GET, 'action' );
-		$action = ! empty( $action ) ? $action : '';
 
-		if ( 'monk_general' === $action || '' === $action ) {
+		if ( 'monk_general' === $action || null === $action ) {
 			add_settings_section(
 				'monk_general_settings',
 				__( 'General Settings', 'monk' ),
@@ -132,7 +131,7 @@ class Monk_Admin {
 		} elseif ( 'monk_tools' === $action ) {
 			add_settings_section(
 				'monk_tools',
-				__( 'Tools Settings', 'monk' ),
+				__( 'Tools', 'monk' ),
 				array( $this, 'monk_tools_description' ),
 				'monk_settings'
 			);
@@ -190,11 +189,10 @@ class Monk_Admin {
 	public function monk_settings_tabs() {
 		$url     = home_url() . $_SERVER['REQUEST_URI'];
 		$action  = filter_input( INPUT_GET, 'action' );
-		$action  = ! empty( $action ) ? $action : '';
 		$general = '';
 		$tools   = '';
 
-		if ( 'monk_general' === $action || '' === $action ) {
+		if ( 'monk_general' === $action || null === $action ) {
 			$general = 'nav-tab-active';
 		} elseif ( 'monk_tools' === $action ) {
 			$tools = 'nav-tab-active';
