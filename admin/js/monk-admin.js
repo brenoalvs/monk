@@ -69,7 +69,7 @@
 		});
 
 		var not_submit = true;
-		$( document ).on( 'submit', '#monk-form-settings', function( event ) {
+		$( document ).on( 'submit', '#monk-general-form', function( event ) {
 			if ( not_submit ) {
 				event.preventDefault();
 				not_submit = false;
@@ -87,13 +87,13 @@
 								if ( response.data ) {
 									$( '#monk-downloading' ).addClass( 'monk-hide' );	
 									if ( -1 < $.inArray( false, response.data ) ) {		
-										$( '#monk-download-error' ).removeClass( 'monk-hide' );
+										$( '#monk-error' ).removeClass( 'monk-hide' );
 									} else {		
-										$( '#monk-download-done' ).removeClass( 'monk-hide' );
+										$( '#monk-done' ).removeClass( 'monk-hide' );
 									}
 								}
 							} else {
-								$( '#monk-download-error' ).removeClass( 'monk-hide' );
+								$( '#monk-error' ).removeClass( 'monk-hide' );
 							}
 						} 
 						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
@@ -118,15 +118,15 @@
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
 							if ( response.success ) {		
-								$( '#monk-bulk-action-done' ).removeClass( 'monk-hide' );
+								$( '#monk-done' ).removeClass( 'monk-hide' );
 							} else {
-								$( '#monk-bulk-action-error' ).removeClass( 'monk-hide' );
+								$( '#monk-error' ).removeClass( 'monk-hide' );
 							}
 						}
 
 						setTimeout( function() {
-							$( '#monk-bulk-action-error' ).addClass( 'monk-hide' );
-							$( '#monk-bulk-action-done' ).addClass( 'monk-hide' );
+							$( '#monk-error' ).addClass( 'monk-hide' );
+							$( '#monk-done' ).addClass( 'monk-hide' );
 							$( '#monk-spinner' ).removeClass( 'is-active' );
 						}, 2000 );
 					}
