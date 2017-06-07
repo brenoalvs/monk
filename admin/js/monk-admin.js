@@ -68,6 +68,40 @@
 			return false;
 		});
 
+		var not_submit = true;
+		$( document ).on( 'submit', '#monk-form-settings', function( event ) {
+			if ( not_submit ) {
+				event.preventDefault();
+				not_submit = false;
+				$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-downloading' ).removeClass( 'monk-hide' );
+				var form_data = $( '#monk-form-settings' ).serializeArray();
+
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						if ( response.hasOwnProperty( 'success' ) ) {
+							if ( response.success ) {
+								if ( response.data ) {
+									$( '#monk-downloading' ).addClass( 'monk-hide' );	
+									if ( -1 < $.inArray( false, response.data ) ) {		
+										$( '#monk-download-error' ).removeClass( 'monk-hide' );
+									} else {		
+										$( '#monk-download-done' ).removeClass( 'monk-hide' );
+									}
+								}
+							} else {
+								$( '#monk-download-error' ).removeClass( 'monk-hide' );
+							}
+						} 
+						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
+					}
+				});
+			}
+		});
+
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
 			$( '.monk-change-current-language' ).slideUp( 150 );

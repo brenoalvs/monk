@@ -130,6 +130,23 @@ div.menu-translations ul.current-menu-translations li {
 	margin-right: 10px;
 }
 
+#monk-form-settings p.submit {
+	display: inline-block;
+}
+
+#monk-form-settings .monk-spinner {
+	margin-top: 0;
+	float: none;
+}
+
+.monk-message {
+	display: inline-block;
+}
+
+.monk-hide {
+	display: none;
+}
+
 .monk-label {
 	overflow: hidden;
 	padding-bottom: 5px;
