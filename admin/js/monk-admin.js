@@ -75,10 +75,6 @@
 				$( '#monk-downloading' ).removeClass( 'monk-hide' );
 				var form_data = $( '#monk-form-settings' ).serializeArray();
 
-				form_data.push({
-					name : 'action',
-					value : 'monk_save_language_packages',
-				});
 				$.ajax({
 					type: 'POST',
 					url: monk.ajax_url,
