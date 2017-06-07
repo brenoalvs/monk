@@ -13,11 +13,13 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$languages = get_available_languages();
-$args = array(
-	'id'        => 'monk-default-language',
-	'name'      => 'monk_default_language',
-	'selected'  => $default_language,
-	'languages' => $languages,
-);
-wp_dropdown_languages( $args );
+global $monk_languages;
+?>	
+<select name="monk_default_language">
+	<?php
+	foreach ( $monk_languages as $lang_code => $lang_names ) : ?>
+		<option value="<?php echo esc_attr( $lang_code ); ?>"<?php selected( $default_language, $lang_code ); ?>>
+			<?php echo esc_html( $lang_names['name'] ); ?>
+		</option>
+	<?php endforeach; ?>
+</select>

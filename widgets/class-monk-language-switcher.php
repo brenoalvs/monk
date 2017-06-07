@@ -42,7 +42,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance The widget options.
 	 */
 	public function widget( $args, $instance ) {
-		$monk_languages = monk_get_available_languages();
+		global $monk_languages;
 
 		$switchable_languages    = array();
 		$active_languages_slug   = array();
@@ -74,9 +74,7 @@ class Monk_Language_Switcher extends WP_Widget {
 						if ( get_query_var( 'lang' ) ) {
 							$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
 							$current_url = remove_query_arg( 'lang', $current_url );
-							$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
 							$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
-							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
 							$switchable_languages[ $lang_code ] = $current_url;
 						}
 					} else {
