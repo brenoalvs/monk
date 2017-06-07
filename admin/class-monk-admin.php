@@ -1405,6 +1405,39 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Download language packages according to active languages
+	 *
+	 * Update active and default languages.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return void
+	 */
+	public function monk_save_language_packages() {
+		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
+			global $monk_languages;
+			$active_languages  = $_POST['monk_active_languages'];
+
+			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+
+			foreach ( $active_languages as $language ) {
+				if ( 'en_US' !== $language ) {
+					$download_pack = wp_download_language_pack( $language );
+					if ( $download_pack ) {
+						$response[] = true;
+					} else {
+						$response[] = false;
+					}
+				}
+			}
+
+			wp_send_json_success( $response );
+		} else {
+			wp_send_json_error();
+		} // End if().
+	}
+
+	/**
 	 * Function to set default language to all posts and term without language
 	 *
 	 * @since    0.4.0

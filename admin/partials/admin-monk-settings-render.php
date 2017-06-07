@@ -27,8 +27,13 @@ if ( ! defined( 'WPINC' ) ) {
 		}
 		?>
 		<form action="options.php" method="POST" class="monk-form-settings" id="<?php echo esc_attr( $form_id ); ?>">
+			<input type="hidden" name="action" value="monk_save_language_packages">
 			<?php
 			if ( ! $is_tools ) {
+				$btn_args = array(
+					'id' => 'monk-submit-settings',
+				);
+				wp_nonce_field( '_monk_nonce', '_monk_nonce' );
 				settings_fields( 'monk_settings' );
 			} else {
 				?><input type="hidden" name="action" value="monk_set_language_to_elements" /><?php
@@ -36,6 +41,8 @@ if ( ! defined( 'WPINC' ) ) {
 			}
 			do_settings_sections( 'monk_settings' );
 			submit_button();
+				do_settings_sections( 'monk_settings' );
+				submit_button( '', 'primary', 'submit', 'true', $btn_args );
 			?>
 			<span class="spinner monk-spinner" id="monk-spinner"></span>
 			<?php if ( $is_tools ) : ?>
@@ -44,6 +51,10 @@ if ( ! defined( 'WPINC' ) ) {
 				<p class="monk-message monk-hide" id="monk-bulk-action-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
 				<p class="monk-message monk-hide" id="monk-bulk-action-error"><?php esc_html_e( 'Error. Try again.', 'monk' ); ?></p>
 			<?php endif; ?>
+			<span class="spinner monk-spinner" id="monk-spinner"></span>
+			<p class="monk-message monk-hide" id="monk-downloading"><?php esc_html_e( 'Downloading packages...', 'monk' ); ?></p>
+			<p class="monk-message monk-hide" id="monk-download-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
+			<p class="monk-message monk-hide" id="monk-download-error"><?php esc_html_e( 'Error. Try again.', 'monk' ); ?></p>
 		</form>
 	</div>
 <?php
