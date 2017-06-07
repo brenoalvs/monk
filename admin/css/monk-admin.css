@@ -146,3 +146,11 @@ div.menu-translations ul.current-menu-translations li {
 .monk-hide {
 	display: none;
 }
+
+.monk-label {
+	overflow: hidden;
+	padding-bottom: 5px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 200px;
+}
