@@ -1416,7 +1416,10 @@ class Monk_Admin {
 	public function monk_save_language_packages() {
 		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
 			global $monk_languages;
-			$active_languages  = $_POST['monk_active_languages'];
+			$default_language = $_POST['monk_default_language'] !== 'en_US' ? $_POST['monk_default_language'] : '';
+			$active_languages = $_POST['monk_active_languages'];
+
+			update_site_option( 'WPLANG', $default_language );
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
