@@ -141,20 +141,32 @@ class Monk_Admin {
 	public function monk_options_init() {
 		$action = filter_input( INPUT_GET, 'action' );
 
-		if ( 'monk_general' === $action || null === $action ) {
-			add_settings_section(
-				'monk_general_settings',
-				__( 'General Settings', 'monk' ),
-				array( $this, 'monk_general_settings_render' ),
-				'monk_settings'
-			);
-		} elseif ( 'monk_tools' === $action ) {
-			add_settings_section(
-				'monk_tools',
-				__( 'Tools', 'monk' ),
-				array( $this, 'monk_tools_description' ),
-				'monk_settings'
-			);
+		switch ( $action ) {
+			case 'monk_tools':
+				add_settings_section(
+					'monk_tools',
+					__( 'Tools', 'monk' ),
+					array( $this, 'monk_tools_description' ),
+					'monk_settings'
+				);
+				break;
+			case 'monk_options':
+				add_settings_section(
+					'monk_options',
+					__( 'Options', 'monk' ),
+					array( $this, 'monk_options_description' ),
+					'monk_settings'
+				);
+				break;
+			case 'monk_general':
+			default:
+				add_settings_section(
+					'monk_general_settings',
+					__( 'General Settings', 'monk' ),
+					array( $this, 'monk_general_settings_render' ),
+					'monk_settings'
+				);
+				break;
 		}
 
 		register_setting( 'monk_settings', 'monk_default_language' );
@@ -192,6 +204,36 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_tools'
 		);
+<<<<<<< HEAD
+=======
+
+		register_setting( 'monk_settings', 'monk_default_language_url' );
+		add_settings_field(
+			'monk_default_language_url',
+			__( 'Show default language in URL', 'monk' ),
+			array( $this, 'monk_default_language_url_render' ),
+			'monk_settings',
+			'monk_general_settings'
+		);
+
+		register_setting( 'monk_settings', 'monk_site_name' );
+		add_settings_field(
+			'monk_site_name',
+			__( 'Site Title', 'monk' ),
+			array( $this, 'monk_site_name_render' ),
+			'monk_settings',
+			'monk_options'
+		);
+
+		register_setting( 'monk_settings', 'monk_site_description' );
+		add_settings_field(
+			'monk_site_description',
+			__( 'Tagline<br><p class="description">In a few words, explain what this site is about.</p>', 'monk' ),
+			array( $this, 'monk_site_description_render' ),
+			'monk_settings',
+			'monk_options'
+		);
+>>>>>>> Added necessary alements to show 'site_name' and 'site_description' fields to tranlate
 	}
 
 	/**
@@ -231,10 +273,26 @@ class Monk_Admin {
 		$action  = filter_input( INPUT_GET, 'action' );
 		$general = '';
 		$tools   = '';
+<<<<<<< HEAD
 		if ( 'monk_general' === $action || null === $action ) {
 			$general = 'nav-tab-active monk-active-tab';
 		} elseif ( 'monk_tools' === $action ) {
 			$tools = 'nav-tab-active monk-active-tab';
+=======
+		$options = '';
+
+		switch ( $action ) {
+			case 'monk_tools':
+				$tools   = 'nav-tab-active';
+				break;
+			case 'monk_options':
+				$options = 'nav-tab-active';
+				break;
+			case 'monk_general':
+			default:
+				$general = 'nav-tab-active';
+				break;
+>>>>>>> Added necessary alements to show 'site_name' and 'site_description' fields to tranlate
 		}
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-tabs-render.php';
@@ -253,6 +311,18 @@ class Monk_Admin {
 	}
 
 	/**
+	 * This is the callback for the monk_options section
+	 *
+	 * Prints a description in the section
+	 *
+	 * @since    0.5.0
+	 * @return  void
+	 */
+	public function monk_options_description() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-options-description.php';
+	}
+
+	/**
 	 * Function to render checkbox field to set default language to all posts and terms
 	 *
 	 * Callback for the monk_set_language_to_elements element
@@ -262,6 +332,42 @@ class Monk_Admin {
 	 */
 	public function monk_set_elements_language_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-set-elements-language-render.php';
+	}
+
+	/**
+	 * Function to render the site name to translate.
+	 *
+	 * Callback for the monk_site_name element
+	 *
+	 * @since    0.5.0
+	 * @return  void
+	 */
+	public function monk_site_name_render() {
+		$monk_languages   = monk_get_available_languages();
+		$site_name        = get_option( 'blogname' );
+		$default_language = get_option( 'monk_default_language', false );
+		$default_slug     = $monk_languages[ $default_language ]['slug'];
+		$active_languages = get_option( 'monk_active_languages', array() );
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-site-name-render.php';
+	}
+
+	/**
+	 * Function to render the site description to translate.
+	 *
+	 * Callback for the monk_site_description element
+	 *
+	 * @since    0.5.0
+	 * @return  void
+	 */
+	public function monk_site_description_render() {
+		$monk_languages   = monk_get_available_languages();
+		$site_description = get_option( 'blogdescription' );
+		$default_language = get_option( 'monk_default_language', false );
+		$default_slug     = $monk_languages[ $default_language ]['slug'];
+		$active_languages = get_option( 'monk_active_languages', array() );
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-site-description-render.php';
 	}
 
 	/**
@@ -293,7 +399,24 @@ class Monk_Admin {
 	 */
 	public function monk_settings_render() {
 		$this->monk_settings_tabs();
-		$action = filter_input( INPUT_GET, 'action' );
+		$action  = filter_input( INPUT_GET, 'action' );
+		$the_tab = false;
+
+		switch ( $action ) {
+			case 'monk_tools':
+				$form_id = 'monk-tools-form';
+				$the_tab = 'tools';
+				break;
+			case 'monk_options':
+				$form_id = 'monk-options-form';
+				$the_tab = 'options';
+				break;
+			case 'monk_general':
+			default:
+				$form_id = 'monk-general-form';
+				$the_tab = 'general';
+				break;
+		}
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-render.php';
 	}
@@ -1453,7 +1576,15 @@ class Monk_Admin {
 	 */
 	public function monk_save_language_packages() {
 		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
+<<<<<<< HEAD
 			$active_languages = $_POST['monk_active_languages'];
+=======
+			global $monk_languages;
+			$default_language = $_POST['monk_default_language'] !== 'en_US' ? $_POST['monk_default_language'] : '';
+			$active_languages = $_POST['monk_active_languages'];
+
+			update_site_option( 'WPLANG', $default_language );
+>>>>>>> Added necessary alements to show 'site_name' and 'site_description' fields to tranlate
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
@@ -1558,7 +1689,42 @@ class Monk_Admin {
 				}
 				$response[] = $set_monk_id && $set_language ? true : false;
 			}
-			wp_send_json_success( $set_translation_array );
+			wp_send_json_success();
+		} else {
+			wp_send_json_error();
+		} // End if().
+	}
+
+	/**
+	 * Function to save site options and your translations
+	 *
+	 * @since    0.5.0
+	 *
+	 * @return void
+	 */
+	public function monk_save_site_options() {
+		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
+			$default_language = get_option( 'monk_default_language', false );
+			$active_languages = get_option( 'monk_active_languages', array() );
+			$default_blogname = $_REQUEST['blogname'];
+			$default_blogdesc = $_REQUEST['blogdescription'];
+
+			update_option( 'blogname', $default_blogname );
+			update_option( 'blogdescription', $default_blogdesc );
+
+			foreach ( $active_languages as $lang ) {
+				if ( $lang !== $default_language ) {
+					$blogname_value = $_REQUEST[ 'blogname_' . $lang ];
+					$blogdesc_value = $_REQUEST[ 'blogdescription_' . $lang ];
+					if ( ! empty( $blogname_value ) ) {
+						update_option( 'blogname_' . $lang, $blogname_value );
+					}
+					if ( ! empty( $blogdesc_value ) ) {
+						update_option( 'blogdescription_' . $lang, $blogdesc_value );
+					}
+				}
+			}
+			wp_send_json_success();
 		} else {
 			wp_send_json_error();
 		} // End if().
