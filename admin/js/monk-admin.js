@@ -86,7 +86,6 @@
 					url: monk.ajax_url,
 					data: form_data,
 					success: function( response ) {
-						console.log( response );
 						if ( response.hasOwnProperty( 'success' ) ) {
 							if ( response.success ) {
 								if ( response.data ) {
