@@ -118,7 +118,6 @@
 					url: monk.ajax_url,
 					data: form_data,
 					success: function( response ) {
-						console.log( response );
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
 							if ( response.success ) {		
@@ -154,7 +153,6 @@
 					url: monk.ajax_url,
 					data: form_data,
 					success: function( response ) {
-						console.log( response );
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-save-options' ).addClass( 'monk-hide' );
 							if ( response.success ) {		
