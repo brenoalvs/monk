@@ -75,7 +75,11 @@
 				not_submit = false;
 				$( '#monk-spinner' ).addClass( 'is-active' );
 				$( '#monk-downloading' ).removeClass( 'monk-hide' );
-				var form_data = $( '#monk-form-settings' ).serializeArray();
+				var form_data = $( '#monk-general-form' ).serializeArray();
+				form_data.push({
+					name : 'action',
+					value : 'monk_save_language_packages',
+				});
 
 				$.ajax({
 					type: 'POST',
