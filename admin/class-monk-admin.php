@@ -178,15 +178,6 @@ class Monk_Admin {
 			'monk_general_settings'
 		);
 
-		register_setting( 'monk_settings', 'monk_default_language_url' );
-		add_settings_field(
-			'monk_default_language_url',
-			__( 'Show default language in URL', 'monk' ),
-			array( $this, 'monk_default_language_url_render' ),
-			'monk_settings',
-			'monk_general_settings'
-		);
-
 		register_setting( 'monk_settings', 'monk_active_languages' );
 		add_settings_field(
 			'monk_active_languages',
@@ -204,8 +195,6 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_tools'
 		);
-<<<<<<< HEAD
-=======
 
 		register_setting( 'monk_settings', 'monk_default_language_url' );
 		add_settings_field(
@@ -233,7 +222,6 @@ class Monk_Admin {
 			'monk_settings',
 			'monk_options'
 		);
->>>>>>> Added necessary alements to show 'site_name' and 'site_description' fields to tranlate
 	}
 
 	/**
@@ -273,12 +261,6 @@ class Monk_Admin {
 		$action  = filter_input( INPUT_GET, 'action' );
 		$general = '';
 		$tools   = '';
-<<<<<<< HEAD
-		if ( 'monk_general' === $action || null === $action ) {
-			$general = 'nav-tab-active monk-active-tab';
-		} elseif ( 'monk_tools' === $action ) {
-			$tools = 'nav-tab-active monk-active-tab';
-=======
 		$options = '';
 
 		switch ( $action ) {
@@ -292,7 +274,6 @@ class Monk_Admin {
 			default:
 				$general = 'nav-tab-active';
 				break;
->>>>>>> Added necessary alements to show 'site_name' and 'site_description' fields to tranlate
 		}
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-tabs-render.php';
@@ -1576,15 +1557,11 @@ class Monk_Admin {
 	 */
 	public function monk_save_language_packages() {
 		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
-<<<<<<< HEAD
-			$active_languages = $_POST['monk_active_languages'];
-=======
 			global $monk_languages;
 			$default_language = $_POST['monk_default_language'] !== 'en_US' ? $_POST['monk_default_language'] : '';
 			$active_languages = $_POST['monk_active_languages'];
 
 			update_site_option( 'WPLANG', $default_language );
->>>>>>> Added necessary alements to show 'site_name' and 'site_description' fields to tranlate
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
