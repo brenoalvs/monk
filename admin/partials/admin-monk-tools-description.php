@@ -1,6 +1,6 @@
 <?php
 /**
- * Provide the view for the monk_options function
+ * Provide the view for the monk_tools function
  *
  * @since      0.4.0
  *
