@@ -204,4 +204,34 @@ class Monk_Public {
 
 		return $args;
 	}
+
+	/**
+	 * Function to filter blogname and blogdescription when in the front-end
+	 *
+	 * @since    0.5.0
+	 *
+	 * @param  string $output String blogname or blogdescription.
+	 * @return string $output String blogname or blogdescription.
+	 */
+	public function monk_filter_bloginfo( $output ) {
+		$monk_languages   = monk_get_available_languages();
+		$default_language = get_option( 'monk_default_language', false );
+		$default_slug     = $monk_languages[ $default_language ]['slug'];
+		$current_slug     = get_query_var( 'lang', $default_slug );
+		$current_locale   = monk_get_locale_by_slug( $current_slug );
+		$blog_name        = get_option( 'blogname' );
+		$blog_description = get_option( 'blogdescription' );
+
+		if ( $current_slug !== $default_slug ) {
+			if ( $output === $blog_name ) {
+				$output = get_option( 'blogname_' . $current_locale, $output );
+			}
+
+			if ( $output === $blog_description ) {
+				$output = get_option( 'blogdescription_' . $current_locale, $output );
+			}
+		}
+
+		return $output;
+	}
 }
