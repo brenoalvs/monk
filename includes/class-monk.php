@@ -244,7 +244,8 @@ class Monk {
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
-		$this->loader->add_filter( 'bloginfo', $plugin_public, 'monk_filter_bloginfo' );
+		$this->loader->add_filter( 'pre_option_blogname', $plugin_public, 'monk_filter_options', 10, 2 );
+		$this->loader->add_filter( 'pre_option_blogdescription', $plugin_public, 'monk_filter_options', 10, 2 );
 	}
 
 	/**
