@@ -1691,13 +1691,13 @@ class Monk_Admin {
 
 			foreach ( $active_languages as $lang ) {
 				if ( $lang !== $default_language ) {
-					$blogname_value = $_REQUEST[ 'blogname_' . $lang ];
-					$blogdesc_value = $_REQUEST[ 'blogdescription_' . $lang ];
+					$blogname_value = $_REQUEST[ 'monk_' . $lang . '_blogname' ];
+					$blogdesc_value = $_REQUEST[ 'monk_' . $lang . '_blogdescription' ];
 					if ( ! empty( $blogname_value ) ) {
-						update_option( 'blogname_' . $lang, $blogname_value );
+						update_option( 'monk_' . $lang . '_blogname', $blogname_value );
 					}
 					if ( ! empty( $blogdesc_value ) ) {
-						update_option( 'blogdescription_' . $lang, $blogdesc_value );
+						update_option( 'monk_' . $lang . '_blogdescription', $blogdesc_value );
 					}
 				}
 			}

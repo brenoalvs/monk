@@ -206,32 +206,32 @@ class Monk_Public {
 	}
 
 	/**
-	 * Function to filter blogname and blogdescription when in the front-end
+	 * Function to filter any option
 	 *
 	 * @since    0.5.0
 	 *
-	 * @param  string $output String blogname or blogdescription.
-	 * @return string $output String blogname or blogdescription.
+	 * @param  mixed  $pre_option Value to return instead of the option value.
+	 * @param  string $option     String option name.
+	 * @return mixed  $pre_option Value to return instead of the option value.
 	 */
-	public function monk_filter_bloginfo( $output ) {
-		$monk_languages   = monk_get_available_languages();
-		$default_language = get_option( 'monk_default_language', false );
-		$default_slug     = $monk_languages[ $default_language ]['slug'];
-		$current_slug     = get_query_var( 'lang', $default_slug );
-		$current_locale   = monk_get_locale_by_slug( $current_slug );
-		$blog_name        = get_option( 'blogname' );
-		$blog_description = get_option( 'blogdescription' );
+	public function monk_filter_options( $pre_option, $option ) {
+		$option_names = apply_filters( 'monk_translatable_option', array(
+			'blogname',
+			'blogdescription',
+		));
 
-		if ( $current_slug !== $default_slug ) {
-			if ( $output === $blog_name ) {
-				$output = get_option( 'blogname_' . $current_locale, $output );
-			}
+		if ( ! in_array( $option, $option_names ) ) {
+			return $pre_option;
+		} else {
+			$default_language = get_option( 'monk_default_language', false );
+			$current_slug     = get_query_var( 'lang', false );
+			$current_locale   = monk_get_locale_by_slug( $current_slug );
 
-			if ( $output === $blog_description ) {
-				$output = get_option( 'blogdescription_' . $current_locale, $output );
+			if ( $current_locale !== $default_language ) {
+				$pre_option = get_option( 'monk_' . $current_locale . '_' . $option, false );
 			}
 		}
 
-		return $output;
+		return $pre_option;
 	}
 }
