@@ -241,7 +241,7 @@ class Monk_Public {
 			$current_slug     = get_query_var( 'lang', false );
 			$current_locale   = monk_get_locale_by_slug( $current_slug );
 
-			if ( $current_locale !== $default_language ) {
+			if ( ! empty( $current_locale ) && $current_locale !== $default_language ) {
 				$pre_option = get_option( 'monk_' . $current_locale . '_' . $option, false );
 			}
 		}
@@ -262,7 +262,7 @@ class Monk_Public {
 		$current_slug     = get_query_var( 'lang', false );
 		$current_locale   = monk_get_locale_by_slug( $current_slug );
 
-		if ( $current_locale !== $default_language ) {
+		if ( ! empty( $current_locale ) && $current_locale !== $default_language ) {
 			$description = get_option( 'monk_' . $current_locale . '_description', false );
 		}
 		return $description;
