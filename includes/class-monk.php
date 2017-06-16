@@ -224,6 +224,10 @@ class Monk {
 		$this->loader->add_action( 'wp_ajax_monk_set_language_to_elements', $plugin_admin, 'monk_set_language_to_elements' );
 		$this->loader->add_action( 'wp_ajax_monk_save_language_packages', $plugin_admin, 'monk_save_language_packages' );
 		$this->loader->add_action( 'wp_ajax_monk_save_options', $plugin_admin, 'monk_save_site_options' );
+		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'monk_user_description_render' );
+		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'monk_user_description_render' );
+		$this->loader->add_action( 'personal_options_update', $plugin_admin, 'monk_save_user_description' );
+		$this->loader->add_action( 'edit_user_profile_update', $plugin_admin, 'monk_save_user_description' );
 	}
 
 	/**
@@ -246,6 +250,7 @@ class Monk {
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
 		$this->loader->add_filter( 'pre_option_blogname', $plugin_public, 'monk_filter_options', 10, 2 );
 		$this->loader->add_filter( 'pre_option_blogdescription', $plugin_public, 'monk_filter_options', 10, 2 );
+		$this->loader->add_filter( 'get_the_author_description', $plugin_public, 'monk_filter_user_description' );
 	}
 
 	/**
