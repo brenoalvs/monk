@@ -1172,13 +1172,13 @@ class Monk_Admin {
 			$language  = $this->monk_language_selector_render( $post_id );
 		} elseif ( ! $language && $post_language ) {
 			$lang_code = $post_language;
-			$language = $monk_languages[ $post_language ]['name'];
+			$language = $monk_languages[ $post_language ]['english_name'];
 		} elseif ( ! $language && $new_post_language ) {
 			$lang_code = $new_post_language;
-			$language = $monk_languages[ $new_post_language ]['name'];
+			$language = $monk_languages[ $new_post_language ]['english_name'];
 		} else {
 			$lang_code = $default_language;
-			$language = $monk_languages[ $default_language ]['name'];
+			$language = $monk_languages[ $default_language ]['english_name'];
 		}
 
 		if ( 'upload.php' !== substr( strrchr( wp_parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
