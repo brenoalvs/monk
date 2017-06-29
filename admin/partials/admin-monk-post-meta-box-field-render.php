@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
 				}
 
 				foreach ( $available_languages as $lang_code ) :
-						$lang_name = $monk_languages[ $lang_code ]['name'];
+						$lang_name = $monk_languages[ $lang_code ]['english_name'];
 				?>
 					<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
 						<?php echo esc_html( $lang_name ); ?>
@@ -90,7 +90,7 @@ if ( ! defined( 'WPINC' ) ) {
 						), $monk_translation_url );
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-							$lang_name = $monk_languages[ $lang_code ]['name'];
+							$lang_name = $monk_languages[ $lang_code ]['english_name'];
 					?>
 							<option value="<?php echo esc_url( $language_url ); ?>"/>
 								<?php echo esc_html( $lang_name ); ?>
@@ -103,7 +103,7 @@ if ( ! defined( 'WPINC' ) ) {
 					foreach ( $active_languages as $lang_code ) :
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-							$lang_name = $monk_languages[ $lang_code ]['name'];
+							$lang_name = $monk_languages[ $lang_code ]['english_name'];
 					?>
 							<option value="<?php echo esc_attr( $lang_code ); ?>"/>
 								<?php echo esc_html( $lang_name ); ?>
@@ -119,7 +119,7 @@ if ( ! defined( 'WPINC' ) ) {
 						), $monk_translation_url );
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-							$lang_name = $monk_languages[ $lang_code ]['name'];
+							$lang_name = $monk_languages[ $lang_code ]['english_name'];
 					?>
 							<option value="<?php echo esc_url( $language_url ); ?>"/>
 								<?php echo esc_html( $lang_name ); ?>
@@ -147,7 +147,7 @@ if ( ! defined( 'WPINC' ) ) {
 	</div>
 	<ul class="monk-translated-to">
 		<li>
-			<span id="current-language"><?php echo esc_html( $monk_languages[ $post_default_language ]['name'] ); ?></span>
+			<span id="current-language"><?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?></span>
 
 			<!-- 
 				Gives the option to alter the current post language
@@ -165,12 +165,12 @@ if ( ! defined( 'WPINC' ) ) {
 					<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 						<select name="monk_post_language" id="new-post-language">
 							<option value="<?php echo esc_attr( $post_default_language ); ?>" selected>
-								<?php echo esc_html( $monk_languages[ $post_default_language ]['name'] ); ?>
+								<?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?>
 							</option>
 							<?php
 							foreach ( $active_languages as $lang_code ) :
 								if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-									$lang_name = $monk_languages[ $lang_code ]['name'];
+									$lang_name = $monk_languages[ $lang_code ]['english_name'];
 							?>
 									<option  value="<?php echo esc_attr( $lang_code ); ?>"/>
 										<?php echo esc_html( $lang_name ); ?>
@@ -192,7 +192,7 @@ if ( ! defined( 'WPINC' ) ) {
 				if ( strval( $monk_id ) !== $post->ID ) :
 					$language_url = get_edit_post_link( $monk_id ); ?>
 					<li>
-						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?></a>
+						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?></a>
 					</li>
 		<?php
 				endif;
