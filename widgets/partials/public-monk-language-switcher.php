@@ -35,6 +35,12 @@ echo $args['before_widget'];
 			</span>
 		</div>
 		<ul class="monk-language-dropdown">
+			<?php if( empty( $switchable_languages ) ) : ?>
+				<li class="monk-lang">
+					<?php /* translators: This is a message that says a content has no translations */ ?>
+					<option><?php esc_html_e( 'No other translations', 'monk' ); ?></option>
+				</li>
+			<?php endif; ?>
 			<?php foreach ( $switchable_languages as $code => $url ) : ?>
 				<?php if ( $code !== $monk_languages[ $current_language ]['slug'] ) : ?>
 					<li class="monk-lang">
