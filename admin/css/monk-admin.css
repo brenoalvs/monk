@@ -167,3 +167,7 @@ div.menu-translations ul.current-menu-translations li {
 	white-space: nowrap;
 	width: 200px;
 }
+
+.monk-active-tab {
+	pointer-events: none;
+}
