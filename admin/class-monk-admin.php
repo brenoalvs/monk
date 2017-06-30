@@ -207,15 +207,15 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_settings_tabs() {
-		$url     = home_url() . $_SERVER['REQUEST_URI'];
+		$url     = is_ssl() ? 'https://' : 'http://';
+		$url     .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$action  = filter_input( INPUT_GET, 'action' );
 		$general = '';
 		$tools   = '';
-
 		if ( 'monk_general' === $action || null === $action ) {
-			$general = 'nav-tab-active';
+			$general = 'nav-tab-active monk-active-tab';
 		} elseif ( 'monk_tools' === $action ) {
-			$tools = 'nav-tab-active';
+			$tools = 'nav-tab-active monk-active-tab';
 		}
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-tabs-render.php';
