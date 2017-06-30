@@ -419,15 +419,9 @@ class Monk_Links {
 		$default_language     = get_option( 'monk_default_language', false );
 		$default_slug         = $monk_languages[ $default_language ]['slug'];
 		$default_language_url = get_option( 'monk_default_language_url', false );
+		$link                 = $this->monk_change_language_url( $link, $language );
 
-		if ( $this->monk_using_permalinks() ) {
-			$path = wp_make_link_relative( $link );
-			$link = $default_language_url || $language !== $default_slug ? trailingslashit( site_url() ) . $language . $path : site_url() . $path;
-		} else {
-			$link = add_query_arg( 'lang', $language, $link );
-		}
-
-		return $link;
+    return $link;
 	}
 
 	/**
