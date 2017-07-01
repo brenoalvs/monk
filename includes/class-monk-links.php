@@ -414,12 +414,7 @@ class Monk_Links {
 	public function monk_add_language_date_permalink( $link ) {
 		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->site_language;
 
-		if ( $this->monk_using_permalinks() ) {
-			$path = wp_make_link_relative( $link );
-			$link = trailingslashit( site_url() ) . $language . $path;
-		} else {
-			$link = add_query_arg( 'lang', $language, $link );
-		}
+		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
