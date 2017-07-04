@@ -234,23 +234,4 @@ class Monk_Public {
 
 		return $pre_option;
 	}
-
-	/**
-	 * Function to filter user description
-	 *
-	 * @since    0.5.0
-	 *
-	 * @param  string $description User description.
-	 * @return string $description User description.
-	 */
-	public function monk_filter_user_description( $description ) {
-		$default_language = get_option( 'monk_default_language', false );
-		$current_slug     = get_query_var( 'lang', false );
-		$current_locale   = monk_get_locale_by_slug( $current_slug );
-
-		if ( ! empty( $current_locale ) && $current_locale !== $default_language ) {
-			$description = get_option( 'monk_' . $current_locale . '_description', false );
-		}
-		return $description;
-	}
 }

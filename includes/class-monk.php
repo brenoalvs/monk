@@ -246,7 +246,6 @@ class Monk {
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
 		$this->loader->add_filter( 'pre_option_blogname', $plugin_public, 'monk_filter_options', 10, 2 );
 		$this->loader->add_filter( 'pre_option_blogdescription', $plugin_public, 'monk_filter_options', 10, 2 );
-		$this->loader->add_filter( 'get_the_author_description', $plugin_public, 'monk_filter_user_description' );
 	}
 
 	/**
