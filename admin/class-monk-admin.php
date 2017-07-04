@@ -332,22 +332,6 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to render the user description to translate.
-	 *
-	 * @since    0.5.0
-	 * @return  void
-	 */
-	public function monk_user_description_render() {
-		$monk_languages   = monk_get_available_languages();
-		$user_description = get_user_option( 'description' );
-		$default_language = get_option( 'monk_default_language', false );
-		$default_slug     = $monk_languages[ $default_language ]['slug'];
-		$active_languages = get_option( 'monk_active_languages', array() );
-
-		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-user-description-render.php';
-	}
-
-	/**
 	 * Function to render the select field, callback for the monk_default_language element
 	 *
 	 * @since    0.1.0
@@ -1682,32 +1666,5 @@ class Monk_Admin {
 		} else {
 			wp_send_json_error();
 		} // End if().
-	}
-
-	/**
-	 * Function to save the user description's translations
-	 *
-	 * @since  0.5.0
-	 * @param  int $user_id Id of the current user.
-	 *
-	 * @return void
-	 */
-	public function monk_save_user_description( $user_id ) {
-		if ( ! current_user_can( 'edit_user', $user_id ) ) {
-			return;
-		}
-
-		$default_language = get_option( 'monk_default_language', false );
-		$active_languages = get_option( 'monk_active_languages', array() );
-
-		foreach ( $active_languages as $lang ) {
-			if ( $lang !== $default_language ) {
-				$userdesc_value = $_REQUEST[ 'monk_' . $lang . '_description' ];
-
-				if ( ! empty( $userdesc_value ) ) {
-					update_option( 'monk_' . $lang . '_description', $userdesc_value );
-				}
-			}
-		}
 	}
 }

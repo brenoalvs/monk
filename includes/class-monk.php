@@ -224,10 +224,6 @@ class Monk {
 		$this->loader->add_action( 'wp_ajax_monk_set_language_to_elements', $plugin_admin, 'monk_set_language_to_elements' );
 		$this->loader->add_action( 'wp_ajax_monk_save_language_packages', $plugin_admin, 'monk_save_language_packages' );
 		$this->loader->add_action( 'wp_ajax_monk_save_options', $plugin_admin, 'monk_save_site_options' );
-		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'monk_user_description_render' );
-		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'monk_user_description_render' );
-		$this->loader->add_action( 'personal_options_update', $plugin_admin, 'monk_save_user_description' );
-		$this->loader->add_action( 'edit_user_profile_update', $plugin_admin, 'monk_save_user_description' );
 	}
 
 	/**
