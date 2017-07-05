@@ -291,7 +291,14 @@ class Monk_Links {
 			if ( $this->monk_using_permalinks() ) {
 				$link = trailingslashit( $link . $language );
 			} else {
-				$link = add_query_arg( 'lang', $language, $link );
+				$monk_languages       = monk_get_available_languages();
+				$default_language     = get_option( 'monk_default_language', false );
+				$default_language_url = get_option( 'monk_default_language_url', false );
+				if ( empty( $default_language_url ) && $monk_languages[ $default_language ]['slug'] === $language ) {
+					$link = remove_query_arg( 'lang' );
+				} else {
+					$link = add_query_arg( 'lang', $language, $link );
+				}
 			}
 		}
 
