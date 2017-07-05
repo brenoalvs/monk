@@ -324,12 +324,17 @@ class Monk_Links {
 
 		if ( in_array( $lang, $active_languages, true ) ) {
 			$language = $lang;
-		} else {
+		} elseif ( in_array( $lang, $monk_languages, true ) ) {
 			$language = $monk_languages[ $lang ]['slug'];
+		} else {
+			$language = $monk_languages[ $default_language ]['slug'];
+		}
+
+		if ( $language === $monk_languages[ $default_language ]['slug'] ) {
+			return $url;
 		}
 
 		if ( $this->monk_using_permalinks() ) {
-
 			if ( ! empty( $active_languages ) ) {
 				$base    = $this->site_home . '/' . $this->site_root;
 				$slug    = $default_language_url || $monk_languages[ $default_language ]['slug'] !== $language ? $language . '/': '';
@@ -548,7 +553,6 @@ class Monk_Links {
 			// Replace the closing form tag with the hidden field.
 			if ( $this->monk_using_permalinks() ) {
 				$form = $default_language_url || $language !== $default_slug ? $form : str_replace( home_url() . '/' . $default_slug . '/', home_url() . '/', $form );
-				return $form;
 			} else {
 				$form = str_replace( '</form>', '<input type="hidden" name="lang" value="' . esc_attr( $language ) . '" /></form>', $form );
 			}
@@ -607,7 +611,15 @@ class Monk_Links {
 			}
 		} elseif ( is_home() || is_front_page() || is_archive() && ! ( is_tax() || is_tag() || is_category() ) ) {
 			// From valid query var.
-			$slug = get_query_var( 'lang', $this->site_language );
+			$default_language     = get_option( 'monk_default_language', false );
+			$default_slug         = $monk_languages[ $default_language ]['slug'];
+			$default_language_url = get_option( 'monk_default_language_url', false );
+
+			if ( empty( $default_language_url ) && $this->site_language === $default_slug ) {
+				$slug = remove_query_arg( 'lang' );
+			} else {
+				$slug = get_query_var( 'lang', $this->site_language );
+			}
 		}
 
 		// If is not any of the above content cases, the fallback is the default language.
