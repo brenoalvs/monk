@@ -190,7 +190,7 @@ class Monk_Admin {
 		register_setting( 'monk_settings', 'monk_set_language_to_elements' );
 		add_settings_field(
 			'monk_set_language_to_elements',
-			__( 'Set default language to all posts and terms', 'monk' ),
+			__( 'Set default language to all posts and terms without language', 'monk' ),
 			array( $this, 'monk_set_elements_language_render' ),
 			'monk_settings',
 			'monk_tools'
@@ -1556,12 +1556,8 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_save_language_packages() {
-		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
-			global $monk_languages;
-			$default_language = $_POST['monk_default_language'] !== 'en_US' ? $_POST['monk_default_language'] : '';
+		if ( check_ajax_referer( '_monk_translation_packages', '_monk_translation_packages', false ) ) {
 			$active_languages = $_POST['monk_active_languages'];
-
-			update_site_option( 'WPLANG', $default_language );
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
@@ -1590,8 +1586,13 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_set_language_to_elements() {
+<<<<<<< HEAD
 		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
 			$monk_set_language_to_elements = filter_input( INPUT_POST, 'monk_set_language_to_elements' );
+=======
+		if ( check_ajax_referer( '_monk_tools', false, false ) ) {
+			$monk_set_language_to_elements = $_POST['monk_set_language_to_elements'];
+>>>>>>> Fixed requested changes
 
 			global $wpdb;
 			$default_language = get_option( 'monk_default_language', false );
@@ -1680,7 +1681,7 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_save_site_options() {
-		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
+		if ( check_ajax_referer( '_monk_site_options', false, false ) ) {
 			$default_language = get_option( 'monk_default_language', false );
 			$active_languages = get_option( 'monk_active_languages', array() );
 			$default_blogname = $_REQUEST['blogname'];
