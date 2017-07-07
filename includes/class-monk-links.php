@@ -334,10 +334,6 @@ class Monk_Links {
 			$language = $monk_languages[ $default_language ]['slug'];
 		}
 
-		if ( $language === $monk_languages[ $default_language ]['slug'] ) {
-			return $url;
-		}
-
 		if ( $this->monk_using_permalinks() ) {
 			if ( ! empty( $active_languages ) ) {
 				$base    = $this->site_home . '/' . $this->site_root;
