@@ -318,26 +318,26 @@ class Monk_Links {
 	public function monk_change_language_url( $url, $lang ) {
 		$monk_languages       = monk_get_available_languages();
 
-		$default_language     = get_option( 'monk_default_language', false );
+		$default_language     = $this->site_language;
 		$default_language_url = get_option( 'monk_default_language_url', false );
 		$active_languages     = $this->monk_get_active_languages();
 
 		if ( in_array( $lang, $active_languages, true ) ) {
 			$language = $lang;
-		} elseif ( in_array( $lang, $monk_languages, true ) ) {
+		} elseif ( array_key_exists( $lang, $monk_languages ) ) {
 			$language = $monk_languages[ $lang ]['slug'];
 		} else {
 			$language = $monk_languages[ $default_language ]['slug'];
 		}
 
-		if ( $language === $monk_languages[ $default_language ]['slug'] ) {
-			return $url;
-		}
-
 		if ( $this->monk_using_permalinks() ) {
 			if ( ! empty( $active_languages ) ) {
 				$base    = $this->site_home . '/' . $this->site_root;
-				$slug    = $default_language_url || $monk_languages[ $default_language ]['slug'] !== $language ? $language . '/': '';
+				if ( ( $default_language_url || ( ! $default_language_url && $language !== $default_language ) ) ) {
+					$slug = $language . '/';
+				} else {
+					$slug = '';
+				}
 				$pattern = str_replace( '/', '\/', $base );
 				$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
 				$url     = preg_replace( $pattern, $base, $url );
