@@ -53,6 +53,7 @@ You must! We'll post some contribution guidelines soon.
     + Improved overall links structures.
     + Improved the Language Switcher widget.
     + Improved text consistency.
+    + Improved the post public filters.
     + Fixed date and category archive links.
 
 - **0.3.0**

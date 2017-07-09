@@ -79,6 +79,7 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 * Improved overall links structures.
 * Improved the Language Switcher widget.
 * Improved text and reading consistency.
+* Improved the post public filters.
 * Fixed date and category archive links.
 
 = 0.3.0 =
