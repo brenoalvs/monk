@@ -39,21 +39,11 @@ Are you a developer and want to help improve Monk? Join us on [GitHub](https://g
 
 == Installation ==
 
-EN-US
-
 1. Install and activate Monk from the Plugins menu in WordPress or download and unzip the plugin folder manually inside of `wp-content/plugins`.
 2. Go to Monk > General Settings and select a language for your current site content and check other languages you may want to translate.
 3. Go to Settings > General and also install the language packages that you want to use through the Site Language option.
 4. If you already have Posts, Pages or other content, you'll need set a language for them by saving the language option on their edit pages.
 5. Remember to activate the Language Switcher Widget under Appearence > Widgets to let your site visitors easily navigate through the translations.
-
-PT-BR
-
-1. Instale e ative o Monk através do menu Plugins no WordPress ou baixe e extraia a pasta do plugin manualmente em `wp-content/plugins`.
-2. Vá em Monk > Configurações e selecione um idioma para o conteúdo atual do site e marque os outros idiomas que deseja traduzir..
-3. Vá em Configurações > Geral e também instale os pacotes de idiomas que você deseja usar através da opção Idioma do Site
-4. Se você já possuir Posts, Páginas e etc. você vai precisará definir um idioma para eles salvando a opção Idioma em suas páginas de edição.
-5. Lembre-se de ativar o widget Seletor de Idiomas em Aparência > Widgets para que os visitantes do seu site possam navegar facilmente pelas traduções.
 
 == Frequently Asked Questions ==
 
