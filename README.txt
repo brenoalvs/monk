@@ -75,6 +75,12 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 
 == Changelog ==
 
+= 0.3.1 =
+* Improved overall links structures.
+* Improved the Language Switcher widget.
+* Improved text and reading consistency.
+* Fixed date and category archive links.
+
 = 0.3.0 =
 * Added menus translation support.
 * Support us using Monk Love message.

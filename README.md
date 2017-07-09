@@ -49,6 +49,12 @@ You must! We'll post some contribution guidelines soon.
 
 ## Changelog
 
+- **0.3.1**
+    + Improved overall links structures.
+    + Improved the Language Switcher widget.
+    + Improved text consistency.
+    + Fixed date and category archive links.
+
 - **0.3.0**
     + Added menus translation support.
     + Support us using Monk Love message.
