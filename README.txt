@@ -86,13 +86,7 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 * Added menus translation support.
 * Support us using Monk Love message.
 
-= [0.2.0] =
-* Improved queries filters by language for posts and terms on admin and front-end.
-* Added medias translation support.
-* Added language in permalinks.
-
-= [0.1.0] =
-* Initial release.
+[See changelog for older versions](https://raw.githubusercontent.com/brenoalvs/monk/master/CHANGELOG.md)
 
 == Credits ==
 
