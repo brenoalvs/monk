@@ -1526,4 +1526,21 @@ class Monk_Admin {
 			wp_send_json_error();
 		} // End if().
 	}
+
+	/**
+	 * Function that creates a shortcode to retrieve a content's translation.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return string $translation_link
+	 */
+	public function monk_language_shortcode( $atts ) {
+		extract( shortcode_atts(
+			array(
+				'lang' => '',
+				'text' => '',
+				), $atts
+			)
+		);
+	}
 }
