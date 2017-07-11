@@ -1,13 +1,5 @@
 ## Changelog
 
-- **[Unreleased]**
-    + Support for over 100 languages.
-    + More improvements in the Language Switcher widget.
-    + Language packages download automatically.
-    + Set a language to all posts and terms.
-    + Fix the "Next and Previous" front end links.
-    + Choose whether you want the main site language in the links.
-
 - **[0.3.1]**
     + Improved overall links structures.
     + Improved the Language Switcher widget.
