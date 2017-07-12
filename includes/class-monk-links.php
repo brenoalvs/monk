@@ -288,7 +288,7 @@ class Monk_Links {
 		$language             = ( empty( $url_language ) ) ? $this->site_language : $url_language;
 		$default_language_url = get_option( 'monk_default_language_url', false );
 
-		if ( $language && ( '/' === $path || '' === $path ) ) {
+		if ( '/' === $path || '' === $path ) {
 			if ( $this->monk_using_permalinks() ) {
 				if ( empty( $default_language_url ) && $this->site_language === $language ) {
 					$link = $link;
@@ -297,9 +297,8 @@ class Monk_Links {
 				}
 			} else {
 				$monk_languages   = monk_get_available_languages();
-				$default_language = get_option( 'monk_default_language', false );
 				if ( empty( $default_language_url ) && $this->site_language === $language ) {
-					$link = remove_query_arg( 'lang' );
+					$link = $link;
 				} else {
 					$link = add_query_arg( 'lang', $language, $link );
 				}
