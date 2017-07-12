@@ -578,7 +578,8 @@ class Monk_Links {
 	 * @return void
 	 */
 	public function monk_canonical_redirection() {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages       = monk_get_available_languages();
+		$default_language_url = get_option( 'default_language_url', false );
 
 		/**
 		 * We do not want to redirect in these cases.
@@ -618,14 +619,10 @@ class Monk_Links {
 			}
 		} elseif ( is_home() || is_front_page() || is_archive() && ! ( is_tax() || is_tag() || is_category() ) ) {
 			// From valid query var.
-			$default_language     = get_option( 'monk_default_language', false );
-			$default_slug         = $monk_languages[ $default_language ]['slug'];
-			$default_language_url = get_option( 'monk_default_language_url', false );
+			$slug = get_query_var( 'lang', $this->site_language );
 
-			if ( empty( $default_language_url ) && $this->site_language === $default_slug ) {
-				$slug = remove_query_arg( 'lang' );
-			} else {
-				$slug = get_query_var( 'lang', $this->site_language );
+			if ( empty( $default_language_url ) && $slug === $this->site_language ) {
+				$slug = '';
 			}
 		}
 
