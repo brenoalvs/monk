@@ -1539,18 +1539,18 @@ class Monk_Admin {
 	public function monk_language_shortcode( $atts ) {
 		extract( shortcode_atts(
 			array(
-				'lang' => '',
-				'text' => '',
+				'text'     => '',
+				'language' => '',
+				'class'    => '',
 				), $atts
 			)
 		);
 
-		$base_post    = get_query_var( 'post' );
-		$base_id      = get_post_meta( $base_post, '_monk_post_translations_id', true );
+		$base_id      = get_post_meta( get_queried_object_id(), '_monk_post_translations_id', true );
 		$translations = get_option( 'monk_post_translations_' . $base_id, false );
-		$translation  = $translations[ $lang ];
+		$translation  = $translations[ $language ];
 
-		$translation_link = '<a href="' . get_permalink( $translation ) . '">' . $text . '</a>';
+		$translation_link = '<a href="' . get_permalink( $translation ) . '" class="' . $class . '">' . $text . '</a>';
 
 		return $translation_link;
 	}
