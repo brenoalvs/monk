@@ -47,6 +47,8 @@ class Monk_Admin {
 		$this->monk = $monk;
 		$this->version = $version;
 
+		add_shortcode( 'translation-link', array( $this, 'monk_language_shortcode' ) );
+
 	}
 
 	/**
