@@ -1542,5 +1542,14 @@ class Monk_Admin {
 				), $atts
 			)
 		);
+
+		$base_post    = get_query_var( 'post' );
+		$base_id      = get_post_meta( $base_post, '_monk_post_translations_id', true );
+		$translations = get_option( 'monk_post_translations_' . $base_id, false );
+		$translation  = $translations[ $lang ];
+
+		$translation_link = '<a href="' . get_permalink( $translation ) . '">' . $text . '</a>';
+
+		return $translation_link;
 	}
 }
