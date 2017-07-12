@@ -91,11 +91,10 @@ class Monk_Language_Switcher extends WP_Widget {
 						}
 						$switchable_languages[ $lang_code ] = $current_url;
 					} else {
-						$has_default_language_url           = get_option( 'monk_default_language_url', false );
 						if ( empty( $has_default_language_url ) && $lang_code === $default_slug ) {
 							$switchable_languages[ $lang_code ] = remove_query_arg( 'lang', $current_url );
 						} else {
-							$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url . '/' );
+							$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), trailingslashit( $current_url ) );
 						}
 					}
 				}
