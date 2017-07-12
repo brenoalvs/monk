@@ -614,10 +614,6 @@ class Monk_Links {
 		} elseif ( is_home() || is_front_page() || is_archive() && ! ( is_tax() || is_tag() || is_category() ) ) {
 			// From valid query var.
 			$slug = get_query_var( 'lang', $this->site_language );
-
-			if ( empty( $default_language_url ) && $slug === $this->site_language ) {
-				$slug = '';
-			}
 		}
 
 		// If is not any of the above content cases, the fallback is the default language.
