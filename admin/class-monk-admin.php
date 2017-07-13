@@ -217,7 +217,7 @@ class Monk_Admin {
 		register_setting( 'monk_settings', 'monk_site_description' );
 		add_settings_field(
 			'monk_site_description',
-			__( 'Tagline<br><p class="description">In a few words, explain what this site is about.</p>', 'monk' ),
+			__( 'Tagline', 'monk' ),
 			array( $this, 'monk_site_description_render' ),
 			'monk_settings',
 			'monk_options'
