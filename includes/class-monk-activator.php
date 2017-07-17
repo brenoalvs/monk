@@ -37,11 +37,21 @@ class Monk_Activator {
 			$language = 'en_US';
 		}
 
+		$default_post_category = get_term( get_option( 'default_category' ) );
+		$uncategorized_term    = get_term_by( 'name', 'Uncategorized', 'category' );
+
 		update_option( 'monk_default_language', $language );
 		update_option( 'monk_active_languages', array( $language ) );
 		update_option( 'monk_settings_notice', true );
 		update_option( 'monk_first_media_list_access', true );
 		set_transient( '_monk_redirect', true, 30 );
+
+		if ( $uncategorized_term->term_id === $default_post_category->term_id ) {
+			$term_translations[ $language ] = $default_post_category->term_id;
+			update_term_meta( $default_post_category->term_id, '_monk_term_language', $language );
+			update_term_meta( $default_post_category->term_id, '_monk_term_translations_id', $default_post_category->term_id );
+			update_option( 'monk_term_translations_' . $default_post_category->term_id, $term_translations );
+		}
 	}
 
 }
