@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 			<td>
 				<?php if ( $monk_language ) : ?>
 					<ul>
-						<li><?php echo esc_html( $monk_languages[ $monk_language ]['name'] ); ?></li>
+						<li><?php echo esc_html( $monk_languages[ $monk_language ]['english_name'] ); ?></li>
 						<?php
 						foreach ( $monk_term_translations as $translation_code => $translation_id ) :
 							if ( in_array( $translation_code, $languages, true ) && $monk_language !== $translation_code ) :
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 						?>
 							<li>
 								<a href="<?php echo esc_url( $translation_term_url ); ?>">
-									<?php echo esc_html( $monk_languages[ $translation_code ]['name'] ); ?>
+									<?php echo esc_html( $monk_languages[ $translation_code ]['english_name'] ); ?>
 								</a>
 							</li>
 						<?php
