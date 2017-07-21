@@ -67,7 +67,7 @@ class Monk {
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '0.3.0';
+		$this->version = '0.3.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -223,6 +223,7 @@ class Monk {
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_change_nav_menu_fields' );
 		$this->loader->add_action( 'wp_ajax_monk_set_language_to_elements', $plugin_admin, 'monk_set_language_to_elements' );
 		$this->loader->add_action( 'wp_ajax_monk_save_language_packages', $plugin_admin, 'monk_save_language_packages' );
+		add_shortcode( 'translation-link', array( $plugin_admin, 'monk_language_shortcode' ) );
 	}
 
 	/**

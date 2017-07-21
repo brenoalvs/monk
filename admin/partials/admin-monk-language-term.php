@@ -47,7 +47,7 @@ else :
 		</select>
 		<p><?php
 			esc_html_e( 'This is a translation of ', 'monk' );
-			echo esc_html( get_term( $monk_id )->name );
+			echo esc_html( '"' . get_term( $monk_id )->name . '"' );
 		?></p>
 	</div>
 

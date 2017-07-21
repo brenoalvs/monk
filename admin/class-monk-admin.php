@@ -207,15 +207,15 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_settings_tabs() {
-		$url     = home_url() . $_SERVER['REQUEST_URI'];
+		$url     = is_ssl() ? 'https://' : 'http://';
+		$url     .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$action  = filter_input( INPUT_GET, 'action' );
 		$general = '';
 		$tools   = '';
-
 		if ( 'monk_general' === $action || null === $action ) {
-			$general = 'nav-tab-active';
+			$general = 'nav-tab-active monk-active-tab';
 		} elseif ( 'monk_tools' === $action ) {
-			$tools = 'nav-tab-active';
+			$tools = 'nav-tab-active monk-active-tab';
 		}
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-tabs-render.php';
@@ -1172,13 +1172,13 @@ class Monk_Admin {
 			$language  = $this->monk_language_selector_render( $post_id );
 		} elseif ( ! $language && $post_language ) {
 			$lang_code = $post_language;
-			$language = $monk_languages[ $post_language ]['name'];
+			$language = $monk_languages[ $post_language ]['english_name'];
 		} elseif ( ! $language && $new_post_language ) {
 			$lang_code = $new_post_language;
-			$language = $monk_languages[ $new_post_language ]['name'];
+			$language = $monk_languages[ $new_post_language ]['english_name'];
 		} else {
 			$lang_code = $default_language;
-			$language = $monk_languages[ $default_language ]['name'];
+			$language = $monk_languages[ $default_language ]['english_name'];
 		}
 
 		if ( 'upload.php' !== substr( strrchr( wp_parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
@@ -1416,7 +1416,8 @@ class Monk_Admin {
 	public function monk_save_language_packages() {
 		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
 			global $monk_languages;
-			$active_languages  = $_POST['monk_active_languages'];
+
+			$active_languages = $_POST['monk_active_languages'];
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
@@ -1525,5 +1526,30 @@ class Monk_Admin {
 		} else {
 			wp_send_json_error();
 		} // End if().
+	}
+
+	/**
+	 * Function that creates a shortcode to retrieve a content's translation.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return string $translation_link
+	 */
+	public function monk_language_shortcode( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'text'     => '',
+				'language' => '',
+				'class'    => '',
+			), $atts
+		);
+
+		$base_id      = get_post_meta( get_queried_object_id(), '_monk_post_translations_id', true );
+		$translations = get_option( 'monk_post_translations_' . $base_id, false );
+		$translation  = $translations[ $atts[ 'language' ] ];
+
+		$translation_link = '<a href="' . get_permalink( $translation ) . '" class="' . $atts[ 'class' ] . '">' . $atts[ 'text' ] . '</a>';
+
+		return $translation_link;
 	}
 }

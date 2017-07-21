@@ -35,18 +35,25 @@ echo $args['before_widget'];
 			</span>
 		</div>
 		<ul class="monk-language-dropdown">
-			<?php foreach ( $switchable_languages as $code => $url ) : ?>
-				<?php if ( $code !== $monk_languages[ $current_language ]['slug'] ) : ?>
-					<li class="monk-lang">
-						<a class="monk-language-link" href="<?php echo esc_url( $url ); ?>">
-							<?php if ( ! $flag ) : ?>
-								<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages_reverted[ $code ]['slug'] ) ?>"></span>
-							<?php endif; ?>
-								<span class="monk-language-name"><?php echo esc_html( $monk_languages_reverted[ $code ]['native_name'] ); ?></span>
-						</a>
-					</li>
-				<?php endif; ?>
-			<?php endforeach; ?>
+			<?php if ( empty( $switchable_languages ) ) : ?>
+				<li class="monk-lang">
+					<?php /* translators: This is a message that says a content has no translations */ ?>
+					<option><?php esc_html_e( 'No other translations', 'monk' ); ?></option>
+				</li>
+			<?php else : ?> 
+				<?php foreach ( $switchable_languages as $code => $url ) : ?>
+					<?php if ( $code !== $monk_languages[ $current_language ]['slug'] ) : ?>
+						<li class="monk-lang">
+							<a class="monk-language-link" href="<?php echo esc_url( $url ); ?>">
+								<?php if ( ! $flag ) : ?>
+									<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages_reverted[ $code ]['slug'] ) ?>"></span>
+								<?php endif; ?>
+									<span class="monk-language-name"><?php echo esc_html( $monk_languages_reverted[ $code ]['native_name'] ); ?></span>
+							</a>
+						</li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</ul>
 		<?php if ( $monk_love ) : ?>
 		<div class="monk-love">
