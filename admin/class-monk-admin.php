@@ -47,6 +47,8 @@ class Monk_Admin {
 		$this->monk = $monk;
 		$this->version = $version;
 
+		add_shortcode( 'translation-link', array( $this, 'monk_language_shortcode' ) );
+
 	}
 
 	/**
@@ -1526,5 +1528,31 @@ class Monk_Admin {
 		} else {
 			wp_send_json_error();
 		} // End if().
+	}
+
+	/**
+	 * Function that creates a shortcode to retrieve a content's translation.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return string $translation_link
+	 */
+	public function monk_language_shortcode( $atts ) {
+		extract( shortcode_atts(
+			array(
+				'text'     => '',
+				'language' => '',
+				'class'    => '',
+				), $atts
+			)
+		);
+
+		$base_id      = get_post_meta( get_queried_object_id(), '_monk_post_translations_id', true );
+		$translations = get_option( 'monk_post_translations_' . $base_id, false );
+		$translation  = $translations[ $language ];
+
+		$translation_link = '<a href="' . get_permalink( $translation ) . '" class="' . $class . '">' . $text . '</a>';
+
+		return $translation_link;
 	}
 }
