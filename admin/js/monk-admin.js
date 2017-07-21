@@ -75,7 +75,11 @@
 				not_submit = false;
 				$( '#monk-spinner' ).addClass( 'is-active' );
 				$( '#monk-downloading' ).removeClass( 'monk-hide' );
-				var form_data = $( '#monk-form-settings' ).serializeArray();
+				var form_data = $( '#monk-general-form' ).serializeArray();
+				form_data.push({
+					name : 'action',
+					value : 'monk_save_language_packages',
+				});
 
 				$.ajax({
 					type: 'POST',
@@ -114,7 +118,6 @@
 					url: monk.ajax_url,
 					data: form_data,
 					success: function( response ) {
-						console.log( response );
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
 							if ( response.success ) {		
@@ -137,6 +140,35 @@
 					$( '#monk-checkbox-not-selected-message' ).addClass( 'monk-hide' );
 				}, 2000 );
 			}
+		});
+
+		$( document ).on( 'submit', '#monk-options-form', function( event ) {
+			event.preventDefault();
+			$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-save-options' ).removeClass( 'monk-hide' );
+				var form_data = $( '#monk-options-form' ).serializeArray();
+
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						if ( response.hasOwnProperty( 'success' ) ) {
+							$( '#monk-save-options' ).addClass( 'monk-hide' );
+							if ( response.success ) {		
+								$( '#monk-done' ).removeClass( 'monk-hide' );
+							} else {
+								$( '#monk-error' ).removeClass( 'monk-hide' );
+							}
+						}
+
+						setTimeout( function() {
+							$( '#monk-error' ).addClass( 'monk-hide' );
+							$( '#monk-done' ).addClass( 'monk-hide' );
+							$( '#monk-spinner' ).removeClass( 'is-active' );
+						}, 2000 );
+					}
+				});
 		});
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {

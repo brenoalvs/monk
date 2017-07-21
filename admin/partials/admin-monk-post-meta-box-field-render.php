@@ -136,7 +136,7 @@ if ( ! defined( 'WPINC' ) ) {
 				?>
 				<input type="hidden" name="monk_id" class="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
 				<input type="hidden" class="current-post-id" value="<?php echo esc_attr( $post->ID ); ?>">
-				<button class="button <?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+				<button class="<?php echo esc_attr( 'button ' . $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 				<?php
 			else :
 			?>

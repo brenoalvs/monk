@@ -29,7 +29,7 @@ echo $args['before_widget'];
 			<span class="monk-dropdown-arrow"></span>
 			<span class="monk-current-lang-name">
 					<?php if ( ! $flag ) : ?>
-						<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $current_slug ); ?>"></span>
+						<span class="<?php echo esc_attr( 'monk-language-flag flag-icon flag-icon-' . $current_slug ); ?>"></span>
 					<?php endif; ?>
 						<span class="monk-language-name"><?php echo esc_html( $monk_languages[ $current_language ]['native_name'] ); ?></span>
 			</span>
@@ -40,7 +40,7 @@ echo $args['before_widget'];
 					<li class="monk-lang">
 						<a class="monk-language-link" href="<?php echo esc_url( $url ); ?>">
 							<?php if ( ! $flag ) : ?>
-								<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages_reverted[ $code ]['slug'] ) ?>"></span>
+								<span class="<?php echo esc_attr( 'monk-language-flag flag-icon flag-icon-' . $monk_languages_reverted[ $code ]['slug'] ) ?>"></span>
 							<?php endif; ?>
 								<span class="monk-language-name"><?php echo esc_html( $monk_languages_reverted[ $code ]['native_name'] ); ?></span>
 						</a>
