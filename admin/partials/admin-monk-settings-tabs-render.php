@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 ?>
 	<h2 class="nav-tab-wrapper">
-		<a href="<?php echo esc_url( $url . '&action=monk_general' ); ?>" class="nav-tab <?php echo esc_attr( $general ); ?>"><?php esc_html_e( 'General', 'monk' ); ?></a>
-		<a href="<?php echo esc_url( $url . '&action=monk_tools' ); ?>" class="nav-tab <?php echo esc_attr( $tools ); ?>"><?php esc_html_e( 'Tools', 'monk' ); ?></a>
-		<a href="<?php echo esc_url( $url . '&action=monk_options' ); ?>" class="nav-tab <?php echo esc_attr( $options ); ?>"><?php esc_html_e( 'Options', 'monk' ); ?></a>
+		<a href="<?php echo esc_url( $url . '&action=monk_general' ); ?>" class="<?php echo esc_attr( 'nav-tab ' . $general ); ?>"><?php esc_html_e( 'General', 'monk' ); ?></a>
+		<a href="<?php echo esc_url( $url . '&action=monk_tools' ); ?>" class="<?php echo esc_attr( 'nav-tab ' . $tools ); ?>"><?php esc_html_e( 'Tools', 'monk' ); ?></a>
+		<a href="<?php echo esc_url( $url . '&action=monk_options' ); ?>" class="<?php echo esc_attr( 'nav-tab ' . $options ); ?>"><?php esc_html_e( 'Options', 'monk' ); ?></a>
 	</h2>
