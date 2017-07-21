@@ -346,10 +346,9 @@ class Monk_Links {
 				$url     = str_replace( $base, $base . $slug, $url );
 			}
 		} else {
-			if ( ( empty( $default_language_url ) && $language === $default_language ) ) {
-				$url = remove_query_arg( 'lang', $url );
-			} else {
-				$url = remove_query_arg( 'lang', $url );
+			$url = remove_query_arg( 'lang', $url );
+
+			if ( ! ( empty( $default_language_url ) && $language === $default_language ) ) {
 				$url = ( empty( $language ) ) ? $url : add_query_arg( 'lang', $language, $url );
 			}
 		}
