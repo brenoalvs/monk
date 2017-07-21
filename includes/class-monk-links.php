@@ -578,7 +578,7 @@ class Monk_Links {
 		 * We do not want to redirect in these cases.
 		 * TODO: Provide IIS Support using $is_IIS && ! iis7_supports_permalinks().
 		 */
-		if ( is_search() || is_admin() || is_robots() || is_preview() || is_trackback() ) {
+		if ( is_search() || is_robots() || is_preview() || is_trackback() ) {
 			return;
 		}
 
@@ -633,7 +633,7 @@ class Monk_Links {
 
 		// If the incoming url has a wrong language, redirect.
 		if ( $redirect_url && $requested_url !== $redirect_url ) {
-			wp_safe_redirect( $redirect_url, 301 );
+			wp_redirect( $redirect_url, 301 );
 			exit();
 		}
 	}
