@@ -1684,16 +1684,16 @@ class Monk_Admin {
 		if ( check_ajax_referer( '_monk_site_options', false, false ) ) {
 			$default_language = get_option( 'monk_default_language', false );
 			$active_languages = get_option( 'monk_active_languages', array() );
-			$default_blogname = $_REQUEST['blogname'];
-			$default_blogdesc = $_REQUEST['blogdescription'];
+			$default_blogname = filter_input( INPUT_POST, 'blogname' );
+			$default_blogdesc = filter_input( INPUT_POST, 'blogdescription' );
 
 			update_option( 'blogname', $default_blogname );
 			update_option( 'blogdescription', $default_blogdesc );
 
 			foreach ( $active_languages as $lang ) {
 				if ( $lang !== $default_language ) {
-					$blogname_value = $_REQUEST[ 'monk_' . $lang . '_blogname' ];
-					$blogdesc_value = $_REQUEST[ 'monk_' . $lang . '_blogdescription' ];
+					$blogname_value = filter_input( INPUT_POST, 'monk_' . $lang . '_blogname' );
+					$blogdesc_value = filter_input( INPUT_POST, 'monk_' . $lang . '_blogdescription' );
 					if ( ! empty( $blogname_value ) ) {
 						update_option( 'monk_' . $lang . '_blogname', $blogname_value );
 					}
