@@ -336,10 +336,9 @@ class Monk_Links {
 		if ( $this->monk_using_permalinks() ) {
 			if ( ! empty( $active_languages ) ) {
 				$base = trailingslashit( $this->site_home ) . $this->site_root;
+				$slug = '';
 				if ( ( $default_language_url || ( ! $default_language_url && $language !== $default_language ) ) ) {
 					$slug = trailingslashit( $language );
-				} else {
-					$slug = '';
 				}
 				$pattern = str_replace( '/', '\/', $base );
 				$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
