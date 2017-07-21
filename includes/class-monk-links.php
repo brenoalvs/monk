@@ -335,9 +335,9 @@ class Monk_Links {
 
 		if ( $this->monk_using_permalinks() ) {
 			if ( ! empty( $active_languages ) ) {
-				$base    = $this->site_home . '/' . $this->site_root;
+				$base = trailingslashit( $this->site_home ) . $this->site_root;
 				if ( ( $default_language_url || ( ! $default_language_url && $language !== $default_language ) ) ) {
-					$slug = $language . '/';
+					$slug = trailingslashit( $language );
 				} else {
 					$slug = '';
 				}
