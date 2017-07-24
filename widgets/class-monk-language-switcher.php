@@ -87,7 +87,7 @@ class Monk_Language_Switcher extends WP_Widget {
 
 							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
 						} else {
-							$current_url = str_replace( $_SERVER['HTTP_HOST'], $_SERVER['HTTP_HOST'] . '/' . $lang_code, $current_url );
+							$current_url = str_replace( dirname($_SERVER['PHP_SELF']), dirname($_SERVER['PHP_SELF']) . '/' . $lang_code, $current_url );
 						}
 						$switchable_languages[ $lang_code ] = $current_url;
 					} else {
