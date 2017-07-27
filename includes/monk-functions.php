@@ -34,7 +34,7 @@ function monk_is_language_code( $language_code ) {
 function monk_get_current_url() {
 	global $wp;
 
-	$query_arg   = http_build_query( '$_GET' );
+	$query_arg   = http_build_query( $_GET );
 	$base_link   = ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	$current_url = add_query_arg( $query_arg, '', $base_link );
 
