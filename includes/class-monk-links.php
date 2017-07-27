@@ -330,7 +330,7 @@ class Monk_Links {
 		} elseif ( array_key_exists( $lang, $monk_languages ) ) {
 			$language = $monk_languages[ $lang ]['slug'];
 		} else {
-			$language = $monk_languages[ $default_language ]['slug'];
+			$language = $default_language;
 		}
 
 		if ( $this->monk_using_permalinks() ) {
