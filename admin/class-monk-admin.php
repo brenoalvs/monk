@@ -207,8 +207,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_settings_tabs() {
-		$url     = is_ssl() ? 'https://' : 'http://';
-		$url     .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$url     = admin_url( 'admin.php?page=monk' );
 		$action  = filter_input( INPUT_GET, 'action' );
 		$general = '';
 		$tools   = '';
