@@ -16,7 +16,7 @@
  * @package    Monk
  * @subpackage Monk/Includes
  */
-class Monk_i18n {
+class Monk_I18n {
 
 
 	/**
@@ -48,7 +48,7 @@ class Monk_i18n {
 			return $locale;
 		}
 
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		/**
 		 * As locale is defined before WordPress parse the request.

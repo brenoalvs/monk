@@ -17,9 +17,9 @@ div#monk-language-switcher {
 	border: none;
 	cursor: pointer;
 	-webkit-hyphens: initial;
-    -moz-hyphens: initial;
-    -ms-hyphens: initial;
-    hyphens: initial;
+	-moz-hyphens: initial;
+	-ms-hyphens: initial;
+	hyphens: initial;
 	margin: 0;
 	max-width: 230px;
 	padding: 0;
@@ -30,14 +30,16 @@ div#monk-language-switcher {
 
 div#monk-language-switcher ul.monk-language-dropdown {
 	background-color: #fff;
-	border: 1px solid;
 	border-top: none;
+	border: 1px solid;
 	box-sizing: border-box;
 	display: none;
+	max-height: 250px;
 	margin: 0;
-	width: 100%;
+	overflow-y: scroll;
 	padding: 0;
 	position: absolute;
+	width: 100%;
 	z-index: 9999;
 }
 
@@ -114,5 +116,21 @@ div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-languag
 div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link span.monk-language-flag,
 div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name span.monk-language-flag {
 	margin-left: 10px;
-	width: 16px;
+	width: 18px;
+}
+
+div#monk-language-switcher div.monk-love {
+	box-sizing: border-box;
+	line-height: normal;
+	margin-top: 5px;
+	padding: 0;
+	font-size: 12px;
+}
+
+div#monk-language-switcher div.monk-love span.monk-heart {
+	padding: 0;
+	font-size: 12px;
+	color: #de1414;
+	line-height: normal;
+	margin-top: 0.18em;
 }

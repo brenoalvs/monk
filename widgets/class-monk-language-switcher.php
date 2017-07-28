@@ -42,16 +42,19 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @param array $instance The widget options.
 	 */
 	public function widget( $args, $instance ) {
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
-		$switchable_languages    = array();
-		$active_languages_slug   = array();
-		$title                   = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
-		$flag                    = ! empty( $instance['flag'] ) ? true : false;
-		$active_languages        = get_option( 'monk_active_languages' );
-		$current_language        = '';
-		$monk_languages_reverted = array();
-		$default_language        = get_option( 'monk_default_language', false );
+		$switchable_languages     = array();
+		$active_languages_slug    = array();
+		$title                    = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
+		$flag                     = ! empty( $instance['flag'] ) ? true : false;
+		$monk_love                = ! empty( $instance['monk_love'] ) ? true : false;
+		$active_languages         = get_option( 'monk_active_languages' );
+		$current_language         = '';
+		$monk_languages_reverted  = array();
+		$default_language         = get_option( 'monk_default_language', false );
+		$has_default_language_url = get_option( 'monk_default_language_url', false );
+		$default_slug             = $monk_languages[ $default_language ]['slug'];
 
 		if ( get_query_var( 'lang' ) ) {
 			$current_language = sanitize_text_field( get_query_var( 'lang' ) );
@@ -68,20 +71,38 @@ class Monk_Language_Switcher extends WP_Widget {
 
 			foreach ( $active_languages_slug as $lang_code ) {
 				$current_url = monk_get_current_url();
+
 				if ( $lang_code !== $current_language ) {
 					if ( get_option( 'permalink_structure', false ) ) {
 						if ( get_query_var( 'lang' ) ) {
-							$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
-							$current_url = remove_query_arg( 'lang', $current_url );
-							$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
-							$switchable_languages[ $lang_code ] = $current_url;
+							$pattern                  = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
+							$current_url              = remove_query_arg( 'lang', $current_url );
+							$current_url              = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
+
+							if ( empty( $has_default_language_url ) && $lang_code === $default_slug ) {
+								$current_url = preg_replace( $pattern, '', $current_url );
+							} else {
+								$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
+							}
+
+							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
+						} else {
+							$current_url = str_replace( dirname($_SERVER['PHP_SELF']), dirname($_SERVER['PHP_SELF']) . '/' . $lang_code, $current_url );
+							if ( dirname($_SERVER['PHP_SELF']) === '\\' ) {
+								$current_url = trailingslashit( $current_url ) . $lang_code; 
+							}
 						}
+						$switchable_languages[ $lang_code ] = $current_url;
 					} else {
-						$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), $current_url );
+						if ( empty( $has_default_language_url ) && $lang_code === $default_slug ) {
+							$switchable_languages[ $lang_code ] = remove_query_arg( 'lang', $current_url );
+						} else {
+							$switchable_languages[ $lang_code ] = add_query_arg( 'lang', esc_attr( $lang_code, 'monk' ), trailingslashit( $current_url ) );
+						}
 					}
 				}
 			}
-		}
+		} // End if().
 
 		if ( is_singular() ) {
 			$monk_post_translations_id = get_post_meta( get_the_id(), '_monk_post_translations_id', true );
@@ -120,7 +141,7 @@ class Monk_Language_Switcher extends WP_Widget {
 					}
 				}
 			}
-		}
+		} // End if().
 
 		if ( is_archive() && ( is_category() || is_tag() ) ) {
 			$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
@@ -160,7 +181,7 @@ class Monk_Language_Switcher extends WP_Widget {
 					}
 				}
 			}
-		}
+		} // End if().
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
@@ -185,9 +206,10 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @return array $instance
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                = $old_instance;
-		$instance['title']       = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['flag']        = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance              = $old_instance;
+		$instance['title']     = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['flag']      = ! empty( $new_instance['flag'] ) ? true : false;
+		$instance['monk_love'] = ! empty( $new_instance['monk_love'] ) ? true : false;
 
 		return $instance;
 	}

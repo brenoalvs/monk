@@ -21,6 +21,8 @@
 			});
 		});
 
+		$( '#monk-default-language option[value=""]' ).val( 'en_US' );
+
 		$( document ).on( 'click', 'span.monk-add-translation', function() {
 			$( '.monk-post-meta-add-translation' ).slideToggle( 150 );
 		});
@@ -64,6 +66,81 @@
 			});
 
 			return false;
+		});
+
+		var not_submit = true;
+		$( document ).on( 'submit', '#monk-general-form', function( event ) {
+			if ( not_submit ) {
+				event.preventDefault();
+				not_submit = false;
+				$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-downloading' ).removeClass( 'monk-hide' );
+				var form_data = $( '#monk-general-form' ).serializeArray();
+				form_data.push({
+					name : 'action',
+					value : 'monk_save_language_packages',
+				});
+
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						if ( response.hasOwnProperty( 'success' ) ) {
+							if ( response.success ) {
+								if ( response.data ) {
+									$( '#monk-downloading' ).addClass( 'monk-hide' );	
+									if ( -1 < $.inArray( false, response.data ) ) {		
+										$( '#monk-error' ).removeClass( 'monk-hide' );
+									} else {		
+										$( '#monk-done' ).removeClass( 'monk-hide' );
+									}
+								}
+							} else {
+								$( '#monk-error' ).removeClass( 'monk-hide' );
+							}
+						} 
+						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
+					}
+				});
+			}
+		});
+
+		$( document ).on( 'submit', '#monk-tools-form', function( event ) {
+			event.preventDefault();
+			if ( $( '#monk-set-language-to-elements' ).prop( 'checked' ) ) {
+				$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-bulk-action' ).removeClass( 'monk-hide' );
+				var form_data = $( '#monk-tools-form' ).serializeArray();
+
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						console.log( response );
+						if ( response.hasOwnProperty( 'success' ) ) {
+							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
+							if ( response.success ) {		
+								$( '#monk-done' ).removeClass( 'monk-hide' );
+							} else {
+								$( '#monk-error' ).removeClass( 'monk-hide' );
+							}
+						}
+
+						setTimeout( function() {
+							$( '#monk-error' ).addClass( 'monk-hide' );
+							$( '#monk-done' ).addClass( 'monk-hide' );
+							$( '#monk-spinner' ).removeClass( 'is-active' );
+						}, 2000 );
+					}
+				});
+			} else {
+				$( '#monk-checkbox-not-selected-message' ).removeClass( 'monk-hide' );
+				setTimeout( function() {
+					$( '#monk-checkbox-not-selected-message' ).addClass( 'monk-hide' );
+				}, 2000 );
+			}
 		});
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
@@ -114,6 +191,52 @@
 					$( '[name="attachments[' + attachment_id + '][language]"]' ).change();
 				}
 			});
+		}
+
+		/**
+		 * Replace components from the admin footer to the major-publishing-actions div, in the menu page
+		*/
+		if ( /\bnav-menus.php?\b/.test( window.location.pathname ) ) {
+			if ( $( '.add-menu-translation' ).length ) {
+				$( 'div#nav-menu-header .major-publishing-actions' ).append( $( '.add-menu-translation' ) );
+				$( $( 'fieldset.menu-language' ) ).insertBefore( 'fieldset.auto-add-pages' );
+				$( $( '.menu-translations' ) ).insertAfter( '.menu-settings' );
+
+				if ( $( '#monk-menu-translation-message' ).length ) {
+					$( '.menu-theme-locations' ).append( $( '#monk-menu-translation-message' ) );
+					$( '.menu-theme-locations  > div.checkbox-input' ).remove();
+				}
+				if ( $( '#monk-checkbox-wrapper' ).length ) {
+					var locations = $( '#monk-menu-locations' ).val().split( '/' );
+
+					for ( var i = 0; i < locations.length - 1; i++) {
+						$( '#monk-' + locations[ i ] ).val( $( '#' + locations[ i ] ).val() );
+					}
+					$( '.menu-theme-locations' ).append( $( '#monk-checkbox-wrapper' ) );
+					$( '.menu-theme-locations  > div.checkbox-input' ).remove();
+				}
+			} else {
+				$( 'div#nav-menu-header .major-publishing-actions' ).append( $( '.new-menu-language' ) );
+			}
+
+			if ( $( '#monk-select-menu-to-edit-groups' ).length ) {
+				$( '#select-menu-to-edit' ).children().remove();
+				$( '#select-menu-to-edit' ).append( $( '#monk-select-menu-to-edit-groups' ).children() );
+				$( '#monk-select-menu-to-edit-groups' ).remove();
+			}
+
+			if ( $( '#monk-menu-locations' ).length ) {
+				var locations = $( '#monk-menu-locations' ).val().split( '/' );
+
+				for ( var i = 0; i < locations.length - 1; i++) {
+					$( '#monk-' + locations[ i ] ).insertBefore( '#' + locations[ i ] );
+					$( '#monk-' + locations[ i ] ).attr( 'name', $( '#' + locations[ i ] ).attr( 'name' ) );
+					$( '#' + locations[ i ] ).remove();
+					$( '#monk-' + locations[ i ] ).attr( 'id', locations[ i ] );
+				}
+
+				$( '#monk-menu-locations' ).remove();
+			}
 		}
 	});
 })( jQuery );
