@@ -1,12 +1,5 @@
 ## Changelog
 
-- **[0.4.0]**
-    + Added the option to choose whether the default language slug should be in the URLs.
-    + Added full language support. You can now translate your site into more than 100 different languages.
-    + Added automatic language packages download.
-    + Improved the Language Switcher's UI.
-    + Fixed the "next and previous" post links.
-
 - **[0.3.1]**
     + Improved overall links structures.
     + Improved the Language Switcher widget.
