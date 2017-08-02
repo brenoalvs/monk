@@ -1,5 +1,5 @@
 === Monk ===
-Contributors: breno-alves, ale-correa, leonofre
+Contributors: breno-alves, ale-correa, leonofre, rafaelangeline
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
 Tested up to: 4.7.2
