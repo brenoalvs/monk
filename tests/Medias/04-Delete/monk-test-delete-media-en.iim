@@ -1,0 +1,12 @@
+﻿VERSION BUILD=844 RECORDER=CR
+URL GOTO=http://local.wordpress.dev/wp-admin/upload.php
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>SELECT:nth-of-type(2)" CONTENT=%de_DE
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>INPUT"
+WAIT SELECT = 5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>TABLE>TBODY>TR>TD>DIV>SPAN:nth-of-type(2)>A"
+WAIT SELECT = 5
+TAG SELECTOR="HTML>BODY>DIV>DIV>DIV:nth-of-type(2)>UL>LI:nth-of-type(5)>UL>LI:nth-of-type(2)>A"
+WAIT SELECT = 5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>TABLE>TBODY>TR>TD:nth-of-type(6)>DIV>DIV>SPAN"
+WAIT SELECT = 5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>TABLE>TBODY>TR>TD>DIV>SPAN:nth-of-type(2)>A"
