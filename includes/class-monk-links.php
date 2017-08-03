@@ -347,6 +347,7 @@ class Monk_Links {
 			}
 		} else {
 			$url = remove_query_arg( 'lang', $url );
+
 			if ( ! ( empty( $default_language_url ) && $language === $default_language ) ) {
 				$url = ( empty( $language ) ) ? $url : add_query_arg( 'lang', $language, $url );
 			}
@@ -371,8 +372,8 @@ class Monk_Links {
 		$post_language = get_post_meta( $post->ID, '_monk_post_language', true );
 		$url_language  = get_query_var( 'lang' );
 		$language      = ( empty( $post_language ) ) ? $this->site_language : $post_language;
+		$link          = $this->monk_change_language_url( $link, $language );
 
-		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
