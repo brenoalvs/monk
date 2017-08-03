@@ -392,8 +392,8 @@ class Monk_Links {
 	public function monk_add_language_page_permalink( $link, $post_id ) {
 		$page_language = get_post_meta( $post_id, '_monk_post_language', true );
 		$language	   = ( empty( $page_language ) ) ? $this->site_language : $page_language;
+		$link          = $this->monk_change_language_url( $link, $language );
 
-		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
