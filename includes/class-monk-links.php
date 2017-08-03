@@ -319,7 +319,7 @@ class Monk_Links {
 	 * @return $url The changed link.
 	 */
 	public function monk_change_language_url( $url, $lang ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages       = monk_get_available_languages();
 
 		$default_language     = get_option( 'monk_default_language', false );
 		$default_language_url = get_option( 'monk_default_language_url', false );
