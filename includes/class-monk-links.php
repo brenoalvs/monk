@@ -456,11 +456,10 @@ class Monk_Links {
 	public function monk_add_language_term_permalink( $link, $term, $taxonomy ) {
 		global $wp_rewrite;
 		$monk_languages = monk_get_available_languages();
+		$term_language  = get_term_meta( $term->term_id, '_monk_term_language', true );
+		$language       = ( empty( $term_language ) ) ? $this->site_language : $monk_languages[ $term_language ]['slug'];
+		$link           = $this->monk_change_language_url( $link, $language );
 
-		$term_language = get_term_meta( $term->term_id, '_monk_term_language', true );
-		$language      = ( empty( $term_language ) ) ? $this->site_language : $monk_languages[ $term_language ]['slug'];
-
-		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
