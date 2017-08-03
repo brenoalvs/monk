@@ -413,8 +413,8 @@ class Monk_Links {
 		$active_languages = $this->monk_get_active_languages();
 		$url_language     = get_query_var( 'lang' );
 		$language         = ( in_array( $url_language, $active_languages, true ) ) ? $url_language : $this->site_language;
+		$link             = $this->monk_change_language_url( $link, $language );
 
-		$link = $this->monk_change_language_url( $link, $language );
 		return $link;
 	}
 
