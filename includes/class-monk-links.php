@@ -541,7 +541,7 @@ class Monk_Links {
 	 */
 	public function monk_change_search_form( $form ) {
 		if ( $form ) {
-			$monk_languages = monk_get_available_languages();
+			$monk_languages       = monk_get_available_languages();
 			$default_language     = get_option( 'monk_default_language', false );
 			$default_slug         = $monk_languages[ $default_language ]['slug'];
 			$default_language_url = get_option( 'monk_default_language_url', false );
@@ -551,7 +551,6 @@ class Monk_Links {
 			// Replace the closing form tag with the hidden field.
 			if ( $this->monk_using_permalinks() ) {
 				$form = $default_language_url || $language !== $default_slug ? $form : str_replace( home_url() . '/' . $default_slug . '/', home_url() . '/', $form );
-				return $form;
 			} else {
 				$form = str_replace( '</form>', '<input type="hidden" name="lang" value="' . esc_attr( $language ) . '" /></form>', $form );
 			}
