@@ -321,21 +321,25 @@ class Monk_Links {
 	public function monk_change_language_url( $url, $lang ) {
 		$monk_languages       = monk_get_available_languages();
 
-		$default_language     = get_option( 'monk_default_language', false );
+		$default_language     = $this->site_language;
 		$default_language_url = get_option( 'monk_default_language_url', false );
 		$active_languages     = $this->monk_get_active_languages();
 
 		if ( in_array( $lang, $active_languages, true ) ) {
 			$language = $lang;
-		} else {
+		} elseif ( array_key_exists( $lang, $monk_languages ) ) {
 			$language = $monk_languages[ $lang ]['slug'];
+		} else {
+			$language = $default_language;
 		}
 
 		if ( $this->monk_using_permalinks() ) {
-
 			if ( ! empty( $active_languages ) ) {
-				$base    = $this->site_home . '/' . $this->site_root;
-				$slug    = $default_language_url || $monk_languages[ $default_language ]['slug'] !== $language ? $language . '/': '';
+				$base = trailingslashit( $this->site_home ) . $this->site_root;
+				$slug = '';
+				if ( ( $default_language_url || ( ! $default_language_url && $language !== $default_language ) ) ) {
+					$slug = trailingslashit( $language );
+				}
 				$pattern = str_replace( '/', '\/', $base );
 				$pattern = '#' . $pattern . '(' . implode( '|', $active_languages ) . ')(\/|$)#';
 				$url     = preg_replace( $pattern, $base, $url );
@@ -343,7 +347,9 @@ class Monk_Links {
 			}
 		} else {
 			$url = remove_query_arg( 'lang', $url );
-			$url = ( empty( $language ) ) ? $url : add_query_arg( 'lang', $language, $url );
+			if ( ! ( empty( $default_language_url ) && $language === $default_language ) ) {
+				$url = ( empty( $language ) ) ? $url : add_query_arg( 'lang', $language, $url );
+			}
 		}
 
 		return $url;
