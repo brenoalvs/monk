@@ -493,7 +493,7 @@ class Monk_Links {
 	 * @return string $link.
 	 */
 	public function monk_add_language_author_permalink( $link, $author_id ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages       = monk_get_available_languages();
 		$default_language     = get_option( 'monk_default_language', false );
 		$default_slug         = $monk_languages[ $default_language ]['slug'];
 		$default_language_url = get_option( 'monk_default_language_url', false );
