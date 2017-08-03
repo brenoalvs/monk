@@ -431,8 +431,8 @@ class Monk_Links {
 	 * @return string $link.
 	 */
 	public function monk_add_language_date_permalink( $link ) {
-		$monk_languages = monk_get_available_languages();
-		$language = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->site_language;
+		$monk_languages       = monk_get_available_languages();
+		$language             = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->site_language;
 		$default_language     = get_option( 'monk_default_language', false );
 		$default_slug         = $monk_languages[ $default_language ]['slug'];
 		$default_language_url = get_option( 'monk_default_language_url', false );
