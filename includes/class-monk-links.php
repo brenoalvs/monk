@@ -284,12 +284,22 @@ class Monk_Links {
 			return $link;
 		}
 
-		$url_language  = get_query_var( 'lang' );
-		$language      = ( empty( $url_language ) ) ? $this->site_language : $url_language;
+		$url_language         = get_query_var( 'lang' );
+		$language             = ( empty( $url_language ) ) ? $this->site_language : $url_language;
+		$default_language_url = get_option( 'monk_default_language_url', false );
+		$path_index           = strripos( $link, $path );
+		$base_link            = substr( $link, 0, $path_index );
 
-		if ( $language && '/' === $path ) {
-			if ( $this->monk_using_permalinks() ) {
-				$link = trailingslashit( $link . $language );
+		if ( $this->monk_using_permalinks() ) {
+			if ( empty( $default_language_url ) && $this->site_language === $language ) {
+				$link = trailingslashit( $link );
+			} else {
+				$link = trailingslashit( $base_link ) . trailingslashit( $language ) . trim( $path, '/\\' );
+			}
+		} else {
+			$monk_languages   = monk_get_available_languages();
+			if ( empty( $default_language_url ) && $this->site_language === $language ) {
+				$link = $link;
 			} else {
 				$link = add_query_arg( 'lang', $language, $link );
 			}
