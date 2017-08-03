@@ -21,9 +21,9 @@ foreach ( $monk_languages as $lang_code => $list ) {
 	$monk_languages_reverted[ $list['slug'] ] = $list;
 }
 
-echo esc_html( $args['before_widget'] );
+echo $args['before_widget'];
 ?>
-	<?php echo esc_html( $args['before_title'] ) . esc_html( $title ) . esc_html( $args['after_title'] ); ?>
+	<?php echo $args['before_title'] . esc_html( $title ) . $args['after_title']; ?>
 	<div id="monk-language-switcher">
 		<div class="monk-current-lang">
 			<span class="monk-dropdown-arrow"></span>
