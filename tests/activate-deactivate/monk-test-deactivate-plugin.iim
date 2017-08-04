@@ -1,0 +1,14 @@
+﻿VERSION BUILD=844 RECORDER=CR
+URL GOTO=http://local.wordpress.dev/wp-admin/admin.php?page=monk
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV>DIV:nth-of-type(2)>UL>LI:nth-of-type(10)>A>DIV:nth-of-type(3)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>UL"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>UL>LI:nth-of-type(2)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM:nth-of-type(2)>TABLE>TBODY>TR>TD"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM:nth-of-type(2)>TABLE>TBODY>TR>TD>STRONG"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM:nth-of-type(2)>TABLE>TBODY>TR>TD>DIV>SPAN>A"
