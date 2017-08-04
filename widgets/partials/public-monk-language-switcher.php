@@ -35,7 +35,7 @@ echo $args['before_widget'];
 			</span>
 		</div>
 		<ul class="monk-language-dropdown">
-			<?php if( empty( $switchable_languages ) ) : ?>
+			<?php if ( empty( $switchable_languages ) ) : ?>
 				<li class="monk-lang">
 					<?php /* translators: This is a message that says a content has no translations */ ?>
 					<option><?php esc_html_e( 'No other translations', 'monk' ); ?></option>
@@ -46,7 +46,7 @@ echo $args['before_widget'];
 						<li class="monk-lang">
 							<a class="monk-language-link" href="<?php echo esc_url( $url ); ?>">
 								<?php if ( ! $flag ) : ?>
-									<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages_reverted[ $code ]['slug'] ) ?>"></span>
+									<span class="monk-language-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages_reverted[ $code ]['slug'] ); ?>"></span>
 								<?php endif; ?>
 									<span class="monk-language-name"><?php echo esc_html( $monk_languages_reverted[ $code ]['native_name'] ); ?></span>
 							</a>
