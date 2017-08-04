@@ -80,7 +80,7 @@ $response = '';
 <?php
 $menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
 
-if ( term_exists( $menu_id ) ) :
+if ( is_nav_menu( $menu_id ) ) :
 	$menu_language     = get_term_meta( $menu_id, '_monk_menu_language', true );
 	$monk_id           = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
 	$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
