@@ -76,7 +76,6 @@ class Monk_I18n {
 			$locale = get_option( 'monk_default_language', false );
 		}
 
-var_dump($locale);
 		return $locale;
 	}
 
