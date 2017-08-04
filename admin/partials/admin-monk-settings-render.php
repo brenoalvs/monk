@@ -39,7 +39,8 @@ if ( ! defined( 'WPINC' ) ) {
 			<?php else : ?>
 				<input type="hidden" name="action" value="monk_set_language_to_elements" />
 			<?php wp_nonce_field( '_monk_nonce' ); ?>
-			<?php endif;
+			<?php endif; ?>
+			<?php
 				do_settings_sections( 'monk_settings' );
 				submit_button( '', 'primary', 'submit', 'true', $btn_args );
 			?>

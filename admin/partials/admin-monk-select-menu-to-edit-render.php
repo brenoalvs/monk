@@ -29,8 +29,11 @@ $response = '';
 	}
 	$has_language = ! empty( get_term_meta( $monk_id_obj->term_id, '_monk_menu_language', true ) ) ? true : false;
 	?>
-	<?php /* translators: This is a label to display the translations group */ ?>
-	<optgroup label="<?php echo esc_attr( sprintf( __( 'Translations of %s', 'monk' ), $monk_id_obj->name ) ); ?>">
+	<optgroup label="<?php
+		/* translators: This is a label to display the translations group */
+		echo esc_attr( sprintf( __( 'Translations of %s', 'monk' ), $monk_id_obj->name ) );
+		?>"
+	>
 		<?php if ( $has_language ) : ?>
 			<?php foreach ( $monk_translations as $nav_menu_id ) : ?>
 				<?php $nav_menu = get_term( $nav_menu_id ); ?>
