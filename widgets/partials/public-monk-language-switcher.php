@@ -37,8 +37,12 @@ echo $args['before_widget'];
 		<ul class="monk-language-dropdown">
 			<?php if ( empty( $switchable_languages ) ) : ?>
 				<li class="monk-lang">
-					<?php /* translators: This is a message that says a content has no translations */ ?>
-					<option><?php esc_html_e( 'No other translations', 'monk' ); ?></option>
+					<option>
+					<?php
+						/* translators: This is a message that says a content has no translations */
+						esc_html_e( 'No other translations', 'monk' );
+					?>
+					</option>
 				</li>
 			<?php else : ?> 
 				<?php foreach ( $switchable_languages as $code => $url ) : ?>
@@ -57,8 +61,10 @@ echo $args['before_widget'];
 		</ul>
 		<?php if ( $monk_love ) : ?>
 		<div class="monk-love">
-			<?php /* translators: This is a message to say the user is with us */ ?>
-			<?php printf( esc_html__( 'Made with %1$s by %2$s', 'monk' ), '<span class="dashicons dashicons-heart monk-heart" aria-hidden="true"></span>', '<a href="https://github.com/brenoalvs/monk" title="Monk">Monk</a>' ); ?>
+			<?php
+				/* translators: This is a message to say the user is with us */
+				printf( esc_html__( 'Made with %1$s by %2$s', 'monk' ), '<span class="dashicons dashicons-heart monk-heart" aria-hidden="true"></span>', '<a href="https://github.com/brenoalvs/monk" title="Monk">Monk</a>' );
+			?>
 		</div>
 		<?php endif; ?>
 	</div>

@@ -16,8 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 $response = '';
 ?>
 <div class="hide-if-no-js" id="monk-select-menu-to-edit-groups">
-<?php
-foreach ( $monk_ids as $monk_id ) : ?>
+<?php foreach ( $monk_ids as $monk_id ) : ?>
 	<?php
 	$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
 	$monk_id_obj       = get_term( $monk_id );
