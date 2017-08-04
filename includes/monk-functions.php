@@ -14,8 +14,8 @@
  *
  * @since  0.1.0
  *
- * @param  string $language_code 	A language code value to validate.
- * @return boolean 					Language code validation.
+ * @param  string $language_code    A language code value to validate.
+ * @return boolean 				    Language code validation.
  */
 function monk_is_language_code( $language_code ) {
 	$monk_languages = monk_get_available_languages();
