@@ -30,7 +30,7 @@ foreach ( $monk_languages as $lang_code => $lang_names ) :
 	}
 
 	$is_default = $default_language === $lang_code ? true : false;
-	$disabled   = $is_default ? 'option-disabled': '';
+	$disabled   = $is_default ? 'option-disabled' : '';
 ?>
 <label for="<?php echo esc_attr( 'monk-' . $id ); ?>" class="monk-label <?php echo esc_attr( $disabled ); ?>">
 	<input type="checkbox" <?php if ( $is_checked ) : ?> class="monk-saved-language" <?php endif; ?> name="monk_active_languages[]" id="<?php echo esc_attr( 'monk-' . $id ); ?>" value="<?php echo esc_attr( $lang_code ); ?>" <?php checked( $is_checked ); ?> />
