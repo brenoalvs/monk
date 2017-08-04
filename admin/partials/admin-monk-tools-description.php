@@ -10,9 +10,9 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	exit();
 }
+
 ?>
-<p><?php esc_html_e( 'Here you can option to set default language to all posts and terms without language.', 'monk' ); ?><br />
-<?php esc_html_e( 'Check the checkbox to confirm.', 'monk' ); ?></p>
-<?php
+<p><?php esc_html_e( 'Here you can set default language to all posts and terms without language.', 'monk' ); ?><br />
+<?php esc_html_e( 'Mark the checkbox and click on "Save Changes" to confirm.', 'monk' ); ?></p>
