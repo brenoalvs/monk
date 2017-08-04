@@ -102,8 +102,8 @@ class Monk_Links {
 		$monk_languages = monk_get_available_languages();
 
 		$this->plugin_name   = $monk;
-		$this->version	     = $version;
-		$this->index	     = 'index.php';
+		$this->version       = $version;
+		$this->index         = 'index.php';
 		$this->site_home     = home_url();
 		$this->structure     = get_option( 'permalink_structure', false );
 		$this->site_root     = preg_match( '#^/*' . $this->index . '#', $this->structure ) ? $this->index . '/' : '';
@@ -391,7 +391,7 @@ class Monk_Links {
 	 */
 	public function monk_add_language_page_permalink( $link, $post_id ) {
 		$page_language = get_post_meta( $post_id, '_monk_post_language', true );
-		$language	   = ( empty( $page_language ) ) ? $this->site_language : $page_language;
+		$language      = ( empty( $page_language ) ) ? $this->site_language : $page_language;
 		$link          = $this->monk_change_language_url( $link, $language );
 
 		return $link;
@@ -477,7 +477,7 @@ class Monk_Links {
 	 */
 	public function monk_add_language_attachment_permalink( $link, $post_id ) {
 		$attachment_language = get_post_meta( $post_id, '_monk_post_language', true );
-		$language	         = ( empty( $attachment_language ) ) ? $this->site_language : $attachment_language;
+		$language            = ( empty( $attachment_language ) ) ? $this->site_language : $attachment_language;
 		$link                = $this->monk_change_language_url( $link, $language );
 
 		return $link;
@@ -546,7 +546,7 @@ class Monk_Links {
 			$default_slug         = $monk_languages[ $default_language ]['slug'];
 			$default_language_url = get_option( 'monk_default_language_url', false );
 			$page_language        = get_query_var( 'lang' );
-			$language	          = ( empty( $page_language ) ) ? $this->site_language : $page_language;
+			$language             = ( empty( $page_language ) ) ? $this->site_language : $page_language;
 
 			// Replace the closing form tag with the hidden field.
 			if ( $this->monk_using_permalinks() ) {
@@ -562,7 +562,7 @@ class Monk_Links {
 	 * Redirects the incoming url when a wrong ( or lacking ) language is detected.
 	 *
 	 * This function prevents duplicated content and improves SEO performance
-	 * beacause is executed along with the wordpress redirect_canonical.
+	 * beacause is executed along with the WordPress redirect_canonical.
 	 *
 	 * @since    0.2.0
 	 *
@@ -601,7 +601,7 @@ class Monk_Links {
 			}
 		} elseif ( is_tax() || is_tag() || is_category() ) {
 			// From current term.
-			$id 	  = get_queried_object_id();
+			$id       = get_queried_object_id();
 			$language = get_term_meta( $id, '_monk_term_language', true );
 
 			if ( ! empty( $language ) ) {
@@ -618,7 +618,7 @@ class Monk_Links {
 			$redirect_url = $requested_url;
 		} else {
 			/*
-			 * Uses the redirect_canonical to check the canonical url that wordpress evaluates.
+			 * Uses the redirect_canonical to check the canonical url that WordPress evaluates.
 			 * Is used twice to correct a bug in which the port is incorrect at the first try
 			 * and returns correct in the second try.
 			 */
