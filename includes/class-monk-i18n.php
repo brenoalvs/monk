@@ -72,8 +72,11 @@ class Monk_I18n {
 			if ( ! in_array( $locale, $active_languages, true ) ) {
 				$locale = get_option( 'monk_default_language', false );
 			}
+		} else {
+			$locale = get_option( 'monk_default_language', false );
 		}
 
+var_dump($locale);
 		return $locale;
 	}
 
