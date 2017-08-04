@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 					<input type="hidden" class="monk-id" value="<?php echo esc_attr( $monk_translations_id ); ?>">
 					<input type="hidden" class="current-post-id" value="<?php echo esc_attr( $post_id ); ?>">
 				<?php endif; ?>
-				<a class="monk-new-translation-link button <?php echo esc_attr( $is_attachment ); ?>" href="<?php echo esc_url( $new_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ) ?></a>
+				<a class="monk-new-translation-link button <?php echo esc_attr( $is_attachment ); ?>" href="<?php echo esc_url( $new_url ); ?>"><?php esc_html_e( 'Add+', 'monk' ); ?></a>
 			</div>
 		<?php endif; ?>
 	<?php else : ?>

@@ -55,7 +55,8 @@ if ( ! defined( 'WPINC' ) ) {
 				<p><?php echo esc_html( sprintf( __( 'Translating "%s".', 'monk' ), $title ) ); ?></p>
 			<?php endif; ?>
 		</div>
-	<?php else :
+	<?php else : ?>
+	<?php
 	$translation_counter = 0;
 	$option_current_name = 'monk_post_translations_' . $monk_id;
 	$post_translations   = get_option( $option_current_name );
@@ -189,15 +190,16 @@ if ( ! defined( 'WPINC' ) ) {
 		<?php
 		if ( isset( $post_translations ) && $post_translations ) :
 			foreach ( $post_translations as $lang_code => $monk_id ) :
-				if ( strval( $monk_id ) !== $post->ID ) :
+				if ( strval( $monk_id ) !== $post->ID ) : ?>
+					<?php
 					$language_url = get_edit_post_link( $monk_id ); ?>
 					<li>
 						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?></a>
 					</li>
+		<?php endif; ?>
+		<?php endforeach; ?>
+		<?php endif; ?>
 		<?php
-				endif;
-			endforeach;
-		endif;
 		if ( isset( $post_translations ) && count( $post_translations ) === 1 ) : ?>
 			<span class="monk-add-translation">
 				<?php esc_html_e( 'Not translated, add one', 'monk' ); ?>

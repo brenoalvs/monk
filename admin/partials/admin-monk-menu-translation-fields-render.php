@@ -21,7 +21,7 @@ $monk_languages = monk_get_available_languages();
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 			<a href="<?php echo esc_url( $new_translation_url ); ?>" class="button"><?php esc_html_e( 'Add translation +', 'monk' ); ?></a>
 		<?php else : ?>
-			<?php esc_html_e( 'No more languages available.', 'monk' ) ?>
+			<?php esc_html_e( 'No more languages available.', 'monk' ); ?>
 		<?php endif; ?>
 	<?php else : ?>
 		<select name="monk_language" id="menu-language">
@@ -52,7 +52,7 @@ $monk_languages = monk_get_available_languages();
 			</select>
 		<?php else : ?>
 			<span class="menu-flag flag-icon flag-icon-<?php echo esc_attr( $monk_languages[ $menu_language ]['slug'] ); ?>"></span>
-			<span><?php echo esc_html( $monk_languages[ $menu_language ]['english_name'] ) ?></span>
+			<span><?php echo esc_html( $monk_languages[ $menu_language ]['english_name'] ); ?></span>
 			<input type="hidden" name="monk_language" value="<?php echo esc_attr( $menu_language ); ?>">
 		<?php endif; ?>
 	</div>

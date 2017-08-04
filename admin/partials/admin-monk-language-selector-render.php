@@ -35,7 +35,7 @@ if ( $available_languages ) :
 			else :
 				?>
 				<option value="<?php echo esc_attr( $lang_code ); ?>">
-					<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] )?>
+					<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
 				</option>;
 				<?php
 			endif;
