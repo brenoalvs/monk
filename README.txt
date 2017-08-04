@@ -3,7 +3,7 @@ Contributors: breno-alves, ale-correa, leonofre, rafaelangeline
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
 Tested up to: 4.7.2
-Stable tag: 0.3.1
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,19 +15,15 @@ Monk is a free translation plugin that allows you to create translations for you
 
 All this bundled in a sweet WordPress-like interface, so that you can translate all your content easily.
 
-Currently supporting 9 of the most popular languages, fully-responsive and tested in various themes from WordPress.org, Monk brings all the reliability you need from a translation plugin.
+Full language support, fully-responsive and tested in various themes from WordPress.org, Monk brings all the reliability you need from a translation plugin.
 
-== Translate your Posts Types ==
+== Translate Everything ==
+
+Serve your content in various languages and your website will be found by users and search engines in any country.
+
+Translate any posts, pages, categories and much more. All this in a simple and intuitive way.
 
 Do you want to be heard everywhere? Monk helps your content reach the world.
-
-== Translate Your Taxonomies ==
-
-How about categorizing your content in different languages ​​to make it easier to search and navigate? With Monk you can translate all your categories, tags or any other terms.
-
-== Translate your Attachments ==
-
-"A picture is worth a thousand words" no one doubts that. But for search engines this is not the rule. How about improving your SEO by adding translations to all your medias?
 
 == Easy to use ==
 
@@ -40,9 +36,8 @@ Are you a developer and want to help improve Monk? Join us on [GitHub](https://g
 == Installation ==
 
 1. Install and activate Monk from the Plugins menu in WordPress or download and unzip the plugin folder manually inside of `wp-content/plugins`.
-2. Go to Monk > General Settings and select a language for your current site content and check other languages you may want to translate.
-3. Go to Settings > General and also install the language packages that you want to use through the Site Language option.
-4. If you already have Posts, Pages or other content, you'll need set a language for them by saving the language option on their edit pages.
+2. Go to Monk > General Settings and select a language for your current content and add other languages you may want to translate.
+3. If you already have Posts, Pages or other content, you'll need set a language for them. You can do it automatically on Monk > Tools page or by saving manually for each.
 5. Remember to activate the Language Switcher Widget under Appearence > Widgets to let your site visitors easily navigate through the translations.
 
 == Frequently Asked Questions ==
@@ -50,7 +45,7 @@ Are you a developer and want to help improve Monk? Join us on [GitHub](https://g
 = Will this plugin work with any theme? =
 
 Yeah! That's what we expect, right? :)
-But if you find anything buggy or weird get in touch by opening a new [forum topic](https://wordpress.org/support/plugin/monk).
+But if you find anything buggy open a new [forum topic](https://wordpress.org/support/plugin/monk).
 
 = Where can I find a documentation? =
 
@@ -66,7 +61,7 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 2. Language filter in action.
 3. Fully-customizable language switcher.
 4. Language switcher widget.
-5. The Settings page (All languages coming soon!).
+5. The Settings page.
 6. Post edition screen.
 7. Localized URLs.
 8. Medias translation support.
@@ -76,9 +71,9 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 == Changelog ==
 
 = [0.4.0] =
-* Added the option to choose whether the default language slug should be in the URLs.
-* Added full language support. You can now translate your site into more than 100 different languages.
 * Added automatic language packages download.
+* Added full language support. You can now translate your site into more than 100 different languages.
+* Added the option to choose whether the default language slug should be in the URLs.
 * Improved the Language Switcher's UI.
 * Fixed the "next and previous" post links.
 
