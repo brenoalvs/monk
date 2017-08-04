@@ -1,0 +1,26 @@
+﻿VERSION BUILD=844 RECORDER=CR
+URL GOTO=http://local.wordpress.dev/wp-admin/admin.php?page=monk
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>P"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV>DIV:nth-of-type(2)>UL>LI:nth-of-type(4)>A>DIV:nth-of-type(3)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>TABLE>TBODY>TR>TD>STRONG>A"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI>A>SPAN"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI>DIV>SELECT" CONTENT=%de_DE
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI>DIV>BUTTON"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>INPUT:nth-of-type(2)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI>A>SPAN"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI>DIV>SELECT" CONTENT=%en_US
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI>DIV>BUTTON"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>INPUT:nth-of-type(2)"
