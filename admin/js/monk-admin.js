@@ -93,14 +93,13 @@
 									if ( -1 < $.inArray( false, response.data ) ) {		
 										$( '#monk-error' ).removeClass( 'monk-hide' );
 									} else {		
-										$( '#monk-done' ).removeClass( 'monk-hide' );
+										$( '#monk-submit-settings' ).click();
 									}
 								}
 							} else {
 								$( '#monk-error' ).removeClass( 'monk-hide' );
 							}
-						} 
-						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
+						}
 					}
 				});
 			}
@@ -118,7 +117,6 @@
 					url: monk.ajax_url,
 					data: form_data,
 					success: function( response ) {
-						console.log( response );
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
 							if ( response.success ) {		
