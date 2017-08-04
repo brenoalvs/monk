@@ -1,0 +1,34 @@
+﻿VERSION BUILD=844 RECORDER=CR
+URL GOTO=http://local.wordpress.dev/wp-admin/admin.php?page=monk
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR>TD>SELECT" CONTENT=%en_US
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(19)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(19)>INPUT" CONTENT=YES
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(37)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(37)>INPUT" CONTENT=YES
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(57)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(57)>INPUT" CONTENT=YES
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(76)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET>LABEL:nth-of-type(76)>INPUT" CONTENT=YES
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>P:nth-of-type(2)>INPUT"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV>DIV:nth-of-type(2)>UL>LI:nth-of-type(9)>UL>LI:nth-of-type(5)>A"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>FORM>DIV>DIV>DIV>SELECT" CONTENT=%es_ES
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>FORM>DIV>DIV>DIV>SELECT" CONTENT=%ja
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>FORM>DIV>DIV>DIV>SELECT" CONTENT=%de_DE
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>FORM>DIV>DIV>DIV>SELECT" CONTENT=%nl_NL
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>FORM>DIV>DIV>DIV>SELECT" CONTENT=%en_US
