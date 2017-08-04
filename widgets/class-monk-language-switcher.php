@@ -30,7 +30,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$widget_options = array(
 			'classname'   => 'monk_language_switcher',
 			'description' => __( 'Switch between site translations.', 'monk' ),
-			);
+		);
 		parent::__construct( 'monk_language_switcher', __( 'Language Switcher', 'monk' ), $widget_options );
 	}
 

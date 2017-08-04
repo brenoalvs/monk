@@ -58,8 +58,7 @@ echo $args['before_widget'];
 		<?php if ( $monk_love ) : ?>
 		<div class="monk-love">
 			<?php /* translators: This is a message to say the user is with us */ ?>
-			<?php printf( esc_html__( 'Made with %1$s by %2$s', 'monk' ), '<span class="dashicons dashicons-heart monk-heart" aria-hidden="true"></span>', '<a href="https://github.com/brenoalvs/monk" title="Monk">Monk</a>' );
-			?>
+			<?php printf( esc_html__( 'Made with %1$s by %2$s', 'monk' ), '<span class="dashicons dashicons-heart monk-heart" aria-hidden="true"></span>', '<a href="https://github.com/brenoalvs/monk" title="Monk">Monk</a>' ); ?>
 		</div>
 		<?php endif; ?>
 	</div>
