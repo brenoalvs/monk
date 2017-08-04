@@ -1306,7 +1306,7 @@ class Monk_Admin {
 						array(
 							'key'     => '_monk_post_language',
 							'compare' => 'NOT EXISTS',
-						)
+						),
 					);
 
 					$query->set( 'meta_query', $meta_query_args );
