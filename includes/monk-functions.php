@@ -14,8 +14,8 @@
  *
  * @since  0.1.0
  *
- * @param  string $language_code 	A language code value to validate.
- * @return boolean 					Language code validation.
+ * @param  string $language_code    A language code value to validate.
+ * @return boolean                  Language code validation.
  */
 function monk_is_language_code( $language_code ) {
 	$monk_languages = monk_get_available_languages();
@@ -35,7 +35,8 @@ function monk_get_current_url() {
 	global $wp;
 
 	$query_arg   = http_build_query( $_GET );
-	$current_url = add_query_arg( $query_arg, '', home_url( $wp->request ) );
+	$base_link   = ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	$current_url = add_query_arg( $query_arg, '', $base_link );
 
 	return $current_url;
 }

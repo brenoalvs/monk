@@ -152,7 +152,7 @@ class Monk_Public {
 				array(
 					'key'     => '_monk_term_language',
 					'compare' => 'NOT EXISTS',
-				)
+				),
 			);
 		} else {
 			$args['meta_query'] = array(

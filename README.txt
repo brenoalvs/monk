@@ -1,5 +1,5 @@
 === Monk ===
-Contributors: breno-alves, ale-correa, leonofre
+Contributors: breno-alves, ale-correa, leonofre, rafaelangeline
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
 Tested up to: 4.7.2
@@ -74,6 +74,13 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 10. Menus edition.
 
 == Changelog ==
+
+= [0.4.0] =
+* Added the option to choose whether the default language slug should be in the URLs.
+* Added full language support. You can now translate your site into more than 100 different languages.
+* Added automatic language packages download.
+* Improved the Language Switcher's UI.
+* Fixed the "next and previous" post links.
 
 = [0.3.1] =
 * Improved overall links structures.

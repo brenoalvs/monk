@@ -207,15 +207,14 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_settings_tabs() {
-		$url     = home_url() . $_SERVER['REQUEST_URI'];
+		$url     = admin_url( 'admin.php?page=monk' );
 		$action  = filter_input( INPUT_GET, 'action' );
 		$general = '';
 		$tools   = '';
-
 		if ( 'monk_general' === $action || null === $action ) {
-			$general = 'nav-tab-active';
+			$general = 'nav-tab-active monk-active-tab';
 		} elseif ( 'monk_tools' === $action ) {
-			$tools = 'nav-tab-active';
+			$tools = 'nav-tab-active monk-active-tab';
 		}
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-settings-tabs-render.php';
@@ -1172,13 +1171,13 @@ class Monk_Admin {
 			$language  = $this->monk_language_selector_render( $post_id );
 		} elseif ( ! $language && $post_language ) {
 			$lang_code = $post_language;
-			$language = $monk_languages[ $post_language ]['name'];
+			$language = $monk_languages[ $post_language ]['english_name'];
 		} elseif ( ! $language && $new_post_language ) {
 			$lang_code = $new_post_language;
-			$language = $monk_languages[ $new_post_language ]['name'];
+			$language = $monk_languages[ $new_post_language ]['english_name'];
 		} else {
 			$lang_code = $default_language;
-			$language = $monk_languages[ $default_language ]['name'];
+			$language = $monk_languages[ $default_language ]['english_name'];
 		}
 
 		if ( 'upload.php' !== substr( strrchr( wp_parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
@@ -1307,7 +1306,7 @@ class Monk_Admin {
 						array(
 							'key'     => '_monk_post_language',
 							'compare' => 'NOT EXISTS',
-						)
+						),
 					);
 
 					$query->set( 'meta_query', $meta_query_args );
@@ -1338,6 +1337,8 @@ class Monk_Admin {
 			$monk_id = filter_input( INPUT_GET, 'monk_id' );
 			if ( $monk_id ) {
 				$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
+			} else {
+				$menu_translations = array();
 			}
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-new-menu-fields-render.php';
 		} else {
@@ -1416,7 +1417,8 @@ class Monk_Admin {
 	public function monk_save_language_packages() {
 		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
 			global $monk_languages;
-			$active_languages  = $_POST['monk_active_languages'];
+
+			$active_languages = $_POST['monk_active_languages'];
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
