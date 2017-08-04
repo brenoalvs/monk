@@ -1,0 +1,20 @@
+﻿VERSION BUILD=844 RECORDER=CR
+URL GOTO=http://local.wordpress.dev/wp-admin/plugins.php?plugin_status=all&paged=1&s
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM:nth-of-type(2)>TABLE>TBODY>TR>TD>DIV>SPAN>A"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>H2"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>H2"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR>TH"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TH"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>P"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(2)>TD>FIELDSET"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(3)>TD"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>FORM>TABLE>TBODY>TR:nth-of-type(3)>TH"
