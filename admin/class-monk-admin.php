@@ -1447,8 +1447,7 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_set_language_to_elements() {
-		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
-			filter_input( INPUT_POST, 'monk_set_language_to_elements' );
+		if ( check_ajax_referer( '_monk_nonce', false, false ) && filter_input( INPUT_POST, 'monk_set_language_to_elements' ) ) {
 
 			global $wpdb;
 			$default_language = get_option( 'monk_default_language', false );
