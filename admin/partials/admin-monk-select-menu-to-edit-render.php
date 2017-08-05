@@ -16,8 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 $response = '';
 ?>
 <div class="hide-if-no-js" id="monk-select-menu-to-edit-groups">
-<?php
-foreach ( $monk_ids as $monk_id ) : ?>
+<?php foreach ( $monk_ids as $monk_id ) : ?>
 	<?php
 	$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
 	$monk_id_obj       = get_term( $monk_id );
@@ -30,8 +29,12 @@ foreach ( $monk_ids as $monk_id ) : ?>
 	}
 	$has_language = ! empty( get_term_meta( $monk_id_obj->term_id, '_monk_menu_language', true ) ) ? true : false;
 	?>
-	<?php /* translators: This is a label to display the translations group */ ?>
-	<optgroup label="<?php echo esc_attr( sprintf( __( 'Translations of %s', 'monk' ), $monk_id_obj->name ) ); ?>">
+	<optgroup label="
+	<?php
+		/* translators: This is a label to display the translations group */
+		echo esc_attr( sprintf( __( 'Translations of %s', 'monk' ), $monk_id_obj->name ) );
+	?>
+	">
 		<?php if ( $has_language ) : ?>
 			<?php foreach ( $monk_translations as $nav_menu_id ) : ?>
 				<?php $nav_menu = get_term( $nav_menu_id ); ?>
@@ -77,7 +80,7 @@ foreach ( $monk_ids as $monk_id ) : ?>
 <?php
 $menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
 
-if ( $menu_id ) :
+if ( is_nav_menu( $menu_id ) ) :
 	$menu_language     = get_term_meta( $menu_id, '_monk_menu_language', true );
 	$monk_id           = get_term_meta( $menu_id, '_monk_menu_translations_id', true );
 	$menu_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );

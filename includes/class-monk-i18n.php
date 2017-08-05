@@ -48,7 +48,7 @@ class Monk_I18n {
 			return $locale;
 		}
 
-		global $monk_languages;
+		$monk_languages = monk_get_available_languages();
 
 		/**
 		 * As locale is defined before WordPress parse the request.
@@ -72,6 +72,8 @@ class Monk_I18n {
 			if ( ! in_array( $locale, $active_languages, true ) ) {
 				$locale = get_option( 'monk_default_language', false );
 			}
+		} else {
+			$locale = get_option( 'monk_default_language', false );
 		}
 
 		return $locale;

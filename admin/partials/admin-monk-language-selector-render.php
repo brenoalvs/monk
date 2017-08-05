@@ -23,19 +23,19 @@ if ( $available_languages ) :
 			if ( $lang_code === $language ) :
 				?>
 				<option value='<?php echo esc_attr( $lang_code ); ?>' selected="selected">
-					<?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?>
+					<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
 				</option>
 				<?php
 			elseif ( ! $language && $lang_code === $default_language ) :
 				?>
 				<option value='<?php echo esc_attr( $lang_code ); ?>' selected="selected">
-					<?php echo esc_html( $monk_languages[ $lang_code ]['name'] ); ?>
+					<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
 				</option>
 				<?php
 			else :
 				?>
 				<option value="<?php echo esc_attr( $lang_code ); ?>">
-					<?php echo esc_html( $monk_languages[ $lang_code ]['name'] )?>
+					<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
 				</option>;
 				<?php
 			endif;

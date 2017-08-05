@@ -1,0 +1,10 @@
+﻿VERSION BUILD=844 RECORDER=CR
+URL GOTO=http://local.wordpress.dev/wp-admin/themes.php
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV>DIV:nth-of-type(2)>UL>LI:nth-of-type(9)>UL>LI:nth-of-type(5)>A"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV>FORM>SELECT" CONTENT=$Monk<SP>Test<SP>Create<SP>Menu<SP>(German)
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV>FORM>SPAN>INPUT"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>FORM>DIV>DIV:nth-of-type(3)>DIV>SPAN>A"

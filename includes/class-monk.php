@@ -67,7 +67,7 @@ class Monk {
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '0.3.1';
+		$this->version = '0.4.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -221,6 +221,8 @@ class Monk {
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'define_view_mode' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'medias_modal_filter' );
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_change_nav_menu_fields' );
+		$this->loader->add_action( 'wp_ajax_monk_set_language_to_elements', $plugin_admin, 'monk_set_language_to_elements' );
+		$this->loader->add_action( 'wp_ajax_monk_save_language_packages', $plugin_admin, 'monk_save_language_packages' );
 	}
 
 	/**
@@ -270,6 +272,8 @@ class Monk {
 		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_canonical_redirection', 5 );
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions', 10, 1 );
 		$this->loader->add_action( 'admin_init', $plugin_links, 'monk_flush_on_update' );
+		$this->loader->add_action( 'get_previous_post_join', $plugin_links, 'monk_previous_and_next_posts', 10, 5 );
+		$this->loader->add_action( 'get_next_post_join', $plugin_links, 'monk_previous_and_next_posts', 10, 5 );
 	}
 
 	/**
