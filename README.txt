@@ -2,7 +2,7 @@
 Contributors: breno-alves, ale-correa, leonofre, rafaelangeline
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
-Tested up to: 4.7.2
+Tested up to: 4.8.1
 Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
