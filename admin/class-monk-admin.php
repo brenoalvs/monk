@@ -470,15 +470,14 @@ class Monk_Admin {
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
+		$language         = $filter;
 		$post_type        = filter_input( INPUT_GET , 'post_type' );
 
-		if ( ! is_customize_preview() && function_exists( 'get_current_screen' ) ) {
+		if ( ! is_customize_preview() && ( function_exists( 'get_current_screen' ) && ! empty( get_current_screen() ) ) ) {
 			if ( 'nav-menus' === get_current_screen()->base ) {
 				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
 				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
 				$language = empty( $language ) ? $default_language : $language;
-			} else {
-				$language = $filter;
 			}
 		}
 
@@ -1447,7 +1446,8 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_set_language_to_elements() {
-		if ( check_ajax_referer( '_monk_nonce', false, false ) && filter_input( INPUT_POST, 'monk_set_language_to_elements' ) ) {
+		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
+			$monk_set_language_to_elements = $_POST['monk_set_language_to_elements'];
 
 			global $wpdb;
 			$default_language = get_option( 'monk_default_language', false );
@@ -1477,20 +1477,20 @@ class Monk_Admin {
 			if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 				foreach ( $post_ids as $post_id ) {
 					$set_language           = $wpdb->insert( 'wp_postmeta', array(
-						'post_id'    => intval( $post_id['ID'] ),
+						'post_id'    => $post_id['ID'],
 						'meta_key'   => '_monk_post_language',
 						'meta_value' => $default_language,
 					));
 					$set_monk_id            = $wpdb->insert( 'wp_postmeta', array(
-						'post_id'    => intval( $post_id['ID'] ),
+						'post_id'    => $post_id['ID'],
 						'meta_key'   => '_monk_post_translations_id',
-						'meta_value' => intval( $post_id['ID'] ),
+						'meta_value' => $post_id['ID'],
 					));
 					$value = array(
-						$default_language => intval( $post_id['ID'] ),
+						$default_language => $post_id['ID'],
 					);
 					$set_translation_array  = $wpdb->insert( 'wp_options', array(
-						'option_name'  => 'monk_post_translations_' . intval( $post_id['ID'] ),
+						'option_name'  => 'monk_post_translations_' . $post_id['ID'],
 						'option_value' => maybe_serialize( $value ),
 						'autoload'     => 'yes',
 					));
@@ -1502,17 +1502,17 @@ class Monk_Admin {
 			if ( is_array( $term_ids ) && ! empty( $term_ids ) ) {
 				foreach ( $term_ids as $term_id ) {
 					$set_language = $wpdb->insert( 'wp_termmeta', array(
-						'term_id'    => intval( $term_id['term_id'] ),
+						'term_id'    => $term_id['term_id'],
 						'meta_key'   => '_monk_term_language',
 						'meta_value' => $default_language,
 					));
 					$set_monk_id  = $wpdb->insert( 'wp_termmeta', array(
-						'term_id'    => intval( $term_id['term_id'] ),
+						'term_id'    => $term_id['term_id'],
 						'meta_key'   => '_monk_term_translations_id',
-						'meta_value' => intval( $term_id['term_id'] ),
+						'meta_value' => $term_id['term_id'],
 					));
 					$value = array(
-						$default_language => intval( $term_id['term_id'] ),
+						$default_language => $term_id['term_id'],
 					);
 					$set_translation_array  = $wpdb->insert( 'wp_options', array(
 						'option_name'  => 'monk_term_translations_' . $term_id['term_id'],
