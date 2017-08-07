@@ -559,7 +559,7 @@ class Monk_Admin {
 			$args['meta_query'] = $meta_query;
 		}
 
-		if ( ! is_customize_preview() ) {
+		if ( ! is_customize_preview() && function_exists( 'get_current_screen' ) ) {
 			$screen = get_current_screen();
 
 			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
