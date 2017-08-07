@@ -42,7 +42,10 @@ foreach ( $monk_languages as $lang_code => $lang_names ) :
 	value="<?php echo esc_attr( $lang_code ); ?>"
 	<?php checked( $is_checked ); ?>
 	/>
+	<?php echo esc_html( $lang_names['english_name'] ); ?>
+	<span class="description">
 	<?php echo esc_html( $lang_names['native_name'] ); ?>
+	</span>
 </label>
 <?php endforeach; ?>
 </fieldset>
