@@ -559,7 +559,7 @@ class Monk_Admin {
 			$args['meta_query'] = $meta_query;
 		}
 
-		if ( ! is_customize_preview() && function_exists( 'get_current_screen' ) ) {
+		if ( ! is_customize_preview() && ( function_exists( 'get_current_screen' ) && ! empty( get_current_screen() ) ) ) {
 			$screen = get_current_screen();
 
 			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
@@ -1325,7 +1325,7 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_add_menu_translation_fields() {
-		if ( 'nav-menus' !== get_current_screen() -> base || 'locations' === filter_input( INPUT_GET, 'action' ) ) {
+		if ( 'nav-menus' !== get_current_screen()->base || 'locations' === filter_input( INPUT_GET, 'action' ) ) {
 			return;
 		}
 
@@ -1371,7 +1371,7 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_change_nav_menu_fields() {
-		$screen   = get_current_screen()->base;
+		$screen = get_current_screen()->base;
 
 		if ( 'nav-menus' !== $screen ) {
 			return;
