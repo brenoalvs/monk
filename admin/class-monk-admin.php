@@ -146,6 +146,15 @@ class Monk_Admin {
 			'monk_general_settings'
 		);
 
+		register_setting( 'monk_settings', 'monk_default_language_url' );
+		add_settings_field(
+			'monk_default_language_url',
+			__( 'Show default language in URL', 'monk' ),
+			array( $this, 'monk_default_language_url_render' ),
+			'monk_settings',
+			'monk_general_settings'
+		);
+
 		register_setting( 'monk_settings', 'monk_active_languages' );
 		add_settings_field(
 			'monk_active_languages',
@@ -162,15 +171,6 @@ class Monk_Admin {
 			array( $this, 'monk_set_elements_language_render' ),
 			'monk_settings',
 			'monk_tools'
-		);
-
-		register_setting( 'monk_settings', 'monk_default_language_url' );
-		add_settings_field(
-			'monk_default_language_url',
-			__( 'Show default language in URL', 'monk' ),
-			array( $this, 'monk_default_language_url_render' ),
-			'monk_settings',
-			'monk_general_settings'
 		);
 	}
 
