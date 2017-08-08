@@ -1,0 +1,14 @@
+﻿VERSION BUILD=844 RECORDER=CR
+URL GOTO=http://local.wordpress.dev/wp-admin/edit.php?post_type=post
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>A"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>DIV>P>SELECT" CONTENT=%en_US
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV>DIV>DIV>INPUT" CONTENT=Monk<SP>Test<SP>Create<SP>Post
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>INPUT:nth-of-type(2)"
+WAIT SECONDS=5
+TAG SELECTOR="HTML>BODY>DIV>DIV:nth-of-type(2)>DIV:nth-of-type(2)>DIV>DIV:nth-of-type(3)>FORM>DIV>DIV>DIV:nth-of-type(2)>DIV>DIV>DIV>UL>LI>SPAN"

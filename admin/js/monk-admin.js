@@ -93,14 +93,13 @@
 									if ( -1 < $.inArray( false, response.data ) ) {		
 										$( '#monk-error' ).removeClass( 'monk-hide' );
 									} else {		
-										$( '#monk-done' ).removeClass( 'monk-hide' );
+										$( '#monk-submit-settings' ).click();
 									}
 								}
 							} else {
 								$( '#monk-error' ).removeClass( 'monk-hide' );
 							}
-						} 
-						setTimeout( function() { $( '#monk-submit-settings' ).click() }, 2000 );
+						}
 					}
 				});
 			}

@@ -27,7 +27,8 @@ $languages = get_option( 'monk_active_languages' );
 			} elseif ( ! isset( $_GET['monk_language_filter'] ) ) {
 				selected( get_option( 'monk_default_language' ), $language );
 			}
-			?>>
+			?>
+		>
 			<?php
 			echo esc_html( $monk_languages[ $language ]['english_name'] );
 			?>
