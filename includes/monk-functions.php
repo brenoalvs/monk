@@ -158,7 +158,7 @@ function monk_get_available_languages() {
 	uasort( $monk_languages,
 		function( $a, $b ) {
 			return strcmp( $a['english_name'], $b['english_name'] );
-	    }
+		}
 	);
 
 	return $monk_languages;
