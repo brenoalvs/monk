@@ -236,16 +236,5 @@
 				$( '#monk-menu-locations' ).remove();
 			}
 		}
-
-		var currentUrl = document.URL;
-		if ( currentUrl.indexOf( 'page=monk' ) !== -1 ) {
-			var sortedLanguages = $( '.monk-label' ).sort( function( a, b ) {
-				return String.prototype.localeCompare.call( $(a).data( 'name' ), $(b).data( 'name' ) );
-			});
-
-			var container = $( '.settings-language-list' );
-			container.detach().empty().append( sortedLanguages );
-			$( 'tbody tr:nth-child(3) td' ).append( container );
-		}
 	});
 })( jQuery );
