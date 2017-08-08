@@ -5,13 +5,14 @@
 }
 
 .flag-icon {
-  background-size: contain;
   background-position: 50%;
   background-repeat: no-repeat;
-  position: relative;
+  background-size: contain;
   display: inline-block;
+  line-height: 25px;
+  margin-left: 15px;
+  position: relative;
   width: 1.33333333em;
-  line-height: 1em;
 }
 
 .flag-icon:before {
