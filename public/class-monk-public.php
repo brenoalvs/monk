@@ -214,7 +214,7 @@ class Monk_Public {
 	 * @param  string $option     String option name.
 	 * @return mixed  $pre_option Value to return instead of the option value.
 	 */
-	public function monk_filter_options( $pre_option, $option ) {
+	public function monk_filter_translatable_option( $pre_option, $option ) {
 		$option_names = apply_filters( 'monk_translatable_option', array(
 			'blogname',
 			'blogdescription',
