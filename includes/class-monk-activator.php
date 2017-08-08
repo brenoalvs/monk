@@ -30,12 +30,7 @@ class Monk_Activator {
 	public static function activate() {
 		$monk_languages = monk_get_available_languages();
 
-		$locale = get_locale();
-		if ( array_key_exists( $locale, $monk_languages ) ) {
-			$language = $locale;
-		} else {
-			$language = 'en_US';
-		}
+		$language = get_locale() ? get_locale() : 'en_US';
 
 		update_option( 'monk_default_language', $language );
 		update_option( 'monk_active_languages', array( $language ) );
