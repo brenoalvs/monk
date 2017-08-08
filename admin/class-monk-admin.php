@@ -1557,7 +1557,7 @@ class Monk_Admin {
 	 */
 	public function monk_save_language_packages() {
 		if ( check_ajax_referer( '_monk_translation_packages', '_monk_translation_packages', false ) ) {
-			$active_languages = $_POST['monk_active_languages'];
+			$active_languages = filter_input( INPUT_POST, 'monk_active_languages' );
 
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
@@ -1586,13 +1586,8 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_set_language_to_elements() {
-<<<<<<< HEAD
-		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
-			$monk_set_language_to_elements = filter_input( INPUT_POST, 'monk_set_language_to_elements' );
-=======
 		if ( check_ajax_referer( '_monk_tools', false, false ) ) {
-			$monk_set_language_to_elements = $_POST['monk_set_language_to_elements'];
->>>>>>> Fixed requested changes
+			$monk_set_language_to_elements = filter_input( INPUT_POST, 'monk_set_language_to_elements' );
 
 			global $wpdb;
 			$default_language = get_option( 'monk_default_language', false );
