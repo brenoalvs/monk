@@ -155,5 +155,10 @@ function monk_get_available_languages() {
 		set_transient( 'monk_languages', $monk_languages, YEAR_IN_SECONDS );
 	} // End if().
 
+	$sort_by_name = function( $a, $b ) {
+		return strcmp( $a['english_name'], $b['english_name'] );
+	};
+	uasort( $monk_languages, $sort_by_name );
+
 	return $monk_languages;
 }
