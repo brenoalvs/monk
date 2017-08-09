@@ -55,12 +55,12 @@ class Monk_Language_Switcher extends WP_Widget {
 		$default_language         = get_option( 'monk_default_language', false );
 		$default_slug             = $monk_languages[ $default_language ]['slug'];
 		$has_default_language_url = get_option( 'monk_default_language_url', false );
+		$current_locale             = monk_get_locale_by_slug( get_query_var( 'lang' ) );
 
-		if ( get_query_var( 'lang' ) ) {
+		if ( get_query_var( 'lang' ) && in_array( $current_locale, $active_languages ) ) {
 			$current_language = sanitize_text_field( get_query_var( 'lang' ) );
 		} else {
-			$code = get_option( 'monk_default_language', false );
-			$current_language = $monk_languages[ $code ]['slug'];
+			$current_language = $monk_languages[ $default_language ]['slug'];
 		}
 
 		if ( is_front_page() || is_post_type_archive() || is_date() || is_404() || is_author() || is_search() ) {
