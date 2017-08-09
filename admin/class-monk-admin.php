@@ -1411,11 +1411,7 @@ class Monk_Admin {
 	 */
 	public function monk_change_nav_menu_fields() {
 		$screen = $this->get_current_screen();
-		if ( $screen ) {
-			$screen = $screen->base;
-		}
-
-		if ( 'nav-menus' !== $screen ) {
+		if ( $screen && 'nav-menus' !== $screen->base ) {
 			return;
 		}
 
