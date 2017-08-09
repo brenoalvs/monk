@@ -624,6 +624,9 @@ class Monk_Links {
 			$redirect_url  = ( ! redirect_canonical( $_redirect_url, false ) ) ? $_redirect_url : redirect_canonical( $_redirect_url, false );
 
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $slug );
+			if ( $this->monk_using_permalinks() ) {
+				$redirect_url = remove_query_arg( 'lang', $redirect_url );
+			}
 		}
 
 		// If the incoming url has a wrong language, redirect.
