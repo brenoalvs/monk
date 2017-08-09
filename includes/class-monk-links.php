@@ -499,9 +499,7 @@ class Monk_Links {
 		$default_language_url = get_option( 'monk_default_language_url', false );
 		$language             = ( get_query_var( 'lang' ) ) ? get_query_var( 'lang' ) : $this->site_language;
 
-		if ( $this->monk_using_permalinks() ) {
-			$link = $default_language_url || $language !== $default_slug ? str_replace( $this->site_home . '/' . $this->site_root, $this->site_home . '/' . $this->site_root . $language . '/', $link ) : $link;
-		} else {
+		if ( ! $this->monk_using_permalinks() ) {
 			$link = add_query_arg( 'lang', $language, home_url() );
 			$link = add_query_arg( 'author', $author_id, $link );
 		}
