@@ -93,11 +93,18 @@ class Monk_Public {
 
 		$query_args       = array();
 		$default_language = get_option( 'monk_default_language', false );
+		$active_languages = get_option( 'monk_active_languages', false );
 		$default_slug     = $monk_languages[ $default_language ]['slug'];
 		$current_language = get_query_var( 'lang', $default_slug );
 		$current_language = monk_get_locale_by_slug( $current_language );
 
-		if ( ! $current_language || $default_language === $current_language ) {
+		if ( $current_language && in_array( $current_language, $active_languages ) ) {
+			$query_args[] = array(
+				'key'     => '_monk_post_language',
+				'value'   => $current_language,
+				'compare' => '=',
+			);
+		} else {
 			$query_args[] = array(
 				'relation' => 'OR',
 				array(
@@ -109,12 +116,6 @@ class Monk_Public {
 					'key'     => '_monk_post_language',
 					'compare' => 'NOT EXISTS',
 				),
-			);
-		} else {
-			$query_args[] = array(
-				'key'     => '_monk_post_language',
-				'value'   => $current_language,
-				'compare' => '=',
 			);
 		}
 
@@ -137,11 +138,20 @@ class Monk_Public {
 		$monk_languages = monk_get_available_languages();
 
 		$default_language = get_option( 'monk_default_language', false );
+		$active_languages = get_option( 'monk_active_languages', false );
 		$default_slug     = $monk_languages[ $default_language ]['slug'];
 		$current_language = get_query_var( 'lang', $default_slug );
 		$current_language = monk_get_locale_by_slug( $current_language );
 
-		if ( ! $current_language || $default_language === $current_language ) {
+		if ( $current_language && in_array( $current_language, $active_languages ) ) {
+			$args['meta_query'] = array(
+				array(
+					'key'     => '_monk_term_language',
+					'value'   => $current_language,
+					'compare' => '=',
+				),
+			);
+		} else {
 			$args['meta_query'] = array(
 				'relation' => 'OR',
 				array(
@@ -152,14 +162,6 @@ class Monk_Public {
 				array(
 					'key'     => '_monk_term_language',
 					'compare' => 'NOT EXISTS',
-				),
-			);
-		} else {
-			$args['meta_query'] = array(
-				array(
-					'key'     => '_monk_term_language',
-					'value'   => $current_language,
-					'compare' => '=',
 				),
 			);
 		}
@@ -182,7 +184,7 @@ class Monk_Public {
 		$default_language = get_option( 'monk_default_language', false );
 
 		if ( $language ) {
-			$language         = monk_get_locale_by_slug( $language );
+			$language = monk_get_locale_by_slug( $language );
 
 			if ( array_key_exists( $location, $menus ) ) {
 				$menu_id           = $menus[ $location ];
