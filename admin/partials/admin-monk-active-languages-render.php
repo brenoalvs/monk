@@ -43,7 +43,7 @@ foreach ( $monk_languages as $lang_code => $lang_names ) :
 	<?php checked( $is_checked ); ?>
 	/>
 	<?php echo esc_html( $lang_names['english_name'] ); ?>
-	<span class="description">
+	<span class="monk-description">
 	<?php echo esc_html( $lang_names['native_name'] ); ?>
 	</span>
 </label>
