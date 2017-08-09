@@ -63,6 +63,7 @@ class Monk_I18n {
 		}
 
 		$matches = preg_split( '/(\/)/', $path, 0, PREG_SPLIT_NO_EMPTY );
+		$slug    = filter_input( INPUT_GET, 'lang' );
 
 		if ( ! empty( $matches ) ) {
 			$slug             = $matches[0];
@@ -72,6 +73,8 @@ class Monk_I18n {
 			if ( ! in_array( $locale, $active_languages, true ) ) {
 				$locale = get_option( 'monk_default_language', false );
 			}
+		} elseif ( $slug ) {
+			$locale = monk_get_locale_by_slug( $slug );
 		} else {
 			$locale = get_option( 'monk_default_language', false );
 		}
