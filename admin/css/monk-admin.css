@@ -171,3 +171,11 @@ div.menu-translations ul.current-menu-translations li {
 .monk-active-tab {
 	pointer-events: none;
 }
+
+.monk-description {
+	color: #adadad;
+	display: block;
+	font-size: 13px;
+	font-style: italic;
+	padding-left: 24px;
+}
