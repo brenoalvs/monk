@@ -614,6 +614,9 @@ class Monk_Links {
 		if ( empty( $slug ) ) {
 			$slug         = $this->site_language;
 			$redirect_url = $requested_url;
+			if ( $this->monk_using_permalinks() ) {
+				$redirect_url = remove_query_arg( 'lang', $requested_url );
+			}
 		} else {
 			/*
 			 * Uses the redirect_canonical to check the canonical url that WordPress evaluates.
