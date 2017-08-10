@@ -1517,7 +1517,7 @@ class Monk_Admin {
 	 */
 	public function monk_save_general_form_settings() {
 		if ( check_ajax_referer( '_monk_save_general_settings', '_monk_save_general_settings', false ) ) {
-			$active_languages = $_POST['monk_active_languages'];
+			$active_languages = filter_input( INPUT_POST, 'monk_active_languages', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 			$response         = $this->monk_save_language_packages( $active_languages );
 			$response[]       = $this->create_uncategorized_translations( $active_languages );
 
