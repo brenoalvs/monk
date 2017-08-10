@@ -1489,7 +1489,7 @@ class Monk_Admin {
 				$has_term      = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
 				if ( ! $has_term ) {
 					$uncategorized_term = get_term_by( 'id', 1, 'category' );
-					if ( $uncategorized_term->term_id === $default_post_category->term_id ) {
+					if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
 						$new_term = wp_insert_term( $monk_uncategorized_translations[ $language ], 'category' );
 						$term_translations[ $language ] = $new_term['term_id'];
 						update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
