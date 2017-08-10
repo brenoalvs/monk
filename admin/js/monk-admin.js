@@ -100,6 +100,9 @@
 								$( '#monk-error' ).removeClass( 'monk-hide' );
 							}
 						}
+						setTimeout( function() {
+							$( '#monk-spinner' ).removeClass( 'is-active' );
+						}, 3000 );
 					}
 				});
 			}
