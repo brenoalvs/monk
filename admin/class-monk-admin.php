@@ -1491,9 +1491,11 @@ class Monk_Admin {
 					$uncategorized_term = get_term_by( 'id', 1, 'category' );
 					if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
 						$new_term = wp_insert_term( $monk_uncategorized_translations[ $language ], 'category' );
-						$term_translations[ $language ] = $new_term['term_id'];
-						update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
-						update_term_meta( $new_term['term_id'], '_monk_term_translations_id', $default_post_category->term_id );
+						if ( ! is_wp_error( $new_term ) ) {
+							$term_translations[ $language ] = $new_term['term_id'];
+							update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
+							update_term_meta( $new_term['term_id'], '_monk_term_translations_id', $default_post_category->term_id );
+						}
 					}
 				} else {
 					$term_translations[ $language ] = $has_term->term_id;
