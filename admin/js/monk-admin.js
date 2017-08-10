@@ -78,7 +78,7 @@
 				var form_data = $( '#monk-general-form' ).serializeArray();
 				form_data.push({
 					name : 'action',
-					value : 'monk_save_language_packages',
+					value : 'monk_save_general_form_settings',
 				});
 
 				$.ajax({
