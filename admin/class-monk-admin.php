@@ -1467,6 +1467,13 @@ class Monk_Admin {
 				}
 			}
 		}
+
+		if ( in_array( false, $response, true ) ) {
+			$response = false;
+		} else {
+			$response = true;
+		}
+
 		return $response;
 	}
 
@@ -1505,7 +1512,15 @@ class Monk_Admin {
 			}
 		}
 
-		return update_option( 'monk_term_translations_' . $default_post_category->term_id, $term_translations );
+		$monk_old_translations = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
+
+		if ( $monk_old_translations === $term_translations ) {
+			$response = true;
+		} else {
+			$response = update_option( 'monk_term_translations_' . $default_post_category->term_id, $term_translations );
+		}
+
+		return $response;
 	}
 
 	/**
@@ -1520,10 +1535,12 @@ class Monk_Admin {
 	public function monk_save_general_form_settings() {
 		if ( check_ajax_referer( '_monk_save_general_settings', '_monk_save_general_settings', false ) ) {
 			$active_languages = filter_input( INPUT_POST, 'monk_active_languages', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-			$response         = $this->monk_save_language_packages( $active_languages );
-			$response[]       = $this->create_uncategorized_translations( $active_languages );
+			$response = array();
 
-			wp_send_json_success( $active_languages );
+			$response[] = $this->monk_save_language_packages( $active_languages ) ? true : false;
+			$response[] = $this->create_uncategorized_translations( $active_languages ) ? true : false;
+
+			wp_send_json_success( $response );
 		} else {
 			wp_send_json_error();
 		} // End if().
