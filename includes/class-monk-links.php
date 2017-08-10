@@ -626,6 +626,10 @@ class Monk_Links {
 			$redirect_url = $this->monk_change_language_url( $redirect_url, $slug );
 		}
 
+		if ( $this->monk_using_permalinks() ) {
+			$redirect_url = remove_query_arg( 'lang', $redirect_url );
+		}
+
 		// If the incoming url has a wrong language, redirect.
 		if ( $redirect_url && $requested_url !== $redirect_url ) {
 			wp_redirect( $redirect_url, 301 );
