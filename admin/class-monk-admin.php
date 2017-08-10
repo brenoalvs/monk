@@ -1015,13 +1015,11 @@ class Monk_Admin {
 		$available_languages       = false;
 		$taxonomy                  = filter_input( INPUT_GET, 'taxonomy' );
 
-		foreach ( $taxonomies as $taxonomy ) {
-			if ( isset( $taxonomy ) ) {
-				$tax = sanitize_text_field( wp_unslash( $taxonomy ) );
-				if ( $tax === $taxonomy ) {
-					$base_url = admin_url( 'edit-tags.php?taxonomy=' . $taxonomy );
-					$base_url_translation = admin_url( 'term.php?taxonomy=' . $taxonomy );
-				}
+		if ( isset( $taxonomy ) ) {
+			$taxonomy = sanitize_text_field( wp_unslash( $taxonomy ) );
+			if ( in_array( $taxonomy, $taxonomies ) ) {
+				$base_url = admin_url( 'edit-tags.php?taxonomy=' . $taxonomy );
+				$base_url_translation = admin_url( 'term.php?taxonomy=' . $taxonomy );
 			}
 		}
 
