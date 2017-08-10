@@ -33,12 +33,12 @@ if ( ! defined( 'WPINC' ) ) {
 				$btn_args = array(
 					'id' => 'monk-submit-settings',
 				);
-				wp_nonce_field( '_monk_nonce', '_monk_nonce' );
+				wp_nonce_field( '_monk_save_general_settings', '_monk_save_general_settings' );
 				settings_fields( 'monk_settings' );
 			?>
 			<?php else : ?>
 				<input type="hidden" name="action" value="monk_set_language_to_elements" />
-			<?php wp_nonce_field( '_monk_nonce' ); ?>
+			<?php wp_nonce_field( '_monk_tools' ); ?>
 			<?php endif; ?>
 			<?php
 				do_settings_sections( 'monk_settings' );

@@ -1447,13 +1447,13 @@ class Monk_Admin {
 	 *
 	 * Update active and default languages.
 	 *
+	 * @param  array $active_languages Active languages array.
+	 *
 	 * @since    0.4.0
 	 *
 	 * @return array
 	 */
-	public function monk_save_language_packages() {
-		$active_languages = $_POST['monk_active_languages'];
-
+	public function monk_save_language_packages( $active_languages ) {
 		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
 		foreach ( $active_languages as $language ) {
@@ -1473,14 +1473,15 @@ class Monk_Admin {
 	/**
 	 * Create 'Uncategorized' translations according to active languages
 	 *
+	 * @param  array $active_languages Active languages array.
+	 *
 	 * @since    0.5.0
 	 *
 	 * @return bool
 	 */
-	public function create_uncategorized_translations() {
+	public function create_uncategorized_translations( $active_languages ) {
 		global $monk_uncategorized_translations;
 
-		$active_languages      = $_POST['monk_active_languages'];
 		$default_post_category = get_term( get_option( 'default_category' ) );
 
 		foreach ( $active_languages as $language ) {
@@ -1515,11 +1516,12 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_save_general_form_settings() {
-		if ( check_ajax_referer( '_monk_nonce', '_monk_nonce', false ) ) {
-			$response = $this->monk_save_language_packages();
-			$response[] = $this->create_uncategorized_translations();
+		if ( check_ajax_referer( '_monk_save_general_settings', '_monk_save_general_settings', false ) ) {
+			$active_languages = $_POST['monk_active_languages'];
+			$response         = $this->monk_save_language_packages( $active_languages );
+			$response[]       = $this->create_uncategorized_translations( $active_languages );
 
-			wp_send_json_success( $response );
+			wp_send_json_success( $active_languages );
 		} else {
 			wp_send_json_error();
 		} // End if().
@@ -1533,7 +1535,7 @@ class Monk_Admin {
 	 * @return void
 	 */
 	public function monk_set_language_to_elements() {
-		if ( check_ajax_referer( '_monk_nonce', false, false ) ) {
+		if ( check_ajax_referer( '_monk_tools', false, false ) ) {
 			$monk_set_language_to_elements = filter_input( INPUT_POST, 'monk_set_language_to_elements' );
 
 			global $wpdb;
