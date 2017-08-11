@@ -71,15 +71,12 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 == Changelog ==
 
 = [0.4.1] =
-* Added the languages' english names to Monk settings page
-* Improved the Language Switcher coding structure
-* Improved the Monk_Links class
-* Improved plugins compatibility with Monk
-* Improved mobile compatibility
-* Fixed a translation bug when permalinks were not active
+* Fixed bug with the site front end translation when permalinks are not active
 * Fixed Travis CI warnings
+* Fixed compatibility bug with `get_current_screen` function calls
 * Fixed broken archive links in the Language Switcher widget
-* Fixed wrong links generation in the terms edit pages
+* Fixed date archive links with duplicated language slug in the URLs
+* Fixed the links coming with wrong taxonomy names in term edit pages
 
 = [0.4.0] =
 * Added automatic language packages download.
@@ -88,20 +85,8 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 * Improved the Language Switcher's UI.
 * Fixed the "next and previous" post links.
 
-= [0.3.1] =
-* Improved overall links structures.
-* Improved the Language Switcher widget.
-* Improved text and reading consistency.
-* Improved the post public filters.
-* Fixed date and category archive links.
-
-= [0.3.0] =
-* Added menus translation support.
-* Support us using Monk Love message.
-
 [See changelog for older versions](https://raw.githubusercontent.com/brenoalvs/monk/master/CHANGELOG.md)
 
 == Credits ==
 
 Special thanks to Lipis by [SVG country flags](https://github.com/lipis/flag-icon-css).
-
