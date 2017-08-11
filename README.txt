@@ -3,7 +3,7 @@ Contributors: breno-alves, ale-correa, leonofre, rafaelangeline
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
 Tested up to: 4.8.1
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,17 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 10. Menus edition.
 
 == Changelog ==
+
+= [0.4.1] =
+* Added the languages' english names to Monk settings page
+* Improved the Language Switcher coding structure
+* Improved the Monk_Links class
+* Improved plugins compatibility with Monk
+* Improved mobile compatibility
+* Fixed a translation bug when permalinks were not active
+* Fixed Travis CI warnings
+* Fixed broken archive links in the Language Switcher widget
+* Fixed wrong links generation in the terms edit pages
 
 = [0.4.0] =
 * Added automatic language packages download.
