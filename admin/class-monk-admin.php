@@ -326,7 +326,7 @@ class Monk_Admin {
 	 */
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
-		$monk_languages = monk_get_available_languages();
+		$monk_languages         = monk_get_available_languages();
 		$monk_id                = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language  = get_post_meta( $post->ID, '_monk_post_language', true );
 		$site_default_language  = get_option( 'monk_default_language', false );
@@ -395,11 +395,10 @@ class Monk_Admin {
 			return;
 		}
 
-		$monk_languages = monk_get_available_languages();
-
-		$active_languages  = get_option( 'monk_active_languages' );
-		$current_language  = get_post_meta( $post_id, '_monk_post_language', true );
-		$post_language     = filter_input( INPUT_POST, 'monk_post_language' );
+		$monk_languages   = monk_get_available_languages();
+		$active_languages = get_option( 'monk_active_languages' );
+		$current_language = get_post_meta( $post_id, '_monk_post_language', true );
+		$post_language    = filter_input( INPUT_POST, 'monk_post_language' );
 
 		if ( ! $current_language ) {
 			$current_language = sanitize_text_field( wp_unslash( $post_language ) );
@@ -811,7 +810,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_custom_taxonomy_field() {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages   = monk_get_available_languages();
 		$languages        = get_option( 'monk_active_languages', false );
 		$taxonomies       = get_taxonomies();
 		$default_language = get_option( 'monk_default_language', false );
@@ -937,7 +936,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_edit_custom_taxonomy_field( $term ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages            = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
 		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
@@ -958,7 +957,7 @@ class Monk_Admin {
 	 */
 	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
-			$monk_languages = monk_get_available_languages();
+			$monk_languages            = monk_get_available_languages();
 			$taxonomies                = get_taxonomies();
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
@@ -998,7 +997,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_term_translation_meta_field( $term ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages            = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$languages                 = get_option( 'monk_active_languages', false );
 		$taxonomies                = get_taxonomies();
