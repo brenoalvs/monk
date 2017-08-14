@@ -223,6 +223,7 @@ class Monk {
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_change_nav_menu_fields' );
 		$this->loader->add_action( 'wp_ajax_monk_set_language_to_elements', $plugin_admin, 'monk_set_language_to_elements' );
 		$this->loader->add_action( 'wp_ajax_monk_save_language_packages', $plugin_admin, 'monk_save_language_packages' );
+		$this->loader->add_action( 'wp_ajax_monk_save_options', $plugin_admin, 'monk_save_site_options' );
 	}
 
 	/**
@@ -243,6 +244,26 @@ class Monk {
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
+
+		$options = array(
+			'blogname',
+			'blogdescription',
+		);
+
+		/**
+		 * This hook is used to add the options that should be filtered.
+		 *
+		 * This filter increments which options will be filtered on the public side of the site.
+		 *
+		 * @since 0.5.0
+		 *
+		 * @param array $options This array contains all the option names that should be translated.
+		 */
+		$option_names = apply_filters( 'monk_translatable_option', $options );
+
+		foreach ( $option_names as $option ) {
+			$this->loader->add_filter( 'pre_option_' . $option, $plugin_public, 'monk_filter_translatable_option', 10, 2 );
+		}
 	}
 
 	/**
