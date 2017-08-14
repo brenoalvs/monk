@@ -204,4 +204,25 @@ class Monk_Public {
 
 		return $args;
 	}
+
+	/**
+	 * Function to filter any option
+	 *
+	 * @since    0.5.0
+	 *
+	 * @param  mixed  $pre_option Value to return instead of the option value.
+	 * @param  string $option     String option name.
+	 * @return mixed  $pre_option Value to return instead of the option value.
+	 */
+	public function monk_filter_translatable_option( $pre_option, $option ) {
+		$default_language = get_option( 'monk_default_language', false );
+		$current_slug     = get_query_var( 'lang', false );
+		$current_locale   = monk_get_locale_by_slug( $current_slug );
+
+		if ( ! empty( $current_locale ) && $current_locale !== $default_language ) {
+			$pre_option = get_option( 'monk_' . $current_locale . '_' . $option, false );
+		}
+
+		return $pre_option;
+	}
 }

@@ -144,6 +144,35 @@
 			}
 		});
 
+		$( document ).on( 'submit', '#monk-options-form', function( event ) {
+			event.preventDefault();
+			$( '#monk-spinner' ).addClass( 'is-active' );
+				$( '#monk-save-options' ).removeClass( 'monk-hide' );
+				var form_data = $( '#monk-options-form' ).serializeArray();
+
+				$.ajax({
+					type: 'POST',
+					url: monk.ajax_url,
+					data: form_data,
+					success: function( response ) {
+						if ( response.hasOwnProperty( 'success' ) ) {
+							$( '#monk-save-options' ).addClass( 'monk-hide' );
+							if ( response.success ) {		
+								$( '#monk-done' ).removeClass( 'monk-hide' );
+							} else {
+								$( '#monk-error' ).removeClass( 'monk-hide' );
+							}
+						}
+
+						setTimeout( function() {
+							$( '#monk-error' ).addClass( 'monk-hide' );
+							$( '#monk-done' ).addClass( 'monk-hide' );
+							$( '#monk-spinner' ).removeClass( 'is-active' );
+						}, 2000 );
+					}
+				});
+		});
+
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
 			e.preventDefault();
 			$( '.monk-change-current-language' ).slideUp( 150 );
