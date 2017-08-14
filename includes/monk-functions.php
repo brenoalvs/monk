@@ -35,7 +35,7 @@ function monk_get_current_url() {
 	global $wp;
 
 	$query_arg   = http_build_query( $_GET );
-	$base_link   = ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	$base_link   = ( is_ssl() ? 'https': 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	$current_url = add_query_arg( $query_arg, '', $base_link );
 
 	return $current_url;
@@ -98,7 +98,7 @@ function monk_get_available_languages() {
 		$monk_languages['en_US']       = array(
 			'native_name'  => 'English (United States)',
 			'english_name' => __( 'English (United States)', 'monk' ),
-			'slug'         => 'en',
+			'slug'         => apply_filters( 'monk_custom_language_slug', 'en', 'en_US' ),
 		);
 
 		foreach ( $wp_get_available_translations as $locale => $lang_content ) {
@@ -143,14 +143,14 @@ function monk_get_available_languages() {
 					break;
 			} // End switch().
 
-			$wp_languages[ $locale ] = array(
-				'native_name' => $lang_content['native_name'],
+			$slug = apply_filters( 'monk_custom_language_slug', $slug, $locale );
+
+			$monk_languages[ $locale ] = array(
+				'native_name'  => $lang_content['native_name'],
 				'english_name' => $lang_content['english_name'],
-				'slug' => $slug,
+				'slug'         => $slug,
 			);
 		} // End foreach().
-
-		$monk_languages = array_merge( $monk_languages, $wp_languages );
 
 		set_transient( 'monk_languages', $monk_languages, YEAR_IN_SECONDS );
 	} // End if().
