@@ -359,7 +359,15 @@ class Monk_Admin {
 	 */
 	public function monk_default_language_render() {
 		$default_language = get_option( 'monk_default_language', false );
-		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-default-language-render.php';
+		$languages        = get_available_languages();
+		$args             = array(
+			'id'        => 'monk-default-language',
+			'name'      => 'monk_default_language',
+			'selected'  => $default_language,
+			'languages' => $languages,
+		);
+
+		wp_dropdown_languages( $args );
 	}
 
 	/**
@@ -1111,13 +1119,11 @@ class Monk_Admin {
 		$available_languages       = false;
 		$taxonomy                  = filter_input( INPUT_GET, 'taxonomy' );
 
-		foreach ( $taxonomies as $taxonomy ) {
-			if ( isset( $taxonomy ) ) {
-				$tax = sanitize_text_field( wp_unslash( $taxonomy ) );
-				if ( $tax === $taxonomy ) {
-					$base_url = admin_url( 'edit-tags.php?taxonomy=' . $taxonomy );
-					$base_url_translation = admin_url( 'term.php?taxonomy=' . $taxonomy );
-				}
+		if ( isset( $taxonomy ) ) {
+			$taxonomy = sanitize_text_field( wp_unslash( $taxonomy ) );
+			if ( in_array( $taxonomy, $taxonomies ) ) {
+				$base_url             = admin_url( 'edit-tags.php?taxonomy=' . $taxonomy );
+				$base_url_translation = admin_url( 'term.php?taxonomy=' . $taxonomy );
 			}
 		}
 
@@ -1413,8 +1419,8 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function medias_modal_filter( $query ) {
-		$post_id  = filter_input( INPUT_GET, 'post_id' );
-		$action   = filter_input( INPUT_GET, 'action' );
+		$post_id = isset( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : '';
+		$action  = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : '';
 
 		if ( is_admin() && ( isset( $post_id ) && '0' !== $post_id ) && isset( $action ) ) {
 
