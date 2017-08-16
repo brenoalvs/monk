@@ -1726,8 +1726,9 @@ class Monk_Admin {
 		if ( ! empty( $translations[ $atts['language'] ] ) ) {
 			$translation  = $translations[ $atts['language'] ];
 			$translation_link = '<a href="' . esc_attr( get_permalink( $translation ) ) . '" class="' . esc_attr( $atts['class'] ) . '">' . esc_html( $atts['text'] ) . '</a>';
+			return $translation_link;
+		} else {
+			return;
 		}
-
-		return $translation_link;
 	}
 }
