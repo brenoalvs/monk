@@ -1419,8 +1419,8 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function medias_modal_filter( $query ) {
-		$post_id  = filter_input( INPUT_GET, 'post_id' );
-		$action   = filter_input( INPUT_GET, 'action' );
+		$post_id = filter_input( INPUT_POST, 'post_id' );
+		$action  = filter_input( INPUT_POST, 'action' );
 
 		if ( is_admin() && ( isset( $post_id ) && '0' !== $post_id ) && isset( $action ) ) {
 
