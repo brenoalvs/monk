@@ -1551,26 +1551,98 @@ class Monk_Admin {
 	 *
 	 * Update active and default languages.
 	 *
+	 * @param  array $active_languages Active languages array.
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return array
+	 */
+	public function monk_save_language_packages( $active_languages ) {
+		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+
+		foreach ( $active_languages as $language ) {
+			if ( 'en_US' !== $language ) {
+				$download_pack = wp_download_language_pack( $language );
+
+				if ( $download_pack ) {
+					$response[] = true;
+				} else {
+					$response[] = false;
+				}
+			}
+		}
+
+		if ( in_array( false, $response, true ) ) {
+			$response = false;
+		} else {
+			$response = true;
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Create 'Uncategorized' translations according to active languages
+	 *
+	 * @param  array $active_languages Active languages array.
+	 *
+	 * @since    0.5.0
+	 *
+	 * @return bool
+	 */
+	public function create_uncategorized_translations( $active_languages ) {
+		global $monk_uncategorized_translations;
+
+		$default_post_category = get_term( get_option( 'default_category' ) );
+
+		foreach ( $active_languages as $language ) {
+			if ( 'en_US' !== $language ) {
+				$has_term      = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
+				if ( ! $has_term ) {
+					$uncategorized_term = get_term_by( 'id', 1, 'category' );
+					if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
+						$new_term = wp_insert_term( $monk_uncategorized_translations[ $language ], 'category' );
+						if ( ! is_wp_error( $new_term ) ) {
+							$term_translations[ $language ] = $new_term['term_id'];
+							update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
+							update_term_meta( $new_term['term_id'], '_monk_term_translations_id', $default_post_category->term_id );
+						}
+					}
+				} else {
+					$term_translations[ $language ] = $has_term->term_id;
+				}
+			} else {
+				$term_translations[ $language ] = $default_post_category->term_id;
+			}
+		}
+
+		$monk_old_translations = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
+
+		if ( $monk_old_translations === $term_translations ) {
+			$response = true;
+		} else {
+			$response = update_option( 'monk_term_translations_' . $default_post_category->term_id, $term_translations );
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Download language packages according to active languages
+	 *
+	 * Update active and default languages.
+	 *
 	 * @since    0.4.0
 	 *
 	 * @return void
 	 */
-	public function monk_save_language_packages() {
-		if ( check_ajax_referer( '_monk_translation_packages', '_monk_translation_packages', false ) ) {
-			$active_languages = filter_input( INPUT_POST, 'monk_active_languages' );
+	public function monk_save_general_form_settings() {
+		if ( check_ajax_referer( '_monk_save_general_settings', '_monk_save_general_settings', false ) ) {
+			$active_languages = filter_input( INPUT_POST, 'monk_active_languages', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			$response = array();
 
-			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
-
-			foreach ( $active_languages as $language ) {
-				if ( 'en_US' !== $language ) {
-					$download_pack = wp_download_language_pack( $language );
-					if ( $download_pack ) {
-						$response[] = true;
-					} else {
-						$response[] = false;
-					}
-				}
-			}
+			$response[] = $this->monk_save_language_packages( $active_languages ) ? true : false;
+			$response[] = $this->create_uncategorized_translations( $active_languages ) ? true : false;
 
 			wp_send_json_success( $response );
 		} else {
