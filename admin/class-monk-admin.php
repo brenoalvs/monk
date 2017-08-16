@@ -1722,11 +1722,10 @@ class Monk_Admin {
 		);
 		$base_id      = get_post_meta( get_queried_object_id(), '_monk_post_translations_id', true );
 		$translations = get_option( 'monk_post_translations_' . $base_id, false );
-		$translation_link = '<a href="' . esc_attr( home_url() ) . '" class="' . esc_attr( $atts['class'] ) . '">' . esc_html( $atts['text'] ) . '</a>';
 
 		if ( ! empty( $translations[ $atts['language'] ] ) ) {
 			$translation  = $translations[ $atts['language'] ];
-			$translation_link = str_replace( home_url(), esc_attr( get_permalink( $translation ) ), $translation_link );
+			$translation_link = '<a href="' . esc_attr( get_permalink( $translation ) ) . '" class="' . esc_attr( $atts['class'] ) . '">' . esc_html( $atts['text'] ) . '</a>';
 		}
 
 		return $translation_link;
