@@ -145,7 +145,7 @@ class Monk_Language_Switcher extends WP_Widget {
 			}
 		} // End if().
 
-		if ( is_archive() && ( is_category() || is_tag() ) ) {
+		if ( is_archive() && ( is_category() || is_tag() || is_tax() ) ) {
 			$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
 			$monk_total_translations   = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
 
