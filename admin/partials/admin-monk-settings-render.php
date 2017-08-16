@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
 						$btn_args = array(
 							'id' => 'monk-submit-settings',
 						);
-						wp_nonce_field( '_monk_translation_packages', '_monk_translation_packages' );
+						wp_nonce_field( '_monk_save_general_settings', '_monk_save_general_settings' );
 						settings_fields( 'monk_settings' );
 					?>
 				<?php break; ?>
