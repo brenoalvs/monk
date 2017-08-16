@@ -1702,4 +1702,33 @@ class Monk_Admin {
 			wp_send_json_error();
 		} // End if().
 	}
+
+	/**
+	 * Function that creates a shortcode on posts to retrieve a link
+	 * for one of its translations.
+	 *
+	 * @since    0.5.0
+	 *
+	 * @param    array $atts The user defined data.
+	 * @return string $translation_link
+	 */
+	public function monk_language_shortcode( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'text'     => '',
+				'language' => '',
+				'class'    => '',
+			), $atts
+		);
+		$base_id      = get_post_meta( get_queried_object_id(), '_monk_post_translations_id', true );
+		$translations = get_option( 'monk_post_translations_' . $base_id, false );
+
+		if ( ! empty( $translations[ $atts['language'] ] ) ) {
+			$translation  = $translations[ $atts['language'] ];
+			$translation_link = '<a href="' . esc_attr( get_permalink( $translation ) ) . '" class="' . esc_attr( $atts['class'] ) . '">' . esc_html( $atts['text'] ) . '</a>';
+			return $translation_link;
+		} else {
+			return;
+		}
+	}
 }
