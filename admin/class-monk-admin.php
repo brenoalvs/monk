@@ -562,9 +562,13 @@ class Monk_Admin {
 				unset( $post_translations[ $lang_code ] );
 			}
 		}
+		$default_post_category           = get_term( get_option( 'default_category' ) );
+		$default_category_translations   = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
+		$default_category_translation_id = array_key_exists( $language, $default_category_translations ) ? $default_category_translations[ $language ] : '';
 
 		update_post_meta( $post_id, '_monk_post_translations_id', $monk_id );
 		update_option( 'monk_post_translations_' . $monk_id, $post_translations );
+		wp_set_post_terms( $post_id, array( $default_category_translation_id ), 'category' );
 	}
 
 	/**
