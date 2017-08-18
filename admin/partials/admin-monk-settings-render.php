@@ -25,12 +25,12 @@ if ( ! defined( 'WPINC' ) ) {
 			switch ( $the_tab ) :
 				case 'tools':
 			?>
-					<input type="hidden" name="action" value="monk_set_language_to_elements" />
-					<?php wp_nonce_field( '_monk_tools' ); ?>
+				<input type="hidden" name="action" value="monk_set_language_to_elements" />
+				<?php wp_nonce_field( '_monk_tools' ); ?>
 				<?php break; ?>
 			<?php case 'options': ?>
-					<input type="hidden" name="action" value="monk_save_options" />
-					<?php wp_nonce_field( '_monk_site_options' ); ?>
+				<input type="hidden" name="action" value="monk_save_options" />
+				<?php wp_nonce_field( '_monk_site_options' ); ?>
 				<?php break; ?>
 			<?php case 'general': ?>
 				<?php default: ?>
@@ -56,11 +56,15 @@ if ( ! defined( 'WPINC' ) ) {
 					<p class="monk-message monk-hide" id="monk-bulk-action"><?php esc_html_e( 'Defining language for posts and terms...', 'monk' ); ?></p>
 				<?php break; ?>
 			<?php case 'options': ?>
-					<p class="monk-message monk-hide" id="monk-save-options"><?php esc_html_e( 'Saving Options...', 'monk' ); ?></p>
+				<p class="monk-message monk-hide" id="monk-save-options">
+				<?php esc_html_e( 'Saving Options...', 'monk' ); ?>
+				</p>
 				<?php break; ?>
 			<?php case 'general': ?>
 				<?php default: ?>
-					<p class="monk-message monk-hide" id="monk-downloading"><?php esc_html_e( 'Downloading packages...', 'monk' ); ?></p>
+					<p class="monk-message monk-hide" id="monk-downloading">
+					<?php esc_html_e( 'Downloading packages...', 'monk' ); ?>
+					</p>
 				<?php break; ?>
 			<?php endswitch; ?>
 			<p class="monk-message monk-hide" id="monk-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
