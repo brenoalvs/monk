@@ -39,13 +39,13 @@ if ( ! defined( 'WPINC' ) ) {
 				// no break.
 			?>
 				<?php default: ?>
-					<?php
-						$btn_args = array(
-							'id' => 'monk-submit-settings',
-						);
-						wp_nonce_field( '_monk_save_general_settings', '_monk_save_general_settings' );
-						settings_fields( 'monk_settings' );
-					?>
+				<?php
+					$btn_args = array(
+						'id' => 'monk-submit-settings',
+					);
+					wp_nonce_field( '_monk_save_general_settings', '_monk_save_general_settings' );
+					settings_fields( 'monk_settings' );
+				?>
 				<?php break; ?>
 			<?php endswitch; ?>
 			<?php
@@ -72,9 +72,9 @@ if ( ! defined( 'WPINC' ) ) {
 				// no break.
 			?>
 				<?php default: ?>
-					<p class="monk-message monk-hide" id="monk-downloading">
-					<?php esc_html_e( 'Downloading packages...', 'monk' ); ?>
-					</p>
+				<p class="monk-message monk-hide" id="monk-downloading">
+				<?php esc_html_e( 'Downloading packages...', 'monk' ); ?>
+				</p>
 				<?php break; ?>
 			<?php endswitch; ?>
 			<p class="monk-message monk-hide" id="monk-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
