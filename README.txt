@@ -70,6 +70,14 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 
 == Changelog ==
 
+= [0.5.0] =
+* Added default category terms translations on Monk activation
+* Added site title and description translation
+* Added shortcode to retrieve translation links
+* Added the 'uncategorized' category translations on Monk activation
+* Added full support for custom taxonomies
+* Fixed medias filter by language on post edit pages
+
 = [0.4.1] =
 * Fixed bug with the site front end translation when permalinks are not active
 * Fixed Travis CI warnings
