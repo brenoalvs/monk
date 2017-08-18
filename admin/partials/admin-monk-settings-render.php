@@ -33,8 +33,8 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php wp_nonce_field( '_monk_site_options' ); ?>
 				<?php break; ?>
 			<?php case 'general': ?>
-				<?php default: ?>
 				<!-- no break -->
+				<?php default: ?>
 					<?php
 						$btn_args = array(
 							'id' => 'monk-submit-settings',
@@ -62,8 +62,8 @@ if ( ! defined( 'WPINC' ) ) {
 				</p>
 				<?php break; ?>
 			<?php case 'general': ?>
-				<?php default: ?>
 				<!-- no break -->
+				<?php default: ?>
 					<p class="monk-message monk-hide" id="monk-downloading">
 					<?php esc_html_e( 'Downloading packages...', 'monk' ); ?>
 					</p>
