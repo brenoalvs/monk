@@ -959,11 +959,11 @@ class Monk_Admin {
 
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
+			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
+			$monk_id           = filter_input( INPUT_POST, 'monk_id' ) ? filter_input( INPUT_POST, 'monk_id' ) : filter_input( INPUT_GET, 'monk_id' );
 			$term_translations = array(
 				$language => $term_id,
 			);
-			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
-			$monk_id           = filter_input( INPUT_POST, 'monk_id' );
 
 			if ( isset( $monk_id ) ) {
 				$monk_id           = sanitize_text_field( wp_unslash( $monk_id ) );
