@@ -34,10 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
 				<input type="hidden" name="action" value="monk_save_options" />
 				<?php wp_nonce_field( '_monk_site_options' ); ?>
 				<?php break; ?>
-			<?php
-			// no break.
-			case 'general':
-			?>
+			<?php case 'general': // no break. ?>
 			<?php default: ?>
 			<?php
 				$btn_args = array(
