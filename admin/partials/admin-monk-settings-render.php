@@ -32,8 +32,10 @@ if ( ! defined( 'WPINC' ) ) {
 				<input type="hidden" name="action" value="monk_save_options" />
 				<?php wp_nonce_field( '_monk_site_options' ); ?>
 				<?php break; ?>
-			<?php case 'general': ?>
-				<!-- no break -->
+			<?php
+			case 'general':
+				// no break.
+			?>
 				<?php default: ?>
 					<?php
 						$btn_args = array(
@@ -61,8 +63,10 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php esc_html_e( 'Saving Options...', 'monk' ); ?>
 				</p>
 				<?php break; ?>
-			<?php case 'general': ?>
-				<!-- no break -->
+			<?php
+			case 'general':
+				// no break.
+			?>
 				<?php default: ?>
 					<p class="monk-message monk-hide" id="monk-downloading">
 					<?php esc_html_e( 'Downloading packages...', 'monk' ); ?>
