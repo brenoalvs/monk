@@ -923,7 +923,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_custom_taxonomy_field() {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages   = monk_get_available_languages();
 		$languages        = get_option( 'monk_active_languages', false );
 		$taxonomies       = get_taxonomies();
 		$default_language = get_option( 'monk_default_language', false );
@@ -1049,7 +1049,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_edit_custom_taxonomy_field( $term ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages            = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$monk_term_translations_id = get_term_meta( $term->term_id, '_monk_term_translations_id', true );
 		$option_name               = 'monk_term_translations_' . $monk_term_translations_id;
