@@ -36,10 +36,10 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php break; ?>
 			<?php
 			case 'general':
+				// no break.
 			?>
 				<?php default: ?>
 					<?php
-					// no break.
 						$btn_args = array(
 							'id' => 'monk-submit-settings',
 						);
@@ -69,9 +69,9 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php break; ?>
 			<?php
 			case 'general':
+				// no break.
 			?>
 				<?php default: ?>
-				<?php // no break. ?>
 					<p class="monk-message monk-hide" id="monk-downloading">
 					<?php esc_html_e( 'Downloading packages...', 'monk' ); ?>
 					</p>
