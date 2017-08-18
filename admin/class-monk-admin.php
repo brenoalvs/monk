@@ -960,7 +960,7 @@ class Monk_Admin {
 			$active_languages  = get_option( 'monk_active_languages', false );
 			$language          = sanitize_text_field( wp_unslash( filter_input( INPUT_POST, 'monk_language' ) ) );
 			$is_menu           = 'nav_menu' === $taxonomy ? 'menu' : 'term';
-			$monk_id           = filter_input( INPUT_GET, 'monk_id' );
+			$monk_id           = $is_menu ? filter_input( INPUT_GET, 'monk_id' ) : filter_input( INPUT_POST, 'monk_id' );
 			$term_translations = array(
 				$language => $term_id,
 			);
