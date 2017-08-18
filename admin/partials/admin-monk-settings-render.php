@@ -28,7 +28,9 @@ if ( ! defined( 'WPINC' ) ) {
 				<input type="hidden" name="action" value="monk_set_language_to_elements" />
 				<?php wp_nonce_field( '_monk_tools' ); ?>
 				<?php break; ?>
-			<?php case 'options': ?>
+			<?php
+			case 'options':
+			?>
 				<input type="hidden" name="action" value="monk_save_options" />
 				<?php wp_nonce_field( '_monk_site_options' ); ?>
 				<?php break; ?>
@@ -58,7 +60,9 @@ if ( ! defined( 'WPINC' ) ) {
 					<p class="monk-message monk-hide" id="monk-checkbox-not-selected-message"><?php esc_html_e( 'Select the checkbox.', 'monk' ); ?></p>
 					<p class="monk-message monk-hide" id="monk-bulk-action"><?php esc_html_e( 'Defining language for posts and terms...', 'monk' ); ?></p>
 				<?php break; ?>
-			<?php case 'options': ?>
+			<?php
+			case 'options':
+			?>
 				<p class="monk-message monk-hide" id="monk-save-options">
 				<?php esc_html_e( 'Saving Options...', 'monk' ); ?>
 				</p>
