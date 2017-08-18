@@ -35,8 +35,8 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php wp_nonce_field( '_monk_site_options' ); ?>
 				<?php break; ?>
 			<?php
+			// no break.
 			case 'general':
-				// no break.
 			?>
 			<?php default: ?>
 			<?php
@@ -68,8 +68,8 @@ if ( ! defined( 'WPINC' ) ) {
 				</p>
 				<?php break; ?>
 			<?php
-			case 'general':
 				// no break.
+			case 'general':
 			?>
 			<?php default: ?>
 				<p class="monk-message monk-hide" id="monk-downloading">
