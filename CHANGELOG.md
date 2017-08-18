@@ -1,5 +1,12 @@
 ## Changelog
 
+- **[0.5.0]**
+    + Added site title and description translation
+    + Added shortcode to retrieve translation links
+    + Added the 'uncategorized' category translations
+    + Fixed custom taxonomies links on language switcher
+    + Fixed medias filter by language on post edit pages
+
 - **[0.4.1]**
     + Fixed bug with the site front end translation when permalinks are not active
     + Fixed Travis CI warnings
