@@ -862,7 +862,20 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_admin_languages_selector() {
-		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
+		$screen   = get_current_screen();
+		$class    = wp_count_posts( $screen->post_type );
+		$has_post = false;
+		$is_trash = 'trash' === filter_input( INPUT_GET, 'post_status' ) ? true : false;
+
+		foreach ( $class as $type => $number ) {
+			if ( ( 'trash' !== $type && 'auto-draft' !== $type && 0 !== $number ) || ( 'trash' === $type && $is_trash ) ) {
+				$has_post = true;
+			}
+		}
+
+		if ( $has_post ) {
+			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
+		}
 	}
 
 	/**
