@@ -80,5 +80,18 @@ if ( ! defined( 'WPINC' ) ) {
 			<p class="monk-message monk-hide" id="monk-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
 			<p class="monk-message monk-hide" id="monk-error"><?php esc_html_e( 'Error. Try again.', 'monk' ); ?></p>
 		</form>
+		<?php
+		$has_update = wp_get_translation_updates();
+		?> 
+		<p><?php var_dump($has_update) ?></p>
+		<?php
+		if ( ! empty( $has_update ) ) {
+			$test = require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
+
+			$upgrader = new Language_Pack_Upgrader();
+
+			$response[] = $upgrader->bulk_upgrade();
+		}
+		?>
 	</div>
 <?php

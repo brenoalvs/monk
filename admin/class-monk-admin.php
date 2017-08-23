@@ -1588,17 +1588,6 @@ class Monk_Admin {
 				}
 			}
 		}
-		wp_version_check( array(), 1 );
-
-		$has_update = wp_get_translation_updates();
-
-		if ( ! empty( $has_update ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
-
-			$upgrader = new Language_Pack_Upgrader();
-
-			$upgrader->bulk_upgrade();
-		}
 
 		if ( in_array( false, $response, true ) ) {
 			$response = false;
