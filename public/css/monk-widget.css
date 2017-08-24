@@ -119,16 +119,15 @@ div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name spa
 	width: 18px;
 }
 
-div#monk-language-switcher div.monk-love {
+div.monk-love {
 	box-sizing: border-box;
 	line-height: normal;
 	margin-top: 5px;
 	padding: 0;
 	font-size: 12px;
-	cursor: default;
 }
 
-div#monk-language-switcher div.monk-love span.monk-heart {
+div.monk-love span.monk-heart {
 	padding: 0;
 	font-size: 12px;
 	color: #de1414;
