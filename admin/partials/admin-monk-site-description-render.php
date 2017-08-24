@@ -13,10 +13,10 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 ?>
-<input type="text" name="blogdescription" value="<?php echo esc_attr( $site_description ); ?>" class="regular-text"><span class="monk-language-flag flag-icon flag-icon-<?php echo esc_attr( $default_slug ); ?>"></span><br>
+<input type="text" name="blogdescription" value="<?php echo esc_attr( $site_description ); ?>" class="regular-text"><span class="monk-language-flag flag-icon flag-icon-<?php echo esc_attr( $default_slug ); ?>" aria-label="<?php echo esc_attr( $monk_languages[ $default_language ]['native_name'] ); ?>"></span><br>
 <?php foreach ( $active_languages as $lang ) : ?>
 	<?php if ( $lang !== $default_language ) : ?>
 		<?php $site_description = get_option( 'monk_' . $lang . '_blogdescription', '' ); ?>
-		<input type="text" name="<?php echo esc_attr( 'monk_' . $lang . '_blogdescription' ); ?>" value="<?php echo esc_attr( $site_description ); ?>" placeholder="<?php echo esc_attr( $monk_languages[ $lang ]['native_name'] ); ?>" class="regular-text"><span class="monk-language-flag flag-icon flag-icon-<?php echo esc_attr( $monk_languages[ $lang ]['slug'] ); ?>"></span><br>
+		<input type="text" name="<?php echo esc_attr( 'monk_' . $lang . '_blogdescription' ); ?>" value="<?php echo esc_attr( $site_description ); ?>" placeholder="<?php echo esc_attr( $monk_languages[ $lang ]['native_name'] ); ?>" class="regular-text"><span class="monk-language-flag flag-icon flag-icon-<?php echo esc_attr( $monk_languages[ $lang ]['slug'] ); ?>" aria-label="<?php echo esc_attr( $monk_languages[ $lang ]['native_name'] ); ?>"></span><br>
 	<?php endif; ?>
 <?php endforeach; ?>
