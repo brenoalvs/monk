@@ -83,13 +83,15 @@ if ( ! defined( 'WPINC' ) ) {
 		<?php
 		$has_update = wp_get_translation_updates();
 
-		if ( ! empty( $has_update ) ) {
-			$test = require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
+		if ( ! empty( $has_update ) ) :
+		?><div class="monk-update-log">
+		<?php
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 
 			$upgrader = new Language_Pack_Upgrader();
 
 			$response[] = $upgrader->bulk_upgrade();
-		}
-		?>
+		?></div>
+		<?php endif; ?>
 	</div>
 <?php
