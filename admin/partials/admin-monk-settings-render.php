@@ -92,7 +92,8 @@ if ( ! defined( 'WPINC' ) ) {
 			$upgrader = new Language_Pack_Upgrader();
 
 			$upgrader->upgrade();
-		?></div>
+		?>
+		</div>
 		<?php endif; ?>
 	</div>
 <?php
