@@ -1,5 +1,11 @@
 ## Changelog
 
+- **[0.5.1]**
+    + Fixed themes and plugins language packs download
+    + Fixed bug on medias update process
+    + Added nation names when hovering a flag
+    + Improved the posts language filter to work more similarly to other filters
+
 - **[0.5.0]**
     + Added site title and description translation
     + Added shortcode to retrieve translation links
