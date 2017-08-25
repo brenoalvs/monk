@@ -90,7 +90,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 			$upgrader = new Language_Pack_Upgrader();
 
-			$response[] = $upgrader->bulk_upgrade();
+			$upgrader->bulk_upgrade();
 		?></div>
 		<?php endif; ?>
 	</div>
