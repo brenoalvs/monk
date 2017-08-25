@@ -84,7 +84,8 @@ if ( ! defined( 'WPINC' ) ) {
 		$has_update = wp_get_translation_updates();
 
 		if ( ! empty( $has_update ) ) :
-		?><div class="monk-update-log">
+		?>
+		<div class="monk-update-log">
 		<?php
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 
