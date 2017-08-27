@@ -3,7 +3,7 @@ Contributors: breno-alves, ale-correa, leonofre, rafaelangeline
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
 Tested up to: 4.8.1
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,12 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 10. Menus edition.
 
 == Changelog ==
+
+= [0.5.1] =
+* Fixed themes and plugins language packs download
+* Fixed bug on medias update process
+* Fixed accessibility attributes on admin controls.
+* Fixed persistent language filter when post type has no posts.
 
 = [0.5.0] =
 * Added site title and description translation
