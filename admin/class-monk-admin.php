@@ -438,7 +438,7 @@ class Monk_Admin {
 	 */
 	public function monk_post_meta_box_field_render( $post ) {
 		global $current_screen;
-		$monk_languages = monk_get_available_languages();
+		$monk_languages         = monk_get_available_languages();
 		$monk_id                = get_post_meta( $post->ID, '_monk_post_translations_id', true );
 		$post_default_language  = get_post_meta( $post->ID, '_monk_post_language', true );
 		$site_default_language  = get_option( 'monk_default_language', false );
@@ -569,12 +569,14 @@ class Monk_Admin {
 		$post_terms            = get_the_terms( $post_id, 'category' );
 		$default_post_category = get_term( get_option( 'default_category' ) );
 
-		if ( 1 >= count( $post_terms ) && $default_post_category->term_id === $post_terms[0]->term_id ) {
-			$default_post_category           = get_term( get_option( 'default_category' ) );
-			$default_category_translations   = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
-			$default_category_translation_id = array_key_exists( $language, $default_category_translations ) ? $default_category_translations[ $language ] : false;
+		if ( is_object( $post_terms ) && is_object( $default_post_category ) ) {
+			if ( 1 >= count( $post_terms ) && $default_post_category->term_id === $post_terms[0]->term_id ) {
+				$default_post_category           = get_term( get_option( 'default_category' ) );
+				$default_category_translations   = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
+				$default_category_translation_id = array_key_exists( $language, $default_category_translations ) ? $default_category_translations[ $language ] : false;
 
-			wp_set_post_terms( $post_id, array( $default_category_translation_id ), 'category' );
+				wp_set_post_terms( $post_id, array( $default_category_translation_id ), 'category' );
+			}
 		}
 	}
 
@@ -862,7 +864,20 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_admin_languages_selector() {
-		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
+		$screen   = $this->get_current_screen();
+		$class    = wp_count_posts( $screen->post_type );
+		$has_post = false;
+		$is_trash = 'trash' === filter_input( INPUT_GET, 'post_status' ) ? true : false;
+
+		foreach ( $class as $type => $number ) {
+			if ( ( 'trash' !== $type && 'auto-draft' !== $type && 0 !== $number && ! $is_trash ) || ( 'trash' === $type && $is_trash && 0 !== $number ) ) {
+				$has_post = true;
+			}
+		}
+
+		if ( $has_post ) {
+			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-filter.php';
+		}
 	}
 
 	/**
@@ -1081,7 +1096,7 @@ class Monk_Admin {
 	 */
 	public function monk_taxonomy_language_column_content( $content, $column_name, $term_id ) {
 		if ( 'languages' === $column_name ) :
-			$monk_languages = monk_get_available_languages();
+			$monk_languages            = monk_get_available_languages();
 			$taxonomies                = get_taxonomies();
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
@@ -1121,7 +1136,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_term_translation_meta_field( $term ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages            = monk_get_available_languages();
 		$monk_language             = get_term_meta( $term->term_id, '_monk_term_language', true );
 		$languages                 = get_option( 'monk_active_languages', false );
 		$taxonomies                = get_taxonomies();

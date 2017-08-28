@@ -18,7 +18,7 @@
  * @return boolean                  Language code validation.
  */
 function monk_is_language_code( $language_code ) {
-	$monk_languages = monk_get_available_languages();
+	$monk_languages  = monk_get_available_languages();
 	$languages_codes = array_keys( $monk_languages );
 
 	return in_array( $language_code , $language_codes, true );
