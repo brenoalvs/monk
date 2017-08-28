@@ -1,7 +1,6 @@
 ## Changelog
 
 - **[0.5.1]**
-    + Fixed themes and plugins language packs download
     + Fixed bug on medias update process
     + Fixed accessibility attributes on admin controls.
     + Fixed persistent language filter when post type has no posts.
