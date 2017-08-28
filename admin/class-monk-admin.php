@@ -569,7 +569,7 @@ class Monk_Admin {
 		$post_terms            = get_the_terms( $post_id, 'category' );
 		$default_post_category = get_term( get_option( 'default_category' ) );
 
-		if ( is_object( $post_terms ) && is_object( $default_post_category ) ) {
+		if ( is_object( $post_terms[0] ) && is_object( $default_post_category ) ) {
 			if ( 1 >= count( $post_terms ) && $default_post_category->term_id === $post_terms[0]->term_id ) {
 				$default_post_category           = get_term( get_option( 'default_category' ) );
 				$default_category_translations   = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
