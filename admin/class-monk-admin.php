@@ -1628,23 +1628,19 @@ class Monk_Admin {
 		$default_post_category = get_term( get_option( 'default_category' ) );
 
 		foreach ( $active_languages as $language ) {
-			if ( 'en_US' !== $language ) {
-				$has_term      = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
-				if ( ! $has_term ) {
-					$uncategorized_term = get_term_by( 'id', 1, 'category' );
-					if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
-						$new_term = wp_insert_term( $monk_uncategorized_translations[ $language ], 'category' );
-						if ( ! is_wp_error( $new_term ) ) {
-							$term_translations[ $language ] = $new_term['term_id'];
-							update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
-							update_term_meta( $new_term['term_id'], '_monk_term_translations_id', $default_post_category->term_id );
-						}
+			$has_term      = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
+			if ( ! $has_term ) {
+				$uncategorized_term = get_term_by( 'id', 1, 'category' );
+				if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
+					$new_term = wp_insert_term( $monk_uncategorized_translations[ $language ], 'category' );
+					if ( ! is_wp_error( $new_term ) ) {
+						$term_translations[ $language ] = $new_term['term_id'];
+						update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
+						update_term_meta( $new_term['term_id'], '_monk_term_translations_id', $default_post_category->term_id );
 					}
-				} else {
-					$term_translations[ $language ] = $has_term->term_id;
 				}
 			} else {
-				$term_translations[ $language ] = $default_post_category->term_id;
+				$term_translations[ $language ] = $has_term->term_id;
 			}
 		}
 
