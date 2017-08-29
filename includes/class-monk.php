@@ -67,7 +67,7 @@ class Monk {
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '0.5.0';
+		$this->version = '0.5.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -113,7 +113,7 @@ class Monk {
 		/**
 		 * Imports a global array with the translatable and native language names.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/monk-available-languages.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/monk-dictionaries.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.

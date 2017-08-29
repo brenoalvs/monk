@@ -1,5 +1,10 @@
 ## Changelog
 
+- **[0.5.1]**
+    + Fixed bug on medias update process
+    + Fixed accessibility attributes on admin controls.
+    + Fixed persistent language filter when post type has no posts.
+
 - **[0.5.0]**
     + Added site title and description translation
     + Added shortcode to retrieve translation links

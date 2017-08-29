@@ -17,7 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 <div class="monk-column-translations">
 	<?php if ( $monk_language ) : ?>
 		<div class="monk-flag-wrapper">
-			<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $monk_language ]['slug'] ); ?>"></span>
+			<span class="monk-selector-flag flag-icon <?php echo esc_attr( 'flag-icon-' . $monk_languages[ $monk_language ]['slug'] ); ?>" aria-label="<?php echo esc_attr( $monk_languages[ $monk_language ]['english_name'] ); ?>" title="<?php echo esc_attr( $monk_languages[ $monk_language ]['english_name'] ); ?>"></span>
 		</div>
 		<?php if ( $available_languages ) : ?>
 			<div class="monk-button-wrapper">
