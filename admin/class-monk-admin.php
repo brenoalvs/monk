@@ -625,12 +625,10 @@ class Monk_Admin {
 		$post_type        = filter_input( INPUT_GET , 'post_type' );
 		$screen           = $this->get_current_screen();
 
-		if ( ! is_customize_preview() && $screen ) {
-			if ( 'nav-menus' === $screen->base ) {
-				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
-				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
-				$language = empty( $language ) ? $default_language : $language;
-			}
+		if ( ! is_customize_preview() && $screen && 'nav-menus' === $screen->base ) {
+			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+			$language = empty( $language ) ? $default_language : $language;
 		}
 
 		if ( $query->is_search() ) {
