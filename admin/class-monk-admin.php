@@ -622,7 +622,6 @@ class Monk_Admin {
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 		$language         = $filter;
-		$post_type        = filter_input( INPUT_GET , 'post_type' );
 		$screen           = $this->get_current_screen();
 
 		if ( ! is_customize_preview() && $screen && 'nav-menus' === $screen->base ) {
@@ -651,8 +650,6 @@ class Monk_Admin {
 					'compare' => 'NOT EXISTS',
 				),
 			);
-
-			$query->set( 'meta_query', $meta_query );
 		} else {
 			$meta_query = array(
 				array(
@@ -660,9 +657,9 @@ class Monk_Admin {
 					'value'   => $language,
 				),
 			);
-
-			$query->set( 'meta_query', $meta_query );
 		}
+
+		$query->set( 'meta_query', $meta_query );
 	}
 
 	/**
