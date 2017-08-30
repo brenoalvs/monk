@@ -638,6 +638,10 @@ class Monk_Admin {
 			}
 		}
 
+		if ( isset( $filter ) && empty( $filter ) ) {
+			return;
+		}
+
 		if ( is_customize_preview() || $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
 			$meta_query = array(
 				'relation' => 'OR', // Optional, defaults to "AND".
