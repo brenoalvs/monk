@@ -581,6 +581,23 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Function to return the post to array of translations
+	 *
+	 * @param   string $post_id ID of the post.
+	 *
+	 * @since    0.5.2
+	 * @return  void
+	 */
+	public function monk_untrash_post( $post_id ) {
+		$language = get_post_meta( $post_id, '_monk_post_language', true );
+		$monk_id  = get_post_meta( $post_id, '_monk_post_translations_id', true );
+		$post_translations = get_option( 'monk_post_translations_' . $monk_id, array() );
+		$post_translations[ $language ] = $post_id;
+
+		update_option( 'monk_post_translations_' . $monk_id, $post_translations );
+	}
+
+	/**
 	 * Function that erases the data stored by the plugin when post is deleted permanently.
 	 *
 	 * @param   string $post_id ID of the post, page or post_type to be deleted.
