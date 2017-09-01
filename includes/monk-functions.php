@@ -91,14 +91,14 @@ function monk_get_url_args( $arg ) {
  */
 function monk_get_available_languages() {
 	$monk_languages = get_transient( 'monk_languages' );
+	require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+	$wp_get_available_translations = wp_get_available_translations();
 
 	if ( ! $monk_languages ) {
-		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
-		$wp_get_available_translations = wp_get_available_translations();
 		$monk_languages['en_US']       = array(
 			'native_name'  => 'English (United States)',
 			'english_name' => __( 'English (United States)', 'monk' ),
-			'slug'         => apply_filters( 'monk_custom_language_slug', 'en', 'en_US' ),
+			'slug'         => 'en',
 		);
 
 		foreach ( $wp_get_available_translations as $locale => $lang_content ) {
@@ -143,7 +143,7 @@ function monk_get_available_languages() {
 					break;
 			} // End switch().
 
-			$slug = apply_filters( 'monk_custom_language_slug', $slug, $locale );
+			$slug = $slug;
 
 			$monk_languages[ $locale ] = array(
 				'native_name'  => $lang_content['native_name'],
@@ -152,12 +152,17 @@ function monk_get_available_languages() {
 			);
 		} // End foreach().
 
+		uasort( $monk_languages, function( $a, $b ) {
+			return strcmp( $a['english_name'], $b['english_name'] );
+		});
+
 		set_transient( 'monk_languages', $monk_languages, YEAR_IN_SECONDS );
 	} // End if().
 
-	uasort( $monk_languages, function( $a, $b ) {
-			return strcmp( $a['english_name'], $b['english_name'] );
-	});
-
+	$monk_languages['en_US']['slug'] = apply_filters( 'monk_custom_language_slug', 'en', 'en_US' );
+	foreach ( $wp_get_available_translations as $locale => $lang_content ) {
+		$slug                              = $monk_languages[ $locale ]['slug'];
+		$monk_languages[ $locale ]['slug'] = apply_filters( 'monk_custom_language_slug', $slug, $locale );
+	}
 	return $monk_languages;
 }
