@@ -72,7 +72,6 @@
 		$( document ).on( 'submit', '#monk-general-form', function( event ) {
 			if ( not_submit ) {
 				event.preventDefault();
-				not_submit = false;
 				$( '#monk-spinner' ).addClass( 'is-active' );
 				$( '#monk-downloading' ).removeClass( 'monk-hide' );
 				var form_data = $( '#monk-general-form' ).serializeArray();
@@ -87,12 +86,13 @@
 					data: form_data,
 					success: function( response ) {
 						if ( response.hasOwnProperty( 'success' ) ) {
+							$( '#monk-downloading' ).addClass( 'monk-hide' );
 							if ( response.success ) {
 								if ( response.data ) {
-									$( '#monk-downloading' ).addClass( 'monk-hide' );	
 									if ( -1 < $.inArray( false, response.data ) ) {		
 										$( '#monk-error' ).removeClass( 'monk-hide' );
-									} else {		
+									} else {
+										not_submit = false;
 										$( '#monk-submit-settings' ).click();
 									}
 								}
@@ -130,17 +130,12 @@
 						}
 
 						setTimeout( function() {
-							$( '#monk-error' ).addClass( 'monk-hide' );
-							$( '#monk-done' ).addClass( 'monk-hide' );
 							$( '#monk-spinner' ).removeClass( 'is-active' );
 						}, 2000 );
 					}
 				});
 			} else {
 				$( '#monk-checkbox-not-selected-message' ).removeClass( 'monk-hide' );
-				setTimeout( function() {
-					$( '#monk-checkbox-not-selected-message' ).addClass( 'monk-hide' );
-				}, 2000 );
 			}
 		});
 
@@ -165,12 +160,16 @@
 						}
 
 						setTimeout( function() {
-							$( '#monk-error' ).addClass( 'monk-hide' );
-							$( '#monk-done' ).addClass( 'monk-hide' );
 							$( '#monk-spinner' ).removeClass( 'is-active' );
 						}, 2000 );
 					}
 				});
+		});
+
+		$( document ).on( 'click', '.monk-dismiss', function() {
+			$( '#monk-done' ).addClass( 'monk-hide' );
+			$( '#monk-error' ).addClass( 'monk-hide' );
+			$( '#monk-checkbox-not-selected-message' ).addClass( 'monk-hide' );
 		});
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
