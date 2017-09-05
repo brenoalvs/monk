@@ -103,6 +103,9 @@
 						setTimeout( function() {
 							$( '#monk-spinner' ).removeClass( 'is-active' );
 						}, 3000 );
+					},
+					error: function( response ) {
+						$( '#monk-error' ).removeClass( 'monk-hide' );
 					}
 				});
 			}
@@ -132,6 +135,9 @@
 						setTimeout( function() {
 							$( '#monk-spinner' ).removeClass( 'is-active' );
 						}, 2000 );
+					},
+					error: function( response ) {
+						$( '#monk-error' ).removeClass( 'monk-hide' );
 					}
 				});
 			} else {
@@ -162,6 +168,9 @@
 						setTimeout( function() {
 							$( '#monk-spinner' ).removeClass( 'is-active' );
 						}, 2000 );
+					},
+					error: function( response ) {
+						$( '#monk-error' ).removeClass( 'monk-hide' );
 					}
 				});
 		});
