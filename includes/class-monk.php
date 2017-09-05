@@ -199,8 +199,6 @@ class Monk {
 		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_post_data' );
-		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
-		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter', 10, 2 );
@@ -306,8 +304,13 @@ class Monk {
 	 * @return  void
 	 */
 	private function define_widget_hooks() {
+		$plugin_widget = new Monk_Language_Switcher();
 
 		$this->loader->add_action( 'widgets_init', $this, 'register_widgets' );
+		if ( is_active_widget( false, false, 'monk_language_switcher' ) ) {
+			$this->loader->add_action( 'customize_register', $plugin_widget, 'monk_language_customizer' );
+			$this->loader->add_action( 'wp_head', $plugin_widget, 'monk_customize_css' );
+		}
 	}
 
 	/**
