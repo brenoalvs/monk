@@ -1835,4 +1835,24 @@ class Monk_Admin {
 			return;
 		}
 	}
+
+	/**
+	 * Function that show language selector on medias grid mode and terms page.
+	 *
+	 * @since    0.5.2
+	 *
+	 * @return void
+	 */
+	public function monk_language_selector() {
+		$monk_languages   = monk_get_available_languages();
+		$active_languages = get_option( 'monk_active_languages', array() );
+		$screen           = function_exists( 'get_current_screen' ) ? get_current_screen() : false;
+		$action           = filter_input( INPUT_GET, 'mode' );
+		$language         = filter_input( INPUT_GET, 'lang' );
+		$default_language = get_option( 'monk_default_language', false );
+
+		if ( 'upload' === $screen->base && 'list' !== $action ) {
+			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-language-filter.php';
+		}
+	}
 }
