@@ -614,13 +614,13 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
+		if ( ! is_admin() || 'nav_menu_item' === $query->get( 'post_type' ) ) {
 			return;
 		}
 
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
-		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
+		$filter           = ! empty( filter_input( INPUT_GET , 'monk_language_filter' ) ) ? filter_input( INPUT_GET , 'monk_language_filter' ) : monk_get_url_args( 'monk_language_filter' );
 		$language         = $filter;
 		$post_type        = filter_input( INPUT_GET , 'post_type' );
 		$screen           = $this->get_current_screen();
@@ -1848,10 +1848,10 @@ class Monk_Admin {
 		$active_languages = get_option( 'monk_active_languages', array() );
 		$screen           = function_exists( 'get_current_screen' ) ? get_current_screen() : false;
 		$action           = filter_input( INPUT_GET, 'mode' );
-		$language         = filter_input( INPUT_GET, 'lang' );
+		$language         = filter_input( INPUT_GET, 'monk_language_filter' );
 		$default_language = get_option( 'monk_default_language', false );
 
-		if ( 'upload' === $screen->base && 'list' !== $action ) {
+		if ( 'upload' === $screen->base ) {
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-language-filter.php';
 		}
 	}
