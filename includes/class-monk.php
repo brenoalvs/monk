@@ -225,6 +225,7 @@ class Monk {
 		$this->loader->add_action( 'wp_ajax_monk_save_general_form_settings', $plugin_admin, 'monk_save_general_form_settings' );
 		$this->loader->add_action( 'wp_ajax_monk_save_options', $plugin_admin, 'monk_save_site_options' );
 		add_shortcode( 'translation', array( $plugin_admin, 'monk_language_shortcode' ) );
+		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_language_selector' );
 	}
 
 	/**
