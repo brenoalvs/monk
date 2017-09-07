@@ -14,24 +14,27 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 ?>
-<select class="monk-lang">
-<?php
-foreach ( $active_languages as $lang_code ) {
-	if ( array_key_exists( $lang_code, $monk_languages ) ) {
-		if ( $lang_code === $language || ( ! $language && $lang_code === $default_language ) ) :
-			?>
-			<option value='<?php echo esc_attr( $lang_code ); ?>' selected="selected">
-				<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
-			</option>
-			<?php
-		else :
-			?>
-			<option value="<?php echo esc_attr( $lang_code ); ?>">
-				<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
-			</option>;
-			<?php
-		endif;
+<div id="monk-language-selector-wrap">
+	<input type="hidden" id="monk-language-selector" value="true">
+	<select class="monk-lang" id="monk-lang-filter" >
+	<?php
+	foreach ( $active_languages as $lang_code ) {
+		if ( array_key_exists( $lang_code, $monk_languages ) ) {
+			if ( $lang_code === $language || ( ! $language && $lang_code === $default_language ) ) :
+				?>
+				<option value='<?php echo esc_attr( $lang_code ); ?>' selected="selected">
+					<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
+				</option>
+				<?php
+			else :
+				?>
+				<option value="<?php echo esc_attr( $lang_code ); ?>">
+					<?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?>
+				</option>;
+				<?php
+			endif;
+		}
 	}
-}
-?>
-</select>
+	?>
+	</select>
+</div>
