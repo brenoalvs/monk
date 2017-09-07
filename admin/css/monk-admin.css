@@ -179,3 +179,7 @@ div.menu-translations ul.current-menu-translations li {
 	font-style: italic;
 	padding-left: 24px;
 }
+
+#monk-language-selector-wrap {
+	padding: 12px 0;
+}
