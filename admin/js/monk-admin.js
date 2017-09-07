@@ -92,7 +92,7 @@
 									$( '#monk-downloading' ).addClass( 'monk-hide' );	
 									if ( -1 < $.inArray( false, response.data ) ) {		
 										$( '#monk-error' ).removeClass( 'monk-hide' );
-									} else {		
+									} else {
 										$( '#monk-submit-settings' ).click();
 									}
 								}
@@ -122,7 +122,7 @@
 					success: function( response ) {
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
-							if ( response.success ) {		
+							if ( response.success ) {
 								$( '#monk-done' ).removeClass( 'monk-hide' );
 							} else {
 								$( '#monk-error' ).removeClass( 'monk-hide' );
@@ -147,30 +147,30 @@
 		$( document ).on( 'submit', '#monk-options-form', function( event ) {
 			event.preventDefault();
 			$( '#monk-spinner' ).addClass( 'is-active' );
-				$( '#monk-save-options' ).removeClass( 'monk-hide' );
-				var form_data = $( '#monk-options-form' ).serializeArray();
+			$( '#monk-save-options' ).removeClass( 'monk-hide' );
+			var form_data = $( '#monk-options-form' ).serializeArray();
 
-				$.ajax({
-					type: 'POST',
-					url: monk.ajax_url,
-					data: form_data,
-					success: function( response ) {
-						if ( response.hasOwnProperty( 'success' ) ) {
-							$( '#monk-save-options' ).addClass( 'monk-hide' );
-							if ( response.success ) {		
-								$( '#monk-done' ).removeClass( 'monk-hide' );
-							} else {
-								$( '#monk-error' ).removeClass( 'monk-hide' );
-							}
+			$.ajax({
+				type: 'POST',
+				url: monk.ajax_url,
+				data: form_data,
+				success: function( response ) {
+					if ( response.hasOwnProperty( 'success' ) ) {
+						$( '#monk-save-options' ).addClass( 'monk-hide' );
+						if ( response.success ) {
+							$( '#monk-done' ).removeClass( 'monk-hide' );
+						} else {
+							$( '#monk-error' ).removeClass( 'monk-hide' );
 						}
-
-						setTimeout( function() {
-							$( '#monk-error' ).addClass( 'monk-hide' );
-							$( '#monk-done' ).addClass( 'monk-hide' );
-							$( '#monk-spinner' ).removeClass( 'is-active' );
-						}, 2000 );
 					}
-				});
+
+					setTimeout( function() {
+						$( '#monk-error' ).addClass( 'monk-hide' );
+						$( '#monk-done' ).addClass( 'monk-hide' );
+						$( '#monk-spinner' ).removeClass( 'is-active' );
+					}, 2000 );
+				}
+			});
 		});
 
 		$( document ).on( 'click', 'button.monk-change-post-language', function( e ) {
@@ -267,6 +267,16 @@
 
 				$( '#monk-menu-locations' ).remove();
 			}
+		};
+
+		if ( 'true' === $( '#monk-language-selector' ).val() ) {
+			$( document ).on( 'ready', function() {
+				$( '.wp-filter' ).append( $( '#monk-language-selector-wrap' ) );
+			});
 		}
+
+		$( document ).on( 'change', '#monk-lang-filter', function() {
+			window.location.href += '?monk_language_filter=' + $( '#monk-lang-filter' ).val();
+		});
 	});
 })( jQuery );
