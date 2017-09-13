@@ -557,7 +557,7 @@ class Monk_Admin {
 		$default_category_translations   = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
 		$default_category_translation_id = array_key_exists( $language, $default_category_translations ) ? $default_category_translations[ $language ] : false;
 
-		return default_category_translation_id;
+		return $default_category_translation_id;
 	}
 
 	protected function get_default_category() {
@@ -565,7 +565,7 @@ class Monk_Admin {
 	}
 	
 	protected function get_post_terms( $post_id ) {
-		return get_the_terms( $post_id, 'category' );;
+		return get_the_terms( $post_id, 'category' );
 	}
 
 	protected function get_active_languages() {
@@ -581,7 +581,7 @@ class Monk_Admin {
 		return get_option( $option_name );
 	}
 
-	protected function get_monk_id() {
+	protected function get_monk_id( $post_id ) {
 		// Get monk_id from POST.
 		$monk_id = filter_input( INPUT_POST, 'monk_id' );
 
@@ -599,7 +599,7 @@ class Monk_Admin {
 
 	public function update_monk_translations_group( $post_id ) {
 		// Set monk_id.
-		$monk_id = $this->get_monk_id();
+		$monk_id = $this->get_monk_id( $post_id );
 
 		// Get post translations.
 		$post_translations = $this->get_post_translations( $monk_id );
@@ -646,10 +646,10 @@ class Monk_Admin {
 		}
 
 		// Save the post translations.
-		$this->update_monk_translations_group( $monk_id, $post_translations );
+		$this->update_post_translations( $post_id, $monk_id, $post_translations );
 	}
 
-	protected function update_post_translations( $monk_id, $post_translations ) {
+	protected function update_post_translations( $post_id, $monk_id, $post_translations ) {
 		update_post_meta( $post_id, '_monk_post_translations_id', $monk_id );
 		update_option( 'monk_post_translations_' . $monk_id, $post_translations );
 	}
