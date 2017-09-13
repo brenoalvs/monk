@@ -490,41 +490,61 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_save_post_meta_box( $post_id ) {
+		// Pegamos o nonce field responsável pelo envio dos dados.
 		$monk_post_meta_box_nonce = filter_input( INPUT_POST, 'monk_post_meta_box_nonce' );
+
+		// Se os dados não vierem ou se o nonce estiver alterado/errado, retorna.
 		if ( ! isset( $monk_post_meta_box_nonce ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $monk_post_meta_box_nonce ) ), basename( __FILE__ ) ) ) {
 			return;
 		}
 
+		// Meta dados não são recomendados em salvamento automático .
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
 
+		// Só se o usuário puder editar posts
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
 
+		/**
+		 * WP salva revisões de posts
+		 * as revisões tem um id = post_id + 1
+		 * não salvamos nada nelas
+		*/
 		if ( wp_is_post_revision( $post_id ) ) {
 			return;
 		}
 
+		// pegamos os todos os idiomas suportados.
 		$monk_languages = monk_get_available_languages();
 
+		// idiomas ativos salvos na option.
 		$active_languages  = get_option( 'monk_active_languages' );
+
+		// o idioma do post, se já tiver.
 		$current_language  = get_post_meta( $post_id, '_monk_post_language', true );
+
+		// idioma do select, caso o usuário esteja o idioma ou seja um novo.
 		$post_language     = filter_input( INPUT_POST, 'monk_post_language' );
 
+		// não tem idioma ainda? usamos o novo
 		if ( ! $current_language ) {
 			$current_language = sanitize_text_field( wp_unslash( $post_language ) );
 		}
 
 		$language          = '';
+
 		$post_translations = array(
 			$current_language => $post_id,
 		);
 
+		// tendo idioma enviado
 		if ( isset( $post_language ) && ! empty( $post_language ) ) {
 			$language = sanitize_text_field( wp_unslash( $post_language ) );
 
+			// e esse idioma está ativo, salvamos
 			if ( in_array( $language , $active_languages ) ) {
 				update_post_meta( $post_id, '_monk_post_language', $language );
 			}
@@ -532,24 +552,32 @@ class Monk_Admin {
 
 		$monk_id = filter_input( INPUT_POST, 'monk_id' );
 
+		// 'monk_id' é a chave do translation group
 		if ( isset( $monk_id ) ) {
 			$monk_id = sanitize_text_field( wp_unslash( $monk_id ) );
 		} else {
+			// quando já tem, fica no meta '_monk_post_translations_id'
 			$monk_id = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		}
 
+		// construímos e pegamos o translation group
 		$option_name       = 'monk_post_translations_' . $monk_id;
 		$post_translations = get_option( $option_name );
 
+		// se já tem um translation group com esse post
 		if ( ! empty( $post_translations ) ) {
+			// se já tiver um idioma ativo com esse id, retiramos o idioma antigo e salvamos com o novo
+			// para funcionar caso seja uma troca de idioma também
 			if ( array_key_exists( $current_language, $post_translations ) ) {
 				if ( $post_id === $post_translations[ $current_language ] && $language ) {
 					unset( $post_translations[ $current_language ] );
 					$post_translations[ $language ] = $post_id;
 				}
+			// criamos uma entrada 'idioma' => 'id'
 			} else {
 				$post_translations[ $current_language ] = $post_id;
 			}
+		// senão será um translation group novo
 		} else {
 			$monk_id           = $post_id;
 			$post_translations = array(
@@ -557,26 +585,31 @@ class Monk_Admin {
 			);
 		}
 
+		// [fallback] se um idioma não tiver suporte, removemos
 		foreach ( $post_translations as $lang_code => $id ) {
 			if ( ! array_key_exists( $lang_code, $monk_languages ) ) {
 				unset( $post_translations[ $lang_code ] );
 			}
 		}
 
+		// salva os dados no meta e option
 		update_post_meta( $post_id, '_monk_post_translations_id', $monk_id );
 		update_option( 'monk_post_translations_' . $monk_id, $post_translations );
 
+		// pega todos os terms do post
 		$post_terms            = get_the_terms( $post_id, 'category' );
+		// e a padrão para posts, a 'uncategorized'
 		$default_post_category = get_term( get_option( 'default_category' ) );
 
-		if ( is_object( $post_terms[0] ) && is_object( $default_post_category ) ) {
-			if ( 1 >= count( $post_terms ) && $default_post_category->term_id === $post_terms[0]->term_id ) {
-				$default_post_category           = get_term( get_option( 'default_category' ) );
-				$default_category_translations   = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
-				$default_category_translation_id = array_key_exists( $language, $default_category_translations ) ? $default_category_translations[ $language ] : false;
+		// se tem pelo menos um term e tem uma 'uncategorized' nele
+		if ( 1 >= count( $post_terms ) && $default_post_category->term_id === $post_terms[0]->term_id ) {
 
-				wp_set_post_terms( $post_id, array( $default_category_translation_id ), 'category' );
-			}
+			// pega a tradução do 'uncategorized' no idioma do post
+			$default_category_translations   = get_option( 'monk_term_translations_' . $default_post_category->term_id, array() );
+			$default_category_translation_id = array_key_exists( $language, $default_category_translations ) ? $default_category_translations[ $language ] : false;
+
+			// salva esse termo no lugar de 'uncategorized', caso seja um idioma diferente do site
+			wp_set_post_terms( $post_id, array( $default_category_translation_id ), 'category' );
 		}
 	}
 
