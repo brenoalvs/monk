@@ -607,6 +607,9 @@ class Monk_Admin {
 		// Get current language already in the post.
 		$current_language  = $this->get_post_current_language( $post_id );
 
+		// Get all active languages.
+		$active_languages  = $this->get_active_languages();
+
 		// Get the selected language from dropdown, passed though POST.
 		$language = $this->get_language_from_post();
 
@@ -637,7 +640,7 @@ class Monk_Admin {
 
 		// Check if the language is supported YET, else we remove it!
 		foreach ( $post_translations as $lang_code => $id ) {
-			if ( ! array_key_exists( $lang_code, $monk_languages ) ) {
+			if ( ! array_key_exists( $lang_code, $active_languages ) ) {
 				unset( $post_translations[ $lang_code ] );
 			}
 		}
@@ -690,6 +693,8 @@ class Monk_Admin {
 	protected function get_post_current_language( $post_id ) {
 		// Set current language.
 		$current_language = get_post_meta( $post_id, '_monk_post_language', true );	
+
+		$language_from_post_global = $this->get_language_from_post();
 
 		// If there's no language already saved, sanitize from POST.
 		if ( ! $current_language ) {
