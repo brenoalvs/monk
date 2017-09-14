@@ -614,13 +614,13 @@ class Monk_Admin {
 	 */
 	public function monk_admin_posts_filter( $query ) {
 		global $mode;
-		if ( ! is_admin() || 'nav_menu_item' === $query->get( 'post_type' ) ) {
+		if ( ! is_admin() || ( 'attachment' === $query->get( 'post_type' ) && 'list' !== $mode ) || 'nav_menu_item' === $query->get( 'post_type' ) ) {
 			return;
 		}
 
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
-		$filter           = ! empty( filter_input( INPUT_GET , 'monk_language_filter' ) ) ? filter_input( INPUT_GET , 'monk_language_filter' ) : monk_get_url_args( 'monk_language_filter' );
+		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 		$language         = $filter;
 		$post_type        = filter_input( INPUT_GET , 'post_type' );
 		$screen           = $this->get_current_screen();
@@ -1839,7 +1839,7 @@ class Monk_Admin {
 	/**
 	 * Function that show language selector on medias grid mode and terms page.
 	 *
-	 * @since    0.5.2
+	 * @since  0.5.2
 	 *
 	 * @return void
 	 */
@@ -1854,5 +1854,28 @@ class Monk_Admin {
 		if ( 'upload' === $screen->base ) {
 			require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-language-filter.php';
 		}
+	}
+
+	/**
+	 * Function that filter attachments on medias grid mode.
+	 *
+	 * @since  0.5.2
+	 * @param  array $args Arguments to be inserted on WP_Query.
+	 *
+	 * @return array $args
+	 */
+	public function monk_filter_attachments_on_grid( $args ) {
+		$filter = ! empty( filter_input( INPUT_POST, 'monk-language' ) ) ? filter_input( INPUT_POST, 'monk-language' ) : get_option( 'monk_default_language', false );
+
+		if ( $filter ) {
+			$args['meta_query'] = array(
+				array(
+					'key' => '_monk_post_language',
+					'value' => $filter,
+				),
+			);
+		}
+
+		return $args;
 	}
 }
