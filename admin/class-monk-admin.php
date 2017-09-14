@@ -516,8 +516,9 @@ class Monk_Admin {
 		if ( wp_is_post_revision( $post_id ) ) {
 			return;
 		}
-
-		$this->monk_api_save( $post_id );		
+		
+		// @TODO: ideally, build the array from INPUT_POST before and pass as parameters.
+		$this->monk_api_save( $post_id );
 	}
 
 	// @TODO: we should be able to pass the post options required as an array (second param).
