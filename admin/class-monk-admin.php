@@ -751,6 +751,10 @@ class Monk_Admin {
 					);
 				}
 
+				if ( isset( $relation ) && 'all' === $relation['value'] ) {
+					return $args;
+				}
+
 				if ( isset( $relation ) ) {
 					$meta_query = array(
 						'relation' => 'OR', // Optional, defaults to "AND".
