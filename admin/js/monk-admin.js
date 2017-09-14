@@ -276,7 +276,19 @@
 		}
 
 		$( document ).on( 'change', '#monk-lang-filter', function() {
-			window.location.href += '?monk_language_filter=' + $( '#monk-lang-filter' ).val();
+			var form_data = {
+				'action' : 'query-attachments',
+				'monk-language' : $( '#monk-lang-filter' ).val(),
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: monk.ajax_url,
+				data: form_data,
+				success: function( response ) {
+					console.log( response );
+				}
+			});
 		});
 	});
 })( jQuery );
