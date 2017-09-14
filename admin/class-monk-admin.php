@@ -1504,6 +1504,29 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Adds a language filter to the terms pages
+	 *
+	 * There are no hooks to use here, so we create the
+	 * components using the admin_footer action and move them to the right location
+	 *
+	 * @since    0.3.0
+	 *
+	 * @return void
+	 */
+	public function monk_add_term_language_filter() {
+		$screen = $this->get_current_screen();
+		if ( $screen ) {
+			if ( 'edit-tags' !== $screen->base || ( 'edit-tags' === $screen->base && 'post_tag' === $screen->taxonomy ) ) {
+				return;
+			}
+		}
+		$url = monk_get_current_url();
+		$action_url = add_query_arg( 'lang', '', $url );
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-term-language-selector-render.php';
+	}
+
+	/**
 	 * Adds new menu components to allow their translation
 	 *
 	 * There are no hooks to use in the menu edit page, so we create the
