@@ -16,7 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 ?>
 <div id="monk-language-selector-wrap">
 	<input type="hidden" id="monk-language-selector" value="true">
-	<select class="monk-lang" id="monk-lang-filter" >
+	<select class="monk-lang attachment-filters" id="monk-lang-filter" >
 	<?php
 	foreach ( $active_languages as $lang_code ) {
 		if ( array_key_exists( $lang_code, $monk_languages ) ) {
