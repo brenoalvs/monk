@@ -640,15 +640,12 @@ class Monk_Admin {
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 		$language         = $filter;
-		$post_type        = filter_input( INPUT_GET , 'post_type' );
 		$screen           = $this->get_current_screen();
 
-		if ( ! is_customize_preview() && $screen ) {
-			if ( 'nav-menus' === $screen->base ) {
-				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
-				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
-				$language = empty( $language ) ? $default_language : $language;
-			}
+		if ( ! is_customize_preview() && $screen && 'nav-menus' === $screen->base ) {
+			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+			$language = empty( $language ) ? $default_language : $language;
 		}
 
 		if ( $query->is_search() ) {
@@ -657,6 +654,10 @@ class Monk_Admin {
 			} else {
 				$language = $filter;
 			}
+		}
+
+		if ( isset( $filter ) && empty( $filter ) ) {
+			return;
 		}
 
 		if ( is_customize_preview() || $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
@@ -671,8 +672,6 @@ class Monk_Admin {
 					'compare' => 'NOT EXISTS',
 				),
 			);
-
-			$query->set( 'meta_query', $meta_query );
 		} else {
 			$meta_query = array(
 				array(
@@ -680,9 +679,9 @@ class Monk_Admin {
 					'value'   => $language,
 				),
 			);
-
-			$query->set( 'meta_query', $meta_query );
 		}
+
+		$query->set( 'meta_query', $meta_query );
 	}
 
 	/**
