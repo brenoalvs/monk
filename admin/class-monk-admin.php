@@ -1628,7 +1628,7 @@ class Monk_Admin {
 		$default_post_category = get_term( get_option( 'default_category' ) );
 
 		foreach ( $active_languages as $language ) {
-			$has_term      = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
+			$has_term = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
 			if ( ! $has_term ) {
 				$uncategorized_term = get_term_by( 'id', 1, 'category' );
 				if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
