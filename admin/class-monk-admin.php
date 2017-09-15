@@ -581,7 +581,8 @@ class Monk_Admin {
 	}
 
 	/**
-	 * Function to return the post to array of translations
+	 * Function to return a post from the trash
+	 * and reinsert it into its original translation group
 	 *
 	 * @param   string $post_id ID of the post.
 	 *
