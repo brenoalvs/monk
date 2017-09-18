@@ -1,5 +1,9 @@
 # Monk [![Build Status](https://travis-ci.org/brenoalvs/monk.svg?branch=master)](https://travis-ci.org/brenoalvs/monk)
-<img src="assets/logo-256x256.png" width="256"/>
+<div align="center">
+  <a href="https://wordpress.org/plugins/monk/">
+    <img src="assets/logo-256x256.png" width="256"/>
+  </a>
+</div>
 
 Welcome!
 This is the official repository on GitHub of Monk, a WordPress translation plugin for your content reach the world. Here you can follow the project development and see the new things that are being made. Feel free to look the sources, issues and most importantly, contribute.
