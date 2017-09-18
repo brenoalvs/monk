@@ -1,5 +1,10 @@
 ## Changelog
 
+- **[0.5.2]**
+    + Fixed bug when a post was restored from trash
+    + Fixed the default category english translation
+    + Fixed bug when "All languages" is selected in the language selector of post and pages
+
 - **[0.5.1]**
     + Fixed bug on medias update process
     + Fixed accessibility attributes on admin controls.
