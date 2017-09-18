@@ -1,7 +1,7 @@
 # Monk [![Build Status](https://travis-ci.org/brenoalvs/monk.svg?branch=master)](https://travis-ci.org/brenoalvs/monk)
 <div align="center">
   <a href="https://wordpress.org/plugins/monk/">
-    <img src="assets/logo-256x256.png" width="256"/>
+    <img src=".wordpress-org/banner-772x250.png" width="772"/>
   </a>
 </div>
 
