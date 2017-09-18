@@ -10,16 +10,16 @@ This is the official repository on GitHub of Monk, a WordPress translation plugi
 
 Download Monk [here](https://wordpress.org/plugins/monk/)
 
-## Asking for support
+<h2 align="center">Asking for support</h2>
 
 Please use this repository only for core related issues, like bugs, PRs and contributions. If you need user related help, please visit our [support page on WordPress.org](https://wordpress.org/support/plugin/monk).
 
-## Documentation
+<h2 align="center">Documentation</h2>
 
 + [Getting started with Monk](https://github.com/brenoalvs/monk/wiki/getting-started)
 + [How our translations work](https://github.com/brenoalvs/monk/wiki/how-translations-work)
 + [Languages in the URLs](https://github.com/brenoalvs/monk/wiki/url-translations)
 
-## Contributing to Monk
+<h2 align="center">Contributing to Monk</h2>
 
 If you find any error or have suggestions, contribute with them to improve Monk. They are all welcome, but before anything please take a minute to read our [contributor guidelines](https://github.com/brenoalvs/monk/blob/master/.github/CONTRIBUITING.md) and [code of conduct](https://github.com/brenoalvs/monk/blob/master/.github/code_of_conduct.md).
