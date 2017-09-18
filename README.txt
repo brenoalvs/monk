@@ -70,6 +70,11 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 
 == Changelog ==
 
+= [0.5.2] =
+* Fixed bug when a post was restored from trash
+* Fixed the default category english translation
+* Fixed bug when "All languages" is selected in the language selector of post and pages
+
 = [0.5.1] =
 * Fixed bug on medias update process
 * Fixed accessibility attributes on admin controls.
@@ -89,13 +94,6 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 * Fixed broken archive links in the Language Switcher widget
 * Fixed date archive links with duplicated language slug in the URLs
 * Fixed the links coming with wrong taxonomy names in term edit pages
-
-= [0.4.0] =
-* Added automatic language packages download.
-* Added full language support. You can now translate your site into more than 100 different languages.
-* Added the option to choose whether the default language slug should be in the URLs.
-* Improved the Language Switcher's UI.
-* Fixed the "next and previous" post links.
 
 [See changelog for older versions](https://raw.githubusercontent.com/brenoalvs/monk/master/CHANGELOG.md)
 
