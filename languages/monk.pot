@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Monk 0.1.0\n"
 "Report-Msgid-Bugs-To: Monk\n"
-"POT-Creation-Date: 2017-08-28 13:48-0300\n"
+"POT-Creation-Date: 2017-09-18 07:40-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Breno Alves\n"
 "Language-Team: Monk\n"
@@ -27,40 +27,38 @@ msgstr ""
 msgid "English (United States)"
 msgstr ""
 
-#: includes/monk-available-languages.php:15
-msgid "Danish"
+#: widgets/class-monk-language-switcher.php:32
+msgid "Switch between site translations."
 msgstr ""
 
-#: includes/monk-available-languages.php:20
-msgid "English"
+#: widgets/class-monk-language-switcher.php:34 admin/class-monk-admin.php:771
+msgid "Language Switcher"
 msgstr ""
 
-#: includes/monk-available-languages.php:25
-msgid "French"
+#: widgets/class-monk-language-switcher.php:49
+#: widgets/partials/admin-monk-language-switcher.php:16
+msgid "Languages"
 msgstr ""
 
-#: includes/monk-available-languages.php:30
-msgid "German"
+#: widgets/partials/admin-monk-language-switcher.php:21
+msgid "Title: "
 msgstr ""
 
-#: includes/monk-available-languages.php:35
-msgid "Italian"
+#: widgets/partials/admin-monk-language-switcher.php:25
+msgid "Hide Flags"
 msgstr ""
 
-#: includes/monk-available-languages.php:40
-msgid "Japanese"
+#: widgets/partials/admin-monk-language-switcher.php:29
+msgid "Monk Love"
 msgstr ""
 
-#: includes/monk-available-languages.php:45
-msgid "Portuguese (Brazil)"
+#: widgets/partials/public-monk-language-switcher.php:43
+msgid "No other translations"
 msgstr ""
 
-#: includes/monk-available-languages.php:50
-msgid "Russian"
-msgstr ""
-
-#: includes/monk-available-languages.php:55
-msgid "Spanish"
+#: widgets/partials/public-monk-language-switcher.php:67
+#, php-format
+msgid "Made with %1$s by %2$s"
 msgstr ""
 
 #: admin/class-monk-admin.php:125
@@ -116,53 +114,70 @@ msgid ""
 "translate."
 msgstr ""
 
-#: admin/class-monk-admin.php:422 admin/class-monk-admin.php:876
-#: admin/class-monk-admin.php:1353
+#: admin/class-monk-admin.php:422 admin/class-monk-admin.php:891
+#: admin/class-monk-admin.php:1368
 #: admin/partials/admin-monk-language-update-term.php:20
 #: admin/partials/admin-monk-language-term.php:19
 #: admin/partials/admin-monk-language-term.php:39
 msgid "Language"
 msgstr ""
 
-#: admin/class-monk-admin.php:769 widgets/class-monk-language-switcher.php:34
-msgid "Language Switcher"
-msgstr ""
-
-#: admin/class-monk-admin.php:784
+#: admin/class-monk-admin.php:786
 msgid "Background"
 msgstr ""
 
-#: admin/class-monk-admin.php:799
+#: admin/class-monk-admin.php:801
 msgid "Text"
 msgstr ""
 
-#: admin/class-monk-admin.php:814
+#: admin/class-monk-admin.php:816
 msgid "Background Hover"
 msgstr ""
 
-#: admin/class-monk-admin.php:829
+#: admin/class-monk-admin.php:831
 msgid "Text Hover"
 msgstr ""
 
-#: admin/class-monk-admin.php:1258
+#: admin/class-monk-admin.php:1273
 msgid "No translations available"
 msgstr ""
 
-#: admin/class-monk-admin.php:1359
+#: admin/class-monk-admin.php:1374
 msgid "Translate"
+msgstr ""
+
+#: admin/partials/admin-monk-select-menu-to-edit-render.php:35
+#, php-format
+msgid "Translations of %s"
+msgstr ""
+
+#: admin/partials/admin-monk-select-menu-to-edit-render.php:55
+msgid "— Select a Menu —"
+msgstr ""
+
+#: admin/partials/admin-monk-select-menu-to-edit-render.php:113
+msgid "None"
 msgstr ""
 
 #: admin/partials/monk-language-filter.php:20
 msgid "All Languages"
 msgstr ""
 
-#: admin/partials/monk-language-column.php:29
-#: admin/partials/admin-monk-post-meta-box-field-render.php:78
-msgid "Add+"
+#: admin/partials/admin-monk-settings-tabs-render.php:17
+msgid "General"
 msgstr ""
 
-#: admin/partials/monk-language-column.php:34
-msgid "No language"
+#: admin/partials/admin-monk-term-translation.php:21
+#: admin/partials/admin-monk-post-meta-box-field-render.php:74
+msgid "Translations"
+msgstr ""
+
+#: admin/partials/admin-monk-term-translation.php:47
+msgid "Add a translation +"
+msgstr ""
+
+#: admin/partials/admin-monk-term-translation.php:50
+msgid "You must set a language before add translations."
 msgstr ""
 
 #: admin/partials/admin-monk-language-selector-render.php:50
@@ -177,6 +192,10 @@ msgstr ""
 msgid "No more languages available."
 msgstr ""
 
+#: admin/partials/admin-monk-options-description.php:16
+msgid "Here you can translate some data referring to your site."
+msgstr ""
+
 #: admin/partials/admin-monk-notice-render.php:13
 msgid "Monk: "
 msgstr ""
@@ -187,30 +206,6 @@ msgstr ""
 
 #: admin/partials/admin-monk-notice-render.php:14
 msgid "configure your language preferences"
-msgstr ""
-
-#: admin/partials/admin-monk-options-description.php:16
-msgid "Here you can translate some data referring to your site."
-msgstr ""
-
-#: admin/partials/admin-monk-language-term.php:50
-msgid "This is a translation of "
-msgstr ""
-
-#: admin/partials/admin-monk-menu-translation-fields-render.php:22
-msgid "Add translation +"
-msgstr ""
-
-#: admin/partials/admin-monk-menu-translation-fields-render.php:62
-msgid "Menu Translations"
-msgstr ""
-
-#: admin/partials/admin-monk-menu-translation-fields-render.php:65
-msgid "This menu does not have translations. "
-msgstr ""
-
-#: admin/partials/admin-monk-menu-translation-fields-render.php:67
-msgid "You can add one here. "
 msgstr ""
 
 #: admin/partials/admin-monk-settings-render.php:60
@@ -237,16 +232,42 @@ msgstr ""
 msgid "Error. Try again."
 msgstr ""
 
-#: admin/partials/admin-monk-widget-notice.php:24
-msgid "Remember to activate the "
+#: admin/partials/admin-monk-tools-description.php:17
+msgid ""
+"Here you can set default language to all posts and terms without language."
 msgstr ""
 
-#: admin/partials/admin-monk-widget-notice.php:24
-msgid "language switcher."
+#: admin/partials/admin-monk-tools-description.php:18
+msgid "Mark the checkbox and click on \"Save Changes\" to confirm."
 msgstr ""
 
-#: admin/partials/admin-monk-settings-tabs-render.php:17
-msgid "General"
+#: admin/partials/monk-language-column.php:29
+#: admin/partials/admin-monk-post-meta-box-field-render.php:78
+msgid "Add+"
+msgstr ""
+
+#: admin/partials/monk-language-column.php:34
+msgid "No language"
+msgstr ""
+
+#: admin/partials/admin-monk-language-term.php:50
+msgid "This is a translation of "
+msgstr ""
+
+#: admin/partials/admin-monk-menu-translation-fields-render.php:22
+msgid "Add translation +"
+msgstr ""
+
+#: admin/partials/admin-monk-menu-translation-fields-render.php:62
+msgid "Menu Translations"
+msgstr ""
+
+#: admin/partials/admin-monk-menu-translation-fields-render.php:65
+msgid "This menu does not have translations. "
+msgstr ""
+
+#: admin/partials/admin-monk-menu-translation-fields-render.php:67
+msgid "You can add one here. "
 msgstr ""
 
 #: admin/partials/admin-monk-post-meta-box-field-render.php:21
@@ -256,11 +277,6 @@ msgstr ""
 #: admin/partials/admin-monk-post-meta-box-field-render.php:57
 #, php-format
 msgid "Translating \"%s\"."
-msgstr ""
-
-#: admin/partials/admin-monk-post-meta-box-field-render.php:74
-#: admin/partials/admin-monk-term-translation.php:21
-msgid "Translations"
 msgstr ""
 
 #: admin/partials/admin-monk-post-meta-box-field-render.php:150
@@ -280,62 +296,10 @@ msgstr ""
 msgid "Not translated, add one"
 msgstr ""
 
-#: admin/partials/admin-monk-tools-description.php:17
-msgid ""
-"Here you can set default language to all posts and terms without language."
+#: admin/partials/admin-monk-widget-notice.php:24
+msgid "Remember to activate the "
 msgstr ""
 
-#: admin/partials/admin-monk-tools-description.php:18
-msgid "Mark the checkbox and click on \"Save Changes\" to confirm."
-msgstr ""
-
-#: admin/partials/admin-monk-select-menu-to-edit-render.php:35
-#, php-format
-msgid "Translations of %s"
-msgstr ""
-
-#: admin/partials/admin-monk-select-menu-to-edit-render.php:55
-msgid "— Select a Menu —"
-msgstr ""
-
-#: admin/partials/admin-monk-select-menu-to-edit-render.php:113
-msgid "None"
-msgstr ""
-
-#: admin/partials/admin-monk-term-translation.php:47
-msgid "Add a translation +"
-msgstr ""
-
-#: admin/partials/admin-monk-term-translation.php:50
-msgid "You must set a language before add translations."
-msgstr ""
-
-#: widgets/class-monk-language-switcher.php:32
-msgid "Switch between site translations."
-msgstr ""
-
-#: widgets/class-monk-language-switcher.php:49
-#: widgets/partials/admin-monk-language-switcher.php:16
-msgid "Languages"
-msgstr ""
-
-#: widgets/partials/public-monk-language-switcher.php:43
-msgid "No other translations"
-msgstr ""
-
-#: widgets/partials/public-monk-language-switcher.php:66
-#, php-format
-msgid "Made with %1$s by %2$s"
-msgstr ""
-
-#: widgets/partials/admin-monk-language-switcher.php:21
-msgid "Title: "
-msgstr ""
-
-#: widgets/partials/admin-monk-language-switcher.php:25
-msgid "Hide Flags"
-msgstr ""
-
-#: widgets/partials/admin-monk-language-switcher.php:29
-msgid "Monk Love"
+#: admin/partials/admin-monk-widget-notice.php:24
+msgid "language switcher."
 msgstr ""
