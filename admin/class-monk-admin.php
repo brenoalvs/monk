@@ -581,6 +581,24 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Function to return a post from the trash
+	 * and reinsert it into its original translation group
+	 *
+	 * @param   string $post_id ID of the post.
+	 *
+	 * @since    0.5.2
+	 * @return  void
+	 */
+	public function monk_untrash_post( $post_id ) {
+		$language = get_post_meta( $post_id, '_monk_post_language', true );
+		$monk_id  = get_post_meta( $post_id, '_monk_post_translations_id', true );
+		$post_translations = get_option( 'monk_post_translations_' . $monk_id, array() );
+		$post_translations[ $language ] = $post_id;
+
+		update_option( 'monk_post_translations_' . $monk_id, $post_translations );
+	}
+
+	/**
 	 * Function that erases the data stored by the plugin when post is deleted permanently.
 	 *
 	 * @param   string $post_id ID of the post, page or post_type to be deleted.
@@ -622,15 +640,12 @@ class Monk_Admin {
 		$active_languages = get_option( 'monk_active_languages', false );
 		$filter           = filter_input( INPUT_GET , 'monk_language_filter' );
 		$language         = $filter;
-		$post_type        = filter_input( INPUT_GET , 'post_type' );
 		$screen           = $this->get_current_screen();
 
-		if ( ! is_customize_preview() && $screen ) {
-			if ( 'nav-menus' === $screen->base ) {
-				$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
-				$language = get_term_meta( $menu_id, '_monk_menu_language', true );
-				$language = empty( $language ) ? $default_language : $language;
-			}
+		if ( ! is_customize_preview() && $screen && 'nav-menus' === $screen->base ) {
+			$menu_id  = filter_input( INPUT_GET , 'menu' ) ? filter_input( INPUT_GET , 'menu' ) : get_user_option( 'nav_menu_recently_edited' );
+			$language = get_term_meta( $menu_id, '_monk_menu_language', true );
+			$language = empty( $language ) ? $default_language : $language;
 		}
 
 		if ( $query->is_search() ) {
@@ -639,6 +654,10 @@ class Monk_Admin {
 			} else {
 				$language = $filter;
 			}
+		}
+
+		if ( isset( $filter ) && empty( $filter ) ) {
+			return;
 		}
 
 		if ( is_customize_preview() || $language === $default_language || ! in_array( $language, $active_languages, true ) ) {
@@ -653,8 +672,6 @@ class Monk_Admin {
 					'compare' => 'NOT EXISTS',
 				),
 			);
-
-			$query->set( 'meta_query', $meta_query );
 		} else {
 			$meta_query = array(
 				array(
@@ -662,9 +679,9 @@ class Monk_Admin {
 					'value'   => $language,
 				),
 			);
-
-			$query->set( 'meta_query', $meta_query );
 		}
+
+		$query->set( 'meta_query', $meta_query );
 	}
 
 	/**
@@ -1628,23 +1645,19 @@ class Monk_Admin {
 		$default_post_category = get_term( get_option( 'default_category' ) );
 
 		foreach ( $active_languages as $language ) {
-			if ( 'en_US' !== $language ) {
-				$has_term      = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
-				if ( ! $has_term ) {
-					$uncategorized_term = get_term_by( 'id', 1, 'category' );
-					if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
-						$new_term = wp_insert_term( $monk_uncategorized_translations[ $language ], 'category' );
-						if ( ! is_wp_error( $new_term ) ) {
-							$term_translations[ $language ] = $new_term['term_id'];
-							update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
-							update_term_meta( $new_term['term_id'], '_monk_term_translations_id', $default_post_category->term_id );
-						}
+			$has_term = get_term_by( 'name', $monk_uncategorized_translations[ $language ], 'category' );
+			if ( ! $has_term ) {
+				$uncategorized_term = get_term_by( 'id', 1, 'category' );
+				if ( $uncategorized_term && $uncategorized_term->term_id === $default_post_category->term_id ) {
+					$new_term = wp_insert_term( $monk_uncategorized_translations[ $language ], 'category' );
+					if ( ! is_wp_error( $new_term ) ) {
+						$term_translations[ $language ] = $new_term['term_id'];
+						update_term_meta( $new_term['term_id'], '_monk_term_language', $language );
+						update_term_meta( $new_term['term_id'], '_monk_term_translations_id', $default_post_category->term_id );
 					}
-				} else {
-					$term_translations[ $language ] = $has_term->term_id;
 				}
 			} else {
-				$term_translations[ $language ] = $default_post_category->term_id;
+				$term_translations[ $language ] = $has_term->term_id;
 			}
 		}
 

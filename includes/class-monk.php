@@ -67,7 +67,7 @@ class Monk {
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '0.5.1';
+		$this->version = '0.5.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -225,6 +225,7 @@ class Monk {
 		$this->loader->add_action( 'wp_ajax_monk_save_general_form_settings', $plugin_admin, 'monk_save_general_form_settings' );
 		$this->loader->add_action( 'wp_ajax_monk_save_options', $plugin_admin, 'monk_save_site_options' );
 		add_shortcode( 'translation', array( $plugin_admin, 'monk_language_shortcode' ) );
+		$this->loader->add_action( 'untrash_post', $plugin_admin, 'monk_untrash_post' );
 	}
 
 	/**
