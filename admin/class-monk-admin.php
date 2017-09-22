@@ -1850,4 +1850,30 @@ class Monk_Admin {
 
 		$comment_args->query_vars['post__in'] = $posts_found;
 	}
+
+	/**
+	 * Function to add a language selector to comments admin page.
+	 * This function uses the restrict_manage_comments action
+	 *
+	 * @since    0.6.0
+	 *
+	 * @return  void
+	 */
+	public function monk_admin_add_comments_language_selector() {
+		$comment_status   = filter_input( INPUT_GET, 'comment_status' );
+		$comment_status   = 'all' === $comment_status ? 'total_comments' : $comment_status;
+		$comment_class    = wp_count_comments();
+
+		foreach ( $comment_class as $status => $number ) {
+
+			if ( $comment_status === $status && intval( $number ) > 0 ) {
+				$monk_languages = monk_get_available_languages();
+				$languages      = get_option( 'monk_active_languages' );
+				$url_language   = filter_input( INPUT_GET, 'lang' );
+
+				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-language-selector-render.php';
+				break;
+			}
+		}
+	}
 }
