@@ -1791,4 +1791,42 @@ class Monk_Admin {
 			return;
 		}
 	}
+
+	/**
+	 * Function to filter comments by their post language.
+	 * This function uses the pre_get_comments filter
+	 *
+	 * @since    0.6.0
+	 *
+	 * @param    WP_Comment_Query $comment_args Instace of WP_Comment_Query class.
+	 * @return  void
+	 */
+	public function monk_admin_comments_filter( $comment_args ) {
+		$screen = $this->get_current_screen();
+		$lang   = filter_input( INPUT_GET, 'lang' );
+
+		if ( ! is_admin() || 'edit-comments' !== $screen->base || empty( $lang ) || 'all' === $lang ) {
+			return;
+		}
+
+		$post_args = array(
+			'meta_key'     => '_monk_post_language',
+			'meta_value'   => $lang,
+		);
+
+		$posts       = new WP_Query( $post_args );
+		$posts_found = array();
+
+		if ( $posts->have_posts() ) {
+
+			while ( $posts->have_posts() ) {
+				$posts->the_post();
+				$posts_found[] = get_the_ID();
+			}
+
+			wp_reset_postdata();
+		}
+
+		$comment_args->query_vars['post__in'] = $posts_found;
+	}
 }
