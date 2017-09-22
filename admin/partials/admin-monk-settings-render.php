@@ -78,5 +78,20 @@ if ( ! defined( 'WPINC' ) ) {
 			<?php break; ?>
 			<?php endswitch; ?>
 		</form>
+		<?php
+		$has_update = wp_get_translation_updates();
+
+		if ( ! empty( $has_update ) ) :
+		?>
+		<div class="monk-update-log">
+		<?php
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
+
+			$upgrader = new Language_Pack_Upgrader();
+
+			$upgrader->upgrade();
+		?>
+		</div>
+		<?php endif; ?>
 	</div>
 <?php

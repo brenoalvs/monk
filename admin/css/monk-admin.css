@@ -185,3 +185,11 @@ div.menu-translations ul.current-menu-translations li {
 	font-style: italic;
 	padding-left: 24px;
 }
+
+div.monk-update-log {
+	background-color: #ffffff;
+	border: 1px solid lightgray;
+	max-height: 150px;
+	overflow-y: scroll;
+	padding: 0 20px;
+}
