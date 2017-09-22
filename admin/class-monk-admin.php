@@ -70,7 +70,14 @@ class Monk_Admin {
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->monk, 'monk', array(
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'ajax_url'                => admin_url( 'admin-ajax.php' ),
+			'general_success_message' => __( 'Language packs updated', 'monk' ),
+			'general_error_message'   => __( 'Error on update language packs! Try again.', 'monk' ),
+			'tools_success_message'   => __( 'Posts and terms language updated', 'monk' ),
+			'tools_error_message'     => __( 'Error on update posts and terms language! Try again.', 'monk' ),
+			'checkbox_error_message'  => __( 'Select the checkbox.', 'monk' ),
+			'options_success_message' => __( 'Site title and description updated', 'monk' ),
+			'options_error_message'   => __( 'Error on update site title and descripition! Try again.', 'monk' ),
 		));
 	}
 
@@ -732,7 +739,10 @@ class Monk_Admin {
 
 		if ( ! is_customize_preview() && $screen ) {
 
-			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
+			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base )
+				|| ( 'nav-menus' === $screen->base )
+				|| ( 'edit-tags' === $screen->base ) ) {
+
 				$active_languages = get_option( 'monk_active_languages', array() );
 				$default_language = get_option( 'monk_default_language', false );
 
@@ -745,14 +755,28 @@ class Monk_Admin {
 						'key'   => '_monk_term_language',
 						'value' => $language,
 					);
+				} elseif ( 'edit-tags' === $screen->base ) {
+					$term_language = filter_input( INPUT_GET, 'lang' );
+					$language      = empty( $term_language ) ? $default_language : $term_language;
+
+					$relation = array(
+						'key'   => '_monk_term_language',
+						'value' => $language,
+					);
 				} else {
 					$post_id       = get_the_id();
 					$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
-					$language      = filter_input( INPUT_GET, 'lang' );
+					$url_language  = filter_input( INPUT_GET, 'lang' ) ? filter_input( INPUT_GET, 'lang' ) : $default_language;
+					$language      = empty( $post_language ) ? $url_language : $post_language;
+
 					$relation = array(
 						'key'   => '_monk_term_language',
-						'value' => $post_language,
+						'value' => $language,
 					);
+				}
+
+				if ( isset( $relation ) && 'all' === $relation['value'] ) {
+					return $args;
 				}
 
 				if ( isset( $relation ) ) {
@@ -771,107 +795,6 @@ class Monk_Admin {
 		} // End if().
 
 		return $args;
-	}
-
-	/**
-	 * Add components on Appearance->Customize.
-	 *
-	 * @param object $wp_customize Customize object.
-	 *
-	 * @since    0.1.0
-	 * @access   public
-	 * @return  void
-	 */
-	public function monk_language_customizer( $wp_customize ) {
-
-		$wp_customize->add_section( 'monk_language_switcher' , array(
-			'title'    => __( 'Language Switcher', 'monk' ),
-			'priority' => 1,
-		));
-
-		/**
-		 * Add setting and control related to Language Switcher Background.
-		 */
-		$wp_customize->add_setting( 'monk_background_color', array(
-			'type'              => 'option',
-			'capability'        => 'manage_options',
-			'default'           => '#fff',
-			'sanitize_callback' => 'sanitize_hex_color',
-		));
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_background_color', array(
-			'label'   => __( 'Background', 'monk' ),
-			'section' => 'monk_language_switcher',
-		)));
-
-		/**
-		 * Add setting and control related to Language Switcher Text Color.
-		 */
-		$wp_customize->add_setting( 'monk_text_color', array(
-			'type'              => 'option',
-			'capability'        => 'manage_options',
-			'default'           => '#000',
-			'sanitize_callback' => 'sanitize_hex_color',
-		));
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_text_color', array(
-			'label'   => __( 'Text', 'monk' ),
-			'section' => 'monk_language_switcher',
-		)));
-
-		/**
-		 * Add setting and control related to Language List Background Hover.
-		 */
-		$wp_customize->add_setting( 'monk_language_background_hover', array(
-			'type'              => 'option',
-			'capability'        => 'manage_options',
-			'default'           => '#000',
-			'sanitize_callback' => 'sanitize_hex_color',
-		));
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_language_background_hover', array(
-			'label'   => __( 'Background Hover', 'monk' ),
-			'section' => 'monk_language_switcher',
-		)));
-
-		/**
-		 * Add setting and control related to Language Text Hover.
-		 */
-		$wp_customize->add_setting( 'monk_language_hover_color', array(
-			'type'              => 'option',
-			'capability'        => 'manage_options',
-			'default'           => '#fff',
-			'sanitize_callback' => 'sanitize_hex_color',
-		));
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'monk_language_hover_color', array(
-			'label'   => __( 'Text Hover', 'monk' ),
-			'section' => 'monk_language_switcher',
-		)));
-	}
-
-	/**
-	 * Include styles related to Customize options.
-	 *
-	 * @since  0.1.0
-	 * @return  void
-	 */
-	public function monk_customize_css() {
-		?>
-		<style type="text/css">
-			div#monk-language-switcher div.monk-current-lang { background-color: <?php echo esc_attr( get_option( 'monk_background_color', '#fff' ) ); ?>; border-color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
-			div#monk-language-switcher div.monk-current-lang:hover { background-color: <?php echo esc_attr( get_option( 'monk_language_background_hover', '#000' ) ); ?>; }
-			div#monk-language-switcher div.monk-current-lang span.monk-current-lang-name { color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
-			div#monk-language-switcher div.monk-current-lang:hover span.monk-current-lang-name { color: <?php echo esc_attr( get_option( 'monk_language_hover_color', '#fff' ) ); ?>; }
-			div#monk-language-switcher ul.monk-language-dropdown { border-color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
-			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang { background-color: <?php echo esc_attr( get_option( 'monk_background_color', '#fff' ) ); ?>; }
-			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:hover { background-color: <?php echo esc_attr( get_option( 'monk_language_background_hover', '#000' ) ); ?>; }
-			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang a.monk-language-link { color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
-			div#monk-language-switcher ul.monk-language-dropdown li.monk-lang:hover a.monk-language-link { color: <?php echo esc_attr( get_option( 'monk_language_hover_color', '#fff' ) ); ?>; }
-			div#monk-language-switcher div.monk-current-lang span.monk-dropdown-arrow { border-top-color: <?php echo esc_attr( get_option( 'monk_text_color', '#000' ) ); ?>; }
-			div#monk-language-switcher div.monk-current-lang:hover span.monk-dropdown-arrow { border-top-color: <?php echo esc_attr( get_option( 'monk_language_hover_color', '#fff' ) ); ?>; }
-		</style>
-		<?php
 	}
 
 	/**
@@ -922,6 +845,7 @@ class Monk_Admin {
 			$monk_languages = monk_get_available_languages();
 
 			$monk_language        = get_post_meta( $post_id, '_monk_post_language', true );
+			$slug                 = $monk_languages[ $monk_language ]['slug'];
 			$monk_translations_id = get_post_meta( $post_id, '_monk_post_translations_id', true );
 			$monk_translations    = get_option( 'monk_post_translations_' . $monk_translations_id, false );
 			$default_language     = get_option( 'monk_default_language', false );
@@ -1116,6 +1040,7 @@ class Monk_Admin {
 			$monk_languages            = monk_get_available_languages();
 			$taxonomies                = get_taxonomies();
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
+			$slug                      = $monk_languages[ $monk_language ]['slug'];
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
 			$languages                 = get_option( 'monk_active_languages', false );
 			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, array() );
@@ -1258,10 +1183,11 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 */
 	public function monk_language_selector_render( $post_id, $language_code = false ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages      = monk_get_available_languages();
 
 		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$language            = get_post_meta( $post_id, '_monk_post_language', true );
+		$slug                = $monk_languages[ $language ]['slug'];
 		$active_languages    = get_option( 'monk_active_languages', false );
 		$default_language    = get_option( 'monk_default_language', false );
 		$post_translations   = get_option( 'monk_post_translations_' . $monk_id, false );
@@ -1501,6 +1427,29 @@ class Monk_Admin {
 				}
 			}
 		} // End if().
+	}
+
+	/**
+	 * Adds a language filter to the terms pages
+	 *
+	 * There are no hooks to use here, so we create the
+	 * components using the admin_footer action and move them to the right location
+	 *
+	 * @since    0.3.0
+	 *
+	 * @return void
+	 */
+	public function monk_add_term_language_filter() {
+		$screen = $this->get_current_screen();
+		if ( $screen ) {
+			if ( 'edit-tags' !== $screen->base || ( 'edit-tags' === $screen->base && 'post_tag' === $screen->taxonomy ) ) {
+				return;
+			}
+		}
+		$url = monk_get_current_url();
+		$action_url = add_query_arg( 'lang', '', $url );
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-term-language-selector-render.php';
 	}
 
 	/**
