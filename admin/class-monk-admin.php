@@ -838,6 +838,7 @@ class Monk_Admin {
 			$monk_languages = monk_get_available_languages();
 
 			$monk_language        = get_post_meta( $post_id, '_monk_post_language', true );
+			$slug                 = $monk_languages[ $monk_language ]['slug'];
 			$monk_translations_id = get_post_meta( $post_id, '_monk_post_translations_id', true );
 			$monk_translations    = get_option( 'monk_post_translations_' . $monk_translations_id, false );
 			$default_language     = get_option( 'monk_default_language', false );
@@ -1032,6 +1033,7 @@ class Monk_Admin {
 			$monk_languages            = monk_get_available_languages();
 			$taxonomies                = get_taxonomies();
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
+			$slug                      = $monk_languages[ $monk_language ]['slug'];
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
 			$languages                 = get_option( 'monk_active_languages', false );
 			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, array() );
@@ -1174,10 +1176,11 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 */
 	public function monk_language_selector_render( $post_id, $language_code = false ) {
-		$monk_languages = monk_get_available_languages();
+		$monk_languages      = monk_get_available_languages();
 
 		$monk_id             = get_post_meta( $post_id, '_monk_post_translations_id', true );
 		$language            = get_post_meta( $post_id, '_monk_post_language', true );
+		$slug                = $monk_languages[ $language ]['slug'];
 		$active_languages    = get_option( 'monk_active_languages', false );
 		$default_language    = get_option( 'monk_default_language', false );
 		$post_translations   = get_option( 'monk_post_translations_' . $monk_id, false );
