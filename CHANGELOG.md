@@ -3,8 +3,8 @@
 - **[0.6.0]**
     + Changed the notification system for when Monk settings page gets updated
     + Improved customizer settings for the Language Switcher widget
-    + Added a filter to display terms by their languages
-    + Added the feature to let users change language slugs
+    + Added terms language filter
+    + Added the filter monk_custom_language_slug to let users change language slugs
 
 - **[0.5.2]**
     + Fixed bug when a post was restored from trash
