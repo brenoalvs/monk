@@ -3,7 +3,7 @@
  * Plugin Name:       Monk
  * Plugin URI:        https://wordpress.org/plugins/monk
  * Description:       Monk is a lightweight translation plugin to make your content reach the world.
- * Version:           0.5.2
+ * Version:           0.6.0
  * Author:            Breno Alves
  * Author URI:        https://github.com/brenoalvs
  * License:           GPL-2.0 or later
