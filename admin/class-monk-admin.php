@@ -732,7 +732,10 @@ class Monk_Admin {
 
 		if ( ! is_customize_preview() && $screen ) {
 
-			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base ) || ( 'nav-menus' === $screen->base ) ) {
+			if ( ( 'edit' === $screen->parent_base && 'post' === $screen->base )
+				|| ( 'nav-menus' === $screen->base )
+				|| ( 'edit-tags' === $screen->base ) ) {
+
 				$active_languages = get_option( 'monk_active_languages', array() );
 				$default_language = get_option( 'monk_default_language', false );
 
@@ -745,14 +748,28 @@ class Monk_Admin {
 						'key'   => '_monk_term_language',
 						'value' => $language,
 					);
+				} elseif ( 'edit-tags' === $screen->base ) {
+					$term_language = filter_input( INPUT_GET, 'lang' );
+					$language      = empty( $term_language ) ? $default_language : $term_language;
+
+					$relation = array(
+						'key'   => '_monk_term_language',
+						'value' => $language,
+					);
 				} else {
 					$post_id       = get_the_id();
 					$post_language = sanitize_text_field( get_post_meta( $post_id, '_monk_post_language', true ) );
-					$language      = filter_input( INPUT_GET, 'lang' );
+					$url_language  = filter_input( INPUT_GET, 'lang' ) ? filter_input( INPUT_GET, 'lang' ) : $default_language;
+					$language      = empty( $post_language ) ? $url_language : $post_language;
+
 					$relation = array(
 						'key'   => '_monk_term_language',
-						'value' => $post_language,
+						'value' => $language,
 					);
+				}
+
+				if ( isset( $relation ) && 'all' === $relation['value'] ) {
+					return $args;
 				}
 
 				if ( isset( $relation ) ) {
@@ -1501,6 +1518,29 @@ class Monk_Admin {
 				}
 			}
 		} // End if().
+	}
+
+	/**
+	 * Adds a language filter to the terms pages
+	 *
+	 * There are no hooks to use here, so we create the
+	 * components using the admin_footer action and move them to the right location
+	 *
+	 * @since    0.3.0
+	 *
+	 * @return void
+	 */
+	public function monk_add_term_language_filter() {
+		$screen = $this->get_current_screen();
+		if ( $screen ) {
+			if ( 'edit-tags' !== $screen->base || ( 'edit-tags' === $screen->base && 'post_tag' === $screen->taxonomy ) ) {
+				return;
+			}
+		}
+		$url = monk_get_current_url();
+		$action_url = add_query_arg( 'lang', '', $url );
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-term-language-selector-render.php';
 	}
 
 	/**

@@ -268,5 +268,23 @@
 				$( '#monk-menu-locations' ).remove();
 			}
 		}
+
+		if ( /\bedit-tags.php?\b/.test( window.location.pathname ) ) {
+			var action_url = '';
+			var filter_value = '';
+			$( '.monk-language-filter-elements' ).insertAfter( '.tablenav div:first-child' );
+
+			$( document ).on( 'change', '#monk-language-filter', function() {
+				filter_value = $( 'select[name="monk_language_filter"] option:selected' ).val();
+			});
+
+			$( document ).on( 'click', 'input#term-query-submit', function( e ) {
+				e.preventDefault();
+				action_url  = $( 'input[type="hidden"][name="hidden_action_url"]' ).val();
+				action_url += "=";
+				action_url += filter_value;
+				window.location.replace( action_url );
+			});
+		}
 	});
 })( jQuery );
