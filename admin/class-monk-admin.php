@@ -70,14 +70,7 @@ class Monk_Admin {
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->monk, plugin_dir_url( __FILE__ ) . 'js/monk-admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->monk, 'monk', array(
-			'ajax_url'                => admin_url( 'admin-ajax.php' ),
-			'general_success_message' => __( 'Language packs updated', 'monk' ),
-			'general_error_message'   => __( 'Error on update language packs! Try again.', 'monk' ),
-			'tools_success_message'   => __( 'Posts and terms language updated', 'monk' ),
-			'tools_error_message'     => __( 'Error on update posts and terms language! Try again.', 'monk' ),
-			'checkbox_error_message'  => __( 'Select the checkbox.', 'monk' ),
-			'options_success_message' => __( 'Site title and description updated', 'monk' ),
-			'options_error_message'   => __( 'Error on update site title and descripition! Try again.', 'monk' ),
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
 		));
 	}
 
