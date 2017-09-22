@@ -34,5 +34,4 @@ if ( ! defined( 'WPINC' ) ) {
 			</option>
 		<?php endforeach; ?>
 	</select>
-
 </div>
