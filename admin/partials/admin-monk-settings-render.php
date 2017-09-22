@@ -19,6 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 			update_option( 'monk_settings_notice', false );
 			settings_errors();
 		?>
+		<div class="monk-hide notice monk-banner" id="monk-notice"><p class="monk-notice-message"></p><span class="dashicons dashicons-dismiss monk-dismiss"></span></div>
 		<form action="options.php" method="POST" class="monk-form-settings" id="<?php echo esc_attr( $form_id ); ?>">
 			<?php $btn_args = array(); ?>
 			<?php
@@ -57,7 +58,6 @@ if ( ! defined( 'WPINC' ) ) {
 			switch ( $the_tab ) :
 				case 'tools':
 			?>
-					<p class="monk-message monk-hide" id="monk-checkbox-not-selected-message"><?php esc_html_e( 'Select the checkbox.', 'monk' ); ?></p>
 					<p class="monk-message monk-hide" id="monk-bulk-action"><?php esc_html_e( 'Defining language for posts and terms...', 'monk' ); ?></p>
 				<?php break; ?>
 			<?php
@@ -77,8 +77,6 @@ if ( ! defined( 'WPINC' ) ) {
 				</p>
 			<?php break; ?>
 			<?php endswitch; ?>
-			<p class="monk-message monk-hide" id="monk-done"><?php esc_html_e( 'Done!', 'monk' ); ?></p>
-			<p class="monk-message monk-hide" id="monk-error"><?php esc_html_e( 'Error. Try again.', 'monk' ); ?></p>
 		</form>
 	</div>
 <?php

@@ -156,8 +156,14 @@ div.menu-translations ul.current-menu-translations li {
 	margin-top: 0;
 }
 
-#monk-checkbox-not-selected-message {
-	color: #ff0000;
+.monk-notice-message {
+	display: inline-block;
+}
+
+.monk-dismiss {
+	cursor: pointer;
+	float: right;
+	padding: 8px 5px;
 }
 
 .monk-label {
