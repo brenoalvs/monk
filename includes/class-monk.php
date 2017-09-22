@@ -202,6 +202,7 @@ class Monk {
 		$this->loader->add_action( 'customize_register', $plugin_admin, 'monk_language_customizer' );
 		$this->loader->add_action( 'wp_head', $plugin_admin, 'monk_customize_css' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
+		$this->loader->add_action( 'restrict_manage_comments', $plugin_admin, 'monk_admin_add_comments_language_selector' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter', 10, 2 );
 		$this->loader->add_filter( 'pre_get_comments', $plugin_admin, 'monk_admin_comments_filter' );
