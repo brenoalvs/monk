@@ -19,9 +19,9 @@ if ( ! defined( 'WPINC' ) ) {
 			update_option( 'monk_settings_notice', false );
 			settings_errors();
 		?>
-		<div class="monk-hide updated notice notice-success monk-banner" id="monk-done"><p class="monk-notice-message"><?php esc_html_e( 'Done', 'monk' ); ?></p><span class="dashicons dashicons-dismiss monk-dismiss"></span></div>
-		<div class="monk-hide notice notice-error monk-banner" id="monk-checkbox-not-selected-message"><p class="monk-notice-message"><?php esc_html_e( 'Select the checkbox.', 'monk' ); ?></p><span class="dashicons dashicons-dismiss monk-dismiss"></span></div>
-		<div class="monk-hide notice notice-error monk-banner" id="monk-error"><p class="monk-notice-message"><?php esc_html_e( 'Error', 'monk' ); ?></p><span class="dashicons dashicons-dismiss monk-dismiss"></span></div>
+		<div class="monk-hide updated notice notice-success monk-banner" id="monk-done"><p class="monk-notice-message"></p><span class="dashicons dashicons-dismiss monk-dismiss"></span></div>
+		<div class="monk-hide notice notice-error monk-banner" id="monk-checkbox-not-selected-message"><p class="monk-notice-message"></p><span class="dashicons dashicons-dismiss monk-dismiss"></span></div>
+		<div class="monk-hide notice notice-error monk-banner" id="monk-error"><p class="monk-notice-message"></p><span class="dashicons dashicons-dismiss monk-dismiss"></span></div>
 		<form action="options.php" method="POST" class="monk-form-settings" id="<?php echo esc_attr( $form_id ); ?>">
 			<?php $btn_args = array(); ?>
 			<?php
