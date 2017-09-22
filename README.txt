@@ -4,7 +4,7 @@ Tags: multilingual, translation, language, multilanguage, international, localiz
 Requires at least: 4.6
 Tested up to: 4.8.1
 Requires PHP: 5.4
-Stable tag: 0.5.2
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 
 == Changelog ==
 
+= [0.6.0] =
+* Changed the notification system for when Monk settings page gets updated
+* Improved customizer settings for the Language Switcher widget
+* Added terms language filter
+* Added the filter monk_custom_language_slug to let users change language slugs
+
 = [0.5.2] =
 * Fixed bug when a post was restored from trash
 * Fixed the default category english translation
@@ -87,14 +93,6 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 * Added the 'uncategorized' category translations
 * Fixed custom taxonomies links on language switcher
 * Fixed medias filter by language on post edit pages
-
-= [0.4.1] =
-* Fixed bug with the site front end translation when permalinks are not active
-* Fixed Travis CI warnings
-* Fixed compatibility bug with `get_current_screen` function calls
-* Fixed broken archive links in the Language Switcher widget
-* Fixed date archive links with duplicated language slug in the URLs
-* Fixed the links coming with wrong taxonomy names in term edit pages
 
 [See changelog for older versions](https://raw.githubusercontent.com/brenoalvs/monk/master/CHANGELOG.md)
 
