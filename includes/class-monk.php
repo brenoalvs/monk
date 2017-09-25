@@ -243,8 +243,8 @@ class Monk {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
+		$this->loader->add_action( 'comment_post', $plugin_public, 'monk_public_add_comment_language', 10, 3 );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
 
