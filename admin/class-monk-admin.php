@@ -1899,6 +1899,7 @@ class Monk_Admin {
 	public function monk_admin_add_comments_language_selector() {
 		$comment_status   = filter_input( INPUT_GET, 'comment_status' );
 		$comment_status   = 'all' === $comment_status ? 'total_comments' : $comment_status;
+		$comment_status   = empty( $comment_status ) ? 'total_comments' : $comment_status;
 		$comment_class    = wp_count_comments();
 
 		foreach ( $comment_class as $status => $number ) {
