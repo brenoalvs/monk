@@ -227,4 +227,24 @@ class Monk_Public {
 
 		return $pre_option;
 	}
+
+	/**
+	 * Function to add the current post language to its comments.
+	 * This function uses the action comment_post
+	 *
+	 * @since    0.6.1
+	 *
+	 * @param    int        $comment_id New Comment id.
+	 * @param    int|string $comment_aproved If the comment is approved or not.
+	 * @param    array      $commentdata Comment attributes .
+	 * @return  void
+	 */
+	public function monk_public_add_comment_language( $comment_id, $comment_aproved, $commentdata ) {
+		$post_id = $commentdata['comment_post_ID'];
+		$language = get_post_meta( $post_id, '_monk_post_language', true );
+
+		if ( ! empty( $language ) ) {
+			add_comment_meta( $comment_id, '_monk_comment_language', $language, true );
+		}
+	}
 }
