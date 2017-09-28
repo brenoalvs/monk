@@ -1732,6 +1732,20 @@ class Monk_Admin {
 				WHERE $wpdb->terms.term_id=$wpdb->termmeta.term_id
 				AND $wpdb->termmeta.meta_key = '_monk_term_language' )", ARRAY_A );
 
+			$j = 0;
+			$comments_where = '';
+			foreach ( $post_ids as $id ) {
+				if ( 0 === $j ) {
+					$comments_where = "( comment_post_ID = '$id[ID]'";
+				} else {
+					$comments_where .= " OR comment_post_ID ='$id[ID]'";
+				}
+				$j++;
+			}
+			$comments_where .= ' )';
+
+			$comment_ids = $wpdb->get_results( "SELECT comment_ID FROM $wpdb->comments WHERE $comments_where", ARRAY_A ); // WPCS: unprepared SQL OK.
+
 			if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 				foreach ( $post_ids as $post_id ) {
 					$set_language           = $wpdb->insert( 'wp_postmeta', array(
@@ -1755,6 +1769,18 @@ class Monk_Admin {
 				}
 
 				$response[] = $set_monk_id && $set_language ? true : false;
+			}
+
+			if ( is_array( $comment_ids ) && ! empty( $comment_ids ) ) {
+				foreach ( $comment_ids as $comment_id ) {
+					$set_language = $wpdb->insert( 'wp_commentmeta', array(
+						'comment_id' => intval( $comment_id['comment_ID'] ),
+						'meta_key'   => '_monk_comment_language',
+						'meta_value' => $default_language,
+					));
+				}
+
+				$response[] = $set_language ? true : false;
 			}
 
 			if ( is_array( $term_ids ) && ! empty( $term_ids ) ) {
