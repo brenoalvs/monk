@@ -1882,4 +1882,27 @@ class Monk_Admin {
 			}
 		}
 	}
+
+	/**
+	 * Function to update the language of all comments of a post, after it has changed language.
+	 * This function uses the updated_postmeta action
+	 *
+	 * @since    0.6.0
+	 *
+	 * @param    int    $meta_id    Id of the changed meta data.
+	 * @param    int    $object_id  Post id updated.
+	 * @param    string $meta_key   Changed meta key.
+	 * @param    mixed  $meta_value New meta value.
+	 * @return  void
+	 */
+	public function monk_update_comment_language( $meta_id, $object_id, $meta_key, $meta_value ) {
+		if ( '_monk_post_language' !== $meta_key ) {
+			return;
+		}
+
+		$post_comments = get_comments( array( 'post_id' => $object_id ) );
+		foreach ( $post_comments as $comment ) {
+			update_comment_meta( $comment->comment_ID, '_monk_comment_language', $meta_value );
+		}
+	}
 }
