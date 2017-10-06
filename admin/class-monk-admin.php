@@ -1881,7 +1881,7 @@ class Monk_Admin {
 	 * Function to add a language selector to comments admin page.
 	 * This function uses the restrict_manage_comments action
 	 *
-	 * @since    0.6.0
+	 * @since    0.7.0
 	 *
 	 * @return  void
 	 */
