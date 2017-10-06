@@ -1819,6 +1819,44 @@ class Monk_Admin {
 	}
 
 	/**
+	 * Function to filter comments by their post language.
+	 * This function uses the comments_clauses filter
+	 *
+	 * @since    0.7.0
+	 *
+	 * @param    array $clauses Array with the query pieces to be filtered.
+	 * @return  array $clauses
+	 */
+	public function monk_admin_clauses( $clauses ) {
+		$screen = $this->get_current_screen();
+		$lang   = filter_input( INPUT_GET, 'lang' );
+
+		if ( ! is_admin() || 'edit-comments' !== $screen->base || 'all' === $lang ) {
+			return $clauses;
+		}
+
+		global $wpdb;
+
+		$default_language = get_option( 'monk_default_language', false );
+		$lang = empty( $lang ) ? $default_language : $lang;
+		$replace = array( '(', ')' );
+		$comment_status = str_replace( $replace , '', $clauses['where'] );
+		$comment_status = '(' . $comment_status . ')';
+		$not_exists = '';
+
+		if ( $default_language === $lang ) {
+			$not_exists = "NOT EXISTS ( SELECT $wpdb->postmeta.post_id WHERE $wpdb->postmeta.meta_key = '_monk_post_language' ) OR";
+		}
+
+		$clauses['join']  .= "INNER JOIN $wpdb->postmeta ON $wpdb->comments.comment_post_ID = $wpdb->postmeta.post_id";
+		$clauses['where'] = $not_exists . " ( $wpdb->postmeta.meta_key = '_monk_post_language' AND $wpdb->postmeta.meta_value = '$lang' AND " . $comment_status . ' )';
+
+		$clauses['orderby'] = str_replace( 'wp_comments.', '', $clauses['orderby'] );
+
+		return $clauses;
+	}
+
+	/**
 	 * Function to add a language selector to comments admin page.
 	 * This function uses the restrict_manage_comments action
 	 *
