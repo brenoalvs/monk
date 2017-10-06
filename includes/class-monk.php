@@ -230,7 +230,7 @@ class Monk {
 		$this->loader->add_action( 'restrict_manage_comments', $plugin_admin, 'monk_admin_add_comments_language_selector' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter', 10, 2 );
-		$this->loader->add_filter( 'pre_get_comments', $plugin_admin, 'monk_admin_comments_filter' );
+		$this->loader->add_filter( 'comments_clauses', $plugin_admin, 'monk_admin_clauses', 10, 2 );
 		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_media_columns', $plugin_admin, 'monk_language_column_head' );
