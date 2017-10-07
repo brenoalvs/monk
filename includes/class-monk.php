@@ -222,7 +222,6 @@ class Monk {
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_add_term_language_filter' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
-		$this->loader->add_action( 'updated_postmeta', $plugin_admin, 'monk_update_comment_language', 10, 4 );
 		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_post_data' );
@@ -230,7 +229,7 @@ class Monk {
 		$this->loader->add_action( 'restrict_manage_comments', $plugin_admin, 'monk_admin_add_comments_language_selector' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter', 10, 2 );
-		$this->loader->add_filter( 'comments_clauses', $plugin_admin, 'monk_admin_clauses', 10, 2 );
+		$this->loader->add_filter( 'comments_clauses', $plugin_admin, 'monk_admin_filter_comment_clauses', 10, 2 );
 		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_media_columns', $plugin_admin, 'monk_language_column_head' );

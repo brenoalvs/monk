@@ -1822,7 +1822,7 @@ class Monk_Admin {
 	 * @param    array $clauses Array with the query pieces to be filtered.
 	 * @return  array $clauses
 	 */
-	public function monk_admin_clauses( $clauses ) {
+	public function monk_admin_filter_comment_clauses( $clauses ) {
 		$screen = $this->get_current_screen();
 		$lang   = filter_input( INPUT_GET, 'lang' );
 
