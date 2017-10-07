@@ -196,7 +196,6 @@ class Monk {
 		$this->loader->add_action( 'admin_footer', $plugin_admin, 'monk_add_menu_translation_fields' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'monk_post_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'monk_save_post_meta_box', 10, 2 );
-		$this->loader->add_action( 'updated_postmeta', $plugin_admin, 'monk_update_comment_language', 10, 4 );
 		$this->loader->add_action( 'wp_trash_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_post_data' );
