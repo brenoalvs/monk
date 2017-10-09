@@ -1818,10 +1818,10 @@ class Monk_Admin {
 		$not_exists = '';
 
 		if ( $default_language === $lang ) {
-			$not_exists = " ( select ID from $wpdb->posts where ID not in ( select post_id from $wpdb->postmeta where $wpdb->postmeta.meta_key = '_monk_post_language' ) and comment_count > 0 ) or comment_post_id in ";
+			$not_exists = " ( SELECT ID FROM $wpdb->posts WHERE ID NOT IN ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '_monk_post_language' ) AND comment_count > 0 ) or comment_post_id IN ";
 		}
 
-		$clauses['where'] = 'comment_post_id in ' . $not_exists . " ( select ID from $wpdb->posts where ID in ( select post_id from $wpdb->postmeta where $wpdb->postmeta.meta_key = '_monk_post_language' and $wpdb->postmeta.meta_value = '$lang' ) and comment_count > 0 ) AND " . $comment_status;
+		$clauses['where'] = 'comment_post_id in ' . $not_exists . " ( select ID FROM $wpdb->posts WHERE ID IN ( select post_id FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '_monk_post_language' AND $wpdb->postmeta.meta_value = '$lang' ) AND comment_count > 0 ) AND " . $comment_status;
 
 		$clauses['orderby'] = str_replace( 'wp_comments.', '', $clauses['orderby'] );
 
