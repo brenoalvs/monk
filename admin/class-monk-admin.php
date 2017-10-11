@@ -1851,6 +1851,7 @@ class Monk_Admin {
 
 	/**
 	 * Function to filter comments by their post language.
+	 *
 	 * @uses the comments_clauses filter
 	 *
 	 * @since    0.7.0
@@ -1888,6 +1889,7 @@ class Monk_Admin {
 
 	/**
 	 * Function to add a language selector to comments admin page.
+	 *
 	 * @uses the restrict_manage_comments action
 	 *
 	 * @since    0.7.0
