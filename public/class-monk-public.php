@@ -81,7 +81,7 @@ class Monk_Public {
 		// Whether we must filter main query.
 		$filter_main_query = false;
 
-		if ( is_home()  || is_archive() || is_search() ) {
+		if ( is_home() || is_archive() || is_search() ) {
 			$filter_main_query = true;
 		}
 
