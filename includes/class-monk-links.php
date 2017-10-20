@@ -180,6 +180,7 @@ class Monk_Links {
 		 * also add the lang parameter in place of '?' symbol.
 		 */
 		foreach ( $rules as $name => $rule ) {
+			$name = preg_replace( '/^\^/', '', $name );
 			if ( ! strpos( $rule, '?lang=$matches[1]' ) ) {
 				$old_matches = array();
 				$new_matches = array();
@@ -205,7 +206,6 @@ class Monk_Links {
 				}
 			}
 		}
-
 		return $monk_rules + $rules;
 	}
 
