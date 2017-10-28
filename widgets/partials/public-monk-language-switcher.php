@@ -14,11 +14,13 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 foreach ( $monk_languages as $lang_code => $list ) {
-	if ( $list['slug'] === $current_language ) {
-		$current_language = $lang_code;
-		$current_slug = $list['slug'];
+	if ( in_array( $lang_code, $active_languages, true ) ) {
+		if ( $list['slug'] === $current_language ) {
+			$current_language = $lang_code;
+			$current_slug = $list['slug'];
+		}
+		$monk_languages_reverted[ $list['slug'] ] = $list;
 	}
-	$monk_languages_reverted[ $list['slug'] ] = $list;
 }
 
 echo $args['before_widget'];
@@ -35,7 +37,7 @@ echo $args['before_widget'];
 			</span>
 		</div>
 		<ul class="monk-language-dropdown">
-			<?php if ( empty( $switchable_languages ) ) : ?>
+			<?php if ( 1 >= count( $switchable_languages ) ) : ?>
 				<li class="monk-lang">
 					<option>
 					<?php
@@ -44,7 +46,7 @@ echo $args['before_widget'];
 					?>
 					</option>
 				</li>
-			<?php else : ?> 
+			<?php else : ?>
 				<?php foreach ( $switchable_languages as $code => $url ) : ?>
 					<?php if ( $code !== $monk_languages[ $current_language ]['slug'] ) : ?>
 						<?php $locale = monk_get_locale_by_slug( $code ); ?>
