@@ -1033,7 +1033,6 @@ class Monk_Admin {
 			$monk_languages            = monk_get_available_languages();
 			$taxonomies                = get_taxonomies();
 			$monk_language             = get_term_meta( $term_id, '_monk_term_language', true );
-			$slug                      = $monk_languages[ $monk_language ]['slug'];
 			$monk_term_translations_id = get_term_meta( $term_id, '_monk_term_translations_id', true );
 			$languages                 = get_option( 'monk_active_languages', false );
 			$monk_term_translations    = get_option( 'monk_term_translations_' . $monk_term_translations_id, array() );
