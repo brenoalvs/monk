@@ -227,4 +227,18 @@ class Monk_Public {
 
 		return $pre_option;
 	}
+
+	/**
+	 * Retrieves translation in current language for page_on_front option.
+	 *
+	 * @param  int $page_id The page on front ID configured by user.
+	 * @return int          Page on front translation ID.
+	 */
+	public function monk_page_on_front_translations( $page_id ) {
+		if ( ! is_admin() ) {
+			$page_id = monk_translated_post_id( $page_id );
+		}
+
+		return $page_id;
+	}
 }
