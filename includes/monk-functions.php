@@ -178,7 +178,7 @@ function monk_get_available_languages() {
 function monk_translated_post_id( $id, $lang = null ) {
 	if ( empty( $lang ) ) {
 		$default_language = get_option( 'monk_default_language', false );
-		$lang             = get_query_var( $lang, $default_language );
+		$lang             = get_query_var( 'lang', $default_language );
 	}
 
 	$current_language = monk_get_locale_by_slug( $lang );
