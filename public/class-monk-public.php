@@ -98,7 +98,7 @@ class Monk_Public {
 		$current_language = get_query_var( 'lang', $default_slug );
 		$current_language = monk_get_locale_by_slug( $current_language );
 
-		if ( $current_language && in_array( $current_language, $active_languages ) ) {
+		if ( $current_language && in_array( $current_language, $active_languages ) && $default_language !== $current_language ) {
 			$query_args[] = array(
 				'key'     => '_monk_post_language',
 				'value'   => $current_language,
