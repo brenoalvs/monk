@@ -166,3 +166,26 @@ function monk_get_available_languages() {
 	}
 	return $monk_languages;
 }
+
+/**
+ * Function to get post type translation id.
+ *
+ * @param  int    $id   Id of the page to translate.
+ * @param  string $lang Slug of the language.
+ *
+ * @return int $id Id of page translation.
+ */
+function monk_translated_post_id( $id, $lang = null ) {
+	if ( empty( $lang ) ) {
+		$default_language = get_option( 'monk_default_language', false );
+		$lang             = get_query_var( $lang, $default_language );
+	}
+
+	$current_language = monk_get_locale_by_slug( $lang );
+	$post_group_id    = get_post_meta( $id, '_monk_post_translations_id', true );
+	$page_group       = get_option( 'monk_post_translations_' . $post_group_id, array() );
+
+	$id = array_key_exists( $current_language, $page_group ) ? $page_group[ $current_language ] : $id;
+
+	return $id;
+}
