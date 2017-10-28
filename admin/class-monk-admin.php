@@ -838,7 +838,7 @@ class Monk_Admin {
 			$monk_languages = monk_get_available_languages();
 
 			$monk_language        = get_post_meta( $post_id, '_monk_post_language', true );
-			$slug                 = ! empty( $monk_language ) ? $monk_languages[ $monk_language ]['slug'] : '';
+			$slug                 = $monk_languages[ $monk_language ]['slug'];
 			$monk_translations_id = get_post_meta( $post_id, '_monk_post_translations_id', true );
 			$monk_translations    = get_option( 'monk_post_translations_' . $monk_translations_id, false );
 			$default_language     = get_option( 'monk_default_language', false );
