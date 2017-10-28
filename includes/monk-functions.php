@@ -53,7 +53,7 @@ function monk_get_locale_by_slug( $slug ) {
 	$monk_languages = monk_get_available_languages();
 
 	foreach ( $monk_languages as $locale => $data ) {
-		if ( $data['slug'] === $slug ) {
+		if ( $data['slug'] === $slug || $slug === $locale ) {
 			return $locale;
 		}
 	}
