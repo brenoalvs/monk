@@ -105,7 +105,7 @@ class Monk_Language_Switcher extends WP_Widget {
 			}
 		} // End if().
 
-		if ( is_singular() ) {
+		if ( is_singular() && ! is_front_page() ) {
 			$current_id                = get_the_id();
 			$monk_post_translations_id = get_post_meta( $current_id, '_monk_post_translations_id', true );
 			$monk_total_translations   = get_option( 'monk_post_translations_' . $monk_post_translations_id, false );
