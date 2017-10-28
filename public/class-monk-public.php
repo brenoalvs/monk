@@ -81,7 +81,7 @@ class Monk_Public {
 		// Whether we must filter main query.
 		$filter_main_query = false;
 
-		if ( is_home() || is_front_page() || is_archive() || is_search() ) {
+		if ( is_home() || is_archive() || is_search() ) {
 			$filter_main_query = true;
 		}
 
@@ -226,5 +226,32 @@ class Monk_Public {
 		}
 
 		return $pre_option;
+	}
+
+	/**
+	 * Function to filter translate the static front page
+	 *
+	 * @since    0.6.1
+	 *
+	 * @param  mixed  $option_value  Value to return instead of the option value.
+	 * @param  string $option        String option name.
+	 * @return mixed  $option_valued Value to return instead of the option value.
+	 */
+	public function monk_translate_static_front_page( $option_value, $option ) {
+		if ( is_admin() ) {
+			return $option_value;
+		}
+
+		$default_language          = get_option( 'monk_default_language', false );
+		$lang                      = get_query_var( 'lang', $default_language );
+		$lang                      = monk_get_locale_by_slug( $lang );
+		$monk_id                   = get_post_meta( $option_value, '_monk_post_translations_id', true );
+		$page_translations         = get_option( 'monk_post_translations_' . $monk_id, array() );
+
+		if ( array_key_exists( $lang, $page_translations ) ) {
+			$option_value = $page_translations[ $lang ];
+		}
+
+		return $option_value;
 	}
 }
