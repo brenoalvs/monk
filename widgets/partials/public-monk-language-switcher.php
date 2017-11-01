@@ -22,6 +22,7 @@ foreach ( $monk_languages as $lang_code => $list ) {
 		$monk_languages_reverted[ $list['slug'] ] = $list;
 	}
 }
+var_dump( $default_language );
 
 echo $args['before_widget'];
 ?>
