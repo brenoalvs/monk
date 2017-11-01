@@ -53,7 +53,7 @@ function monk_get_locale_by_slug( $slug ) {
 	$monk_languages = monk_get_available_languages();
 
 	foreach ( $monk_languages as $locale => $data ) {
-		if ( $data['slug'] === $slug ) {
+		if ( $data['slug'] === $slug || $slug === $locale ) {
 			return $locale;
 		}
 	}
@@ -168,7 +168,7 @@ function monk_get_available_languages() {
 }
 
 /**
- * Returns translation data for current element.
+ * Retrieves translation data for current page.
  *
  * @since  0.7.0
  *
@@ -335,4 +335,28 @@ function monk_get_translations() {
 	}
 
 	return $translation_data;
+
+/**
+ * Function to get post translation id.
+ *
+ * Retrieves ID of translation in a given language or in current site language.
+ *
+ * @param  int    $id   Id of the post.
+ * @param  string $lang Language slug.
+ *
+ * @return int    $id   Id of post translation.
+ */
+function monk_translated_post_id( $id, $lang = null ) {
+	if ( empty( $lang ) ) {
+		$default_language = get_option( 'monk_default_language', false );
+		$lang             = get_query_var( 'lang', $default_language );
+	}
+
+	$current_language = monk_get_locale_by_slug( $lang );
+	$post_group_id    = get_post_meta( $id, '_monk_post_translations_id', true );
+	$page_group       = get_option( 'monk_post_translations_' . $post_group_id, array() );
+
+	$id = array_key_exists( $current_language, $page_group ) ? $page_group[ $current_language ] : $id;
+
+	return $id;
 }

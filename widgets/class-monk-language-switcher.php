@@ -55,7 +55,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$default_language         = get_option( 'monk_default_language', false );
 		$default_slug             = $monk_languages[ $default_language ]['slug'];
 		$has_default_language_url = get_option( 'monk_default_language_url', false );
-		$current_locale             = monk_get_locale_by_slug( get_query_var( 'lang' ) );
+		$current_locale           = monk_get_locale_by_slug( get_query_var( 'lang' ) );
 
 		$translation_data = monk_get_translations();
 

@@ -95,8 +95,21 @@ class Monk_Public {
 		$default_language = get_option( 'monk_default_language', false );
 		$active_languages = get_option( 'monk_active_languages', false );
 		$default_slug     = $monk_languages[ $default_language ]['slug'];
-		$current_language = get_query_var( 'lang', $default_slug );
-		$current_language = monk_get_locale_by_slug( $current_language );
+		$lang             = get_query_var( 'lang', $default_slug );
+		$current_language = monk_get_locale_by_slug( $lang );
+
+		// Hotfix for translatable static front page.
+		if ( is_home() && 'page' === get_option( 'show_on_front' ) && ! is_page( get_option( 'page_for_posts' ) ) ) {
+			$front_page_id     = get_option( 'page_on_front' );
+			$group_id          = get_post_meta( $front_page_id, '_monk_post_translations_id', true );
+			$translation_group = get_option( 'monk_post_translations_' . $group_id, false );
+
+			$query->set( 'page_id', $translation_group[ $current_language ] );
+			$query->is_home     = false;
+			$query->is_page     = true;
+			$query->is_singular = true;
+			return;
+		}
 
 		if ( $current_language && in_array( $current_language, $active_languages ) && $default_language !== $current_language ) {
 			$query_args[] = array(
@@ -226,5 +239,19 @@ class Monk_Public {
 		}
 
 		return $pre_option;
+	}
+
+	/**
+	 * Retrieves translation in current language for page_on_front option.
+	 *
+	 * @param  int $page_id The page on front ID configured by user.
+	 * @return int          Page on front translation ID.
+	 */
+	public function monk_page_on_front_translations( $page_id ) {
+		if ( ! is_admin() ) {
+			$page_id = monk_translated_post_id( $page_id );
+		}
+
+		return $page_id;
 	}
 }
