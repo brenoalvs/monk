@@ -20,6 +20,7 @@ foreach ( $monk_languages as $lang_code => $list ) {
 	}
 	$monk_languages_reverted[ $list['slug'] ] = $list;
 }
+var_dump( $default_language );
 
 echo $args['before_widget'];
 ?>
@@ -44,7 +45,7 @@ echo $args['before_widget'];
 					?>
 					</option>
 				</li>
-			<?php else : ?> 
+			<?php else : ?>
 				<?php foreach ( $switchable_languages as $code => $url ) : ?>
 					<?php if ( $code !== $monk_languages[ $current_language ]['slug'] ) : ?>
 						<?php $locale = monk_get_locale_by_slug( $code ); ?>
