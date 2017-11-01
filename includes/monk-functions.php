@@ -335,6 +335,7 @@ function monk_get_translations() {
 	}
 
 	return $translation_data;
+}
 
 /**
  * Function to get post translation id.
