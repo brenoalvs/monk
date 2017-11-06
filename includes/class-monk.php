@@ -95,7 +95,7 @@ class Monk {
 		$this->define_admin_hooks( $this->get_default_language(), $this->get_active_languages() );
 		$this->define_public_hooks( $this->get_default_language(), $this->get_active_languages() );
 		$this->define_link_hooks( $this->get_default_language(), $this->get_active_languages() );
-		$this->define_widget_hooks( $this->get_default_language(), $this->get_active_languages() );
+		$this->define_widget_hooks();
 	}
 
 	/**
@@ -331,14 +331,11 @@ class Monk {
 	/**
 	 * Register all of the hooks related to Monk Widgets
 	 *
-	 * @param   string $default_language The default language of the plugin.
-	 * @param   array  $active_languages The active languages of the plugin.
-	 *
 	 * @since    0.1.0
 	 * @access   private
 	 * @return  void
 	 */
-	private function define_widget_hooks( $default_language, $active_languages ) {
+	private function define_widget_hooks() {
 		$plugin_widget = new Monk_Language_Switcher();
 
 		$this->loader->add_action( 'widgets_init', $this, 'register_widgets' );
@@ -359,7 +356,7 @@ class Monk {
 	 * @return  void
 	 */
 	public function add_term_hooks() {
-		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version(), $this->default_language, $this->active_languages );
+		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_default_language(), $this->get_active_languages() );
 		$taxonomies = get_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
