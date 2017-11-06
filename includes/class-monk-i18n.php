@@ -40,13 +40,11 @@ class Monk_I18n {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since  0.7.0
-	 * @param  string $default_language The default language of the plugin.
-	 * @param  array  $active_languages The active languages of the plugin.
 	 * @return  void
 	 */
-	public function __construct( $default_language, $active_languages ) {
-		$this->default_language = $default_language;
-		$this->active_languages = $active_languages;
+	public function __construct() {
+		$this->default_language = Monk()->get_default_language();
+		$this->active_languages = Monk()->get_active_languages();
 	}
 
 	/**

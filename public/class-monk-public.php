@@ -58,15 +58,13 @@ class Monk_Public {
 	 * @since  0.1.0
 	 * @param  string $monk             The name of the plugin.
 	 * @param  string $version          The version of this plugin.
-	 * @param  string $default_language The default language of the plugin.
-	 * @param  array  $active_languages The active languages of the plugin.
 	 * @return void
 	 */
-	public function __construct( $monk, $version, $default_language, $active_languages ) {
+	public function __construct( $monk, $version ) {
 		$this->plugin_name      = $monk;
 		$this->version          = $version;
-		$this->default_language = $default_language;
-		$this->active_languages = $active_languages;
+		$this->default_language = Monk()->get_default_language();
+		$this->active_languages = Monk()->get_active_languages();
 	}
 
 	/**

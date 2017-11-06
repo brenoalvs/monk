@@ -115,10 +115,8 @@ class Monk_Links {
 	 *
 	 * @param    string $monk       The name and ID of the plugin.
 	 * @param    string $version    The plugin version.
-	 * @param  string $default_language The default language of the plugin.
-	 * @param  array  $active_languages The active languages of the plugin.
 	 */
-	public function __construct( $monk, $version, $default_language, $active_languages ) {
+	public function __construct( $monk, $version ) {
 		$monk_languages = monk_get_available_languages();
 
 		$this->plugin_name   = $monk;
@@ -128,8 +126,8 @@ class Monk_Links {
 		$this->structure     = get_option( 'permalink_structure', false );
 		$this->site_root     = preg_match( '#^/*' . $this->index . '#', $this->structure ) ? $this->index . '/' : '';
 
-		$this->default_language = $default_language;
-		$this->active_languages = $active_languages;
+		$this->default_language = Monk()->get_default_language();
+		$this->active_languages = Monk()->get_active_languages();
 
 		if ( $default_language ) {
 			$this->site_slug = $monk_languages[ $this->default_language ]['slug'];

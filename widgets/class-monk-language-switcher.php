@@ -45,8 +45,8 @@ class Monk_Language_Switcher extends WP_Widget {
 	 * @since  0.1.0
 	 */
 	public function __construct() {
-		$this->default_language = get_option( 'monk_default_language', false );
-		$this->active_languages = get_option( 'monk_active_languages', array() );
+		$this->default_language = Monk()->get_default_language();
+		$this->active_languages = Monk()->get_active_languages();
 		$widget_options         = array(
 			'classname'   => 'monk_language_switcher',
 			'description' => __( 'Switch between site translations.', 'monk' ),
