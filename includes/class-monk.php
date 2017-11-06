@@ -90,11 +90,11 @@ class Monk {
 		$this->active_languages = get_option( 'monk_active_languages', array() );
 
 		$this->load_dependencies();
-		$this->set_locale( $this->get_default_language(), $this->get_active_languages() );
+		$this->set_locale();
 		$this->define_global_hooks();
-		$this->define_admin_hooks( $this->get_default_language(), $this->get_active_languages() );
-		$this->define_public_hooks( $this->get_default_language(), $this->get_active_languages() );
-		$this->define_link_hooks( $this->get_default_language(), $this->get_active_languages() );
+		$this->define_admin_hooks();
+		$this->define_public_hooks();
+		$this->define_link_hooks();
 		$this->define_widget_hooks();
 	}
 
@@ -175,9 +175,9 @@ class Monk {
 	 * @access   private
 	 * @return  void
 	 */
-	private function set_locale( $default_language, $active_languages ) {
+	private function set_locale() {
 
-		$monk_i18n = new Monk_I18n( $default_language, $active_languages );
+		$monk_i18n = new Monk_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $monk_i18n, 'load_plugin_textdomain' );
 		$this->loader->add_filter( 'locale', $monk_i18n, 'monk_define_locale' );
@@ -200,15 +200,12 @@ class Monk {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @param   string $default_language The default language of the plugin.
-	 * @param   array  $active_languages The active languages of the plugin.
-	 *
 	 * @since   0.1.0
 	 * @access  private
 	 * @return  void
 	 */
-	private function define_admin_hooks( $default_language, $active_languages ) {
-		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version(), $default_language, $active_languages );
+	private function define_admin_hooks() {
+		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -254,16 +251,13 @@ class Monk {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @param   string $default_language The default language of the plugin.
-	 * @param   array  $active_languages The active languages of the plugin.
-	 *
 	 * @since    0.1.0
 	 * @access   private
 	 * @return  void
 	 */
-	private function define_public_hooks( $default_language, $active_languages ) {
+	private function define_public_hooks() {
 
-		$plugin_public = new Monk_Public( $this->get_plugin_name(), $this->get_version(), $default_language, $active_languages );
+		$plugin_public = new Monk_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -297,15 +291,12 @@ class Monk {
 	/**
 	 * Register all of the hooks related to links and permalinks
 	 *
-	 * @param   string $default_language The default language of the plugin.
-	 * @param   array  $active_languages The active languages of the plugin.
-	 *
 	 * @since    0.2.0
 	 * @access   private
 	 */
-	private function define_link_hooks( $default_language, $active_languages ) {
+	private function define_link_hooks() {
 
-		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version(), $default_language, $active_languages );
+		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $plugin_links, 'monk_add_home_rewrite_rule' );
 		$this->loader->add_filter( 'home_url', $plugin_links, 'monk_add_language_home_permalink', 10, 2 );
@@ -356,7 +347,7 @@ class Monk {
 	 * @return  void
 	 */
 	public function add_term_hooks() {
-		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_default_language(), $this->get_active_languages() );
+		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
 		$taxonomies = get_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
