@@ -35,16 +35,36 @@ class Monk_Public {
 	private $version;
 
 	/**
+	 * The default language of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      string    $default_language    The default language of the plugin.
+	 */
+	private $default_language;
+
+	/**
+	 * The active languages of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      array $active_languages The active languages of the plugin.
+	 */
+	private $active_languages;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    0.1.0
-	 * @param      string $monk       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
+	 * @since  0.1.0
+	 * @param  string $monk             The name of the plugin.
+	 * @param  string $version          The version of this plugin.
 	 * @return void
 	 */
 	public function __construct( $monk, $version ) {
-		$this->plugin_name = $monk;
-		$this->version = $version;
+		$this->plugin_name      = $monk;
+		$this->version          = $version;
+		$this->default_language = Monk()->get_default_language();
+		$this->active_languages = Monk()->get_active_languages();
 	}
 
 	/**
@@ -92,8 +112,8 @@ class Monk_Public {
 		$monk_languages = monk_get_available_languages();
 
 		$query_args       = array();
-		$default_language = get_option( 'monk_default_language', false );
-		$active_languages = get_option( 'monk_active_languages', false );
+		$default_language = $this->default_language;
+		$active_languages = $this->active_languages;
 		$default_slug     = $monk_languages[ $default_language ]['slug'];
 		$lang             = get_query_var( 'lang', $default_slug );
 		$current_language = monk_get_locale_by_slug( $lang );
@@ -150,8 +170,8 @@ class Monk_Public {
 
 		$monk_languages = monk_get_available_languages();
 
-		$default_language = get_option( 'monk_default_language', false );
-		$active_languages = get_option( 'monk_active_languages', false );
+		$default_language = $this->default_language;
+		$active_languages = $this->active_languages;
 		$default_slug     = $monk_languages[ $default_language ]['slug'];
 		$current_language = get_query_var( 'lang', $default_slug );
 		$current_language = monk_get_locale_by_slug( $current_language );
@@ -194,7 +214,7 @@ class Monk_Public {
 		$location         = $args['theme_location'];
 		$menus            = get_nav_menu_locations();
 		$language         = get_query_var( 'lang' );
-		$default_language = get_option( 'monk_default_language', false );
+		$default_language = $this->default_language;
 
 		if ( $language ) {
 			$language = monk_get_locale_by_slug( $language );
@@ -230,7 +250,7 @@ class Monk_Public {
 	 * @return mixed  $pre_option Value to return instead of the option value.
 	 */
 	public function monk_filter_translatable_option( $pre_option, $option ) {
-		$default_language = get_option( 'monk_default_language', false );
+		$default_language = $this->default_language;
 		$current_slug     = get_query_var( 'lang', false );
 		$current_locale   = monk_get_locale_by_slug( $current_slug );
 

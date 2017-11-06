@@ -180,8 +180,8 @@ function monk_get_translations() {
 	$translation_data         = array();
 	$active_languages_slug    = array();
 	$current_language_slug    = '';
-	$active_languages         = get_option( 'monk_active_languages' );
-	$default_language         = get_option( 'monk_default_language', false );
+	$active_languages         = Monk()->get_active_languages();
+	$default_language         = Monk()->get_default_language();
 	$has_default_language_url = get_option( 'monk_default_language_url', false );
 	$current_locale           = monk_get_locale_by_slug( get_query_var( 'lang' ) );
 	$default_slug             = $monk_languages[ $default_language ]['slug'];
@@ -317,7 +317,7 @@ function monk_get_translations() {
 				}
 			}
 		} else {
-			$current_language_slug                       = $monk_languages[ get_option( 'monk_default_language', false ) ]['slug'];
+			$current_language_slug                       = $monk_languages[ $monk->get_default_language() ]['slug'];
 			$monk_translations[ $current_language_slug ] = get_queried_object_id();
 
 			foreach ( $monk_translations as $lang_code => $term_id ) {
@@ -349,7 +349,7 @@ function monk_get_translations() {
  */
 function monk_translated_post_id( $id, $lang = null ) {
 	if ( empty( $lang ) ) {
-		$default_language = get_option( 'monk_default_language', false );
+		$default_language = Monk()->get_default_language();
 		$lang             = get_query_var( 'lang', $default_language );
 	}
 

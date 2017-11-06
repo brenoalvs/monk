@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 $monk_languages = monk_get_available_languages();
-$languages      = get_option( 'monk_active_languages' );
+$languages      = $this->active_languages;
 $url_language   = filter_input( INPUT_GET, 'lang' );
 ?>
 
@@ -22,13 +22,13 @@ $url_language   = filter_input( INPUT_GET, 'lang' );
 	<select name="monk_language_filter" id="monk-language-filter">
 		<option value="all"><?php esc_html_e( 'All Languages', 'monk' ); ?></option>
 		<?php foreach ( $languages as $language ) : ?>
-			<option value="<?php echo esc_attr( $language ); ?>" 
+			<option value="<?php echo esc_attr( $language ); ?>"
 				<?php
 				if ( isset( $url_language ) && ! empty( $url_language ) ) {
 					$monk_language_filter = sanitize_text_field( wp_unslash( $url_language ) );
 					selected( $monk_language_filter, $language );
 				} elseif ( ! isset( $url_language ) ) {
-					selected( get_option( 'monk_default_language' ), $language );
+					selected( $this->default_language, $language );
 				}
 				?>
 			>

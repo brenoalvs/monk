@@ -22,12 +22,32 @@ if ( ! defined( 'WPINC' ) ) {
 class Monk_Language_Switcher extends WP_Widget {
 
 	/**
+	 * The default language of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      string    $default_language    The default language of the plugin.
+	 */
+	private $default_language;
+
+	/**
+	 * The active languages of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      array $active_languages The active languages of the plugin.
+	 */
+	private $active_languages;
+
+	/**
 	 * Sets up the widgets classname and description.
 	 *
 	 * @since  0.1.0
 	 */
 	public function __construct() {
-		$widget_options = array(
+		$this->default_language = Monk()->get_default_language();
+		$this->active_languages = Monk()->get_active_languages();
+		$widget_options         = array(
 			'classname'   => 'monk_language_switcher',
 			'description' => __( 'Switch between site translations.', 'monk' ),
 		);
@@ -49,10 +69,10 @@ class Monk_Language_Switcher extends WP_Widget {
 		$title                    = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
 		$flag                     = ! empty( $instance['flag'] ) ? true : false;
 		$monk_love                = ! empty( $instance['monk_love'] ) ? true : false;
-		$active_languages         = get_option( 'monk_active_languages' );
+		$active_languages         = $this->active_languages;
 		$current_language         = '';
 		$monk_languages_reverted  = array();
-		$default_language         = get_option( 'monk_default_language', false );
+		$default_language         = $this->default_language;
 		$default_slug             = $monk_languages[ $default_language ]['slug'];
 		$has_default_language_url = get_option( 'monk_default_language_url', false );
 		$current_locale           = monk_get_locale_by_slug( get_query_var( 'lang' ) );

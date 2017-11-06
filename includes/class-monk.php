@@ -55,6 +55,24 @@ class Monk {
 	protected $version;
 
 	/**
+	 * The default language of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   protected
+	 * @var      string    $default_language    The default language of the plugin.
+	 */
+	protected $default_language;
+
+	/**
+	 * The active languages of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   protected
+	 * @var      array $active_languages The active languages of the plugin.
+	 */
+	protected $active_languages;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -68,6 +86,8 @@ class Monk {
 
 		$this->plugin_name = 'Monk';
 		$this->version = '0.6.0';
+		$this->default_language = get_option( 'monk_default_language', false );
+		$this->active_languages = get_option( 'monk_active_languages', array() );
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -84,7 +104,8 @@ class Monk {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Monk_Loader. Orchestrates the hooks of the plugin.
-	 * - Monk_i18n. Defines internationalization functionality.
+	 * - Monk_i18n. Defi
+	 nes internationalization functionality.
 	 * - Monk_Admin. Defines all hooks for the admin area.
 	 * - Monk_Public. Defines all hooks for the public side of the site.
 	 * - Monk_Language_Switcher. Defines all functions related to Monk_Language_Switcher widget.
@@ -179,12 +200,11 @@ class Monk {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    0.1.0
-	 * @access   private
+	 * @since   0.1.0
+	 * @access  private
 	 * @return  void
 	 */
 	private function define_admin_hooks() {
-
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -319,6 +339,9 @@ class Monk {
 	/**
 	 * Register all of the hooks related to terms
 	 *
+	 * @param   string $default_language The default language of the plugin.
+	 * @param   array  $active_languages The active languages of the plugin.
+	 *
 	 * @since    0.1.0
 	 * @access   public
 	 * @return  void
@@ -411,4 +434,23 @@ class Monk {
 		return $this->version;
 	}
 
+	/**
+	 * Retrieve the default language of the plugin.
+	 *
+	 * @since     0.7.0
+	 * @return    string    The default language of the plugin.
+	 */
+	public function get_default_language() {
+		return $this->default_language;
+	}
+
+	/**
+	 * Retrieve the active languages of the plugin.
+	 *
+	 * @since     0.7.0
+	 * @return    array    The active languages of the plugin.
+	 */
+	public function get_active_languages() {
+		return $this->active_languages;
+	}
 }
