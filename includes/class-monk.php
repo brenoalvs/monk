@@ -241,9 +241,8 @@ class Monk {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'wp_head', $plugin_public, 'monk_add_localization_tags', 10, 2 );
+		$this->loader->add_action( 'wp_head', $plugin_public, 'monk_print_localization_tags' );
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
-		$this->loader->add_filter( 'monk_filter_localization_tags', $plugin_public, 'monk_add_localization_tags', 10, 2 );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
 		$this->loader->add_filter( 'option_page_on_front', $plugin_public, 'monk_page_on_front_translations' );
