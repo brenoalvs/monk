@@ -206,7 +206,6 @@ function monk_get_translations( $element_id = null ) {
 		}
 	}
 
-	// Caso 1.
 	if ( is_front_page() || is_post_type_archive() || is_date() || is_404() || is_author() || is_search() ) {
 
 		foreach ( $active_languages as $code ) {
@@ -250,7 +249,6 @@ function monk_get_translations( $element_id = null ) {
 		}
 	} // End if().
 
-	// Caso 2.
 	if ( ( is_singular() && ! is_front_page() ) || ( $element_id && ! empty( $element_id ) ) ) {
 		$current_id         = empty( $element_id ) ? get_the_id() : $element_id;
 		$current_locale     = get_post_meta( $current_id, '_monk_post_language', true );
@@ -288,7 +286,6 @@ function monk_get_translations( $element_id = null ) {
 		}
 	} // End if().
 
-	// Caso 3.
 	if ( is_archive() && ( is_category() || is_tag() || is_tax() ) ) {
 		$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
 		$total_translations        = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
