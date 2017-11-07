@@ -258,9 +258,31 @@ class Monk_Public {
 	/**
 	 * Prints the hreflang tags according to the current content.
 	 *
-	 * @return string monk_localization_tags filtered
+	 * @return void
 	 */
 	public function monk_print_localization_tags() {
-		return apply_filters( 'monk_localization_tags', null, array() );
+		if ( is_admin() ) {
+			return;
+		}
+
+		$monk_localization_data = array();
+		$translation_data = monk_get_translations();
+
+		foreach ( $translation_data as $slug => $data ) {
+			$monk_localization_data[ $slug ] = $data['url'];
+			if ( $custom_lang_data && ! empty( $custom_lang_data ) ) {
+				if ( array_key_exists( $slug, $custom_lang_data ) ) {
+					$monk_localization_data[ $slug ] = $custom_lang_data[ $slug ];
+				}
+			}
+		}
+
+		$monk_localization_data = apply_filters( 'monk_hreflang_tags', null, array() );
+
+		foreach ( $monk_localization_data as $slug => $url ) {
+			if ( null !== $url ) {
+				echo '<link rel="alternate" href="' . esc_url( $url ) . '" hreflang="' . esc_attr( $slug ) . '" />';
+			}
+		}
 	}
 }
