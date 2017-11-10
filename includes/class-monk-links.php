@@ -669,4 +669,32 @@ class Monk_Links {
 
 		return $join;
 	}
+
+	/**
+	 * Allows content to have the same slug of their translations
+	 *
+	 * This function varifies if the current content is a translation, if it is,
+	 * uses the filter wp_unique_post_slug to validade the duplication of a slug
+	 * from one of the translations.
+	 *
+	 * @param  string $slug             The JOIN clause in the SQL.
+	 * @param  int    $post_id          Whether post should be in a same taxonomy term.
+	 * @param  string $post_status      Array of excluded term IDs.
+	 * @param  string $post_type        Taxonomy. Used to identify the term used when `$in_same_term` is true.
+	 * @param  string $post_parent      WP_Post object.
+	 * @param  string $original_slug    WP_Post object.
+	 *
+	 * @since  0.4.0
+	 *
+	 * @return string $slug
+	 */
+	public function monk_validade_duplicated_slugs( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug ) {
+		$current_url = $_SERVER['HTTP_REFERER'];
+
+		if ( strpos( $current_url, 'monk_id=' ) !== false ) {
+			$slug = $original_slug;
+		}
+
+		return $slug;
+	}
 }
