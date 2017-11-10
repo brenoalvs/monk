@@ -688,7 +688,7 @@ class Monk_Links {
 	 *
 	 * @return string $slug
 	 */
-	public function monk_validade_duplicated_slugs( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug ) {
+	public function monk_validade_duplicated_post_slugs( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug ) {
 		$current_url = $_SERVER['HTTP_REFERER'];
 
 		if ( strpos( $current_url, 'monk_id=' ) !== false ) {
