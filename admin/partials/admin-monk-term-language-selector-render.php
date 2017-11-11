@@ -2,7 +2,7 @@
 /**
  * Provides the view for monk_add_commentt_language_selector function.
  *
- * @since      0.6.0
+ * @since      0.7.0
  *
  * @package    Monk
  * @subpackage Monk/Admin/Partials
@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 	<select name="lang" id="monk-language-filter">
 		<option value="all"><?php esc_html_e( 'All Languages', 'monk' ); ?></option>
 		<?php foreach ( $languages as $language ) : ?>
-			<option value="<?php echo esc_attr( $language ); ?>" 
+			<option value="<?php echo esc_attr( $language ); ?>"
 				<?php
 				if ( isset( $url_language ) && ! empty( $url_language ) ) {
 					$monk_language_filter = sanitize_text_field( wp_unslash( $url_language ) );
