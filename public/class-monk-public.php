@@ -270,14 +270,9 @@ class Monk_Public {
 
 		foreach ( $translation_data as $slug => $data ) {
 			$monk_localization_data[ $slug ] = $data['url'];
-			if ( $custom_lang_data && ! empty( $custom_lang_data ) ) {
-				if ( array_key_exists( $slug, $custom_lang_data ) ) {
-					$monk_localization_data[ $slug ] = $custom_lang_data[ $slug ];
-				}
-			}
 		}
 
-		$monk_localization_data = apply_filters( 'monk_hreflang_tags', null, array() );
+		$monk_localization_data = apply_filters( 'monk_hreflang_tags', $monk_localization_data );
 
 		foreach ( $monk_localization_data as $slug => $url ) {
 			if ( null !== $url ) {
