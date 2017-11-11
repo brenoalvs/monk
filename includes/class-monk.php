@@ -297,7 +297,7 @@ class Monk {
 		$this->loader->add_action( 'admin_init', $plugin_links, 'monk_flush_on_update' );
 		$this->loader->add_action( 'get_previous_post_join', $plugin_links, 'monk_previous_and_next_posts', 10, 5 );
 		$this->loader->add_action( 'get_next_post_join', $plugin_links, 'monk_previous_and_next_posts', 10, 5 );
-		$this->loader->add_action( 'wp_unique_post_slug', $plugin_links, 'monk_validade_duplicated_slugs', 10, 6 );
+		$this->loader->add_action( 'wp_unique_post_slug', $plugin_links, 'monk_validade_duplicated_post_slugs', 10, 6 );
 	}
 
 	/**
