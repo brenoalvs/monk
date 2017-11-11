@@ -15,8 +15,8 @@ if ( ! defined( 'WPINC' ) ) {
 
 $monk_languages = monk_get_available_languages();
 
-$active_languages = get_option( 'monk_active_languages', false );
-$default_language = get_option( 'monk_default_language', false );
+$active_languages = $this->active_languages;
+$default_language = $this->default_language;
 ?>
 <fieldset>
 <?php

@@ -18,6 +18,36 @@
  */
 class Monk_I18n {
 
+	/**
+	 * The default language of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      string    $default_language    The default language of the plugin.
+	 */
+	private $default_language;
+
+	/**
+	 * The active languages of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      array $active_languages The active languages of the plugin.
+	 */
+	private $active_languages;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since  0.7.0
+	 * @param  string $default_language The default language of the plugin.
+	 * @param  array  $active_languages The active languages of the plugin.
+	 * @return  void
+	 */
+	public function __construct( $default_language, $active_languages ) {
+		$this->default_language = $default_language;
+		$this->active_languages = $active_languages;
+	}
 
 	/**
 	 * Load the plugin text domain for translation.
@@ -68,15 +98,15 @@ class Monk_I18n {
 		if ( ! empty( $matches ) ) {
 			$slug             = $matches[0];
 			$locale           = monk_get_locale_by_slug( $slug );
-			$active_languages = get_option( 'monk_active_languages', false );
+			$active_languages = $this->active_languages;
 
 			if ( ! in_array( $locale, $active_languages, true ) ) {
-				$locale = get_option( 'monk_default_language', false );
+				$locale = $this->default_language;
 			}
 		} elseif ( $slug ) {
 			$locale = monk_get_locale_by_slug( $slug );
 		} else {
-			$locale = get_option( 'monk_default_language', false );
+			$locale = $this->default_language;
 		}
 
 		return $locale;
