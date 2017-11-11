@@ -172,10 +172,9 @@ function monk_get_available_languages() {
  *
  * @since  0.7.0
  *
- * @param int $element_id The ID of an element to retrieve the translations from.
  * @return array $translation_data
  */
-function monk_get_translations( $element_id = null ) {
+function monk_get_translations() {
 	$monk_languages = monk_get_available_languages();
 
 	$translation_data         = array();
@@ -249,8 +248,8 @@ function monk_get_translations( $element_id = null ) {
 		}
 	} // End if().
 
-	if ( ( is_singular() && ! is_front_page() ) || ( $element_id && ! empty( $element_id ) ) ) {
-		$current_id         = empty( $element_id ) ? get_the_id() : $element_id;
+	if ( ( is_singular() && ! is_front_page() ) ) {
+		$current_id         = get_the_id();
 		$current_locale     = get_post_meta( $current_id, '_monk_post_language', true );
 		$translations_id    = get_post_meta( $current_id, '_monk_post_translations_id', true );
 		$total_translations = get_option( 'monk_post_translations_' . $translations_id, false );
