@@ -972,6 +972,7 @@ class Monk_Admin {
 		$is_menu                   = 'nav_menu' === $taxonomy ? 'menu' : 'term';
 		$current_language          = get_term_meta( $term_id, '_monk_' . $is_menu . '_language', true );
 		$monk_term_translations_id = get_term_meta( $term_id, '_monk_' . $is_menu . '_translations_id', true );
+		$new_language              = $new_language && ! empty( $new_language ) ? $new_language : $current_language;
 
 		update_term_meta( $term_id, '_monk_' . $is_menu . '_language', $new_language );
 
