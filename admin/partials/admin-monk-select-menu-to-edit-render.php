@@ -102,7 +102,7 @@ if ( is_nav_menu( $menu_id ) ) :
 
 		<?php if ( ! $locations_tab ) : ?>
 			<div class="hide-if-no-js" id="monk-menu-translation-message">
-			<?php $locations = array_keys( $menus, $menu ); ?>
+			<?php $locations = array_keys( $menus, $menu, true ); ?>
 			<?php if ( $locations ) : ?>
 				<?php foreach ( $locations as $location ) : ?>
 					<?php if ( array_key_exists( $location, $registered_menus ) ) : ?>
@@ -110,7 +110,7 @@ if ( is_nav_menu( $menu_id ) ) :
 					<?php endif; ?>
 				<?php endforeach; ?>
 			<?php else : ?>
-				<div><?php esc_html_e( 'None', 'monk' ); ?></div>
+				<div><?php esc_html_e( 'No assigned location', 'monk' ); ?></div>
 			<?php endif; ?>
 			</div>
 		<?php endif; ?>
