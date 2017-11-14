@@ -51,7 +51,7 @@ $monk_languages = monk_get_available_languages();
 			?>
 			</select>
 		<?php else : ?>
-			<span class="menu-flag flag-icon flag-icon-<?php echo esc_attr( $monk_languages[ $menu_language ]['slug'] ); ?>"></span>
+			<span class="menu-flag flag-icon flag-icon-<?php echo esc_attr( strtolower( $menu_language ) ); ?>"></span>
 			<span><?php echo esc_html( $monk_languages[ $menu_language ]['english_name'] ); ?></span>
 			<input type="hidden" name="monk_language" value="<?php echo esc_attr( $menu_language ); ?>">
 		<?php endif; ?>
