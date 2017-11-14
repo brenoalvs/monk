@@ -89,10 +89,10 @@
 						if ( response.hasOwnProperty( 'success' ) ) {
 							if ( response.success ) {
 								if ( response.data ) {
-									$( '#monk-downloading' ).addClass( 'monk-hide' );	
-									if ( -1 < $.inArray( false, response.data ) ) {		
+									$( '#monk-downloading' ).addClass( 'monk-hide' );
+									if ( -1 < $.inArray( false, response.data ) ) {
 										$( '#monk-error' ).removeClass( 'monk-hide' );
-									} else {		
+									} else {
 										$( '#monk-submit-settings' ).click();
 									}
 								}
@@ -122,7 +122,7 @@
 					success: function( response ) {
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-bulk-action' ).addClass( 'monk-hide' );
-							if ( response.success ) {		
+							if ( response.success ) {
 								$( '#monk-done' ).removeClass( 'monk-hide' );
 							} else {
 								$( '#monk-error' ).removeClass( 'monk-hide' );
@@ -157,7 +157,7 @@
 					success: function( response ) {
 						if ( response.hasOwnProperty( 'success' ) ) {
 							$( '#monk-save-options' ).addClass( 'monk-hide' );
-							if ( response.success ) {		
+							if ( response.success ) {
 								$( '#monk-done' ).removeClass( 'monk-hide' );
 							} else {
 								$( '#monk-error' ).removeClass( 'monk-hide' );
@@ -212,7 +212,7 @@
 				success : function( file_attachment ){
 					var attachment_id = file_attachment.attributes.id;
 					var item          = $( '.attachments li.save-ready' ).not( '.uploading, .saved-language, [data-id]' );
-					
+
 					if ( typeof undefined === typeof item.attr( 'data-id' ) ) {
 						item.find( '.attachment-preview' ).click();
 						item.addClass( 'saved-language' );
@@ -229,7 +229,7 @@
 		if ( /\bnav-menus.php?\b/.test( window.location.pathname ) ) {
 			if ( $( '.add-menu-translation' ).length ) {
 				$( 'div#nav-menu-header .major-publishing-actions' ).append( $( '.add-menu-translation' ) );
-				$( $( 'fieldset.menu-language' ) ).insertBefore( 'fieldset.auto-add-pages' );
+				$( $( 'fieldset.menu-language' ) ).insertBefore( '.auto-add-pages' );
 				$( $( '.menu-translations' ) ).insertAfter( '.menu-settings' );
 
 				if ( $( '#monk-menu-translation-message' ).length ) {
