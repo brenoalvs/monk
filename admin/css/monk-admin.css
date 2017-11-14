@@ -105,6 +105,12 @@ div.monk-language-field {
 	margin-right: 10px;
 }
 
+fieldset.menu-settings-group {
+    margin: 0 0 10px;
+    overflow: hidden;
+    padding-left: 18%;
+}
+
 .add-menu-translation {
 	text-align: right;
 	float: right;
@@ -115,9 +121,18 @@ div.monk-language-field {
 	height: 30px;
 }
 
+legend.howto {
+	float: left;
+    clear: both;
+    width: 21.951%;
+    padding: 3px 0 0;
+    margin-left: -21.951%;
+}
+
 .menu-flag {
 	font-size: 15px;
 	margin-right: 5px;
+	margin-left: 0 !important;
 }
 
 .menu-translations {
