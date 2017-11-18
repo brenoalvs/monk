@@ -32,5 +32,6 @@ Tests are in `tests` directory. To run them you need to install some requirement
 4. Install and configure the test environment running `bin/install-wp-tests.sh <db-name> <db-user> <db-pass> [db-host] [wp-version]`. E.g.: `bin/install-wp-tests.sh wordpress_test root '' localhost latest`
 5. Run `phpunit` and let the tests begin!
 
-*Note:* Be sure to have `svn` command installed on your system. 
+*Note:* Be sure to have `svn` command installed on your system.
+
 *Note:* If anything fails running install-wp-tests.sh you'll have to delete /tmp/wordpress* and drop the wordpress_test database to undo what the script does.
