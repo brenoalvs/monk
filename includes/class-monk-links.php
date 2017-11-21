@@ -121,12 +121,12 @@ class Monk_Links {
 	public function __construct( $monk, $version, $default_language, $active_languages ) {
 		$monk_languages = monk_get_available_languages();
 
-		$this->plugin_name   = $monk;
-		$this->version       = $version;
-		$this->index         = 'index.php';
-		$this->site_home     = home_url();
-		$this->structure     = get_option( 'permalink_structure', false );
-		$this->site_root     = preg_match( '#^/*' . $this->index . '#', $this->structure ) ? $this->index . '/' : '';
+		$this->plugin_name = $monk;
+		$this->version     = $version;
+		$this->index       = 'index.php';
+		$this->site_home   = home_url();
+		$this->structure   = get_option( 'permalink_structure', false );
+		$this->site_root   = preg_match( '#^/*' . $this->index . '#', $this->structure ) ? $this->index . '/' : '';
 
 		$this->default_language = $default_language;
 		$this->active_languages = $active_languages;
@@ -340,7 +340,7 @@ class Monk_Links {
 	 * @return $url The changed link.
 	 */
 	public function monk_change_language_url( $url, $lang ) {
-		$monk_languages       = monk_get_available_languages();
+		$monk_languages = monk_get_available_languages();
 
 		$default_language     = $this->site_slug;
 		$default_language_url = get_option( 'monk_default_language_url', false );
@@ -604,7 +604,7 @@ class Monk_Links {
 		}
 
 		// First get the correct url and scheme.
-		$requested_url    = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$requested_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 		// Get current active languages.
 		$active_languages = $this->monk_get_active_languages();
@@ -676,9 +676,9 @@ class Monk_Links {
 	 */
 	public function monk_previous_and_next_posts( $join, $in_same_term, $excluded_terms, $taxonomy, $post ) {
 		global $wpdb;
-		$post_id          = $post->ID;
-		$post_language    = get_post_meta( $post_id, '_monk_post_language', true );
-		$language         = $this->default_language;
+		$post_id       = $post->ID;
+		$post_language = get_post_meta( $post_id, '_monk_post_language', true );
+		$language      = $this->default_language;
 
 		if ( $post_language ) {
 			$language = $post_language;
