@@ -1833,11 +1833,11 @@ class Monk_Admin {
 		global $wpdb;
 
 		$default_language = get_option( 'monk_default_language', false );
-		$lang = empty( $lang ) ? $default_language : $lang;
-		$replace = array( '(', ')' );
-		$comment_status = str_replace( $replace , '', $clauses['where'] );
-		$comment_status = '(' . $comment_status . ')';
-		$not_exists = '';
+		$lang             = empty( $lang ) ? $default_language : $lang;
+		$replace          = array( '(', ')' );
+		$comment_status   = str_replace( $replace , '', $clauses['where'] );
+		$comment_status   = '(' . $comment_status . ')';
+		$not_exists       = '';
 
 		if ( $default_language === $lang ) {
 			$not_exists = " ( SELECT ID FROM $wpdb->posts WHERE ID NOT IN ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '_monk_post_language' ) AND comment_count > 0 ) or comment_post_id IN ";
@@ -1860,10 +1860,10 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_admin_add_comments_language_selector() {
-		$comment_status   = filter_input( INPUT_GET, 'comment_status' );
-		$comment_status   = 'all' === $comment_status ? 'total_comments' : $comment_status;
-		$comment_status   = empty( $comment_status ) ? 'total_comments' : $comment_status;
-		$comment_class    = wp_count_comments();
+		$comment_status = filter_input( INPUT_GET, 'comment_status' );
+		$comment_status = 'all' === $comment_status ? 'total_comments' : $comment_status;
+		$comment_status = empty( $comment_status ) ? 'total_comments' : $comment_status;
+		$comment_class  = wp_count_comments();
 
 		foreach ( $comment_class as $status => $number ) {
 
