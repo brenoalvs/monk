@@ -67,7 +67,7 @@ class Monk {
 	public function __construct() {
 
 		$this->plugin_name = 'Monk';
-		$this->version = '0.6.0';
+		$this->version     = '0.6.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -325,7 +325,7 @@ class Monk {
 	 */
 	public function add_term_hooks() {
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
-		$taxonomies = get_taxonomies();
+		$taxonomies   = get_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
 			add_action( $taxonomy . '_add_form_fields', array( $plugin_admin, 'monk_custom_taxonomy_field' ) );
