@@ -21,7 +21,7 @@ function monk_is_language_code( $language_code ) {
 	$monk_languages  = monk_get_available_languages();
 	$languages_codes = array_keys( $monk_languages );
 
-	return in_array( $language_code , $language_codes, true );
+	return in_array( $language_code, $language_codes, true );
 }
 
 /**
@@ -70,10 +70,10 @@ function monk_get_locale_by_slug( $slug ) {
  * @return array The URL parameter.
  */
 function monk_get_url_args( $arg ) {
-	$url    = $_SERVER['HTTP_REFERER'];
-	$query  = parse_url( $url );
-	$query  = array_key_exists( 'query',  $query ) ? $query['query'] : '';
-	$query  = parse_str( $query, $name );
+	$url   = $_SERVER['HTTP_REFERER'];
+	$query = parse_url( $url );
+	$query = array_key_exists( 'query',  $query ) ? $query['query'] : '';
+	$query = parse_str( $query, $name );
 
 	if ( isset( $name[ $arg ] ) ) {
 		return $name[ $arg ];
@@ -95,7 +95,7 @@ function monk_get_available_languages() {
 	$wp_get_available_translations = wp_get_available_translations();
 
 	if ( ! $monk_languages ) {
-		$monk_languages['en_US']       = array(
+		$monk_languages['en_US'] = array(
 			'native_name'  => 'English (United States)',
 			'english_name' => __( 'English (United States)', 'monk' ),
 			'slug'         => 'en',
@@ -175,8 +175,8 @@ function monk_get_available_languages() {
  * @return array $translation_data
  */
 function monk_get_translations() {
+	$monk           = new Monk();
 	$monk_languages = monk_get_available_languages();
-	$monk = new Monk();
 
 	$translation_data         = array();
 	$active_languages_slug    = array();
@@ -209,19 +209,19 @@ function monk_get_translations() {
 	if ( is_front_page() || is_post_type_archive() || is_date() || is_404() || is_author() || is_search() ) {
 
 		foreach ( $active_languages as $code ) {
-			$active_languages_slug[]           = $monk_languages[ $code ]['slug'];
+			$active_languages_slug[] = $monk_languages[ $code ]['slug'];
 		}
 
 		foreach ( $active_languages_slug as $lang_slug ) {
-			$current_url                                    = monk_get_current_url();
-			$locale_by_slug                                 = monk_get_locale_by_slug( $lang_slug );
+			$current_url    = monk_get_current_url();
+			$locale_by_slug = monk_get_locale_by_slug( $lang_slug );
 
 			if ( $lang_slug !== $current_language_slug ) {
 				if ( get_option( 'permalink_structure', false ) ) {
 					if ( get_query_var( 'lang' ) ) {
-						$pattern                  = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
-						$current_url              = remove_query_arg( 'lang', $current_url );
-						$current_url              = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
+						$pattern     = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
+						$current_url = remove_query_arg( 'lang', $current_url );
+						$current_url = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
 
 						if ( empty( $has_default_language_url ) && $lang_slug === $default_slug ) {
 							$current_url = preg_replace( $pattern, '', $current_url );
@@ -259,7 +259,7 @@ function monk_get_translations() {
 			$current_language_slug = $monk_languages[ $current_locale ]['slug'];
 		} else {
 			$current_language_slug = $monk_languages[ $default_language ]['slug'];
-			$current_locale   = $default_language;
+			$current_locale        = $default_language;
 		}
 
 		if ( is_array( $total_translations ) ) {
@@ -279,8 +279,8 @@ function monk_get_translations() {
 
 		foreach ( $active_languages as $code ) {
 			if ( in_array( $code, $monk_translations, true ) ) {
-				$translation_data[ $monk_languages[ $code ]['slug'] ]['code'] = $code;
-				$translation_data[ $monk_languages[ $code ]['slug'] ]['native_name'] = $monk_languages[ $code ]['native_name'];
+				$translation_data[ $monk_languages[ $code ]['slug'] ]['code']         = $code;
+				$translation_data[ $monk_languages[ $code ]['slug'] ]['native_name']  = $monk_languages[ $code ]['native_name'];
 				$translation_data[ $monk_languages[ $code ]['slug'] ]['english_name'] = $monk_languages[ $code ]['english_name'];
 			}
 		}
@@ -292,10 +292,10 @@ function monk_get_translations() {
 
 		if ( get_term_meta( get_queried_object_id(), '_monk_term_language', true ) ) {
 			$current_language_slug = $monk_languages[ get_term_meta( get_queried_object_id(), '_monk_term_language', true ) ]['slug'];
-			$current_locale   = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
+			$current_locale        = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
 		} else {
 			$current_language_slug = $monk_languages[ $default_language ]['slug'];
-			$current_locale   = $default_language;
+			$current_locale        = $default_language;
 		}
 
 		if ( is_array( $total_translations ) ) {
@@ -347,7 +347,7 @@ function monk_get_translations() {
  */
 function monk_translated_post_id( $id, $lang = null ) {
 	if ( empty( $lang ) ) {
-		$monk = new Monk();
+		$monk             = new Monk();
 		$default_language = $monk->get_default_language();
 		$lang             = get_query_var( 'lang', $default_language );
 	}
