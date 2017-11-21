@@ -130,7 +130,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function monk_language_customizer( $wp_customize ) {
 
-		$wp_customize->add_section( 'monk_language_switcher' , array(
+		$wp_customize->add_section( 'monk_language_switcher', array(
 			'title'    => __( 'Language Switcher', 'monk' ),
 			'priority' => 700,
 		));

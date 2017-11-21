@@ -17,7 +17,7 @@ foreach ( $monk_languages as $lang_code => $list ) {
 	if ( in_array( $lang_code, $active_languages, true ) ) {
 		if ( $list['slug'] === $current_language ) {
 			$current_language = $lang_code;
-			$current_slug = $list['slug'];
+			$current_slug     = $list['slug'];
 		}
 		$monk_languages_reverted[ $list['slug'] ] = $list;
 	}
