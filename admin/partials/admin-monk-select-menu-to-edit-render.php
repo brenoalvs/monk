@@ -78,7 +78,7 @@ $response = '';
 <?php endif; ?>
 
 <?php
-$menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
+$menu_id = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
 
 if ( is_nav_menu( $menu_id ) ) :
 	$menu_language     = get_term_meta( $menu_id, '_monk_menu_language', true );
@@ -91,7 +91,7 @@ if ( is_nav_menu( $menu_id ) ) :
 		$menu = get_term( $menu_id );
 	}
 
-	$menu_name      = $menu->name;
+	$menu_name = $menu->name;
 	?>
 	<?php if ( array_key_exists( $default_language, $menu_translations ) && $menu_language !== $default_language ) : ?>
 		<?php if ( array_key_exists( $default_language, $menu_translations ) ) : ?>
