@@ -84,8 +84,8 @@ class Monk {
 	 */
 	public function __construct() {
 
-		$this->plugin_name = 'Monk';
-		$this->version = '0.6.0';
+		$this->plugin_name      = 'Monk';
+		$this->version          = '0.6.0';
 		$this->default_language = get_option( 'monk_default_language', false );
 		$this->active_languages = get_option( 'monk_active_languages', array() );
 
@@ -104,8 +104,7 @@ class Monk {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Monk_Loader. Orchestrates the hooks of the plugin.
-	 * - Monk_i18n. Defi
-	 nes internationalization functionality.
+	 * - Monk_i18n. Defines internationalization functionality.
 	 * - Monk_Admin. Defines all hooks for the admin area.
 	 * - Monk_Public. Defines all hooks for the public side of the site.
 	 * - Monk_Language_Switcher. Defines all functions related to Monk_Language_Switcher widget.
@@ -170,6 +169,9 @@ class Monk {
 	 *
 	 * Uses the Monk_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
+	 *
+	 * @param    string $default_language The language defined by user.
+	 * @param    array  $active_languages Active languages to be used accorss the site.
 	 *
 	 * @since    0.1.0
 	 * @access   private
@@ -348,16 +350,13 @@ class Monk {
 	/**
 	 * Register all of the hooks related to terms
 	 *
-	 * @param   string $default_language The default language of the plugin.
-	 * @param   array  $active_languages The active languages of the plugin.
-	 *
 	 * @since    0.1.0
 	 * @access   public
 	 * @return  void
 	 */
 	public function add_term_hooks() {
 		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_default_language(), $this->get_active_languages() );
-		$taxonomies = get_taxonomies();
+		$taxonomies   = get_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
 			add_action( $taxonomy . '_add_form_fields', array( $plugin_admin, 'monk_custom_taxonomy_field' ) );
