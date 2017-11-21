@@ -276,4 +276,30 @@ class Monk_Public {
 
 		return $page_id;
 	}
+
+	/**
+	 * Prints the hreflang tags according to the current content.
+	 *
+	 * @return void
+	 */
+	public function monk_print_localization_tags() {
+		if ( is_admin() ) {
+			return;
+		}
+
+		$monk_localization_data = array();
+		$translation_data = monk_get_translations();
+
+		foreach ( $translation_data as $slug => $data ) {
+			$monk_localization_data[ $slug ] = $data['url'];
+		}
+
+		$monk_localization_data = apply_filters( 'monk_hreflang_tags', $monk_localization_data );
+
+		foreach ( $monk_localization_data as $slug => $url ) {
+			if ( null !== $url ) {
+				echo '<link rel="alternate" href="' . esc_url( $url ) . '" hreflang="' . esc_attr( $slug ) . '" />';
+			}
+		}
+	}
 }
