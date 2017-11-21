@@ -1695,17 +1695,17 @@ class Monk_Admin {
 
 			if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 				foreach ( $post_ids as $post_id ) {
-					$set_language         = $wpdb->insert( 'wp_postmeta', array(
+					$set_language          = $wpdb->insert( 'wp_postmeta', array(
 						'post_id'    => intval( $post_id['ID'] ),
 						'meta_key'   => '_monk_post_language',
 						'meta_value' => $default_language,
 					));
-					$set_monk_id          = $wpdb->insert( 'wp_postmeta', array(
+					$set_monk_id           = $wpdb->insert( 'wp_postmeta', array(
 						'post_id'    => intval( $post_id['ID'] ),
 						'meta_key'   => '_monk_post_translations_id',
 						'meta_value' => intval( $post_id['ID'] ),
 					));
-					$value = array(
+					$value                 = array(
 						$default_language => intval( $post_id['ID'] ),
 					);
 					$set_translation_array = $wpdb->insert( 'wp_options', array(
