@@ -1835,7 +1835,7 @@ class Monk_Admin {
 		$default_language = get_option( 'monk_default_language', false );
 		$lang             = empty( $lang ) ? $default_language : $lang;
 		$replace          = array( '(', ')' );
-		$comment_status   = str_replace( $replace , '', $clauses['where'] );
+		$comment_status   = str_replace( $replace, '', $clauses['where'] );
 		$comment_status   = '(' . $comment_status . ')';
 		$not_exists       = '';
 
