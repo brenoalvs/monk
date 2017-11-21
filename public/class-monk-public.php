@@ -233,7 +233,7 @@ class Monk_Public {
 						$args['menu'] = $monk_translations[ $default_language ];
 					} else {
 						$menu_id_fallback = array_shift( $monk_translations );
-						$args['menu'] = $menu_id_fallback;
+						$args['menu']     = $menu_id_fallback;
 					}
 				}
 			}
@@ -288,7 +288,7 @@ class Monk_Public {
 		}
 
 		$monk_localization_data = array();
-		$translation_data = monk_get_translations();
+		$translation_data       = monk_get_translations();
 
 		foreach ( $translation_data as $slug => $data ) {
 			$monk_localization_data[ $slug ] = $data['url'];
