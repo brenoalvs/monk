@@ -44,7 +44,7 @@ class Monk_Admin {
 	 */
 	public function __construct( $monk, $version ) {
 
-		$this->monk = $monk;
+		$this->monk    = $monk;
 		$this->version = $version;
 
 	}
