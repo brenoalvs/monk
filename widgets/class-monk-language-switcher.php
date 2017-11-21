@@ -22,12 +22,32 @@ if ( ! defined( 'WPINC' ) ) {
 class Monk_Language_Switcher extends WP_Widget {
 
 	/**
+	 * The default language of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      string    $default_language    The default language of the plugin.
+	 */
+	private $default_language;
+
+	/**
+	 * The active languages of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   private
+	 * @var      array $active_languages The active languages of the plugin.
+	 */
+	private $active_languages;
+
+	/**
 	 * Sets up the widgets classname and description.
 	 *
 	 * @since  0.1.0
 	 */
 	public function __construct() {
-		$widget_options = array(
+		$this->default_language = get_option( 'monk_default_language', false );
+		$this->active_languages = get_option( 'monk_active_languages', array() );
+		$widget_options         = array(
 			'classname'   => 'monk_language_switcher',
 			'description' => __( 'Switch between site translations.', 'monk' ),
 		);
@@ -49,141 +69,24 @@ class Monk_Language_Switcher extends WP_Widget {
 		$title                    = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
 		$flag                     = ! empty( $instance['flag'] ) ? true : false;
 		$monk_love                = ! empty( $instance['monk_love'] ) ? true : false;
-		$active_languages         = get_option( 'monk_active_languages' );
+		$active_languages         = $this->active_languages;
 		$current_language         = '';
 		$monk_languages_reverted  = array();
-		$default_language         = get_option( 'monk_default_language', false );
+		$default_language         = $this->default_language;
 		$default_slug             = $monk_languages[ $default_language ]['slug'];
 		$has_default_language_url = get_option( 'monk_default_language_url', false );
-		$current_locale             = monk_get_locale_by_slug( get_query_var( 'lang' ) );
+		$current_locale           = monk_get_locale_by_slug( get_query_var( 'lang' ) );
 
-		if ( get_query_var( 'lang' ) && in_array( $current_locale, $active_languages ) ) {
-			$current_language = sanitize_text_field( get_query_var( 'lang' ) );
-		} else {
-			$current_language = $monk_languages[ $default_language ]['slug'];
+		$translation_data = monk_get_translations();
+
+		foreach ( $translation_data as $slug => $data ) {
+			if ( ! empty( $data['url'] ) ) {
+				$switchable_languages[ $slug ] = $data['url'];
+			}
+			if ( true === $translation_data[ $slug ]['current'] ) {
+				$current_language = $slug;
+			}
 		}
-
-		if ( is_front_page() || is_post_type_archive() || is_date() || is_404() || is_author() || is_search() ) {
-
-			foreach ( $active_languages as $code ) {
-				$active_languages_slug[] = $monk_languages[ $code ]['slug'];
-			}
-
-			foreach ( $active_languages_slug as $lang_code ) {
-				$current_url = monk_get_current_url();
-
-				if ( $lang_code !== $current_language ) {
-					if ( get_option( 'permalink_structure', false ) ) {
-						if ( get_query_var( 'lang' ) ) {
-							$pattern                  = '/\/(' . implode( '|', $active_languages_slug ) . ')/';
-							$current_url              = remove_query_arg( 'lang', $current_url );
-							$current_url              = is_ssl() ? str_replace( 'https://', '', $current_url ) : str_replace( 'http://', '', $current_url );
-
-							if ( empty( $has_default_language_url ) && $lang_code === $default_slug ) {
-								$current_url = preg_replace( $pattern, '', $current_url );
-							} else {
-								$current_url = preg_replace( $pattern, '/' . $lang_code, $current_url );
-							}
-
-							$current_url = is_ssl() ? 'https://' . $current_url : 'http://' . $current_url;
-						} else {
-							if ( dirname( $_SERVER['PHP_SELF'] ) === '\\' || dirname( $_SERVER['PHP_SELF'] ) === '/' ) {
-								$current_url = str_replace( home_url(), home_url() . $lang_code . '/', $current_url );
-							} else {
-								$current_url = str_replace( dirname( $_SERVER['PHP_SELF'] ), trailingslashit( dirname( $_SERVER['PHP_SELF'] ) ) . $lang_code, $current_url );
-							}
-						}
-						$switchable_languages[ $lang_code ] = $current_url;
-					} else {
-						if ( empty( $has_default_language_url ) && $lang_code === $default_slug ) {
-							$switchable_languages[ $lang_code ] = remove_query_arg( 'lang', $current_url );
-						} else {
-							$switchable_languages[ $lang_code ] = add_query_arg( 'lang', sanitize_key( $lang_code ) );
-						}
-					}
-				}
-			}
-		} // End if().
-
-		if ( is_singular() ) {
-			$current_id                = get_the_id();
-			$monk_post_translations_id = get_post_meta( $current_id, '_monk_post_translations_id', true );
-			$monk_total_translations   = get_option( 'monk_post_translations_' . $monk_post_translations_id, false );
-
-			if ( get_post_meta( $current_id, '_monk_post_language', true ) ) {
-				$current_language = $monk_languages[ get_post_meta( $current_id, '_monk_post_language', true ) ]['slug'];
-				$current_locale   = get_post_meta( $current_id, '_monk_post_language', true );
-			} else {
-				$current_language = $monk_languages[ $default_language ]['slug'];
-				$current_locale   = $default_language;
-			}
-
-			if ( is_array( $monk_total_translations ) ) {
-				foreach ( $monk_total_translations as $lang_code => $post_id ) {
-					if ( in_array( $lang_code, $active_languages, true ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
-						$monk_translations[ $lang_code ] = $post_id;
-					}
-				}
-			} else {
-				$monk_translations[ $current_locale ] = $current_id;
-			}
-
-			if ( $monk_translations ) {
-				foreach ( $monk_translations as $lang_code => $post_id ) {
-					if ( $monk_languages[ $lang_code ]['slug'] !== $current_language ) {
-						$switchable_languages[ $monk_languages[ $lang_code ]['slug'] ] = get_permalink( $post_id );
-					}
-				}
-			} else {
-				$current_language                       = $monk_languages[ get_option( 'monk_default_language', false ) ]['slug'];
-				$monk_translations[ $current_language ] = $current_id;
-				foreach ( $monk_translations as $lang_code => $post_id ) {
-					if ( $lang_code !== $current_language ) {
-						$switchable_languages[ $lang_code ] = get_permalink( $post_id );
-					}
-				}
-			}
-		} // End if().
-
-		if ( is_archive() && ( is_category() || is_tag() || is_tax() ) ) {
-			$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
-			$monk_total_translations   = get_option( 'monk_term_translations_' . $monk_term_translations_id, false );
-
-			if ( get_term_meta( get_queried_object_id(), '_monk_term_language', true ) ) {
-				$current_language = $monk_languages[ get_term_meta( get_queried_object_id(), '_monk_term_language', true ) ]['slug'];
-				$current_locale   = get_term_meta( get_queried_object_id(), '_monk_term_language', true );
-			} else {
-				$current_language = $monk_languages[ $default_language ]['slug'];
-				$current_locale   = $default_language;
-			}
-
-			if ( is_array( $monk_total_translations ) ) {
-				foreach ( $monk_total_translations as $lang_code => $term_id ) {
-					if ( in_array( $lang_code, $active_languages, true ) || $monk_languages[ $lang_code ]['slug'] === $current_language ) {
-						$monk_translations[ $lang_code ] = $term_id;
-					}
-				}
-			} else {
-				$monk_translations[ $current_locale ] = get_the_id();
-			}
-
-			if ( $monk_translations ) {
-				foreach ( $monk_translations as $lang_code => $term_id ) {
-					if ( $monk_languages[ $lang_code ]['slug'] !== $current_language ) {
-						$switchable_languages[ $monk_languages[ $lang_code ]['slug'] ] = get_term_link( $term_id );
-					}
-				}
-			} else {
-				$current_language                       = $monk_languages[ get_option( 'monk_default_language', false ) ]['slug'];
-				$monk_translations[ $current_language ] = get_queried_object_id();
-
-				foreach ( $monk_translations as $lang_code => $term_id ) {
-					if ( $lang_code !== $current_language ) {
-						$switchable_languages[ $lang_code ] = get_term_link( $term_id );
-					}
-				}
-			}
-		} // End if().
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'widgets/partials/public-monk-language-switcher.php';
 	}
@@ -227,7 +130,7 @@ class Monk_Language_Switcher extends WP_Widget {
 	 */
 	public function monk_language_customizer( $wp_customize ) {
 
-		$wp_customize->add_section( 'monk_language_switcher' , array(
+		$wp_customize->add_section( 'monk_language_switcher', array(
 			'title'    => __( 'Language Switcher', 'monk' ),
 			'priority' => 700,
 		));

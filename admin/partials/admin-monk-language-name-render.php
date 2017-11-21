@@ -18,7 +18,7 @@ if ( ! $language ) : ?>
 	<?php elseif ( filter_input( INPUT_POST, 'post_id' ) && get_post_meta( filter_input( INPUT_POST, 'post_id' ), '_monk_post_language', true ) ) : ?>
 		<?php $language = get_post_meta( filter_input( INPUT_POST, 'post_id' ), '_monk_post_language', true ); ?>
 	<?php else : ?>
-		<?php $language = get_option( 'monk_default_language', false ); ?>
+		<?php $language = $this->default_language; ?>
 	<?php endif; ?>
 <?php endif; ?>
 <div class="monk-language-field">
