@@ -63,24 +63,13 @@ if ( ! defined( 'WPINC' ) ) {
 	<?php
 	$translation_counter = 0;
 	$option_current_name = 'monk_post_translations_' . $monk_id;
-	$post_translations   = get_option( $option_current_name );
+	$post_translations   = get_option( $option_current_name, false );
 	foreach ( $active_languages as $code ) {
 		if ( $post_translations && array_key_exists( $code, $post_translations ) ) {
-			$translation_counter = $translation_counter + 1;
+			$translation_counter = $translation_counter++;
 		}
 	}
 	?>
-	<div class="monk-post-meta-text">
-		<label for="monk-post-add-translation"><?php esc_html_e( 'Translations', 'monk' ); ?></label>
-		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
-		<a class="edit-post-status hide-if-no-js">
-			<span aria-hidden="true" class="monk-add-translation">
-				<?php esc_html_e( 'Add+', 'monk' ); ?>
-			</span>
-			<span class="screen-reader-text"><?php esc_html_e( 'Add new translation', 'monk' ); ?></span>
-		</a>
-		<?php endif; ?>
-	</div>
 	<div class="monk-post-meta-add-translation">
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 			<select name="monk_post_translation_id" class='monk-lang'>
@@ -162,7 +151,7 @@ if ( ! defined( 'WPINC' ) ) {
 			<?php if ( $is_available_languages ) : ?>
 				<a class="edit-post-status hide-if-no-js">
 					<span aria-hidden="true" class="monk-change-language">
-						<?php esc_html_e( 'Edit', 'monk' ); ?>
+						<?php esc_html_e( 'Change', 'monk' ); ?>
 					</span>
 					<span class="screen-reader-text"><?php esc_html_e( 'Change current language', 'monk' ); ?></span>
 				</a>
@@ -193,13 +182,15 @@ if ( ! defined( 'WPINC' ) ) {
 		</li>
 		<?php
 		if ( isset( $post_translations ) && $post_translations ) :
-			foreach ( $post_translations as $lang_code => $monk_id ) :
-				if ( strval( $monk_id ) !== $post->ID ) :
-					$language_url = get_edit_post_link( $monk_id );
+			foreach ( $post_translations as $lang_code => $translation_id ) :
+				if ( strval( $translation_id ) !== $post->ID ) :
+					$language_url = get_edit_post_link( $translation_id );
+					$title        = ucwords( get_the_title( $translation_id ) );
 		?>
 					<li>
-						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?></a>
+						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $title ); ?></a>
 					</li>
+					<span class="translation-language"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?></span>
 		<?php endif; ?>
 		<?php endforeach; ?>
 		<?php endif; ?>
