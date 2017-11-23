@@ -59,8 +59,22 @@ th.column-languages {
 	margin-top: 10px;
  }
 
+ .monk-translated-to li:nth-child(1) {
+ 	margin-bottom: 10px;
+ }
+
  .monk-translated-to li a {
 	text-decoration: none;
+ }
+
+ .monk-translated-to li {
+ 	margin-bottom: 0;
+ }
+
+ span.translation-language {
+ 	font-weight: bold;
+ 	margin-bottom: 6px;
+ 	font-size: 12px;
  }
 
  .option-disabled {
