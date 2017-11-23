@@ -243,6 +243,7 @@ class Monk {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
+		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_singular_language_query' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
 		$this->loader->add_filter( 'option_page_on_front', $plugin_public, 'monk_page_on_front_translations' );
@@ -292,7 +293,7 @@ class Monk {
 		$this->loader->add_filter( 'attachment_link', $plugin_links, 'monk_add_language_attachment_permalink', 20, 2 );
 		$this->loader->add_filter( 'post_type_archive_link', $plugin_links, 'monk_add_language_post_archive_permalink', 20, 2 );
 		$this->loader->add_action( 'get_search_form', $plugin_links, 'monk_change_search_form', 50 );
-		$this->loader->add_action( 'template_redirect', $plugin_links, 'monk_canonical_redirection', 5 );
+		// $this->loader->add_action( 'template_redirect', $plugin_links, 'monk_canonical_redirection', 5 );
 		$this->loader->add_action( 'rewrite_rules_array', $plugin_links, 'monk_create_rewrite_functions', 10, 1 );
 		$this->loader->add_action( 'admin_init', $plugin_links, 'monk_flush_on_update' );
 		$this->loader->add_action( 'get_previous_post_join', $plugin_links, 'monk_previous_and_next_posts', 10, 5 );
