@@ -254,4 +254,25 @@ class Monk_Public {
 
 		return $page_id;
 	}
+
+	public function monk_singular_language_query( $query ) {
+		if ( is_singular() && $query->is_main_query() ) {
+			$languages        = monk_get_available_languages();
+			$default_language = get_option( 'monk_default_language', false );
+			$lang_slug        = '';
+
+			if ( empty( $query->query_vars['lang'] ) ) {
+				$lang_slug = $languages[ $default_language ]['slug'];
+			} else {
+				$lang_slug = $query->query_vars['lang'];
+			}
+
+			$locale = monk_get_locale_by_slug( $lang_slug );
+
+			$query->query_vars['meta_key']   = '_monk_post_language';
+			$query->query_vars['meta_value'] = $locale;
+		}
+
+		return $query;
+	}
 }
