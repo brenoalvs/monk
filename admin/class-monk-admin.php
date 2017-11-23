@@ -1811,4 +1811,70 @@ class Monk_Admin {
 			return;
 		}
 	}
+
+	/**
+	 * Function to filter comments by their post language.
+	 *
+	 * @uses the comments_clauses filter
+	 *
+	 * @since    0.7.0
+	 *
+	 * @param    array $clauses Array with the query pieces to be filtered.
+	 * @return  array $clauses
+	 */
+	public function monk_admin_filter_comment_clauses( $clauses ) {
+		$screen = $this->get_current_screen();
+		$lang   = filter_input( INPUT_GET, 'lang' );
+
+		if ( ! is_admin() || 'edit-comments' !== $screen->base || 'all' === $lang ) {
+			return $clauses;
+		}
+
+		global $wpdb;
+
+		$default_language = get_option( 'monk_default_language', false );
+		$lang             = empty( $lang ) ? $default_language : $lang;
+		$replace          = array( '(', ')' );
+		$comment_status   = str_replace( $replace, '', $clauses['where'] );
+		$comment_status   = '(' . $comment_status . ')';
+		$not_exists       = '';
+
+		if ( $default_language === $lang ) {
+			$not_exists = " ( SELECT ID FROM $wpdb->posts WHERE ID NOT IN ( SELECT post_id FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '_monk_post_language' ) AND comment_count > 0 ) or comment_post_id IN ";
+		}
+
+		$clauses['where'] = 'comment_post_id in ' . $not_exists . " ( select ID FROM $wpdb->posts WHERE ID IN ( select post_id FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '_monk_post_language' AND $wpdb->postmeta.meta_value = '$lang' ) AND comment_count > 0 ) AND " . $comment_status;
+
+		$clauses['orderby'] = str_replace( 'wp_comments.', '', $clauses['orderby'] );
+
+		return $clauses;
+	}
+
+	/**
+	 * Function to add a language selector to comments admin page.
+	 *
+	 * @uses the restrict_manage_comments action
+	 *
+	 * @since    0.7.0
+	 *
+	 * @return  void
+	 */
+	public function monk_admin_add_comments_language_selector() {
+		$comment_status = filter_input( INPUT_GET, 'comment_status' );
+		$comment_status = 'all' === $comment_status ? 'total_comments' : $comment_status;
+		$comment_status = empty( $comment_status ) ? 'total_comments' : $comment_status;
+		$comment_class  = wp_count_comments();
+
+		foreach ( $comment_class as $status => $number ) {
+
+			if ( $comment_status === $status && intval( $number ) > 0 ) {
+				$monk_languages = monk_get_available_languages();
+				$languages      = get_option( 'monk_active_languages' );
+				$url_language   = filter_input( INPUT_GET, 'lang' );
+
+				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-language-selector-render.php';
+				break;
+			}
+		}
+	}
 }
