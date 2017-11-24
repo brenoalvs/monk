@@ -188,16 +188,11 @@ if ( ! defined( 'WPINC' ) ) {
 					$title        = ucwords( get_the_title( $translation_id ) );
 		?>
 					<li>
+						<span class="translation-language"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] . ': ' ); ?></span>
 						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $title ); ?></a>
 					</li>
-					<span class="translation-language"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?></span>
 		<?php endif; ?>
 		<?php endforeach; ?>
-		<?php endif; ?>
-		<?php if ( isset( $post_translations ) && count( $post_translations ) === 1 ) : ?>
-			<span class="monk-add-translation">
-				<?php esc_html_e( 'Not translated, add one', 'monk' ); ?>
-			</span>
 		<?php endif; ?>
 	</ul>
 <?php
