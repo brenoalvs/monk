@@ -71,10 +71,6 @@ th.column-languages {
  	margin-bottom: 0;
  }
 
- span.translation-language {
- 	font-weight: bold;
- }
-
  .option-disabled {
 	opacity: 0.5;
 	pointer-events: none;
