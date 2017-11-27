@@ -71,6 +71,20 @@ th.column-languages {
  	margin-bottom: 0;
  }
 
+ .monk-form-label {
+ 	display: inline-block;
+ 	margin: 6px 0 8px;
+ }
+
+ #monk-translation-actions {
+    clear: both;
+	text-align: right;
+ }
+
+ .monk-inner-section-elements {
+ 	margin-top: 10px;
+ }
+
  .option-disabled {
 	opacity: 0.5;
 	pointer-events: none;
