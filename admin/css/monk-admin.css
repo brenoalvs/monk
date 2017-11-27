@@ -71,6 +71,10 @@ th.column-languages {
  	margin-bottom: 0;
  }
 
+ .monk-box-item {
+ 	padding-top: 8px;
+ }
+
  .monk-form-label {
  	display: inline-block;
  	margin: 6px 0 8px;
@@ -82,7 +86,7 @@ th.column-languages {
  }
 
  .monk-inner-section-elements {
- 	margin-top: 10px;
+ 	/*padding-top: 10px;*/
  }
 
  .option-disabled {
