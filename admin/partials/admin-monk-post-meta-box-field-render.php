@@ -73,7 +73,7 @@ if ( ! defined( 'WPINC' ) ) {
 	<div>
 		<ul class="monk-translated-to">
 			<li>
-				<div class="monk-inner-section-elements">
+				<div>
 					<span id="current-language"><?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?></span>
 
 				<!--
@@ -115,26 +115,28 @@ if ( ! defined( 'WPINC' ) ) {
 				</div>
 			</li>
 			<?php
-			if ( isset( $post_translations ) && $post_translations ) :
+			if ( isset( $post_translations ) && 1 < count( $post_translations ) ) :
 			?>
 			<li>
 				<div>
 					<strong><?php esc_html_e( 'Translations', 'monk' ); ?></strong>
-					<div class="monk-inner-section-elements">
+					<div>
 					<?php
 					foreach ( $post_translations as $lang_code => $translation_id ) :
 						if ( strval( $translation_id ) !== $post->ID ) :
 							$language_url = get_edit_post_link( $translation_id );
 							$title        = ucwords( get_the_title( $translation_id ) );
 					?>
-						<span><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] . ': ' ); ?></span>
-						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $title ); ?></a>
+						<div class="monk-box-item">
+							<span><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] . ': ' ); ?></span>
+							<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $title ); ?></a>
+						</div>
 					<?php endif; ?>
 					<?php endforeach; ?>
-					<?php endif; ?>
 					</div>
 				</div>
 			</li>
+			<?php endif; ?>
 		</ul>
 	</div>
 	<div>
@@ -142,7 +144,7 @@ if ( ! defined( 'WPINC' ) ) {
 		<strong><?php esc_html_e( 'Add a translation', 'monk' ); ?></strong>
 		<span class="screen-reader-text"><?php esc_html_e( 'Add new translation', 'monk' ); ?></span>
 		<div>
-			<div class="monk-inner-section-elements">
+			<div class="monk-box-item">
 				<label for="monk-post-translation-id"><?php esc_html_e( 'Language', 'monk' ); ?></label>
 				<select name="monk_post_translation_id" class='monk-lang' id="monk-post-translation-id">
 					<?php
