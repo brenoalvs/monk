@@ -178,9 +178,21 @@
 			$( '.monk-change-current-language' ).slideUp( 150 );
 		});
 
+		$( document ).on( 'change', 'input#monk-add-blank-translation', function() {
+			if ( $( 'input#monk-add-blank-translation' ).is( ':checked' ) ) {
+				$( 'select#monk-post-translation-id' ).attr( 'disabled', true );
+			} else {
+				$( 'select#monk-post-translation-id' ).attr( 'disabled', false );
+			}
+		});
+
 		$( document ).on( 'click', 'button.monk-submit-translation', function( e ) {
 			e.preventDefault();
-			var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
+			if ( $( 'input#monk-add-blank-translation' ).is( ':checked' ) ) {
+				var encoded_url = $( 'input#monk-add-blank-translation' ).val();
+			} else {
+				var encoded_url = $( 'select[name="monk_post_translation_id"]' ).val();
+			}
 			window.location.replace( encoded_url );
 		});
 
