@@ -180,6 +180,7 @@ if ( ! defined( 'WPINC' ) ) {
 							endif;
 						endforeach;
 					else :
+						$language_url = '';
 						foreach ( $active_languages as $lang_code ) :
 							$language_url = add_query_arg( array(
 								'lang'    => $lang_code,
@@ -210,8 +211,9 @@ if ( ! defined( 'WPINC' ) ) {
 				<button class="button <?php echo esc_attr( $attach ); ?> button-primary button-large"><?php esc_html_e( 'Add', 'monk' ); ?></button>
 			</div>
 			<?php else : ?>
+				<?php $language_url = remove_query_arg( 'lang', $language_url ); ?>
 				<label for="blank-translation" class="monk-form-label"><?php esc_html_e( 'Add new blank translation', 'monk' ); ?></label>
-				<input type="checkbox" name="monk_blank_translation" value="blank" id="blank-translation">
+				<input type="checkbox" name="monk_blank_translation" value="<?php echo esc_url( $language_url ); ?>" id="blank-translation">
 			</div>
 			<div id="monk-translation-actions">
 				<button class="monk-submit-translation button button-primary button-large" id="<?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Add', 'monk' ); ?></button>
