@@ -59,8 +59,34 @@ th.column-languages {
 	margin-top: 10px;
  }
 
+ .monk-translated-to li:nth-child(1) {
+ 	margin-bottom: 10px;
+ }
+
  .monk-translated-to li a {
 	text-decoration: none;
+ }
+
+ .monk-translated-to li {
+ 	margin-bottom: 0;
+ }
+
+ .monk-box-item {
+ 	padding-top: 8px;
+ }
+
+ .monk-form-label {
+ 	display: inline-block;
+ 	margin: 6px 0 8px;
+ }
+
+ #monk-translation-actions {
+    clear: both;
+	text-align: right;
+ }
+
+ .monk-inner-section-elements {
+ 	/*padding-top: 10px;*/
  }
 
  .option-disabled {
