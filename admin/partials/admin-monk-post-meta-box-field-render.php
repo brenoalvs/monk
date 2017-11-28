@@ -212,8 +212,8 @@ if ( ! defined( 'WPINC' ) ) {
 			</div>
 			<?php else : ?>
 				<?php $language_url = remove_query_arg( 'lang', $language_url ); ?>
-				<label for="blank-translation" class="monk-form-label"><?php esc_html_e( 'Add new blank translation', 'monk' ); ?></label>
-				<input type="checkbox" name="monk_blank_translation" value="<?php echo esc_url( $language_url ); ?>" id="blank-translation">
+				<label for="monk-add-blank-translation" class="monk-form-label"><?php esc_html_e( 'Add new blank translation', 'monk' ); ?></label>
+				<input type="checkbox" name="monk_blank_translation" value="<?php echo esc_url( $language_url ); ?>" id="monk-add-blank-translation">
 			</div>
 			<div id="monk-translation-actions">
 				<button class="monk-submit-translation button button-primary button-large" id="<?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Add', 'monk' ); ?></button>
