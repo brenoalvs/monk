@@ -202,7 +202,7 @@ class Monk_Admin {
 		add_settings_field(
 			'monk_active_languages_list',
 			__( 'Active languages', 'monk' ),
-			array( $this, 'monk_languages_list_render' ),
+			array( $this, 'monk_active_languages_list_render' ),
 			'monk_settings',
 			'monk_general_settings'
 		);
@@ -407,6 +407,16 @@ class Monk_Admin {
 	 */
 	public function monk_add_new_language_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-add-languages-render.php';
+	}
+
+	/**
+	 * Function to render the languages list section, callback for the monk_active_languages_list element
+	 *
+	 * @since   0.8.0
+	 * @return  void
+	 */
+	public function monk_active_languages_list_render() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-active-languages-list-render.php';
 	}
 
 	/**
