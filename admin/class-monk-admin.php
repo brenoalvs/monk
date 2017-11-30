@@ -406,7 +406,7 @@ class Monk_Admin {
 	 * @return  void
 	 */
 	public function monk_add_new_language_render() {
-		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-active-languages-render.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-add-languages-render.php';
 	}
 
 	/**
