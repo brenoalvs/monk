@@ -198,6 +198,15 @@ class Monk_Admin {
 			'monk_general_settings'
 		);
 
+		register_setting( 'monk_settings', 'monk_active_languages_list' );
+		add_settings_field(
+			'monk_active_languages_list',
+			__( 'Active languages', 'monk' ),
+			array( $this, 'monk_languages_list_render' ),
+			'monk_settings',
+			'monk_general_settings'
+		);
+
 		register_setting( 'monk_settings', 'monk_active_languages' );
 		add_settings_field(
 			'monk_active_languages',
