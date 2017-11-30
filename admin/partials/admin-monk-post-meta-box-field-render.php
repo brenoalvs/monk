@@ -66,11 +66,54 @@ if ( ! defined( 'WPINC' ) ) {
 	$post_translations   = get_option( $option_current_name );
 	foreach ( $active_languages as $code ) {
 		if ( $post_translations && array_key_exists( $code, $post_translations ) ) {
-			$translation_counter = $translation_counter + 1;
+			$translation_counter = $translation_counter++;
 		}
 	}
 	?>
-	<div class="monk-post-meta-text">
+	<div class="monk-post-current-language">
+		<p>
+			<strong><?php echo esc_html_e( 'Language', 'monk' ); ?></strong>
+			<span id="current-language"><?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?></span>
+
+			<!--
+				Gives the option to alter the current post language
+				When the user select this feature,
+				the option containig translations is updated
+			-->
+			<?php if ( $is_available_languages ) : ?>
+				<a class="edit-post-status hide-if-no-js">
+					<span aria-hidden="true" class="monk-change-language">
+						<?php esc_html_e( 'Change', 'monk' ); ?>
+					</span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Change the language for this post', 'monk' ); ?></span>
+				</a>
+				<div class="monk-change-current-language">
+					<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
+						<select name="monk_post_language" id="new-post-language">
+							<option value="<?php echo esc_attr( $post_default_language ); ?>" selected>
+								<?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?>
+							</option>
+							<?php
+							foreach ( $active_languages as $lang_code ) :
+								if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
+									$lang_name = $monk_languages[ $lang_code ]['english_name'];
+							?>
+									<option  value="<?php echo esc_attr( $lang_code ); ?>"/>
+										<?php echo esc_html( $lang_name ); ?>
+									</option>
+							<?php
+								endif;
+							endforeach;
+							?>
+						</select>
+						<button class="monk-change-post-language button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
+						<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+		</p>
+	</div>
+	<div class="monk-post-translations">
 		<label for="monk-post-add-translation"><?php esc_html_e( 'Translations', 'monk' ); ?></label>
 		<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
 		<a class="edit-post-status hide-if-no-js">
@@ -148,57 +191,23 @@ if ( ! defined( 'WPINC' ) ) {
 				<button class="monk-submit-translation button" id="<?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 			<?php endif; ?>
 			<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
+			<p>
+				<input type="checkbox" id="monk-copy-content" disabled="true">
+				<label for="monk-copy-content" class="option-disabled"><?php esc_html_e( 'Copy post settings (Coming soon!)', 'monk' ); ?></label>
+			</p>
 		<?php endif; ?>
 	</div>
 	<ul class="monk-translated-to">
-		<li>
-			<span id="current-language"><?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?></span>
-
-			<!--
-				Gives the option to alter the current post language
-				When the user select this feature,
-				the option containig translations is updated
-			-->
-			<?php if ( $is_available_languages ) : ?>
-				<a class="edit-post-status hide-if-no-js">
-					<span aria-hidden="true" class="monk-change-language">
-						<?php esc_html_e( 'Edit', 'monk' ); ?>
-					</span>
-					<span class="screen-reader-text"><?php esc_html_e( 'Change current language', 'monk' ); ?></span>
-				</a>
-				<div class="monk-change-current-language">
-					<?php if ( count( $active_languages ) !== $translation_counter ) : ?>
-						<select name="monk_post_language" id="new-post-language">
-							<option value="<?php echo esc_attr( $post_default_language ); ?>" selected>
-								<?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?>
-							</option>
-							<?php
-							foreach ( $active_languages as $lang_code ) :
-								if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-									$lang_name = $monk_languages[ $lang_code ]['english_name'];
-							?>
-									<option  value="<?php echo esc_attr( $lang_code ); ?>"/>
-										<?php echo esc_html( $lang_name ); ?>
-									</option>
-							<?php
-								endif;
-							endforeach;
-							?>
-						</select>
-						<button class="monk-change-post-language button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
-						<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
-					<?php endif; ?>
-				</div>
-			<?php endif; ?>
-		</li>
 		<?php
 		if ( isset( $post_translations ) && $post_translations ) :
-			foreach ( $post_translations as $lang_code => $monk_id ) :
-				if ( strval( $monk_id ) !== $post->ID ) :
-					$language_url = get_edit_post_link( $monk_id );
+			foreach ( $post_translations as $lang_code => $translation_id ) :
+				if ( strval( $translation_id ) !== $post->ID ) :
+					$language_url      = get_edit_post_link( $translation_id );
+					$translation_title = get_the_title( $translation_id );
 		?>
 					<li>
-						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?></a>
+						<span><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] . ': ' ); ?></span>
+						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $translation_title ); ?></a>
 					</li>
 		<?php endif; ?>
 		<?php endforeach; ?>
