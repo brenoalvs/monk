@@ -67,7 +67,7 @@ class Monk_Language_Switcher extends WP_Widget {
 		$switchable_languages     = array();
 		$active_languages_slug    = array();
 		$title                    = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Languages', 'monk' );
-		$flag                     = ! empty( $instance['flag'] ) ? true : false;
+		$flag                     = empty( $instance['flag'] ) ? true : false;
 		$monk_love                = ! empty( $instance['monk_love'] ) ? true : false;
 		$active_languages         = $this->active_languages;
 		$current_language         = '';
