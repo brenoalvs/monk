@@ -201,8 +201,8 @@ class Monk_Admin {
 		register_setting( 'monk_settings', 'monk_active_languages' );
 		add_settings_field(
 			'monk_active_languages',
-			__( 'Add new translation', 'monk' ),
-			array( $this, 'monk_active_languages_render' ),
+			__( 'Add new language', 'monk' ),
+			array( $this, 'monk_add_new_language_render' ),
 			'monk_settings',
 			'monk_general_settings'
 		);
@@ -396,7 +396,7 @@ class Monk_Admin {
 	 * @since   0.1.0
 	 * @return  void
 	 */
-	public function monk_active_languages_render() {
+	public function monk_add_new_language_render() {
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-active-languages-render.php';
 	}
 
