@@ -1459,8 +1459,10 @@ class Monk_Admin {
 				return;
 			}
 		}
-		$url        = monk_get_current_url();
-		$action_url = add_query_arg( 'lang', '', $url );
+		$monk_languages = monk_get_available_languages();
+		$languages      = get_option( 'monk_active_languages', array() );
+		$url            = monk_get_current_url();
+		$action_url     = add_query_arg( 'lang', '', $url );
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-term-language-selector-render.php';
 	}
@@ -1869,7 +1871,7 @@ class Monk_Admin {
 
 			if ( $comment_status === $status && intval( $number ) > 0 ) {
 				$monk_languages = monk_get_available_languages();
-				$languages      = get_option( 'monk_active_languages' );
+				$languages      = get_option( 'monk_active_languages', array() );
 				$url_language   = filter_input( INPUT_GET, 'lang' );
 
 				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-language-selector-render.php';
