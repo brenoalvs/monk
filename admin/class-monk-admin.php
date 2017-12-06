@@ -703,8 +703,9 @@ class Monk_Admin {
 
 		$old_meta_query = $query->get( 'meta_query' );
 
-		$meta_query = array_merge( $old_meta_query, $meta_query );
-
+		if ( is_array( $old_meta_query ) ) {
+			$meta_query = array_merge( $old_meta_query, $meta_query );
+		}
 		$query->set( 'meta_query', $meta_query );
 	}
 
@@ -811,7 +812,9 @@ class Monk_Admin {
 			} // End if().
 		} // End if().
 
-		$args = array_merge( $old_meta_query, $args['meta_query'] );
+		if ( is_array( $old_meta_query ) ) {
+			$args['meta_query'] = array_merge( $old_meta_query, $args['meta_query'] );
+		}
 		return $args;
 	}
 

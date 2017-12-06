@@ -156,9 +156,11 @@ class Monk_Public {
 
 		$meta_query = $query->get( 'meta_query' );
 
-		$meta_query = array_merge( $meta_query, $query_args );
+		if ( is_array( $meta_query ) ) {
+			$query_args = array_merge( $meta_query, $query_args );
+		}
 
-		$query->set( 'meta_query', $meta_query );
+		$query->set( 'meta_query', $query_args );
 	}
 
 	/**
@@ -206,7 +208,9 @@ class Monk_Public {
 			);
 		}
 
-		$args = array_merge( $old_meta_query, $args['meta_query'] );
+		if ( is_array( $old_meta_query ) ) {
+			$args['meta_query'] = array_merge( $old_meta_query, $args['meta_query'] );
+		}
 
 		return $args;
 	}
