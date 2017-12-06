@@ -154,7 +154,11 @@ class Monk_Public {
 			);
 		}
 
-		$query->set( 'meta_query', array( $query_args ) );
+		$meta_query = $query->get( 'meta_query' );
+
+		$meta_query = array_merge( $meta_query, $query_args );
+
+		$query->set( 'meta_query', $meta_query );
 	}
 
 	/**
@@ -177,6 +181,7 @@ class Monk_Public {
 		$default_slug     = $monk_languages[ $default_language ]['slug'];
 		$current_language = get_query_var( 'lang', $default_slug );
 		$current_language = monk_get_locale_by_slug( $current_language );
+		$old_meta_query   = $args['meta_query'];
 
 		if ( $current_language && in_array( $current_language, $active_languages ) ) {
 			$args['meta_query'] = array(
@@ -200,6 +205,8 @@ class Monk_Public {
 				),
 			);
 		}
+
+		$args = array_merge( $old_meta_query, $args['meta_query'] );
 
 		return $args;
 	}
