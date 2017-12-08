@@ -1,6 +1,6 @@
 <?php
 /**
- * Provides the view for monk_add_commentt_language_selector function.
+ * Provides the view for monk_add_term_language_filter function.
  *
  * @since      0.7.0
  *
