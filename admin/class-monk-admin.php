@@ -1872,7 +1872,7 @@ class Monk_Admin {
 				$languages      = get_option( 'monk_active_languages' );
 				$url_language   = filter_input( INPUT_GET, 'lang' );
 
-				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-language-selector-render.php';
+				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-comments-language-selector-render.php';
 				break;
 			}
 		}
