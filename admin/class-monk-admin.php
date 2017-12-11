@@ -701,6 +701,11 @@ class Monk_Admin {
 			);
 		}
 
+		$old_meta_query = $query->get( 'meta_query' );
+
+		if ( is_array( $old_meta_query ) ) {
+			$meta_query = array_merge( $old_meta_query, $meta_query );
+		}
 		$query->set( 'meta_query', $meta_query );
 	}
 
@@ -717,7 +722,7 @@ class Monk_Admin {
 		if ( ! is_admin() ) {
 			return $args;
 		}
-
+		$old_meta_query = $args['meta_query'];
 		$screen = $this->get_current_screen();
 
 		if ( is_customize_preview() ) {
@@ -807,6 +812,9 @@ class Monk_Admin {
 			} // End if().
 		} // End if().
 
+		if ( is_array( $old_meta_query ) ) {
+			$args['meta_query'] = array_merge( $old_meta_query, $args['meta_query'] );
+		}
 		return $args;
 	}
 
