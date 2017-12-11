@@ -32,7 +32,7 @@ class Monk_Activator {
 
 		$language = get_locale() ? get_locale() : 'en_US';
 
-		$default_post_category = get_term( get_option( 'default_category' ) );
+		$default_post_category = get_term( get_option( 'default_category' ), OBJECT );
 		$uncategorized_term    = get_term_by( 'id', 1, 'category' );
 
 		update_option( 'monk_default_language', $language );
