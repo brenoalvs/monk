@@ -37,7 +37,7 @@ echo $args['before_widget'];
 			</span>
 		</div>
 		<ul class="monk-language-dropdown">
-			<?php if ( 1 >= count( $switchable_languages ) ) : ?>
+			<?php if ( 1 > count( $switchable_languages ) ) : ?>
 				<li class="monk-lang">
 					<option>
 					<?php

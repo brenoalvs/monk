@@ -701,6 +701,11 @@ class Monk_Admin {
 			);
 		}
 
+		$old_meta_query = $query->get( 'meta_query' );
+
+		if ( is_array( $old_meta_query ) ) {
+			$meta_query = array_merge( $old_meta_query, $meta_query );
+		}
 		$query->set( 'meta_query', $meta_query );
 	}
 
@@ -717,8 +722,8 @@ class Monk_Admin {
 		if ( ! is_admin() ) {
 			return $args;
 		}
-
-		$screen = $this->get_current_screen();
+		$old_meta_query = $args['meta_query'];
+		$screen         = $this->get_current_screen();
 
 		if ( is_customize_preview() ) {
 			$language = $this->default_language;
@@ -807,6 +812,9 @@ class Monk_Admin {
 			} // End if().
 		} // End if().
 
+		if ( is_array( $old_meta_query ) ) {
+			$args['meta_query'] = array_merge( $old_meta_query, $args['meta_query'] );
+		}
 		return $args;
 	}
 
@@ -1459,8 +1467,10 @@ class Monk_Admin {
 				return;
 			}
 		}
-		$url        = monk_get_current_url();
-		$action_url = add_query_arg( 'lang', '', $url );
+		$monk_languages = monk_get_available_languages();
+		$languages      = get_option( 'monk_active_languages', array() );
+		$url            = monk_get_current_url();
+		$action_url     = add_query_arg( 'lang', '', $url );
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/admin-monk-term-language-selector-render.php';
 	}
@@ -1869,10 +1879,10 @@ class Monk_Admin {
 
 			if ( $comment_status === $status && intval( $number ) > 0 ) {
 				$monk_languages = monk_get_available_languages();
-				$languages      = get_option( 'monk_active_languages' );
+				$languages      = get_option( 'monk_active_languages', array() );
 				$url_language   = filter_input( INPUT_GET, 'lang' );
 
-				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-term-language-selector-render.php';
+				require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-monk-comments-language-selector-render.php';
 				break;
 			}
 		}
