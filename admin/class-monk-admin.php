@@ -723,7 +723,7 @@ class Monk_Admin {
 			return $args;
 		}
 		$old_meta_query = $args['meta_query'];
-		$screen = $this->get_current_screen();
+		$screen         = $this->get_current_screen();
 
 		if ( is_customize_preview() ) {
 			$language = $this->default_language;
