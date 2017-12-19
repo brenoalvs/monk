@@ -242,7 +242,7 @@ function monk_get_translations() {
 					if ( empty( $has_default_language_url ) && $lang_slug === $default_slug ) {
 						$translation_data[ $lang_slug ]['url'] = remove_query_arg( 'lang', $current_url );
 					} else {
-						$translation_data[ $lang_slug ]['url'] = add_query_arg( 'lang', sanitize_key( $lang_code ) );
+						$translation_data[ $lang_slug ]['url'] = add_query_arg( 'lang', sanitize_key( $lang_slug ) );
 					}
 				}
 			}
