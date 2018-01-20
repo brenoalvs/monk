@@ -1250,8 +1250,9 @@ class Monk_Admin {
 	 */
 	public function monk_fields_to_save( $post, $attachment ) {
 		$active_languages = $this->active_languages;
+		$referer          = wp_parse_url( $_SERVER['HTTP_REFERER'] );
 
-		if ( 'upload.php' !== substr( strrchr( parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
+		if ( 'upload.php' !== substr( strrchr( $referer['path'], '/' ), 1 ) ) {
 			if ( isset( $attachment['language'] ) ) {
 				if ( is_array( $active_languages ) ) {
 					if ( in_array( $attachment['language'], $active_languages ) ) {
@@ -1313,7 +1314,9 @@ class Monk_Admin {
 			$language  = $monk_languages[ $default_language ]['english_name'];
 		}
 
-		if ( 'upload.php' !== substr( strrchr( wp_parse_url( $_SERVER['HTTP_REFERER'] )['path'], '/' ), 1 ) ) {
+		$referer = wp_parse_url( $_SERVER['HTTP_REFERER'] );
+
+		if ( 'upload.php' !== substr( strrchr( $referer['path'], '/' ), 1 ) ) {
 			$is_translatable = false;
 		}
 
