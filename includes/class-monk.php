@@ -55,6 +55,24 @@ class Monk {
 	protected $version;
 
 	/**
+	 * The default language of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   protected
+	 * @var      string    $default_language    The default language of the plugin.
+	 */
+	protected $default_language;
+
+	/**
+	 * The active languages of the plugin.
+	 *
+	 * @since    0.7.0
+	 * @access   protected
+	 * @var      array $active_languages The active languages of the plugin.
+	 */
+	protected $active_languages;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -66,15 +84,17 @@ class Monk {
 	 */
 	public function __construct() {
 
-		$this->plugin_name = 'Monk';
-		$this->version = '0.6.0';
+		$this->plugin_name      = 'Monk';
+		$this->version          = '0.7.0';
+		$this->default_language = get_option( 'monk_default_language', false );
+		$this->active_languages = get_option( 'monk_active_languages', array() );
 
 		$this->load_dependencies();
-		$this->set_locale();
+		$this->set_locale( $this->get_default_language(), $this->get_active_languages() );
 		$this->define_global_hooks();
-		$this->define_admin_hooks();
-		$this->define_public_hooks();
-		$this->define_link_hooks();
+		$this->define_admin_hooks( $this->get_default_language(), $this->get_active_languages() );
+		$this->define_public_hooks( $this->get_default_language(), $this->get_active_languages() );
+		$this->define_link_hooks( $this->get_default_language(), $this->get_active_languages() );
 		$this->define_widget_hooks();
 	}
 
@@ -150,13 +170,16 @@ class Monk {
 	 * Uses the Monk_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
+	 * @param    string $default_language The language defined by user.
+	 * @param    array  $active_languages Active languages to be used accorss the site.
+	 *
 	 * @since    0.1.0
 	 * @access   private
 	 * @return  void
 	 */
-	private function set_locale() {
+	private function set_locale( $default_language, $active_languages ) {
 
-		$monk_i18n = new Monk_I18n();
+		$monk_i18n = new Monk_I18n( $default_language, $active_languages );
 
 		$this->loader->add_action( 'plugins_loaded', $monk_i18n, 'load_plugin_textdomain' );
 		$this->loader->add_filter( 'locale', $monk_i18n, 'monk_define_locale' );
@@ -179,13 +202,15 @@ class Monk {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    0.1.0
-	 * @access   private
+	 * @param   string $default_language The default language of the plugin.
+	 * @param   array  $active_languages The active languages of the plugin.
+	 *
+	 * @since   0.1.0
+	 * @access  private
 	 * @return  void
 	 */
-	private function define_admin_hooks() {
-
-		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
+	private function define_admin_hooks( $default_language, $active_languages ) {
+		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version(), $default_language, $active_languages );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -201,8 +226,10 @@ class Monk {
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'delete_attachment', $plugin_admin, 'monk_delete_post_data' );
 		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'monk_admin_languages_selector' );
+		$this->loader->add_action( 'restrict_manage_comments', $plugin_admin, 'monk_admin_add_comments_language_selector' );
 		$this->loader->add_filter( 'pre_get_posts', $plugin_admin, 'monk_admin_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_admin, 'monk_admin_terms_filter', 10, 2 );
+		$this->loader->add_filter( 'comments_clauses', $plugin_admin, 'monk_admin_filter_comment_clauses', 10, 2 );
 		$this->loader->add_filter( 'manage_posts_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'monk_language_column_head' );
 		$this->loader->add_filter( 'manage_media_columns', $plugin_admin, 'monk_language_column_head' );
@@ -231,20 +258,24 @@ class Monk {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
+	 * @param   string $default_language The default language of the plugin.
+	 * @param   array  $active_languages The active languages of the plugin.
+	 *
 	 * @since    0.1.0
 	 * @access   private
 	 * @return  void
 	 */
-	private function define_public_hooks() {
+	private function define_public_hooks( $default_language, $active_languages ) {
 
-		$plugin_public = new Monk_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Monk_Public( $this->get_plugin_name(), $this->get_version(), $default_language, $active_languages );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'wp_head', $plugin_public, 'monk_print_localization_tags' );
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'monk_public_posts_filter' );
 		$this->loader->add_filter( 'get_terms_defaults', $plugin_public, 'monk_public_terms_filter' );
 		$this->loader->add_filter( 'wp_nav_menu_args', $plugin_public, 'monk_filter_nav_menus' );
+		$this->loader->add_filter( 'option_page_on_front', $plugin_public, 'monk_page_on_front_translations' );
 
 		$options = array(
 			'blogname',
@@ -270,12 +301,15 @@ class Monk {
 	/**
 	 * Register all of the hooks related to links and permalinks
 	 *
+	 * @param   string $default_language The default language of the plugin.
+	 * @param   array  $active_languages The active languages of the plugin.
+	 *
 	 * @since    0.2.0
 	 * @access   private
 	 */
-	private function define_link_hooks() {
+	private function define_link_hooks( $default_language, $active_languages ) {
 
-		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version() );
+		$plugin_links = new Monk_Links( $this->get_plugin_name(), $this->get_version(), $default_language, $active_languages );
 
 		$this->loader->add_action( 'init', $plugin_links, 'monk_add_home_rewrite_rule' );
 		$this->loader->add_filter( 'home_url', $plugin_links, 'monk_add_language_home_permalink', 10, 2 );
@@ -323,8 +357,8 @@ class Monk {
 	 * @return  void
 	 */
 	public function add_term_hooks() {
-		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version() );
-		$taxonomies = get_taxonomies();
+		$plugin_admin = new Monk_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_default_language(), $this->get_active_languages() );
+		$taxonomies   = get_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
 			add_action( $taxonomy . '_add_form_fields', array( $plugin_admin, 'monk_custom_taxonomy_field' ) );
@@ -410,4 +444,23 @@ class Monk {
 		return $this->version;
 	}
 
+	/**
+	 * Retrieve the default language of the plugin.
+	 *
+	 * @since     0.7.0
+	 * @return    string    The default language of the plugin.
+	 */
+	public function get_default_language() {
+		return $this->default_language;
+	}
+
+	/**
+	 * Retrieve the active languages of the plugin.
+	 *
+	 * @since     0.7.0
+	 * @return    array    The active languages of the plugin.
+	 */
+	public function get_active_languages() {
+		return $this->active_languages;
+	}
 }

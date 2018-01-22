@@ -46,7 +46,7 @@ if ( ! defined( 'WPINC' ) ) {
 				</select>
 			</p>
 			<?php if ( $post_translations && $post->ID !== $monk_id ) : ?>
-				<?php if ( get_the_title( $monk_id ) ) : ?> 
+				<?php if ( get_the_title( $monk_id ) ) : ?>
 					<?php $title = get_the_title( $monk_id ); ?>
 				<?php else : ?>
 					<?php $title = get_the_title( reset( $monk_translations ) ); ?>
@@ -65,7 +65,7 @@ if ( ! defined( 'WPINC' ) ) {
 	$option_current_name = 'monk_post_translations_' . $monk_id;
 	$post_translations   = get_option( $option_current_name );
 	foreach ( $active_languages as $code ) {
-		if ( $post_translations && array_key_exists( $code , $post_translations ) ) {
+		if ( $post_translations && array_key_exists( $code, $post_translations ) ) {
 			$translation_counter = $translation_counter + 1;
 		}
 	}
@@ -93,7 +93,7 @@ if ( ! defined( 'WPINC' ) ) {
 							'lang'      => $lang_code,
 							'monk_id'   => $monk_id,
 						), $monk_translation_url );
-						$lang_id = sanitize_title( $lang_code );
+						$lang_id      = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
 							$lang_name = $monk_languages[ $lang_code ]['english_name'];
 					?>
@@ -119,10 +119,10 @@ if ( ! defined( 'WPINC' ) ) {
 				else :
 					foreach ( $active_languages as $lang_code ) :
 						$language_url = add_query_arg( array(
-							'lang'      => $lang_code,
-							'monk_id'   => $monk_id,
+							'lang'    => $lang_code,
+							'monk_id' => $monk_id,
 						), $monk_translation_url );
-						$lang_id = sanitize_title( $lang_code );
+						$lang_id      = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
 							$lang_name = $monk_languages[ $lang_code ]['english_name'];
 					?>
@@ -154,7 +154,7 @@ if ( ! defined( 'WPINC' ) ) {
 		<li>
 			<span id="current-language"><?php echo esc_html( $monk_languages[ $post_default_language ]['english_name'] ); ?></span>
 
-			<!-- 
+			<!--
 				Gives the option to alter the current post language
 				When the user select this feature,
 				the option containig translations is updated

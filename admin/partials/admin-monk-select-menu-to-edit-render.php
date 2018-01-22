@@ -78,7 +78,7 @@ $response = '';
 <?php endif; ?>
 
 <?php
-$menu_id           = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
+$menu_id = empty( $menu ) || 'delete' === filter_input( INPUT_GET, 'action' ) ? get_user_option( 'nav_menu_recently_edited' ) : $menu;
 
 if ( is_nav_menu( $menu_id ) ) :
 	$menu_language     = get_term_meta( $menu_id, '_monk_menu_language', true );
@@ -91,7 +91,7 @@ if ( is_nav_menu( $menu_id ) ) :
 		$menu = get_term( $menu_id );
 	}
 
-	$menu_name      = $menu->name;
+	$menu_name = $menu->name;
 	?>
 	<?php if ( array_key_exists( $default_language, $menu_translations ) && $menu_language !== $default_language ) : ?>
 		<?php if ( array_key_exists( $default_language, $menu_translations ) ) : ?>
@@ -102,7 +102,7 @@ if ( is_nav_menu( $menu_id ) ) :
 
 		<?php if ( ! $locations_tab ) : ?>
 			<div class="hide-if-no-js" id="monk-menu-translation-message">
-			<?php $locations = array_keys( $menus, $menu ); ?>
+			<?php $locations = array_keys( $menus, $menu, true ); ?>
 			<?php if ( $locations ) : ?>
 				<?php foreach ( $locations as $location ) : ?>
 					<?php if ( array_key_exists( $location, $registered_menus ) ) : ?>
@@ -110,7 +110,7 @@ if ( is_nav_menu( $menu_id ) ) :
 					<?php endif; ?>
 				<?php endforeach; ?>
 			<?php else : ?>
-				<div><?php esc_html_e( 'None', 'monk' ); ?></div>
+				<div><?php esc_html_e( 'No assigned location', 'monk' ); ?></div>
 			<?php endif; ?>
 			</div>
 		<?php endif; ?>
