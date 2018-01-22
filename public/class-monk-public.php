@@ -309,7 +309,7 @@ class Monk_Public {
 
 		foreach ( $monk_localization_data as $slug => $url ) {
 			if ( null !== $url ) {
-				echo '<link rel="alternate" href="' . esc_url( $url ) . '" hreflang="' . esc_attr( $slug ) . '" />';
+				echo '<link rel="alternate" href="' . esc_url( $url ) . '" hreflang="' . esc_attr( $slug ) . '" />' . PHP_EOL;
 			}
 		}
 	}
