@@ -2,9 +2,9 @@
 Contributors: breno-alves, ale-correa, leonofre, rafaelangeline
 Tags: multilingual, translation, language, multilanguage, international, localization
 Requires at least: 4.6
-Tested up to: 4.8.1
+Tested up to: 4.9.2
 Requires PHP: 5.4
-Stable tag: 0.6.0
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,28 +71,22 @@ You must! Join us on our [GitHub repository](http://github.com/brenoalvs/monk/) 
 
 == Changelog ==
 
+= [0.7.0] =
+* Added hreflang tags
+* Added comments filter by post language on admin
+* Added monk_get_translations function that can be used to create custom language switchers
+* Changed database queries to improve performance
+* Fixed static front page bug
+* Fixed custom meta queries overwrite
+* Fixed syntax error on plugin activation for older PHP versions
+* Fixed terms filter button was not showing
+* Fixed incorrectly language options when opening last edited menu
+
 = [0.6.0] =
 * Changed the notification system for when Monk settings page gets updated
 * Improved customizer settings for the Language Switcher widget
 * Added terms language filter
 * Added the filter monk_custom_language_slug to let users change language slugs
-
-= [0.5.2] =
-* Fixed bug when a post was restored from trash
-* Fixed the default category english translation
-* Fixed bug when "All languages" is selected in the language selector of post and pages
-
-= [0.5.1] =
-* Fixed bug on medias update process
-* Fixed accessibility attributes on admin controls.
-* Fixed persistent language filter when post type has no posts.
-
-= [0.5.0] =
-* Added site title and description translation
-* Added shortcode to retrieve translation links
-* Added the 'uncategorized' category translations
-* Fixed custom taxonomies links on language switcher
-* Fixed medias filter by language on post edit pages
 
 [See changelog for older versions](https://raw.githubusercontent.com/brenoalvs/monk/master/CHANGELOG.md)
 

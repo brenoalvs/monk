@@ -1,5 +1,16 @@
 ## Changelog
 
+- **[0.7.0]**
+	+ Added hreflang tags
+	+ Added comments filter by post language on admin
+	+ Added monk_get_translations function that can be used to create custom language switchers.
+	+ Changed database queries to improve performance
+	+ Fixed static front page bug
+	+ Fixed custom meta queries overwrite
+	+ Fixed syntax error on plugin activation for older PHP versions.
+	+ Fixed terms filter button was not showing.
+	+ Fixed incorrectly language options when opening last edited menu.
+
 - **[0.6.0]**
     + Changed the notification system for when Monk settings page gets updated
     + Improved customizer settings for the Language Switcher widget
