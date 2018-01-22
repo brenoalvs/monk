@@ -129,6 +129,7 @@ function monk_get_available_languages() {
 				case 'es_PE':
 				case 'es_CL':
 				case 'es_AR':
+				case 'es_CR':
 				case 'fr_CA':
 				case 'fr_BE':
 				case 'nl_NL_formal':
