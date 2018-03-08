@@ -1278,6 +1278,9 @@ class Monk_Admin {
 	 * @since  0.2.0
 	 */
 	public function monk_attachment_meta_box( $form_fields, $post ) {
+		if ( 'edit' === filter_input( INPUT_GET, 'action' ) && 'attachment' === $post->post_type ) {
+			return $form_fields;
+		}
 		$monk_languages = monk_get_available_languages();
 
 		$post_id           = $post->ID;
