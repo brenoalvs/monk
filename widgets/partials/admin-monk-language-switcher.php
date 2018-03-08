@@ -22,7 +22,7 @@ $monk_love = isset( $instance['monk_love'] ) ? (bool) $instance['monk_love'] : f
 	<input class="widefat monk-input-text" id="monk-title" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 	<label class="monk-label-block" for="<?php echo esc_attr( $this->get_field_id( 'flag' ) ); ?>">
 		<input class="monk-input-checkbox" type="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'flag' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'flag' ) ); ?>"<?php checked( $flag ); ?> />
-		<?php esc_html_e( 'Hide Flags', 'monk' ); ?>
+		<?php esc_html_e( 'Show Flags', 'monk' ); ?>
 	</label>
 	<label class="monk-label-block" for="<?php echo esc_attr( $this->get_field_id( 'monk_love' ) ); ?>">
 		<input class="monk-input-checkbox" type="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'monk_love' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'monk_love' ) ); ?>"<?php checked( $monk_love ); ?> />
