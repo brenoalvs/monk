@@ -16,57 +16,70 @@ th.column-languages {
 	outline: none;
 }
 
- div.monk-post-meta-text label {
+div.monk-post-current-language {
+	border-bottom: 1px solid #eeeeee;
+}
+
+div.monk-post-current-language strong {
+	display: block;
+}
+
+div.monk-post-translations {
+	padding-top: 13px;
+}
+
+div.monk-post-translations label {
 	font-weight: 600;
 	line-height: 1em;
 	margin: 0 0 8px 0;
 
- }
+}
 
- div.monk-post-meta-text label:before {
+div.monk-post-translations label:before {
 	font: 400 20px/1 dashicons;
 	color: #82878c;
 	content: '\f326';
 	margin: 0 7px 0 -2px;
 	vertical-align: top;
- }
+}
 
- div.monk-post-meta-text h2 {
+div.monk-post-translations h2 {
 	color: #82878c;
- }
+}
 
  .monk-add-translation, .monk-change-language, .button-cancel {
 	text-decoration: underline;
 	cursor: pointer;
- }
+}
 
- .monk-post-meta-add-translation {
+.monk-post-meta-add-translation {
 	display: none;
 	margin-top: 15px;
- }
+	border-bottom: 1px solid #eeeeee;
+}
 
- .monk-change-current-language {
+.monk-change-current-language {
 	display: none;
 	margin: 10px 0 15px;
- }
+}
 
- .monk-post-meta-option:before {
+.monk-post-meta-option:before {
 	font: 400 20px/1 dashicons;
 	color: #82878c;
- }
+}
 
- .monk-translated-to {
+.monk-translated-to {
 	margin-top: 10px;
- }
+}
 
- .monk-translated-to li a {
+.monk-translated-to li a {
 	text-decoration: none;
- }
+}
 
- .option-disabled {
-	opacity: 0.5;
+.option-disabled {
+	opacity: 0.8;
 	pointer-events: none;
- }
+}
 
 .monk-translation-link {
 	border-bottom: 1px solid #fff;

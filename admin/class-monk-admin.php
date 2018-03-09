@@ -439,7 +439,7 @@ class Monk_Admin {
 	public function monk_post_meta_box() {
 		add_meta_box(
 			'monk_post_meta_box_field',
-			__( 'Language', 'monk' ),
+			__( 'Languages', 'monk' ),
 			array( $this, 'monk_post_meta_box_field_render' ),
 			'',
 			'side',
