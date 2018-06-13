@@ -103,6 +103,16 @@ class Monk_Public {
 		// Whether we must filter main query.
 		$filter_main_query = false;
 
+		/**
+		 * Hotfix: Avoid filter ACF fields by language.
+		 * So you can grab a post field from any language.
+		 *
+		 * @todo Support ACF field groups translations (admin-only).
+		 */
+		if ( $query->get( 'post_type' ) === 'acf-field' ) {
+			return;
+		}
+
 		if ( is_home() || is_archive() || is_search() ) {
 			$filter_main_query = true;
 		}
@@ -133,7 +143,7 @@ class Monk_Public {
 			return;
 		}
 
-		if ( $current_language && in_array( $current_language, $active_languages ) && $default_language !== $current_language ) {
+		if ( $current_language && in_array( $current_language, $active_languages ) ) {
 			$query_args[] = array(
 				'key'     => '_monk_post_language',
 				'value'   => $current_language,
