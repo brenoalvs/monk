@@ -151,7 +151,7 @@ function monk_get_available_languages() {
 				'english_name' => $lang_content['english_name'],
 				'slug'         => $slug,
 			);
-		} // End foreach().
+		} // End foreach.
 
 		uasort( $monk_languages, function( $a, $b ) {
 			return strcmp( $a['english_name'], $b['english_name'] );

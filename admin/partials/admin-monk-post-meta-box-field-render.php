@@ -33,9 +33,8 @@ if ( ! defined( 'WPINC' ) ) {
 				} else {
 					$available_languages = $active_languages;
 				}
-
-				foreach ( $available_languages as $lang_code ) :
 				?>
+				<?php foreach ( $available_languages as $lang_code ) : ?>
 					<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
 						<?php
 							$lang_name = $monk_languages[ $lang_code ]['english_name'];
@@ -102,9 +101,9 @@ if ( ! defined( 'WPINC' ) ) {
 									echo esc_html( $lang_name );
 								?>
 							</option>
-						<?php
-						endif;
-					endforeach;
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php
 				elseif ( 'attachment' === $post_type ) :
 					$monk_translation_url = admin_url( 'media-new.php' );
 					foreach ( $active_languages as $lang_code ) :
@@ -117,9 +116,9 @@ if ( ! defined( 'WPINC' ) ) {
 									echo esc_html( $lang_name );
 								?>
 							</option>
-						<?php
-						endif;
-					endforeach;
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php
 				else :
 					foreach ( $active_languages as $lang_code ) :
 						$language_url = add_query_arg( array(
@@ -135,10 +134,9 @@ if ( ! defined( 'WPINC' ) ) {
 									echo esc_html( $lang_name );
 								?>
 							</option>
-						<?php
-						endif;
-					endforeach;
-				endif;
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
 				?>
 			</select>
 			<?php
@@ -186,10 +184,8 @@ if ( ! defined( 'WPINC' ) ) {
 											echo esc_html( $lang_name );
 										?>
 									</option>
-								<?php
-								endif;
-							endforeach;
-							?>
+								<?php endif; ?>
+							<?php endforeach; ?>
 						</select>
 						<button class="monk-change-post-language button"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 						<a class="monk-cancel-language-change hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
