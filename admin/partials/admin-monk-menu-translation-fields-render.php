@@ -28,10 +28,8 @@ $monk_languages = monk_get_available_languages();
 			<?php foreach ( $active_languages as $locale ) : ?>
 				<?php if ( ! array_key_exists( $locale, $menu_translations ) ) : ?>
 				<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['english_name'] ); ?></option>
-			<?php
-				endif;
-				endforeach;
-			?>
+				<?php endif; ?>
+			<?php endforeach; ?>
 		</select>
 	<?php endif; ?>
 </span>
@@ -45,10 +43,8 @@ $monk_languages = monk_get_available_languages();
 			<?php foreach ( $active_languages as $locale ) : ?>
 				<?php if ( ! array_key_exists( $locale, $menu_translations ) ) : ?>
 				<option value="<?php echo esc_html( $locale ); ?>"><?php echo esc_html( $monk_languages[ $locale ]['english_name'] ); ?></option>
-			<?php
-				endif;
-				endforeach;
-			?>
+				<?php endif; ?>
+			<?php endforeach; ?>
 			</select>
 		<?php else : ?>
 			<span class="menu-flag flag-icon flag-icon-<?php echo esc_attr( strtolower( $menu_language ) ); ?>"></span>

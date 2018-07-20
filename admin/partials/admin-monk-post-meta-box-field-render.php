@@ -35,14 +35,14 @@ if ( ! defined( 'WPINC' ) ) {
 				}
 
 				foreach ( $available_languages as $lang_code ) :
-						$lang_name = $monk_languages[ $lang_code ]['english_name'];
 				?>
 					<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $lang, $lang_code ); ?>>
-						<?php echo esc_html( $lang_name ); ?>
+						<?php
+							$lang_name = $monk_languages[ $lang_code ]['english_name'];
+							echo esc_html( $lang_name );
+						?>
 					</option>
-				<?php
-					endforeach;
-				?>
+				<?php endforeach; ?>
 				</select>
 			</p>
 			<?php if ( $post_translations && $post->ID !== $monk_id ) : ?>
@@ -95,12 +95,14 @@ if ( ! defined( 'WPINC' ) ) {
 						), $monk_translation_url );
 						$lang_id      = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-							$lang_name = $monk_languages[ $lang_code ]['english_name'];
-					?>
+						?>
 							<option value="<?php echo esc_url( $language_url ); ?>"/>
-								<?php echo esc_html( $lang_name ); ?>
+								<?php
+									$lang_name = $monk_languages[ $lang_code ]['english_name'];
+									echo esc_html( $lang_name );
+								?>
 							</option>
-					<?php
+						<?php
 						endif;
 					endforeach;
 				elseif ( 'attachment' === $post_type ) :
@@ -108,12 +110,14 @@ if ( ! defined( 'WPINC' ) ) {
 					foreach ( $active_languages as $lang_code ) :
 						$lang_id = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-							$lang_name = $monk_languages[ $lang_code ]['english_name'];
-					?>
+						?>
 							<option value="<?php echo esc_attr( $lang_code ); ?>"/>
-								<?php echo esc_html( $lang_name ); ?>
+								<?php
+									$lang_name = $monk_languages[ $lang_code ]['english_name'];
+									echo esc_html( $lang_name );
+								?>
 							</option>
-					<?php
+						<?php
 						endif;
 					endforeach;
 				else :
@@ -124,12 +128,14 @@ if ( ! defined( 'WPINC' ) ) {
 						), $monk_translation_url );
 						$lang_id      = sanitize_title( $lang_code );
 						if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-							$lang_name = $monk_languages[ $lang_code ]['english_name'];
-					?>
+						?>
 							<option value="<?php echo esc_url( $language_url ); ?>"/>
-								<?php echo esc_html( $lang_name ); ?>
+								<?php
+									$lang_name = $monk_languages[ $lang_code ]['english_name'];
+									echo esc_html( $lang_name );
+								?>
 							</option>
-					<?php
+						<?php
 						endif;
 					endforeach;
 				endif;
@@ -138,13 +144,11 @@ if ( ! defined( 'WPINC' ) ) {
 			<?php
 			$attach = ( 'attachment' === $post_type ) ? 'monk-attach' : '';
 			if ( $attach ) :
-				?>
+			?>
 				<input type="hidden" name="monk_id" class="monk-id" value="<?php echo esc_attr( $monk_id ); ?>">
 				<input type="hidden" class="current-post-id" value="<?php echo esc_attr( $post->ID ); ?>">
 				<button class="button <?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
-				<?php
-			else :
-			?>
+			<?php else : ?>
 				<button class="monk-submit-translation button" id="<?php echo esc_attr( $attach ); ?>"><?php esc_html_e( 'Ok', 'monk' ); ?></button>
 			<?php endif; ?>
 			<a class="monk-cancel-submit-translation hide-if-no-js button-cancel"><?php esc_html_e( 'Cancel', 'monk' ); ?></a>
@@ -175,12 +179,14 @@ if ( ! defined( 'WPINC' ) ) {
 							<?php
 							foreach ( $active_languages as $lang_code ) :
 								if ( array_key_exists( $lang_code, $monk_languages ) && ! array_key_exists( $lang_code, $post_translations ) ) :
-									$lang_name = $monk_languages[ $lang_code ]['english_name'];
-							?>
+								?>
 									<option  value="<?php echo esc_attr( $lang_code ); ?>"/>
-										<?php echo esc_html( $lang_name ); ?>
+										<?php
+											$lang_name = $monk_languages[ $lang_code ]['english_name'];
+											echo esc_html( $lang_name );
+										?>
 									</option>
-							<?php
+								<?php
 								endif;
 							endforeach;
 							?>
@@ -196,12 +202,12 @@ if ( ! defined( 'WPINC' ) ) {
 			foreach ( $post_translations as $lang_code => $monk_id ) :
 				if ( strval( $monk_id ) !== $post->ID ) :
 					$language_url = get_edit_post_link( $monk_id );
-		?>
+				?>
 					<li>
 						<a href="<?php echo esc_url( $language_url ); ?>"><?php echo esc_html( $monk_languages[ $lang_code ]['english_name'] ); ?></a>
 					</li>
-		<?php endif; ?>
-		<?php endforeach; ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
 		<?php endif; ?>
 		<?php if ( isset( $post_translations ) && count( $post_translations ) === 1 ) : ?>
 			<span class="monk-add-translation">

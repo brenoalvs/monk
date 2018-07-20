@@ -809,8 +809,8 @@ class Monk_Admin {
 
 					$args['meta_query'] = $meta_query;
 				}
-			} // End if().
-		} // End if().
+			} // End if.
+		} // End if.
 
 		if ( is_array( $old_meta_query ) ) {
 			$args['meta_query'] = array_merge( $old_meta_query, $args['meta_query'] );
@@ -901,7 +901,7 @@ class Monk_Admin {
 			}
 
 			require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/monk-language-column.php';
-		} // End if().
+		} // End if.
 	}
 
 	/**
@@ -1450,7 +1450,7 @@ class Monk_Admin {
 					$query->set( 'meta_query', $meta_query_args );
 				}
 			}
-		} // End if().
+		} // End if.
 	}
 
 	/**
@@ -1667,7 +1667,7 @@ class Monk_Admin {
 			wp_send_json_success( $response );
 		} else {
 			wp_send_json_error();
-		} // End if().
+		} // End if.
 	}
 
 	/**
@@ -1757,7 +1757,7 @@ class Monk_Admin {
 			wp_send_json_success();
 		} else {
 			wp_send_json_error();
-		} // End if().
+		} // End if.
 	}
 
 	/**
@@ -1792,7 +1792,7 @@ class Monk_Admin {
 			wp_send_json_success();
 		} else {
 			wp_send_json_error();
-		} // End if().
+		} // End if.
 	}
 
 	/**
