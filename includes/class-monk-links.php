@@ -242,16 +242,19 @@ class Monk_Links {
 	 */
 	public function monk_add_home_rewrite_rule() {
 		$active_languages = $this->monk_get_active_languages();
+		$language_codes   = array();
 
 		// Constructs the array to hold all language codes.
 		foreach ( $active_languages as $codes ) {
 			$language_codes[ $codes ] = $codes;
 		}
 
-		// The $slug i.e (en|pt-br|es).
-		$regex = '(' . implode( '|', $language_codes ) . ')/?$';
+		if ( ! empty( $language_codes ) ) {
+			// The matching slugs i.e. (en|pt-br|es).
+			$regex = '(' . implode( '|', $language_codes ) . ')/?$';
 
-		add_rewrite_rule( $regex, 'index.php?lang=$matches[1]', 'top' );
+			add_rewrite_rule( $regex, 'index.php?lang=$matches[1]', 'top' );
+		}
 	}
 
 	/**
