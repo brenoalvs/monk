@@ -142,7 +142,7 @@ function monk_get_available_languages() {
 				default:
 					$slug = array_shift( $lang_content['iso'] );
 					break;
-			} // End switch().
+			} // End switch.
 
 			$slug = $slug;
 
@@ -151,14 +151,14 @@ function monk_get_available_languages() {
 				'english_name' => $lang_content['english_name'],
 				'slug'         => $slug,
 			);
-		} // End foreach().
+		} // End foreach.
 
 		uasort( $monk_languages, function( $a, $b ) {
 			return strcmp( $a['english_name'], $b['english_name'] );
 		});
 
 		set_transient( 'monk_languages', $monk_languages, YEAR_IN_SECONDS );
-	} // End if().
+	} // End if.
 
 	$monk_languages['en_US']['slug'] = apply_filters( 'monk_custom_language_slug', 'en', 'en_US' );
 	foreach ( $wp_get_available_translations as $locale => $lang_content ) {
@@ -248,7 +248,7 @@ function monk_get_translations() {
 				}
 			}
 		}
-	} // End if().
+	} // End if.
 
 	if ( ( is_singular() && ! is_front_page() ) ) {
 		$current_id         = get_the_id();
@@ -285,7 +285,7 @@ function monk_get_translations() {
 				$translation_data[ $monk_languages[ $code ]['slug'] ]['english_name'] = $monk_languages[ $code ]['english_name'];
 			}
 		}
-	} // End if().
+	} // End if.
 
 	if ( is_archive() && ( is_category() || is_tag() || is_tax() ) ) {
 		$monk_term_translations_id = get_term_meta( get_queried_object_id(), '_monk_term_translations_id', true );
@@ -325,7 +325,7 @@ function monk_get_translations() {
 				}
 			}
 		}
-	} // End if().
+	} // End if.
 
 	foreach ( $translation_data as $slug => $list ) {
 		if ( $current_language_slug === $slug ) {
