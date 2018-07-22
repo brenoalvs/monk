@@ -24,8 +24,8 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php if ( $monk_language ) : ?>
 					<ul>
 						<li><?php echo esc_html( $monk_languages[ $monk_language ]['english_name'] ); ?></li>
-						<?php
-						foreach ( $monk_term_translations as $translation_code => $translation_id ) :
+						<?php foreach ( $monk_term_translations as $translation_code => $translation_id ) : ?>
+							<?php
 							if ( in_array( $translation_code, $languages, true ) && $monk_language !== $translation_code ) :
 								$translation_term_url = add_query_arg( 'tag_ID', $translation_id, $base_url_translation );
 							?>

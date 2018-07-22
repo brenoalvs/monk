@@ -55,8 +55,8 @@ $response = '';
 				<option value="0" <?php selected( 0, $menus[ $location ] ); ?>><?php esc_html_e( '— Select a Menu —' ); ?></option>
 				<?php foreach ( $monk_ids as $monk_id ) : ?>
 					<?php
-						$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
-						if ( ! empty( $monk_translations ) ) :
+					$monk_translations = get_option( 'monk_menu_translations_' . $monk_id, array() );
+					if ( ! empty( $monk_translations ) ) :
 					?>
 						<?php foreach ( $monk_translations as $nav_menu_language => $nav_menu_id ) : ?>
 							<?php if ( $nav_menu_language === $default_language ) : ?>
