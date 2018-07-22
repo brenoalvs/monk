@@ -85,8 +85,7 @@ class Monk {
 	public function __construct() {
 		$this->plugin_name      = 'Monk';
 		$this->version          = '0.7.0';
-
-		$locale 				= get_locale();
+		$locale                 = get_locale();
 		$this->default_language = get_option( 'monk_default_language', $locale );
 		$this->active_languages = get_option( 'monk_active_languages', array( $locale ) );
 
